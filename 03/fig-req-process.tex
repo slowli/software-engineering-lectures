@@ -1,0 +1,59 @@
+\begin{tikz*}[%
+	iteration/.style={rectangle,align=center}
+]
+	
+	\node[iteration] (elic) at (0, 0) {
+		\termwithexpl{определение}{elicitation}
+	};
+	\node[iteration,right=of elic] (analysis) {
+		\termwithexpl{анализ}{analysis}
+	};
+	\node[iteration,right=of analysis] (spec) {
+		\termwithexpl{спецификация}{specification}
+	};
+	\node[iteration,right=of spec] (valid) {
+		\termwithexpl{проверка}{validation}
+	};
+	\node[iteration,right=of valid] (manage) {
+		\termwithexpl{управление}{management}
+	};
+	
+	\draw[->] (elic) to (analysis);
+	\draw[->] (analysis) to (spec);
+	\draw[->] (spec) to (valid);
+	\draw[->] (valid) to (manage);
+	
+	\node<1> [note={(elic.south)},below=2em of elic.south,anchor=north west,text width=20em] {
+		\begin{itemize}
+			\item Извлечение информации из договоров;
+			\item проведение собеседований;
+			\item согласование с заказчиком.
+		\end{itemize}
+	};
+	\node<2> [note={(analysis.south)},below=2em of spec,text width=20em] {
+		\begin{itemize}
+			\item Изучение потребностей и целей пользователей;
+			\item требования к системе исполнения, аппаратуре и~ПО;
+			\item устранение конфликтов между требованиями;
+			\item определение приоритетов и принципов взаимодействия с окружением.
+		\end{itemize}
+	};
+	\node<3> [note={(spec.south)},below=2em of spec,text width=20em] {
+		\begin{itemize}
+		\item Формальное описание требований;
+		\item спецификация требований к структуре ПО, функциям, качеству и~документации;
+		\item задание архитектуры и логики системы.
+		\end{itemize}
+	};
+	\node<4> [note={(valid.south)},below=2em of valid] {
+		Проверка однозначности, непротиворечивости, \\
+		полноты и реализуемости требований.
+	};
+	\node<5> [note={(manage.south)},below=2em of manage.south,anchor=north east,text width=20em] {
+		\begin{itemize}
+			\item Интеграция требований во все процессы ЖЦ; 
+			\item контроль реализации требований; 
+			\item необходимая корректировка требований.
+		\end{itemize}
+	};
+\end{tikz*}

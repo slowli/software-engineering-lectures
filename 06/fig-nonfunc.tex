@@ -1,0 +1,49 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3em},
+	sub/.style={font=\small,minimum height=0pt,minimum width=10em},
+	hilight/.style={font=\small\only<#1>{\color{red}}},
+]
+	\node(nonfunc) [minimum width=30em]{\bfseries Нефункциональные требования};
+	
+	\node(org) [below=of nonfunc] {%
+		\termwithexpl{Организационные требования}{organizational req.}
+	};
+	\node(env) [sub,below=of org] {среда выполнения \\ \emph{(environmental req.)}};
+	\node(oper) [sub,below=0.25em of env,hilight=2] {операционные \\ \emph{(operational req.)}};
+	\node(dev) [sub,below=0.25em of oper,hilight=3] {ограничения \\ на разработку \\ \emph{(development req.)}};
+	\draw[->] (org) to (env);
+	
+	\node(prod) [left=1.75em of org] {%
+		\termwithexpl{Требования на продукт}{product requirements}
+	};
+	\node(usability) [sub,below=of prod] {интерфейс \emph{(usability)}};
+	\node(efficiency) [sub,below=0.25em of usability] {продуктивность \\ \emph{(efficiency)}};
+	\node(dep) [sub,below=0.25em of efficiency] {надежность \\ \emph{(dependability)}};
+	\node(sec) [sub,below=0.25em of dep] {безопасность \emph{(security)}};
+	\draw[->] (prod) to (usability);
+	
+	\node(ext) [right=1.75em of org]{%
+		\termwithexpl{Внешние требования}{external req.}
+	};
+	\node(reg) [sub,below=of ext,hilight=4] {регламентные \\ \emph{(regulatory req.)}};
+	\node(legal) [sub,below=0.25em of reg,hilight=5] {юридические \\ \emph{(legislative req.)}};
+	\node(ethical) [sub,below=0.25em of legal] {этические \\ \emph{(ethical req.)}};
+	\draw[->] (ext) to (reg);
+	
+	\draw[->] (nonfunc) to (org);
+	\draw[->] (nonfunc) to (prod);
+	\draw[->] (nonfunc) to (ext);
+	
+	\node<2> [note={(oper.north)},above=1em of oper.north,anchor=south] {
+		Определяют, каким образом  \\ будет использоваться система \\ (напр., порядок ее запуска).
+	};
+	\node<3> [note={(dev.north)},above=1em of dev.north,anchor=south] {
+		Напр., язык программирования \\ или среда разработки.
+	};
+	\node<4> [note={(reg.west)},left=1em of reg.west,anchor=east] {
+		Напр., требования центрального банка \\ для банковских систем.
+	};
+	\node<5> [note={(legal.west)},left=1em of legal.west,anchor=east] {
+		Напр., требования безопасности \\ в соответствии с законом \\ про защиту персональных данных.
+	};
+\end{tikz*}

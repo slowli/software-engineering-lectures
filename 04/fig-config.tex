@@ -1,0 +1,42 @@
+\linespread{1.0}
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center}
+]
+	\node(control) at (0, 0) [minimum height=6em] {
+		\textbf{Контроль} \\ \textbf{конфигурации} \\
+		\small\color{gray} (SC control)
+	};
+	\node(status) [right=of control,minimum height=6em] {
+		\textbf{Учет статуса} \\ \textbf{конфигурации} \\ 
+		\small\color{gray} (SC status \\
+		\small\color{gray} accounting)
+	};
+	\node(release) [right=of status,minimum height=6em] {
+		\textbf{Выпуски и} \\ \textbf{доставка} \\
+		\small\color{gray} (release management \\
+		\small\color{gray} and delivery)
+	};
+	\node(audit) [right=of release,minimum height=6em] {
+		\textbf{Аудит} \\ \textbf{конфигурации} \\ 
+		\small\color{gray} (SC auditing)
+	};
+	
+	\node(midx) at ($ (control)!0.5!(audit) $) [draw=none] {};
+	
+	\node(ident) [below=4em of midx,minimum width=35em] {
+		\textbf{Идентификация конфигурации} \\
+		\small\color{gray} (SC identification)
+	};
+	
+	\draw[->] (ident.north -| control.south) to (control.south);
+	\draw[->] (ident.north -| status.south) to (status.south);
+	\draw[->] (ident.north -| release.south) to (release.south);
+	\draw[->] (ident.north -| audit.south) to (audit.south);
+	
+	\node(mgmt) [below=of ident,draw=none] {
+		\textbf{Управление процессом конфигурации} \\
+		\small\color{gray}(management of the SCM process)
+	};
+	
+	\node[dashed,inner xsep=1em,inner ysep=1em,fit=(control.north west) (audit.north east) (mgmt.south)] {};
+\end{tikz*}

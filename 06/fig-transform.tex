@@ -1,0 +1,17 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,align=center,minimum height=3em,inner xsep=0.5em,minimum width=15em},
+	label/.style={font=\footnotesize\itshape,minimum height=0pt,minimum width=0pt}
+]
+	\node(nonfunc) {\bfseries Нефункциональное требование};
+	\node(func) [right=6em of nonfunc]{\bfseries Функциональное требование};
+	\node(confid) [below=of nonfunc] {Защита конфиденциальных \\ данных};
+	\node(auth) [below=of func] {Система авторизации};
+	\node(mem) [below=of confid] {Ограничение на \\ занимаемую память};
+	\node(del) [below=of auth] {Периодическое удаление \\ лишних данных};
+	\node(recover) [below=of mem] {Отказоустойчивость};
+	\node(copy) [below=of del] {Система резервных \\ копий данных};
+	
+	\draw[->] (confid) -- node[below,label]{уточнение} (auth);
+	\draw[->] (mem) -- node[below,label]{уточнение} (del);
+	\draw[->] (recover) -- node[below,label]{уточнение} (copy);
+\end{tikz*}

@@ -1,0 +1,75 @@
+\begin{tikz*}[%
+	class/.style={draw,rectangle split,rectangle split parts=3},
+	qty/.style={font=\footnotesize},
+	role/.style={font=\small}
+]
+	\node(reader) [class,text width=7.5em] {
+		\hfill\alert<2>{\textbf{Читатель}}\hfill\strut{}
+		\nodepart{two}
+		\alert<3>{Имя} \\ 
+		\alert<3>{\textit{Адрес}} \\ 
+		\alert<3>{e-mail} \\ 
+		\alert<3>{Телефон}
+		\nodepart{three}
+		\alert<4>{Задолженность}
+	};
+	\node(book) [class,text width=7.5em,right=6.5em of reader] {
+		\hfill\textbf{Книга}\hfill\strut{}
+		\nodepart{two}
+		Название \\ 
+		\textit{Автор} \\ 
+		\textit{Издатель} \\
+		Год издания \\
+		ISBN \\ 
+		Кол-во страниц
+		\nodepart{three}
+		\alert<4>{Ссылка} \\ 
+		\alert<4>{Похожие книги}
+	};
+	\node(category) [class,text width=7.5em,right=6.5em of book] {
+		\hfill\alert<2>{\textbf{Категория}}\hfill\strut{}
+		\nodepart{two}
+		Название \\ 
+		Описание
+		\nodepart{three}
+		Кол-во книг
+	};
+	
+	\node(_tmp) [coordinate] at ($ (reader.text split east) + (0,-0.5em) $) {};
+	\draw (_tmp) -- (_tmp -| book.west)
+		node(qty1)[qty,above,very near start]{\alert<6,7>{0..1}} 
+		node(role1)[role,below,midway]{\alert<5>{выдача}} 
+		node(qty2)[qty,above,very near end]{\alert<6,8>{0..20}};
+	\node(_tmp) [coordinate] at ($ (reader.two split east) + (0,0.5em) $) {};
+	\draw (_tmp) -- (_tmp -| book.west)
+		node(qty3)[qty,above,very near start]{0..*} 
+		node(role2)[role,below,midway]{история} 
+		node(qty4)[qty,above,very near end]{0..*};
+	\draw (book) -- (category)
+		node(qty5)[qty,above,very near start]{\alert<6,9>{1..*}} 
+		node(role3)[role,below,midway]{} 
+		node(qty6)[qty,above,very near end]{\alert<10>{0..*}};
+		
+	\node<2> [note={(reader.text split)},below=1em of reader.text split,anchor=north west] {название класса};
+	\node<2> [note={(category.text split)},below=1em of category.text split,anchor=north east] {название класса};
+	
+	\node<3> [note={(reader.two east)},right=1em of reader.two east,callout pointer width=0.5em] {поля класса};
+	\node<4> [note={(reader.three east)},right=1em of reader.three east,callout pointer width=0.5em] {операции класса};
+	\node<4> [note={(book.three east)},right=1em of book.three east,callout pointer width=0.5em] {операции класса};
+	
+	\node<5> [note={(role1.north)},above=1em of role1.north] {отношение между классами};
+	\node<5> [note={(role3.north)},above=1em of role3.north] {отношение между классами};
+	
+	\node<6> [note={(qty1.south)},below=1em of qty1.south] {кратность};
+	\node<6> [note={(qty2.south)},below=1em of qty2.south] {кратность};
+	\node<6> [note={(qty5.south)},below=1em of qty5.south] {кратность};
+	
+	\node<7> [note={(qty1.south)},below=1em of qty1.south] {%
+		Каждая книга в любой момент времени \\ может находиться у 0 либо 1 читателя.};
+	\node<8> [note={(qty2.south)},below=1em of qty2.south] {%
+		Каждый читатель может взять \\ не более 20 книг.};
+	\node<9> [note={(qty5.south)},below=1em of qty5.south] {%
+		Категория соответствует \\ как минимум одной книге.};
+	\node<10> [note={(qty6.south)},below=1em of qty6.south] {%
+		У каждой книги может быть \\ произвольное число категорий.};
+\end{tikz*}

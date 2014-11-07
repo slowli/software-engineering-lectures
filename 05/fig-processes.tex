@@ -1,0 +1,75 @@
+\begingroup
+	\makeatletter%
+	\let\@orig@itemize\itemize
+	\def\itemize{%
+		\@orig@itemize%
+		\let\@orig@item\item%
+		\def\item{\vspace{-0.5ex}\@orig@item}%
+	}
+	\makeatother
+	\begin{tikz*}[%
+		every node/.style={rectangle,align=center,inner sep=0.5em}
+	]
+		\node(all) {\bfseries Процессы ЖЦ};
+		\node(org) [below=of all] {
+			Организационные \\ процессы
+		};
+		\node(main) [left=of org.north west,anchor=north east] {
+			Основные \\ процессы
+		};
+		\node(aux) [right=of org.north east,anchor=north west] {
+			Процессы \\ поддержки
+		};
+		\node(manage) [below left=2em and -2em of org] {
+			Управление
+		}; 
+		\node(improve) [below right=2em and -2em of org] {
+			Модификация \\ процессов
+		};
+		
+		\draw (all) to (main.north);
+		\draw (all) to (aux.north);
+		\draw (all) to (org.north);
+		\draw (org) to (manage.north);
+		\draw (org) to (improve.north);
+		
+		\node<2> [note={(main.south)},below=4em of main.south,anchor=north west,text width=13em] {
+			\begin{itemize}
+				\item приобретение;
+				\item поставка;
+				\item разработка;
+				\item эксплуатация;
+				\item сопровождение.
+			\end{itemize}
+		};
+		\node<3> [note={(aux.south)},below=4em of aux.south,anchor=north east,text width=13em] {
+			\begin{itemize}
+				\item документирование;
+				\item конфигурация; 
+				\item QA; 
+				\item верификация; 
+				\item валидация; 
+				\item аудит; 
+				\item оценка.
+			\end{itemize}
+		};
+		\node<4> [note={(manage.south)},below=1em of manage.south,anchor=north west,text width=13em] {
+			\begin{itemize}
+				\item организацией; 
+				\item проектом; 
+				\item качеством;
+				\item риском;
+				\item знаниями;
+				\item орг. обеспечение;
+				\item измерение.
+			\end{itemize}
+		};
+		\node<5> [note={(improve.south)},below=1em of improve.south,anchor=north east,text width=13em] {
+			\begin{itemize}
+				\item внедрение; 
+				\item оценка;
+				\item совершенствование.
+			\end{itemize}
+		};
+	\end{tikz*}
+\endgroup

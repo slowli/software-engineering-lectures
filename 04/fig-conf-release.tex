@@ -1,0 +1,15 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3em,minimum width=8.5em},
+	edge/.style={draw=none,minimum height=0pt,minimum width=0pt,font=\small\itshape},
+	hilight/.style={font=\only<#1>{\color{red}}},
+	hilight edge/.style={font=\footnotesize\itshape\only<#1>{\color{red}}}
+]
+	\node(elem) {элементы \\ конфигурации};
+	\node(lib) [right=7.5em of elem,hilight=2] {библиотека};
+	\node(user) [above right=of lib] {конечный \\ пользователь};
+	\node(test) [below right=of lib] {тестирование};
+	
+	\draw[->] (elem) -- node[edge,above,hilight edge=1]{построение; \\ конф. данные} (lib);
+	\draw[->] (lib) -- node[edge,below right,hilight edge=3]{публичный релиз} (user);
+	\draw[->] (lib) -- node[edge,above right,hilight edge=3]{технический релиз} (test);
+\end{tikz*}

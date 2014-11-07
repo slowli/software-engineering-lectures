@@ -1,0 +1,15 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,align=center,minimum height=3em},
+	node distance=2em and 2em
+]
+	\node(req) {\textbf{Инженерия} \\ \textbf{требований}};
+	\node(design) [right=of req] {Проектирование};
+	\node(construct) [right=of design] {Конструирование};
+	\node(testing) [right=of construct] {Тестирование};
+	\node(maint) [right=of testing] {Сопровождение};
+	
+	\draw[->] (req) to (design);
+	\draw[->] (design) to (construct);
+	\draw[->] (construct) to (testing);
+	\draw[->] (testing) to (maint);
+\end{tikz*}

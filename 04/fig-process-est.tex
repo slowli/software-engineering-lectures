@@ -1,0 +1,20 @@
+\linespread{1.0}%
+\begin{tikz*}[%
+	xscale=1.25,
+	every node/.style={rectangle,align=center,minimum height=3em}
+]
+	\node(features) {\textbf{Оцениваемые характеристики процессов}};
+	\node(plan) [below=of features] {планируемость};
+	\node(control) [left=of plan] {управляемость};
+	\node(predict) [below=of control] {предсказуемость};
+	\node(product) [right=of plan] {результативность};
+	\node(measure) [below=of product] {измеримость};
+	
+	\draw[-] (features) to (plan);
+	\draw[-] (features) to (control);
+	\draw[-] (features) to (predict);
+	\draw[-] (features) to (product);
+	\draw[-] (features) to (measure);
+	
+	\draw[decorate,decoration={brace,amplitude=6pt}] (measure.south east) -- node[below]{зрелость} (predict.south west);
+\end{tikz*}

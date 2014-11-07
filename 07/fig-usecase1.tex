@@ -1,0 +1,19 @@
+\begin{tikz*}[%
+	every node/.style={draw,align=center},
+	label/.style={draw=none,font=\small\bfseries},
+	actor/.style={human,minimum width=2em,minimum height=3em,outer sep=6pt},
+	action/.style={ellipse,minimum height=2.5em}
+]
+	\node(reader) [actor] {};
+	\node(lbl-reader) [label,below=0pt of reader] {\alert<2>{Читатель}};
+	\node(act) [action,right=5em of reader] {\alert<3>{Выдача книги}};
+	\node(lib) [actor,right=5em of act] {};
+	\node(lbl-lib) [label,below=0pt of lib] {\alert<2>{Библиотекарь}};
+	
+	\draw (reader) to (act);
+	\draw (act) to (lib);
+	
+	\node<2> [note={(lbl-reader.east)},right=1em of lbl-reader,callout pointer width=0.5em] {актер};
+	\node<2> [note={(lbl-lib.west)},left=1em of lbl-lib,callout pointer width=0.5em] {актер};
+	\node<3> [note={(act.south)},below=1em of act] {взаимодействие};
+\end{tikz*}

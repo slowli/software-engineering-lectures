@@ -1,0 +1,24 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center},
+	label/.style={draw=none,font=\small\itshape}
+]
+	\node(reuse1) {КПИ$_1$};
+	\node(reuse2) [right=0.75em of reuse1] {КПИ$_2$};
+	\node(reuse-dots) [right=0.75em of reuse2,draw=none] {\dots};
+	\node(reusen) [right=0.75em of reuse-dots] {КПИ$_n$};
+	\node(repo-label) [label,below=2.5em of $(reuse1.south west)!0.5!(reusen.south east)$] {репозиторий};
+	
+	\node(model) [right=5em of reusen] {Модель ПрО};
+	\node(conf) at (model.center |- repo-label.center) {Конфигурация};
+	
+	\begin{pgfonlayer}{background}
+		\node(repo) [fit=(reuse1) (reuse2) (reusen) (repo-label),rectangle,draw,fill=blue!20,minimum height=6em] {};
+	\end{pgfonlayer}
+
+	\node(prod) [minimum height=6em,right=15em of repo] {Производство ПП};
+	
+	\draw[->] (repo.north east |- model.west) to (model.west);
+	\draw[->] (model.east) to (prod.north west |- model.east);
+	\draw[<-] (repo.south east |- conf.west) to (conf.west);
+	\draw[<-] (conf.east) to (prod.south west |- conf.east);
+\end{tikz*}

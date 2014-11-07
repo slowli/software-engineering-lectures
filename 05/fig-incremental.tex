@@ -1,0 +1,35 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=2.5em}
+]
+	\node(analysis) {Анализ \\ требований};
+	\node(design1) [above right=of analysis] {Проектирование};
+	\node(impl1) [right=of design1] {Реализация};
+	\node(test1) [right=of impl1] {Тестирование};
+	\node(release1) [right=of test1,ellipse] {Выпуск 1};
+	\draw[->] (analysis) |- (design1);
+	\draw[->] (design1) to (impl1);
+	\draw[->] (impl1) to (test1);
+	\draw[->] (test1) to (release1);
+	
+	\node(design2) [right=of analysis] {Проектирование};
+	\node(impl2) [right=of design2] {Реализация};
+	\node(test2) [right=of impl2] {Тестирование};
+	\node(release2) [right=of test2,ellipse] {Выпуск 2};
+	\draw[->] (analysis) to (design2);
+	\draw[->] (design2) to (impl2);
+	\draw[->] (impl2) to (test2);
+	\draw[->] (test2) to (release2);
+	
+	\draw[->,dashed] (release1) to (release2);
+	
+	\node(design3) [below right=of analysis] {Проектирование};
+	\node(impl3) [right=of design3,label=below:$\vdots$] {Реализация};
+	\node(test3) [right=of impl3] {Тестирование};
+	\node(release3) [right=of test3,ellipse] {Выпуск 3};
+	\draw[->] (analysis) |- (design3);
+	\draw[->] (design3) to (impl3);
+	\draw[->] (impl3) to (test3);
+	\draw[->] (test3) to (release3);
+	
+	\draw[->,dashed] (release2) to (release3);
+\end{tikz*}

@@ -1,0 +1,423 @@
+\documentclass{a4beamer}
+\input{lecture-common.def}
+
+\usetikzlibrary{shapes.misc}
+\input{shape.human.tex}
+
+\lecturetitle{Программная инженерия. Лекция №7 — Моделирование программных систем.}
+\title[Моделирование ПС]{Моделирование программных систем}
+\author{Алексей Островский}
+\institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
+\date{07 ноября 2014 г.}
+
+\begin{document}
+	\frame{\titlepage}
+	
+	\section[Основы]{Основы моделирования}
+	
+	\subsection{Определение}
+	
+	\frame{
+		\frametitle{Моделирование в разработке ПО}
+
+		\begin{center}\small
+			\input{fig-model-in-dev.tex}
+		\end{center}
+		
+		\begin{Definition}
+			\textbf{Системное моделирование} — процесс создания абстрактных моделей программной системы, 
+			отображающих различные ее аспекты.
+		\end{Definition}
+	}
+	
+	\frame{
+		\frametitle{Цели моделирования}
+
+		\begin{center}\linespread{1.0}
+			\begin{tabular}{|p{0.22\textwidth}|p{0.65\textwidth}|}
+				\hline
+				\centering\textbf{Процесс} & \centering\textbf{Цель моделирования} \cr
+				\hline
+				\raggedright Инженерия требований & \raggedright объяснение предложенных требований заинтересованным сторонам. \cr
+				\hline
+				Проектирование & \raggedright создание общей структуры системы архитекторами; планирование и документирование общих указаний по~имплементации. \cr
+				\hline
+				Программирование & \raggedright частичная или полная имплементация системы с помощью генераторов кода. \cr
+				\hline
+				Сопровождение & \raggedright объяснение структуры системы для команды сопровождения; базис для внесения изменений в систему. \cr
+				\hline
+			\end{tabular}
+		\end{center}
+	}
+	
+	\subsection{Представления системы}
+	
+	\frame{
+		\frametitle{Представления системы}
+
+		\begin{Definition}
+			\textbf{Представление} — абстрактная модель системы, выделяющая ее характеристики, 
+			соответствующие определенному аспекту ее функционирования.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Основные представления:}
+		\begin{itemize}
+			\item контекстное представление — модель окружения, в котором выполняется система;
+			\item взаимодействия — связи системы с окружением, а также элементов в системе;
+			\item структурное представление — организация системы и данных для обработки;
+			\item поведение — модель реагирования системы в ответ на внешние события.
+		\end{itemize}
+	}
+	
+	\subsection{Язык моделирования UML}
+	
+	\frame{
+		\frametitle{Язык моделирования UML}
+
+		\begin{Definition}
+			\textbf{Унифицированный язык моделирования} \engterm{unified modeling language, UML} — язык маркировки общего назначения, 
+			целью которого является стандартизация графического представления архитектуры и дизайна ПС. 
+		\end{Definition}
+		
+		\vspace{1.5ex}
+		\begin{tabular}{r@{\ —\ }l}
+			\textbf{1996 г.} & UML 1.0 (Grady Booch, Ivar Jacobson, James Rumbaugh). \cr
+			\textbf{2000 г.} & стандарт ISO. \cr
+			\textbf{2005 г.} & UML 2.0 (новые виды диаграмм, расширение семантики языка). \cr
+		\end{tabular}
+		
+		\vspace{2ex}
+		\textbf{Инструменты UML:} 
+		\begin{itemize}
+			\item Eclipse Modeling Tools; 
+			\item Papyrus; 
+			\item Rational Software Architect/Modeler, …
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Основные диаграммы UML}
+		
+		\begin{itemize}
+			\item
+			\textbf{Диаграмма деятельности} \engterm{activity diagram}: составляющие деятельности по~обработке данных.
+			\item
+			\textbf{Диаграмма вариантов использования} \engterm{use case diagram}: взаимодействие между~системой и ее окружением.
+			\item
+			\textbf{Диаграмма последовательности} \engterm{sequence diagram}: 
+			взаимодействие системы с~актерами и компонентов системы друг с другом.
+			\item
+			\textbf{Диаграмма классов} \engterm{class diagram}: структура классов, используемых в системе, и~отношения между классами.
+			\item
+			\textbf{Диаграмма состояний} \engterm{state diagram}: реагирование системы на внутренние и~внешние события.
+		\end{itemize}
+	}
+	
+	\section[Контекст]{Контекстные модели}
+	
+	\subsection{Контекст системы}
+	
+	\frame{
+		\frametitle{Контекстные модели}
+		
+		\textbf{Цель:} 
+		\begin{itemize}
+			\item разграничение функций системы и ее окружения;
+			\item определение компонентов, которые надо имплементировать, и используемых интерфейсов.
+		\end{itemize}
+		
+		\vspace{0.5ex}
+		\begin{center}
+			\input{fig-context.tex}
+		
+			\vspace{1ex}
+			\figureexpl{\textbf{Пример:} контекст электронной библиотечной системы.}
+		\end{center}
+	}
+	
+	\subsection{Модель процесса}
+	
+	\frame{
+		\frametitle{Модель процесса}
+		
+		\label{p:activity}
+		\begin{center}
+			{\small\input{fig-activity.tex}}
+			
+			\vspace{1ex}
+			\figureexpl{Диаграмма деятельности UML \engterm{activity diagram} для обработки запроса на выдачу документа.}
+		\end{center}
+	}
+	
+	\section[Взаимодействие]{Модели взаимодействия}
+	
+	\frame{
+		\frametitle{Модели взаимодействия}
+		
+		\textbf{Цели:} 
+		\begin{itemize}
+			\item отладка взаимодействия с пользователями; 
+			\item выработка пользовательских требований; 
+			\item определение возможных «узких мест» и проблем коммуникации; 
+			\item отработка производительности \engterm{performance} и надежности \engterm{dependability}.
+		\end{itemize}
+		
+		\vspace{1ex}
+		\textbf{Типы моделей:}
+		\begin{itemize}
+			\item
+			варианты использования — моделирование взаимодействия системы с актерами (пользователями или другими системами);
+			\item
+			диаграммы последовательностей — моделирование взаимодействия компонентов системы.
+		\end{itemize}
+	}
+	
+	\subsection{Варианты использования}
+	
+	\frame{
+		\frametitle{Варианты использования}
+		
+		\begin{center}
+			\begin{overlayarea}{\textwidth}{0.21\textheight}
+				\input{fig-usecase1.tex}
+			\end{overlayarea}
+			
+			\vspace{1ex}
+			\figureexpl{Взаимодействие между читателем и библиотекарем на диаграмме вариантов использования \engterm{use case diagram}}
+		\end{center}
+		
+		\vspace{0.9ex}
+		\begin{center}\linespread{1.0}
+			\begin{tabular}{rp{0.7\textwidth}}
+				\textbf{Актеры:} & читатель, библиотекарь \cr
+				\textbf{Описание:} & \raggedright Библиотекарь выдает книгу на руки пользователю 
+					и вносит соответствующие данные в систему. \cr
+				\textbf{Данные:} & \raggedright идентификатор книги, дата выдачи, кому выдана, на какой срок. \cr
+				\textbf{Побуждение:} & \raggedright команда системы, полученная от библиотекаря. \cr
+				\textbf{Отклик:} & \raggedright подтверждение внесения изменений в систему. \cr
+				\textbf{Доп. условия:} & \raggedright библиотекарь должен быть авторизован в системе; 
+					читатель должен иметь разрешение на выдачу книги. \cr
+			\end{tabular}
+		\end{center}
+	}
+	
+	\frame{
+		\frametitle{Варианты использования (продолжение)}
+		
+		\begin{center}
+			{\small\input{fig-usecase2.tex}}
+			
+			\vspace{1ex}
+			\figureexpl{Более сложный пример, демонстрирующий связи между взаимодействиями}
+		\end{center}
+	}
+	
+	\subsection{Диаграммы последовательностей}
+	
+	\frame{
+		\frametitle{Диаграммы последовательностей}
+		
+		\label{p:sequence}
+		\begin{center}
+			\input{fig-sequence.tex}
+			
+			\vspace{1ex}
+			\figureexpl{Диаграмма последовательности для просмотра информации о книге}
+		\end{center}
+	}
+	
+	\frame{
+		\frametitle{Диаграммы последовательностей (продолжение)}
+		
+		\textbf{Интерпретация примера:}
+		\begin{enumerate}
+			\item
+			\textbf{Библиотекарь} запрашивает информацию по книге по ее идентификатору \textbf{BID} (напр., ISBN). 
+			Для отображения информации создается экземпляр \textbf{B} класса \textbf{BookInfo}, отображающий информацию в виде таблицы.
+			
+			\item
+			\textbf{B} запрашивает базу данных \textbf{D}, предоставляя ей идентификатор пользователя \textbf{UID}.
+		
+			\item
+			База данных проверяет право \textbf{UID} на \textbf{просмотр сведений} о книге с помощью системы авторизации \textbf{AS}.
+			
+			\item
+			Если авторизация выполнена успешно, \textbf{D} возвращает данные о книге. \textbf{B} отображает их.
+			
+			\item
+			Если авторизация не удалась, возвращается \textbf{ошибка}. \textbf{B} отображает сведения об ошибке.
+		\end{enumerate}
+	}
+	
+	\section[Структура]{Структурные модели}
+	
+	\subsection{Диаграммы классов}
+	
+	\frame{
+		\frametitle{Структурные модели}
+		
+		\textbf{Цели:}
+		\begin{itemize}
+			\item определение архитектуры системы;
+			\item определение структур хранения данных.
+		\end{itemize}
+		
+		\vspace{0.5ex}
+		\textbf{Диаграмма классов UML:}
+		\vspace{0.5ex}
+		\begin{center}
+			\input{fig-class1.tex}
+			
+			\vspace{1ex}
+			\figureexpl{Диаграмма для нескольких классов предметной области «Библиотека». \textit{Курсив} = другие классы.}
+		\end{center}
+	}
+	
+	\subsection{Отношения обобщения}
+	
+	\frame{
+		\frametitle{Отношения обобщения}
+		
+		\begin{center}
+			\input{fig-class2.tex}
+			
+			\vspace{1ex}
+			\figureexpl{Диаграмма классов, демонстрирующая отношения обобщения \engterm{generalization}.}
+		\end{center}
+	}
+	
+	\subsection{Отношения агрегации и композиции}
+	
+	\frame{
+		\frametitle{Отношения агрегации и композиции}
+		
+		\textbf{Агрегация («часть/целое», слабая связь)}
+		\begin{center}
+			\begin{tikz*}[%
+				class/.style={draw,rectangle,align=center,minimum height=3em,minimum width=7.5em,font=\bfseries},
+				qty/.style={font=\footnotesize},
+				role/.style={font=\small}
+			]
+				\node(library) [class]{Библиотека};
+				\node(book) [class,right=6em of library] {Книга};
+				
+				\draw[-open diamond] (book) -- (library)
+					node[qty,very near start,above] {1..*}
+					node[role,midway,below] {включает}
+					node[qty,very near end,above] {1};
+			\end{tikz*}
+			
+			\vspace{1ex}
+			\figureexpl{Каждая книга принадлежит одной из библиотек. Эта библиотека может измениться.}
+		\end{center}
+		
+		\vspace{2ex}
+		\textbf{Композиция («часть/целое», сильная связь)}
+		\begin{center}
+			\begin{tikz*}[%
+				class/.style={draw,rectangle,align=center,minimum height=3em,minimum width=7.5em,font=\bfseries},
+				qty/.style={font=\footnotesize},
+				role/.style={font=\small}
+			]
+				\node(library) [class]{Журнал};
+				\node(book) [class,right=6em of library] {Статья};
+				
+				\draw[-diamond] (book) -- (library)
+					node[qty,very near start,above] {1..*}
+					node[role,midway,below] {включает}
+					node[qty,very near end,above] {1};
+			\end{tikz*}
+			
+			\vspace{1ex}
+			\figureexpl{Журнал состоит из нескольких статей; для каждой статьи содержащий ее журнал фиксирован.}
+		\end{center}
+	}
+	
+	\section[Поведение]{Модели поведения}
+	
+	\frame{
+		\frametitle{Модели поведения}
+		
+		\textbf{Цель:} определение реакции системы на внешние и внутренние входные сигналы.
+		
+		\vspace{2ex}
+		\textbf{Виды сигналов:}
+		\begin{itemize}
+			\item данные (\emph{data-driven modeling})
+			
+			\textbf{Область применения:} системы обработки данных (напр., транзакций).
+			
+			\textbf{Диаграммы UML:} диаграмма  \inlink{p:activity}{деятельности}, диаграмма \inlink{p:sequence}{последовательности}.
+			
+			\vspace{1ex}
+			\item события (\emph{event-driven modeling})
+			
+			\textbf{Область применения:} системы реального времени (напр., микроконтроллеры).
+			
+			\textbf{Диаграммы UML:} диаграмма состояний.
+		\end{itemize}
+	}
+	
+	\subsection{Диаграммы состояний}
+	
+	\frame{
+		\frametitle{Диаграммы состояний}
+		
+		\begin{center}
+			{\small\input{fig-state.tex}}
+			
+			\vspace{1ex}
+			\figureexpl{Упрощенная диаграмма состояний для жизненного цикла программы (\emph{activity}) в Android}
+		\end{center}
+	}
+	
+	\section{Заключение}
+
+	\subsection{Выводы}
+
+	\frame{
+		\frametitle{Выводы}
+		
+		\begin{enumerate}
+			\item
+			Модели нужны для разработки отдельных аспектов программных систем: 
+			контекста выполнения, взаимодействий, структуры и поведения системы.
+			
+			\item
+			Моделирование важно для детализации требований к программному обеспечению, 
+			а~также для проектирования общей архитектуры системы и отдельных элементов.
+			
+			\item
+			Одним из стандартов моделирования являются графические модели на основе языка UML. 
+			В прикладном моделировании используются 5 основных типов диаграмм UML: 
+			диаграммы деятельности, последовательности, вариантов использования, классов и~состояний.
+		\end{enumerate}
+	}
+
+	\subsection{Материалы}
+	
+	\frame{
+		\frametitle{Материалы}
+		
+		\begin{thebibliography}{9}
+			\bibitem[2]{2}
+			Sommerville, Ian
+			\newblock Software Engineering.
+			\newblock {\footnotesize Pearson, 2011. — 790 p.}
+		
+			\bibitem[1]{1}
+			Лавріщева К.\,М. 
+			\newblock Програмна інженерія (підручник). 
+			\newblock {\footnotesize К., 2008. — 319 с.}
+		\end{thebibliography}
+	}
+	
+	\frame{
+		\frametitle{}
+		
+		\begin{center}
+			\Huge Спасибо за внимание!
+		\end{center}
+	}
+\end{document}
