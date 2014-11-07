@@ -1,0 +1,45 @@
+%% Lectures - common definitions
+
+\usextensions{tikz}
+\usetikzlibrary{shapes.multipart,shapes.callouts,shapes.geometric}
+\input{fix-callouts.inc} % Fixes absolute positioning of rectangle callouts
+
+\newif\ifbigpages \bigpagesfalse
+\ifdim\paperwidth >20cm
+	\bigpagestrue
+\fi
+
+\tikzset{%
+	note/.style={rectangle callout,draw=none,callout pointer width=1em,%
+		align=flush left,font=\footnotesize,inner sep=0.5em,%
+		fill=blue!15,fill opacity=0.95,text opacity=1.0,callout absolute pointer=#1},
+	node distance=2em and 2.75em
+}
+\ifbigpages
+	% Scale all arrow tips by the factor of 2.5
+	\let\old@pgf@arrow@call=\pgf@arrow@call
+	\def\pgf@arrow@call#1{%
+		\@tempdima=\pgflinewidth%
+		\pgfsetlinewidth{2.5\pgflinewidth}%
+		\old@pgf@arrow@call{#1}%
+		\pgfsetlinewidth{\@tempdima}%
+	}
+	\def\pgfarrowsleftextend#1{\pgfmathsetlength{\pgf@xa}{1.5*#1}}
+	\def\pgfarrowsrightextend#1{\pgfmathsetlength{\pgf@xb}{1.5*#1}}
+\fi
+
+%% Explanation for a figure
+\def\figureexpl#1{%
+	{\linespread{1.0}\footnotesize\color{gray}{#1}\par}
+}
+%% English term
+\def\engterm#1{(англ. \textit{#1})}
+%% Term with explanation below (to be used in diagrams)
+\def\termwithexpl#1#2{#1\strut{}\\\small\color{gray}(\textit{#2})\strut{}}
+%% External link
+\def\extlink#1#2{\href{#1}{\color[rgb]{0.7,0.7,1.0}\dashbar{#2}}}
+%% Internal link
+\def\inlink#1#2{\hyperlink{#1}{\color[rgb]{0.7,0.7,1.0}\dashbar{#2}}}
+%% Explanation for a list item
+\def\itemexpl#1{\begingroup\linespread{1.0}\small\vspace{0.75ex}#1\par\endgroup}
+
