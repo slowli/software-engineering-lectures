@@ -1,0 +1,26 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3em},
+	group/.style={},%{inner xsep=2em},
+	hilight/.style={font=\only<#1>{\color{red}}},
+]
+	\node(task1) [hilight=2] {Задание$_{1}$};
+	\node(task2) [right=0.5em of task1,hilight=2] {Задание$_{2}$};
+	\node(task-dots) [right=0.5em of task2,draw=none] {$\cdots$};
+	\node(act-label) [below=0.5em of task1,draw=none,minimum height=0pt,hilight=3] {Действие$_{1}$};
+	\node(act1) [group,fit=(task1) (task-dots) (act-label)] {};
+	
+	\node(taskk) [right=2em of task-dots,hilight=2] {Задание$_{k}$};
+	\node(taskk1) [right=0.5em of taskk,hilight=2] {Задание$_{k+1}$};
+	\node(task-dots2) [right=0.5em of taskk1,draw=none] {$\cdots$};
+	\node(act-label2) [below=0.5em of taskk,draw=none,minimum height=0pt,hilight=3] {Действие$_{2}$};
+	\node(act2) [group,hilight=2,fit=(taskk) (task-dots2) (act-label2)] {};
+	
+	\node(act-dots) [right=1em of act2,draw=none] {$\cdots$};
+	\node(process-label) [below=4em of $(act1.west)!0.5!(act-dots.east)$,minimum height=0pt,draw=none,hilight=4] {Процесс ЖЦ};
+	\node(process) [group,fit=(act1) (act-dots) (process-label)] {};
+	
+	\node(input) [below left=of process-label] {Входные данные};
+	\node(output) [below right=of process-label,hilight=5] {Итог процесса};
+	\draw[->] (input.north) to (input.north |- process.south);
+	\draw[<-] (output.north) to (output.north |- process.south);
+\end{tikz*}

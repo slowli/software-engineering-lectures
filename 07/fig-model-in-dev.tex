@@ -1,0 +1,23 @@
+\begin{tikz*}[%
+	scale=1.25,
+	every node/.style={rectangle,align=center,minimum height=3em},
+	every label/.style={,minimum height=0pt,font=\small\itshape}
+]
+	\node(comp) {Проектирование \\ компонентов};
+	\node(constr) [right=of comp] {Конструирование};
+	\node(arch) [above=of comp] {Архитектура};
+	\node(model) [above=of constr] {\bfseries Моделирование};
+	\node(req) [right=of model] {Инженерия \\ требований};
+	\node(test) [right=of constr] {Тестирование};
+	\node(maint) [right=of test] {Сопровождение};
+	
+	\draw[<->] (req) to (model);
+	\draw[->] (constr) to (test);
+	\draw[->] (test) to (maint);
+	\draw[->] (model) to (arch);
+	\draw[->] (arch) to (comp);
+	\draw[->] (comp) to (constr);
+	
+	\node(design) [draw,dashed,inner ysep=1em,inner xsep=2.5em,
+		fit=(model.north east) (arch.north west) (comp.south west) (constr.south east),label=below:Проектирование и программирование] {};
+\end{tikz*}

@@ -1,0 +1,62 @@
+\def\areamember#1{\small\color{gray}#1\strut{}}
+\linespread{1.0}
+\begin{tikz*}[
+	every node/.style={draw,rectangle split,rectangle split parts=2,align=center}
+]
+	\node(areas) [rectangle,minimum width=35em] {\large Основные области знаний SWEBOK\strut{}};
+
+	\node(design) [above=1em of areas] {
+		\textbf{Проектирование ПО}
+		\nodepart{two}
+		\areamember{базовые концепции} \\ 
+		\areamember{ключевые вопросы} \\
+		\areamember{архитектура} \\
+		\areamember{нотации} \\ 
+		\areamember{стратегия и методы}
+	};
+	\node(req) [left=2em of design.south west,anchor=south east] {
+		\textbf{Инженерия требований}
+		\nodepart{two}
+		\areamember{определение} \\ 
+		\areamember{анализ} \\ 
+		\areamember{спецификация} \\ 
+		\areamember{проверка} \\ 
+		\areamember{управление}
+	};
+	\node(construct) [right=2em of design.south east,anchor=south west] {
+		\textbf{Конструирование ПО}
+		\nodepart{two}
+		\areamember{снижение сложности} \\ 
+		\areamember{ориентация на изменения} \\ 
+		\areamember{валидация} \\ 
+		\areamember{внешние стандарты} \\
+		\areamember{}
+	};
+
+	\node(_tmp) at (areas.south -| req.east) [coordinate]{};
+	\node(testing) [below=1em of _tmp,anchor=north] {
+		\textbf{Тестирование ПО}
+		\nodepart{two}
+		\areamember{концепции} \\ 
+		\areamember{уровни тестирования} \\ 
+		\areamember{техники} \\ 
+		\areamember{метрики} \\ 
+		\areamember{управление тестированием}
+	};
+	\node(_tmp) at (areas.south -| construct.west) [coordinate]{};
+	\node(maintenance) [below=1em of _tmp,anchor=north] {
+		\textbf{Сопровождение ПО}
+		\nodepart{two}
+		\areamember{концепции} \\ 
+		\areamember{сопровождение} \\ 
+		\areamember{ключевые вопросы} \\ 
+		\areamember{спецификация требований} \\ 
+		\areamember{процесс сопровождения}
+	};
+	
+	\draw[->] (areas.north -| req.south) to (req.south);
+	\draw[->] (areas) to (design);
+	\draw[->] (areas.north -| construct.south) to (construct.south);
+	\draw[->] (areas.south -| testing.north) to (testing.north);
+	\draw[->] (areas.south -| maintenance.north) to (maintenance.north);
+\end{tikz*}

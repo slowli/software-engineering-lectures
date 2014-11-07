@@ -1,0 +1,15 @@
+\begin{tikz*}[%
+	scale=1.25,
+	every node/.style={rectangle,draw,align=center,minimum height=3em,minimum width=7.5em}
+]
+	\node(lib) {«система» \\ \textbf{Библиотека}};
+	\node(scan) [left=of lib] {«система» \\ Сканирование книг};
+	\node(archive) [right=of lib] {«система» \\ Электронный архив};
+	\node(plan) [above=of lib] {«система» \\ Планирование выдачи};
+	\node(report) [below=of lib] {«система» \\ Сбор отчетности};
+	
+	\draw (lib) to (scan);
+	\draw (lib) to (archive);
+	\draw (lib) to (plan);
+	\draw (lib) to (report);
+\end{tikz*}

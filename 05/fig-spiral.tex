@@ -1,0 +1,39 @@
+\begingroup
+	\footnotesize%
+	\begin{tikz*}[%
+		x=2em,y=2em,
+		xscale=3.25,yscale=1.9,
+		every node/.style={rectangle,align=center,minimum height=2.5em},
+		objective/.style={draw,font=\small\bfseries}
+	]
+		\draw[->] (-3.5,0) to (4.25,0);
+		\draw[->] (0,-4) to (0,4) node[right]{Стоимость системы};
+
+		\draw[thick,draw=blue,domain=0.01:21.991,samples=150,smooth,variable=\t,xscale=0.19,yscale=0.175] plot({\t*sin(\t r)}, {\t*cos(\t r)});
+		
+		\node at (0.1, -0.2) [pin=84:Концепция \\ требований] {};
+		\node at (-0.4, -0.2) {План ЖЦ};
+		\node at (-0.4, 0.3) {План \\ требований};
+		\node at (0.8, 0.2) {Прототип 1};
+		\node at (2.0, 0.2) {Прототип 2};
+		\node at (3.2, 0.4) {Функциональный \\ прототип};
+		\node at (0.95, -0.3) {Требования};
+		\node at (0.5, -1.0) {Верификация \\ и валидация};
+		\node at (-0.5, -1.0) {План \\ разработки};
+		\node at (2.0, -0.5) {Черновое \\ проектирование};
+		\node at (0.5, -2.2) {Верификация \\ и валидация};
+		\node at (-0.5, -2.2) {План \\ тестирования};
+		\node at (3.3, -0.5) {Проектирование};
+		\node at (3.0, -1.4) {Кодирование};
+		\node at (2.55, -2.1) {Интеграция};
+		\node at (1.7, -2.8) {Тестирование};
+		\node at (0.6, -3.3) {Имплементация};
+		
+		\node at (-0.3, -3.85) {\bfseries Выпуск};
+		
+		\node at (-2.75, 3.25) [objective] {1. Определение \\ целей};
+		\node at (3.5, 3.25) [objective] {2. Минимизация \\ риска};
+		\node at (3.5, -3.25) [objective] {3. Разработка \\ и тестирование};
+		\node at (-2.75, -3.25) [objective] {4. Планирование \\ след. итерации};
+	\end{tikz*}
+\endgroup

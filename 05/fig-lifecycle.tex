@@ -1,0 +1,26 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,align=center,minimum height=3em},
+	every label/.style={font=\small\itshape,minimum height=0pt},
+	imp/.style={font=\small\bfseries\color{red}}
+]
+	\node(design) {Проектирование};
+	\node(constr) [right=of design] {Конструирование};
+	\node(testing) [below=of design] {Тестирование};
+	\node(maint) [below=of constr] {Сопровождение};
+	
+	\node<2->(quest) at ($ (design)!0.5!(maint) $) {\LARGE\bfseries\color{red} ???};
+	
+	\draw[dotted] (design) to (constr);
+	\draw[dotted] (design) to (testing);
+	\draw[dotted] (design) to (maint);
+	\draw[dotted] (constr) to (testing);
+	\draw[dotted] (constr) to (maint);
+	\draw[dotted] (testing) to (maint);
+	
+	\node(devel) [fit=(design.north west) (constr.north east) (maint.south east),draw,inner xsep=1em,label=below:Разработка] {};
+	\node(contract) [left=of devel,label={[imp]below:\only<3->{???}}]{Договор \\ с заказчиком};
+	\node(product) [right=of devel,label={[imp]below:\only<4->{???}}] {Готовый \\ продукт};
+	
+	\draw[->] (contract) to (devel);
+	\draw[->] (devel) to (product);
+\end{tikz*}

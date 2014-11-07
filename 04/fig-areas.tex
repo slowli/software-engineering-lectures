@@ -1,0 +1,61 @@
+\def\areamember#1{\small\color{gray}#1\strut{}}
+\begin{tikz*}[%
+	area/.style={rectangle split,rectangle split parts=2,draw,align=center}
+]
+	\node(areas) at (0, 0) [rectangle,draw,minimum width=35em] {\large Организационные области знаний SWEBOK\strut{}};
+	
+
+	\node(tools) [area,below=1em of areas] {
+		\textbf{Инструменты и методы}
+		\nodepart{two}
+		\areamember{инструменты} \\ 
+		\areamember{методы} \\
+		\areamember{} \\
+		\areamember{}
+	};
+	\node(process) [area,left=1em of tools.north west,anchor=north east] {
+		\textbf{Процесс инженерии}
+		\nodepart{two}
+		\areamember{имплементация} \\ 
+		\areamember{определение} \\ 
+		\areamember{оценка} \\ 
+		\areamember{измерение}
+	};
+	\node(quality) [area,right=1em of tools.north east,anchor=north west] {
+		\textbf{Инженерия качества}
+		\nodepart{two}
+		\areamember{концепция} \\ 
+		\areamember{характеристики} \\ 
+		\areamember{QA} \\ 
+		\areamember{верификация и валидация}
+	};
+
+	\node(_tmp) at (areas.north -| process.east) [coordinate]{};
+	\node(conf) [area,above=1em of _tmp,anchor=south] {
+		\textbf{Управление конфигурацией}
+		\nodepart{two}
+		\areamember{управление процессом} \\ 
+		\areamember{идентификация} \\ 
+		\areamember{контроль} \\ 
+		\areamember{учет статуса} \\ 
+		\areamember{аудит} \\
+		\areamember{выпуски и доставка}
+	};
+	\node(_tmp) at (areas.north -| quality.west) [coordinate]{};
+	\node(eng) [area,above=1em of _tmp,anchor=south] {
+		\textbf{Управление инженерией}
+		\nodepart{two}
+		\areamember{планирование} \\ 
+		\areamember{координация} \\
+		\areamember{мониторинг} \\
+		\areamember{контроль} \\ 
+		\areamember{измерение} \\
+		\areamember{отчетность}
+	};
+	
+	\draw[->] (areas.north -| conf.south) to (conf.south);
+	\draw[->] (areas.north -| eng.south) to (eng.south);
+	\draw[->] (areas.south -| process.north) to (process.north);
+	\draw[->] (areas.south -| tools.north) to (tools.north);
+	\draw[->] (areas.south -| quality.north) to (quality.north);
+\end{tikz*}

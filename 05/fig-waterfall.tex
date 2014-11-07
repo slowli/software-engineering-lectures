@@ -1,0 +1,21 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,align=center,minimum height=2.25em}
+]
+	\node(req) [draw] {Инженерия требований};
+	\node(req-doc) [right=5em of req] {Спецификация требований};
+	\node(design) [below right=2em and -3em of req,draw] {Проектирование};
+	\node(arch) [right=4em of design] {Архитектура};
+	\node(impl) [below right=2em and -3em of design,draw] {Имплементация};
+	\node(sw) [right=4em of impl] {Программный продукт};
+	\node(test) [below right=2em and -3em of impl,draw] {Тестирование};
+	\node(maint) [below right=2em and -3em of test,draw] {Сопровождение};
+	
+	\draw[->] (req) to (design);
+	\draw[->,dashed] (req) to (req-doc);
+	\draw[->] (design) to (impl);
+	\draw[->,dashed] (design) to (arch);
+	\draw[->] (impl) to (test);
+	\draw[->,dashed] (impl) to (sw);
+	\draw[->] (test) to (maint);
+	\draw[->,dotted] (maint) -| (req);
+\end{tikz*}

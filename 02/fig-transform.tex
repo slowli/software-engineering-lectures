@@ -1,0 +1,11 @@
+\begin{tikz*}[
+	every node/.style={rectangle,draw,align=center,minimum height=2.75em},
+	label/.style={draw=none,minimum height=0pt,font=\footnotesize}
+]
+	\node(data) {Данные и \\ структуры};
+	\node(base) [right=6em of data] {Модули, \\ компоненты, \dots};
+	\node(target) [right=6em of base] {ПС, ПО, \\ семейства, \dots};
+	
+	\draw[->] (data) -- node[label,above] {функции и \\[-1ex] композиции} (base);
+	\draw[->] (base) -- node[label,above] {инженерия} (target);
+\end{tikz*}

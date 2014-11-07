@@ -1,0 +1,24 @@
+\begin{tikz*}[%
+	iteration/.style={rectangle,align=center}
+]
+	\node[iteration] (elic) {
+		\termwithexpl{определение}{elicitation}
+	};
+	\node[iteration,right=of elic] (analysis) {
+		\termwithexpl{анализ}{analysis}
+	};
+	\node[iteration,right=of analysis] (spec) {
+		\termwithexpl{спецификация}{specification}
+	};
+	\node[iteration,right=of spec] (valid) {
+		\termwithexpl{проверка}{validation}
+	};
+	\node[iteration,right=of valid] (manage) {
+		\termwithexpl{управление}{management}
+	};
+	
+	\draw[->] (elic) to (analysis);
+	\draw[->] (analysis) to (spec);
+	\draw[->] (spec) to (valid);
+	\draw[->] (valid) to (manage);
+\end{tikz*}

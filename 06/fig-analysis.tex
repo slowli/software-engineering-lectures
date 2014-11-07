@@ -1,0 +1,38 @@
+\begin{tikz*}[%
+	xscale=2.0,
+	every node/.style={rectangle,draw,align=center,minimum height=3em}
+]
+	\node(discovery) at (90:7.5em) {\alert<2>{Сбор требований}};
+	\node(class) at (0:7.5em) {\alert<3>{Классификация} \\ \alert<3>{и организация}};
+	\node(prio) at (-90:7.5em) {\alert<4>{Выделение приоритетов} \\ \alert<4>{и согласование}};
+	\node(spec) at (180:7.5em) {\alert<5>{Спецификация}};
+	
+	\draw[->] (discovery.east) -| (class.north);
+	\draw[->] (class.south) |- (prio.east);
+	\draw[->] (prio.west) -| (spec.south);
+	\draw[->] (spec.north) |- (discovery.west);
+	
+	\node<2> [note={(discovery.south)},below=1em of discovery.south,anchor=north] {
+		Взаимодействие с заинтересованными сторонами \\
+		(заказчиками, конечными пользователями, \\ обслуживающим персоналом, …) 
+		для определения \\ их требований.
+		
+		\\[0.5ex]
+		\textbf{Методы:} интервью, сценарии, прецеденты, \\ варианты применения (use case).
+	};
+	
+	\node<3> [note={(class.west)},left=1em of class.west,anchor=east] {
+		Упорядочивание требований в связанные группы \\
+		с использованием архитектуры системы.
+	};
+
+	\node<4> [note={(prio.north)},above=1em of prio.north,anchor=south] {
+		Согласование требований с заинтересованными \\
+		сторонами и нахождение компромиссов.
+	};
+	
+	\node<5> [note={(spec.east)},right=1em of spec.east,anchor=west] {
+		Описание требований с помощью формальных \\
+		или неформальных методов.
+	};
+\end{tikz*}

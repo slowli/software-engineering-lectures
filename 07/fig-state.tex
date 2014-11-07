@@ -1,0 +1,55 @@
+\begin{tikz*}[%
+	state/.style={rounded rectangle,draw,align=center,minimum width=10em,minimum height=4em,font=\footnotesize},
+	label/.style={font=\footnotesize}
+]
+	\def\statecap#1{%
+		{\small\textbf{#1}\strut{}}%
+	}
+	\node(active) [state] {%
+		\alert<3>{\statecap{Выполнение}} \\[.75ex]
+		\textbf{do/} обработка событий
+	};
+	\node(inactive) [state,below=5em of active] {%
+		\statecap{Приостановка} \\[.75ex]
+		\textbf{entry/} сохр. состояния
+	};
+	\node(restart) [state,right=7.5em of inactive] {%
+		\statecap{Перезапуск} \\[.75ex]
+		\alert<5>{\textbf{do/} onRestart()}
+	};
+	\node(kill) [state,left=7.5em of inactive] {%
+		\alert<3>{\statecap{Уничтожение}} \\ \alert<3>{\statecap{процесса}}
+	};
+	\node(init) [state] at (active.west -| kill.north) {%
+		\statecap{Инициализация} \\[.75ex]
+		\textbf{entry/} восст. \\ состояния
+	};
+	\node(start) [circle,minimum width=1em,fill,above=3em of init] {};
+	\node(end1) [circle,minimum width=1em,fill,below=3em of kill] {};
+	\node(end) [circle,minimum width=1.35em,draw] at (end1.center) {};
+	
+	\draw[->] (start) -- (init);
+	\draw[->] (kill) -- (end);
+	\draw[->] (active) -- node[label,right,align=left]{активация \\ другого приложения} (inactive);
+	\draw[->] (inactive) -- node(return)[label,above,align=center]{\alert<4>{возврат} \\ \alert<4>{к приложению}} (restart);
+	\draw[->] (inactive) -- node[label,above,align=center]{нехватка \\ памяти} (kill);
+	\draw[->] (restart.north) |- (active.east);
+	\draw[->] (init) -- node(trans)[coordinate]{} (active);
+	\draw[->] (active) -- node[label,right]{\quad выход} (kill);
+	
+	\node<2> [note={(start.east)},below right=1em of start] {начальное состояние};
+	\node<2> [note={(end.east)},above right=1em of end] {конечное состояние};
+	\node<3> [note={(kill.south east)},below right=1em of kill.south east] {состояние};
+	\node<3> [note={(kill.south east)},below right=1em of kill.south east] {состояние};
+	\node<3> [note={(active.north east)},above right=1em of active.north east] {состояние};
+	\node<4> [note={(trans)},above=1em of trans] {переход};
+	\node<4> [note={(return.south)},below=1em of return.south] {условный переход};
+	\node<5> [note={(restart.north)},above=1em of restart.north,anchor=south east,text width=17.5em] {%
+		условие выполнения действий:
+		\begin{itemize}
+			\item \textbf{entry} — при входе в~состояние;
+			\item \textbf{exit} — при выходе из~состояния;
+			\item \textbf{do} — во время нахождения в~состоянии.
+		\end{itemize}
+	};
+\end{tikz*}

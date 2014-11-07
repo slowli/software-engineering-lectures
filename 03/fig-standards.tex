@@ -1,0 +1,32 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,align=center,minimum height=2em}
+]
+	\node[inner sep=0.5em] (st) {\textbf{Стандарты конструирования ПО}};
+	\node[inner sep=0.5em,above=of st] (ext) {Внешние стандарты};
+	\node[above=of ext] (pl) {\termwithexpl{Языки программирования}{Java, C++, C\#, Python, …}};
+	\node[left=of pl] (dl) {\termwithexpl{Языки описания данных}{XML, SQL, YAML, …}};
+	\node[right=of pl] (il) {\termwithexpl{Интерфейсные языки}{IDL, UML, …}};
+	\node[below=of dl] (api) {\termwithexpl{Интерфейсы ОС}{API}};
+	\node[right=of ext] (inter) {\termwithexpl{Стандарты взаимодействия}{COM, CORBA, …}};
+	
+	\node[inner sep=0.5em,below=of st] (int) {Внутренние стандарты};
+	\node[below left=of int] (team) {Координация групповой \\ деятельности};
+	\node[below=of int] (gen) {Общие стандарты};
+	\node[below right=of gen] (verify) {Структуризация \\ для проверок};
+	\node[left=of verify] (change) {Ожидание \\ изменений};
+	\node[left=of change] (compl) {Снижение \\ сложности};
+
+	\draw[->] (st) to (ext);
+	\draw[->] (ext) to (pl);
+	\draw[->] (ext) to (dl);
+	\draw[->] (ext) to (il);
+	\draw[->] (ext) to (api);
+	\draw[->] (ext) to (inter);
+	
+	\draw[->] (st) to (int);
+	\draw[->] (int) to (team);
+	\draw[->] (int) to (gen);
+	\draw[->] (gen) to (compl);
+	\draw[->] (gen) to (change);
+	\draw[->] (gen) to (verify);
+\end{tikz*}

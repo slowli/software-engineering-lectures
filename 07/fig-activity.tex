@@ -1,0 +1,71 @@
+\begin{tikz*}[%
+	every node/.style={draw,align=center,font=\small},
+	activity/.style={rounded rectangle,minimum height=3em},
+	decision/.style={diamond,minimum width=1em,minimum height=1em},
+	label/.style={draw=none,font=\footnotesize},
+	system/.style={rectangle,minimum height=3em}
+]
+	\node(start) [circle,fill,minimum width=1em,minimum height=1em] {};
+	\node(data) [activity,below=of start] {\alert<4>{Извлечь данные}};
+	\node(sink1) [rectangle,fill,minimum width=5em,below=of data] {};
+	\node(check-exist) [activity,below=of sink1] {\alert<4>{Проверить} \\ \alert<4>{наличие}};
+	\node(check-e) [activity,below left=2em and 5em of sink1] {Проверить \\ эл. версию};
+	\node(sys-e) [system,above=of check-e] {\alert<9>{Электронный} \\ \alert<9>{архив}};
+	\node(check-access) [activity,below right=2em and 4em of sink1]{Проверить \\ доступ};
+	\node(sink2) [rectangle,fill,minimum width=5em,below=of check-exist] {};
+	\node(decision) [decision,below=of sink2] {};
+	\node(unavailable) [activity,below=of decision] {Уведомить};
+	\node(e-version) at (decision.west -| check-e.south) [activity] {Загрузить \\ эл. версию};
+	\node(below-un) [coordinate,below=1.5em of unavailable] {};
+	
+	\node(sink3) [rectangle,fill,minimum height=5em,right=10em of decision] {};
+	\node(db) [activity,right=of sink3]{Обновить БД};
+	\node(appointment) [activity,above=of db]{Назначить \\ встречу};
+	\node(sys-app) [system,above=of appointment]{\alert<9>{Планирование} \\ \alert<9>{выдачи}};
+	\node(doc) [activity,below=of db]{\alert<4>{Запросить} \\ \alert<4>{документ}};
+	\node(sink4) [rectangle,fill,minimum height=5em,right=of db] {};
+	\node(end1) [circle,fill,minimum width=1em,minimum height=1em,right=of sink4] {};
+	\node(end) [circle,draw,minimum width=1.35em,minimum height=1.35em] at (end1.center) {};
+	
+	\draw[->] (start) to (data);
+	\draw[->] (data) to (sink1);
+	\draw[->] (sink1) to (check-exist);
+	\draw[->] (sink1) to (check-e);
+	\draw[->] (sink1) to (check-access);
+	\draw[<-] (check-e) to (sys-e);
+	\draw[<-] (sink2) to (check-exist);
+	\draw[<-] (sink2) to (check-e);
+	\draw[<-] (sink2) to (check-access);
+	\draw[->] (sink2) to (decision);
+	\draw[->] (decision) -- node(lbl-no)[label,right] {\alert<6>{[нет]}} (unavailable);
+	\draw[->] (decision) -- node(lbl-e)[label,above] {\alert<6>{[эл. версия]}} (e-version);
+	\draw[->] (decision) -- node(lbl-paper)[label,above] {\alert<6>{[бум. версия]}} (sink3);
+	\draw[->] (sink3) to (db);
+	\draw[->] (sink3) to (appointment);
+	\draw[->] (sink3) to (doc);
+	\draw[<-] (sink4) to (db);
+	\draw[<-] (sink4) to (appointment);
+	\draw[<-] (sink4) to (doc);
+	\draw[->] (sys-app) to (appointment);
+	\draw[->] (sink4) to (end);
+	\draw (unavailable) to (below-un);
+	\draw (e-version.south) |- (below-un);
+	\draw[->] (below-un) -| (end);
+	\draw[->] (sys-e.west) -- ++(-1em,0) |- (e-version.west);
+	
+	\node<2> [note={(start.south east)},below right=1em of start] {начальное состояние};
+	\node<3> [note={(end.north west)},above left=1em of end] {конечное состояние};
+	\node<4> [note={(data.east)},right=1em of data,callout pointer width=0.5em] {действие};
+	\node<4> [note={(check-exist.south east)},below right=1em of check-exist] {действие};
+	\node<4> [note={(doc.west)},left=1em of doc,callout pointer width=0.5em] {действие};
+	\node<5> [note={(decision.south east)},below right=1em of decision] {решение};
+	\node<6> [note={(lbl-no.south)},below=1em of lbl-no] {условие};
+	\node<6> [note={(lbl-paper.south)},below=1em of lbl-paper] {условие};
+	\node<6> [note={(lbl-e.south)},below=1em of lbl-e] {условие};
+	\node<7> [note={(sink1.east)},right=1em of sink1] {начало выполнения \\ параллельных действий};
+	\node<7> [note={(sink3.south west)},below left=1em of sink3] {начало выполнения \\ параллельных действий};
+	\node<8> [note={(sink2.east)},right=1em of sink2] {конец выполнения \\ параллельных действий};
+	\node<8> [note={(sink4.south west)},below left=1em of sink4] {конец выполнения \\ параллельных действий};
+	\node<9> [note={(sys-e.east)},right=1em of sys-e,callout pointer width=0.5em] {внешняя система};
+	\node<9> [note={(sys-app.south)},below=1em of sys-app] {внешняя система};
+\end{tikz*}

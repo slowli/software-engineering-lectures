@@ -1,0 +1,16 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum width=7.5em}
+]
+	\node(se) [rectangle,draw] {Программная \\ инженерия};
+	\node(sci) at (90:7.5em) [rectangle,draw,anchor=south] {Научная \\ дисциплина};
+	\node(eng) at (18:7.5em) [rectangle,draw,anchor=south west] {Инженерная \\ дисциплина};
+	\node(prod) at (162:7.5em) [rectangle,draw,anchor=south east] {Производственная \\ дисциплина};
+	\node(ec) at (-54:7.5em) [rectangle,draw,anchor=north west] {Экономическая \\ дисциплина};
+	\node(man) at (-126:7.5em) [rectangle,draw,anchor=north east] {Дисциплина \\ управления};
+	
+	\draw[->] (se) to (sci);
+	\draw[->] (se) to (eng);
+	\draw[->] (se) to (prod);
+	\draw[->] (se) to (ec);
+	\draw[->] (se) to (man);
+\end{tikz*}

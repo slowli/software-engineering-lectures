@@ -1,0 +1,37 @@
+\begin{tikz*}[%
+	every node/.style={draw,align=center},
+	actor-label/.style={draw=none,font=\small\bfseries},
+	label/.style={draw=none,font=\small},
+	actor/.style={human,minimum width=2.5em,minimum height=4em,outer sep=6pt},
+	action/.style={ellipse,minimum height=3.5em}
+]
+	\node(reader) [actor] {};
+	\node(lbl-reader) [actor-label,below=0pt of reader] {Читатель};
+	\node(reg-reader) [action,left=of reader] {Регистрация \\ читателя};
+	\node(query-book) [action,below=of reg-reader] {Запрос книги};
+	\node(activity) [action,above=of reg-reader] {Просмотр \\ активности};
+	\node(take-book) [action,above right=0em and 5em of reader] {Выдача книги};
+	\node(read-book) [action,above=4em of take-book] {Выдача для \\ ознакомления};
+	\node(give-book) [action,below right=0em and 5em of reader] {Сдача книги};
+	\node(lib) [actor,below right=0em and 5em of take-book] {};
+	\node(lbl-lib) [actor-label,below=0pt of lib] {Библиотекарь};
+	\node(reg-book) [action,below=3em of lbl-lib] {Регистрация \\ книги};
+	\node(upd-book) [action,left=7em of reg-book] {Обновление \\ данных};
+	
+	\draw (reader) to (reg-reader);
+	\draw (reader) to (query-book);
+	\draw (reader) to (activity);
+	\draw (reader) to (take-book);
+	\draw (reader) to (give-book);
+	\draw (lib) to (take-book);
+	\draw (lib) to (give-book);
+	\draw[->,dashed] (read-book) -- 
+		node(relation1)[label,right] {«расширяет»} 
+		node(comment)[label,left] {\alert<3>{\{при невозможности} \\ \alert<3>{выдачи на абонемент\}}} 
+		(take-book);
+	\draw (lbl-lib) to (reg-book);
+	\draw[->,dashed] (upd-book) -- node(relation2)[label,below] {\alert<2>{«расширяет»}} (reg-book);
+	
+	\node<2> [note={(relation2.north)},above=1em of relation2] {отношение между взаимодействиями \\ («расширяет» или «использует»)};
+	\node<3> [note={(comment.south)},below=1em of comment]{комментарий};
+\end{tikz*}

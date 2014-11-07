@@ -1,0 +1,21 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,align=center,minimum height=3em}
+]
+	\node(all) {\bfseries Модели ЖЦ};
+	\node(waterfall) [above left=of all] {Каскадная};
+	\node(spiral) [above right=of all] {Спиральная};
+	\node(incr) [below left=of all] {Инкрементная};
+	\node(evo) [below right=of all] {Эволюционная};
+	
+	\node(agile) [below=of $(incr.south)!0.5!(evo.south)$] {Гибкая \\ методология}; 
+	\node(rad) [below right=of spiral] {RAD};
+	
+	\draw (all) to (waterfall);
+	\draw (all) to (incr);
+	\draw (all) to (spiral);
+	\draw (all) to (evo);
+	\draw (incr) to (agile);
+	\draw (evo) to (rad);
+	\draw[dashed] (spiral) to (rad);
+	\draw[dashed] (evo) to (agile);
+\end{tikz*}

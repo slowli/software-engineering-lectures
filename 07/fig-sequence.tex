@@ -1,0 +1,72 @@
+\begin{tikz*}[%
+	every node/.style={draw,align=center},
+	actor-label/.style={draw=none,font=\small\bfseries},
+	lifeline/.style={draw=blue,fill=white},
+	actor/.style={human,minimum width=1.0em,minimum height=2.25em},
+	action/.style={draw=none,font=\footnotesize},
+	condition/.style={draw=none,font=\small,fill=white}
+]
+	\node(lib) [actor] {};
+	\node(lbl-lib) [actor-label,above=0pt of lib] {\alert<2>{Библиотекарь}};
+	\draw[dashed] (lib.south) ++(0, -1em) -- ++(0, -18em);
+	\node(line-lib) [lifeline,below=1em of lib.south,minimum height=16em] {};
+	
+	\node(bookinfo) [right=10em of lib.south,anchor=south] {B: BookInfo};
+	\draw[dashed] (bookinfo.south) ++(0, -1em) -- ++(0, -18em);
+	\node(line-bookinfo) [lifeline,below=1.5em of bookinfo.south,anchor=north,minimum height=14.5em] {};
+	
+	\node(db) [right=10em of bookinfo.south,anchor=south] {\alert<2>{D: BookDB}};
+	\draw[dashed] (db.south) ++(0, -1em) -- ++(0, -18em);
+	\node(line-db) [lifeline,below=2.5em of db.south,anchor=north,minimum height=13em] {};
+	
+	\node(auth) [right=10em of db.south,anchor=south] {AS: Authorization};
+	\draw[dashed] (auth.south) ++(0, -1em) -- ++(0, -18em);
+	\node(line-auth) [lifeline,below=3.5em of auth.south,anchor=north,minimum height=3.5em] {};
+	
+	\node(alt-box-ne) [coordinate,below=2em of line-auth.south] {};
+	\node(alt-box-sw) [coordinate,below=0pt of line-lib.south] {};
+	\node(alt-box) [fit=(alt-box-ne) (alt-box-sw),inner xsep=2em,inner ysep=1em] {};
+	\node(lbl-alt-box) at (alt-box.north west) [anchor=north west,fill=white] {\alert<6>{Alt}};
+	\node(alt-success) [condition,below right=2pt and 2pt of lbl-alt-box.south west,anchor=north west] {\alert<7>{[успешная авторизация]}};
+	\draw[dashed](alt-success.south -| alt-box.west) ++ (0, -1em) --
+		($ (alt-success.south -| alt-box.east) + (0, -1em) $);
+	\node(alt-fail) [condition,below right=1.1em and 2pt of alt-success.south -| alt-box.west,anchor=north west] {\alert<7>{[ошибка авторизации]}};
+	
+	\draw[<-] (line-bookinfo.north west) ++(0, -0.5em) -- node(act-view-info)[action,above]{\alert<4>{ViewInfo(BID)}}
+		($ (line-bookinfo.north west -| line-lib.east) + (0, -0.5em) $);
+	\draw[<-] (line-db.north west) ++(0, -0.5em) -- node(act-view)[action,above]{\alert<4>{View(\textbf{out} Info, BID, UID)}}
+		($ (line-db.north west -| line-bookinfo.east) + (0, -0.5em) $);
+	\draw[<-] (line-auth.north west) ++(0, -0.5em) -- node(act-auth)[action,above]{Auth(UID, \textit{просмотр})}
+		($ (line-auth.north west -| line-db.east) + (0, -0.5em) $);
+	\draw[->,dashed] (line-auth.south west) ++(0, 1em) -- node(resp-auth)[action,above]{\alert<5>{авторизация}}
+		($ (line-auth.south west -| line-db.east) + (0, 1em) $);
+	\draw[->,dashed] (alt-box.north -| line-db.west) ++(0, -3em) --node(resp-info)[action,above]{\alert<5>{информация о книге}}
+		($ (alt-box.north -| line-bookinfo.east) + (0, -3em) $);
+	\draw[->,dashed] (alt-fail.north -| line-db.west) ++(0, -2em) --node(resp-error)[action,above]{Error(\textit{нет доступа})}
+		($ (alt-fail.north -| line-bookinfo.east) + (0, -2em) $);
+		
+	\node<2> [note={(lib.south)},below=1em of lib.south,anchor=north west] {задействованный актер};
+	\node<2> [note={(db.south)},below=1em of db.south] {задействованный объект};
+	
+	\node<3> [lifeline,fill=blue!50,below=1em of lib.south,minimum height=16em] {};
+	\node<3> [lifeline,fill=blue!50,below=2.5em of db.south,anchor=north,minimum height=13em] {};
+	\node<3> [note={(line-db.south east)},right=1em of line-db.south east,callout pointer width=0.5em] 
+		{время существования объекта \\ \engterm{lifeline}};
+	\node<3> [note={(line-lib.east)},above right=2em and 1em of line-lib.east] 
+		{время существования объекта \\ \engterm{lifeline}};
+		
+	\node<4> [note={(act-view-info.south)},below=1em of act-view-info.south] {сообщение};
+	\node<4> [note={(act-view.south)},below=1em of act-view.south] {сообщение};
+	
+	\node<5> [note={(resp-auth.south)},below=1em of resp-auth.south] {ответное сообщение};
+	\node<5> [note={(resp-info.north)},above=1em of resp-info.north] {ответное сообщение};
+	
+	\node(alt-border) [coordinate] at ($ (alt-success.south -| alt-box.east) + (-8em, -1em) $) {};
+	\node<6> [note={(lbl-alt-box.north)},above=1em of lbl-alt-box.north,anchor=south west] 
+		{альтернативное развитие \\ событий};
+	\node<6> [note={(alt-border)},below=1em of alt-border] 
+		{граница между вариантами};
+	
+	\node<7> [note={(alt-success.north)},above=1em of alt-success.north,anchor=south west] {условие выполнения};
+	\node<7> [note={(alt-fail.south)},below=1em of alt-fail.south,anchor=north west] {условие выполнения};
+\end{tikz*}
