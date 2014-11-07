@@ -1,0 +1,77 @@
+%%
+%% Human-like shape for UML diagrams. Expects 'draw' style and no node text.
+%% (c) Alexei Ostrovski, 2014
+%%
+\begingroup
+\makeatletter
+\pgfdeclareshape{human}{
+	\inheritsavedanchors[from=rectangle]
+	\inheritanchorborder[from=rectangle]
+	% Anchors
+	\inheritanchor[from=rectangle]{center}
+	\inheritanchor[from=rectangle]{north}
+	\inheritanchor[from=rectangle]{east}
+	\inheritanchor[from=rectangle]{south}
+	\inheritanchor[from=rectangle]{west}
+	\inheritanchor[from=rectangle]{north east}
+	\inheritanchor[from=rectangle]{north west}
+	\inheritanchor[from=rectangle]{south east}
+	\inheritanchor[from=rectangle]{south west}
+	\backgroundpath{%
+		\pgf@process{\northeast}% 
+		\pgf@xb=.5\pgf@x%
+		\pgf@yb=.5\pgf@y%
+		\pgf@process{\southwest}%
+		\pgf@xa=.5\pgf@x%
+		\pgf@ya=.5\pgf@y%
+		\advance\pgf@xa by \pgf@xb%
+		\advance\pgf@ya by \pgf@yb%
+		%(\pgf@xa,\pgf@ya) = center
+		\pgf@process{\northeast}%
+		\pgf@xb=\pgf@x%
+		\pgf@yb=\pgf@y%
+		\pgf@process{\southwest}%
+		\advance\pgf@xb by -\pgf@x%
+		\advance\pgf@yb by -\pgf@y%
+		\pgf@x=\pgfkeysvalueof{/pgf/outer xsep}
+		\pgf@y=\pgfkeysvalueof{/pgf/outer ysep}
+		\advance\pgf@xb by -2\pgf@x
+		\advance\pgf@yb by -2\pgf@y
+		%(\pgf@xb,\pgf@yb) = (width,height)
+		% Torso
+		\pgf@xc=\pgf@xa \pgf@yc=\pgf@ya
+		\advance\pgf@yc by 0.2\pgf@xb
+		\pgfpathmoveto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+		\advance\pgf@yc by -0.4\pgf@xb
+		\pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+		\pgfpathclose
+		% Legs
+		\pgf@xc=\pgf@xa \pgf@yc=\pgf@ya
+		\advance\pgf@yc by -0.2\pgf@xb
+		\pgfpathmoveto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+		\advance\pgf@xc by -0.3\pgf@xb
+		\advance\pgf@yc by -0.3\pgf@yb
+		\pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+		\pgfpathclose
+		\pgf@xc=\pgf@xa \pgf@yc=\pgf@ya
+		\advance\pgf@yc by -0.2\pgf@xb
+		\pgfpathmoveto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+		\advance\pgf@xc by 0.3\pgf@xb
+		\advance\pgf@yc by -0.3\pgf@yb
+		\pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+		\pgfpathclose
+		% Arms
+		\pgf@xc=\pgf@xa \pgf@yc=\pgf@ya
+		\advance\pgf@xc by -.4\pgf@xb
+		\pgfpathmoveto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+		\advance\pgf@xc by 0.8\pgf@xb
+		\pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+		\pgfpathclose
+		% Head
+		\pgf@xc=\pgf@xa \pgf@yc=\pgf@ya
+		\advance\pgf@yc by 0.3\pgf@yb
+		\pgfpathcircle{\pgfpoint{\pgf@xc}{\pgf@yc}}{0.15\pgf@yb}
+	}
+}
+\endgroup
+

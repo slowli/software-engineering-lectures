@@ -1,0 +1,5 @@
+%% Lectures - font configuration
+\mainfont{Cambria}
+\sansfont[Scale=0.92]{Calibri}
+\monofont{Courier New}
+
