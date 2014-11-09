@@ -1,5 +1,18 @@
 %% Lectures - font configuration
-\mainfont{Cambria}
-\sansfont[Scale=0.92]{Calibri}
-\monofont{Courier New}
+\mainfont{Droid Serif}
+\sansfont[Scale=1.0]{Ubuntu}
+\monofont[Scale=1.0]{Ubuntu Mono}
+
+% Some other font configurations
+%\mainfont{Cambria}
+%\sansfont[Scale=1.05]{Calibri}
+%\monofont{Courier New}
+
+%\mainfont{Liberation Serif}
+%\sansfont[Scale=1.0]{Liberation Sans}
+%\monofont[Scale=1.0]{Liberation Mono}
+
+%\mainfont{FreeSerif}
+%\sansfont[Scale=1.0]{FreeSans}
+%\monofont[Scale=1.0]{FreeMono}
 

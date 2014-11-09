@@ -9,32 +9,30 @@
 \SetupKeyvalOptions{family=aiv,prefix=aiv@}
 
 \DeclareStringOption[russian]{lang}
-\DeclareStringOption[a4]{scale}
+\DeclareStringOption[17pt]{scale}
+\DeclareStringOption[a4]{page}
 
 \ProcessKeyvalOptions*
 
 \newif\ifprintout \printoutfalse
 \def\@tempa{printout}
-\ifx\aiv@scale\@tempa
+\ifx\aiv@page\@tempa
 	\printouttrue
-	\PassOptionsToClass{printout,20pt}{beamer}
+	\PassOptionsToClass{printout}{beamer}
 \else
 	\def\@tempa{a4}
-	\ifx\aiv@scale\@tempa
-		\PassOptionsToClass{20pt}{beamer}
-	\else
-		\PassOptionsToClass{\aiv@scale}{beamer}
-	\fi
 \fi
+\PassOptionsToClass{\aiv@scale}{beamer}
 \PassOptionsToClass{\aiv@lang}{beamer}
 \LoadClass[unicode,compress]{beamer}
 
 % Geometry package is loaded by beamer
 \def\@tempa{a4}
-\ifx\aiv@scale\@tempa
+\ifx\aiv@page\@tempa
 	\geometry{a4paper,landscape}
 \fi
 \ifprintout
+	% TODO don't use geometry to rescale
 	\geometry{a4paper,landscape}
 	\RequirePackage{pgfpages}
 	\pgfpagesuselayout{resize to}[a4paper,border shrink=1cm,landscape]
@@ -162,7 +160,8 @@
 	lang=\aiv@lang
 ]{xtensions}
 
-\renewcommand{\baselinestretch}{1.25}
+\renewcommand{\baselinestretch}{1.35}
 
 \def\th@plain{\normalfont}
 \newtheorem{Hypothesis}[theorem]{\hypothesisname}
+

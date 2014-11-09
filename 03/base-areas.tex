@@ -91,13 +91,13 @@
 		\begin{center}
 			{\small\input{fig-req-classic.tex}}
 			
-			\vspace{.5ex}
+			\vspace{1ex}
 			\figureexpl{В классической модели жизненного цикла \engterm{waterfall model} инженерия требований — \\ начальный процесс разработки~ПО.}
 			
-			\vspace{2.5ex}
+			\vspace{1.5ex}
 			{\small\input{fig-req-cont.tex}}
 			
-			\vspace{-1.25ex}
+			%\vspace{1ex}
 			\figureexpl{В других моделях (RUP, extreme programming, Scrum) требования уточняются в процессе разработки.}
 		\end{center}
 	}
@@ -105,9 +105,9 @@
 	\frame{
 		\frametitle{Составляющие инженерии требований}
 		
-		\vspace{2ex}
+		\vspace*{5ex}
 		\begin{overlayarea}{\textwidth}{0.6\textheight}
-			\input{fig-req-process.tex}
+			{\small\input{fig-req-process.tex}}
 		\end{overlayarea}
 	}
 	
@@ -202,7 +202,7 @@
 
 				\vspace{1ex}
 				\begin{columns}
-					\begin{column}{0.5\textwidth}\centering
+					\begin{column}{0.47\textwidth}\centering
 						\includegraphics[width=\textwidth]{decorator.png}
 						
 						\vspace{-0.5ex}
@@ -224,7 +224,7 @@
 				
 				\vspace{1ex}
 				\begin{columns}
-					\begin{column}{0.37\textwidth}\centering
+					\begin{column}{0.35\textwidth}\centering
 						\includegraphics[width=0.8\textwidth]{state-diagram.png}
 					
 						\vspace{-0.5ex}
@@ -251,8 +251,8 @@
 		\frametitle{Конструирование ПО}
 
 		\begin{Definition}
-			\textbf{Конструирование ПО} \engterm{software construction} — создание ПО из составных элементов (блоков, операторов, функций) 
-			и его проверка методами верификации и тестирования.
+			\textbf{Конструирование ПО} \engterm{software construction} — создание~ПО из~составных элементов (блоков, операторов, функций) 
+			и его проверка методами верификации и~тестирования.
 		\end{Definition}
 
 		\vspace{1ex}
@@ -293,7 +293,7 @@
 	\frame{
 		\frametitle{Стандарты при конструировании}
 		
-		\input{fig-standards.tex}
+		{\small\input{fig-standards.tex}}
 	}
 
 	\subsection{Управление конструированием}
@@ -468,7 +468,7 @@
 		\frametitle{Сопровождение ПО}
 
 		\begin{Definition}
-			\textbf{Сопровождение ПО} \engterm{software maintenance} — совокупность действий по обеспечению работы ПО, 
+			\textbf{Сопровождение ПО} \engterm{software maintenance} — совокупность действий по~обеспечению работы ПО, 
 			внесению изменений при~выявлении ошибок, адаптации к~новой среде исполнения, улучшения продуктивности или~других характеристик ПО.
 		\end{Definition}
 
@@ -518,9 +518,10 @@
 			\textbf{Понимание программ} \engterm{program comprehension} — чтение и осмысление кода~ПО с~целью внесения в него изменений.
 			\item
 			\textbf{Реинженерия} \engterm{reengineering} — усовершенствование ПО путем реорганизации или реструктуризации, 
-			а также настройка параметров и программных элементов для новой среды исполнения.
+			а~также настройка параметров и~программных элементов для новой среды исполнения.
 			\item
-			\textbf{Реверсная инженерия} \engterm{reverse engineering} — анализ ПО для выделения его~компонент и взаимоотношений между ними. \\
+			\textbf{Реверсная инженерия} \engterm{reverse engineering} — анализ ПО для выделения его~компонент и взаимоотношений между ними.
+
 			Используется для создания абстрактного представления ПО, чаще всего для~перепрограммирования ПО для~новой среды исполнения.
 			\item
 			\textbf{Рефакторинг} \engterm{refactoring} — реорганизация кода программы для улучшения ее~структуры, не изменяющая функциональность ПО.
