@@ -9,61 +9,59 @@ CFLAGS=--halt-on-error --interaction=batchmode
 OUTDIR=out
 TEMPDIR=tmp
 
-RERUN_STR="Rerun to get cross-references right"
-
+# Source TeX files
 TEX=01/intro.tex 02/disciplines.tex 03/base-areas.tex \
 	04/aux-areas.tex 05/lifecycle.tex 06/requirements.tex \
-	07/modeling.tex 08/architecture.tex
-AUX_FILES=$(addprefix $(OUTDIR)/,*.aux *.log *.nav *.out *.snm *.toc)
+	07/modeling.tex
+#08/architecture.tex
 
 DIRS=$(subst /,,$(dir $(TEX)))
 DIRS_a4=$(addsuffix -a4,$(DIRS))
 DIRS_beamer=$(addsuffix -beamer,$(DIRS))
 
-PDFS=$(addprefix $(OUTDIR)/,$(subst /,-,$(TEX:.tex=.pdf)))
-PDFS_beamer=$(PDFS:.pdf=-beamer.pdf)
-
+# Function for defining rules for separate presentations.
+#
+# Arguments:
+# 	$(1) - directory of the TeX file
+# 	$(2) - base name of the TeX file (excluding the .tex suffix)
 define DIR_template
-TEX_FILE=$(filter $(1)/%,$(TEX))
-TEXNAME=$$(notdir $$(TEX_FILE))
-TEX_FILE_beamer=$(TEMPDIR)/$$(patsubst %.tex,%-beamer.tex,$$(notdir $$(TEX_FILE)))
-
 $(1): $(1)-a4 $(1)-beamer
-$(1)-a4: $(wildcard $(1)/fig-*.tex) $(filter $(OUTDIR)/$(1)%,$(PDFS))
-$(1)-beamer: $(wildcard $(1)/fig-*.tex) $(filter $(OUTDIR)/$(1)%,$(PDFS_beamer))
+$(1)-a4: $(OUTDIR)/$(1)-$(2).pdf
+$(1)-beamer: $(OUTDIR)/$(1)-$(2)-beamer.pdf
 
-$(filter $(OUTDIR)/$(1)%,$(PDFS)): $$(TEX_FILE) $(OUTDIR) $(TEMPDIR)
-	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) $$<
-	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) $$<
-	mv $(TEMPDIR)/$$(patsubst %.tex,%.pdf,$$(notdir $$<)) $$@
+$(OUTDIR)/$(1)-$(2).pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*.tex)
+	mkdir -p $(TEMPDIR)
+	mkdir -p $(OUTDIR)
+	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(1)-$(2) $$<
+	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(1)-$(2) $$<
+	mv $(TEMPDIR)/$$(notdir $$@) $$@
 
-$$(TEX_FILE_beamer): $$(TEX_FILE)
-	cp $$(TEX_FILE) $(TEMPDIR)/src.tex
-	sed "s/documentclass{a4beamer}/documentclass[scale=9pt]{a4beamer}/" $(TEMPDIR)/src.tex > $$@
-	rm -f $(TEMPDIR)/src.tex
-
-$(filter $(OUTDIR)/$(1)%,$(PDFS_beamer)): $$(TEX_FILE_beamer) $(OUTDIR) $(TEMPDIR)
-	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) $$<
-	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) $$<
-	mv $(TEMPDIR)/$$(patsubst %.tex,%.pdf,$$(notdir $$<)) $$@
+$(OUTDIR)/$(1)-$(2)-beamer.pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*.tex)
+	mkdir -p $(TEMPDIR)
+	mkdir -p $(OUTDIR)
+	sed -r "s/documentclass(\[.*\])?\{a4beamer\}/documentclass[page=beamer,scale=8pt]{a4beamer}/" $$< > $(TEMPDIR)/tmp.tex
+	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(1)-$(2)-beamer $(TEMPDIR)/tmp.tex
+	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(1)-$(2)-beamer $(TEMPDIR)/tmp.tex
+	rm $(TEMPDIR)/tmp.tex
+	mv $(TEMPDIR)/$$(notdir $$@) $$@
 endef
-
-
-$(foreach _dir,$(DIRS),$(eval $(call DIR_template,$(_dir))))
 
 all: $(DIRS)
 all-a4: $(DIRS_a4)
 all-beamer: $(DIRS_beamer)
+install: all
 
-$(OUTDIR):
-	mkdir $(OUTDIR)
-$(TEMPDIR):
-	mkdir $(TEMPDIR)
+$(foreach _dir,$(DIRS), \
+	$(eval _basename = $(basename $(notdir $(filter $(_dir)/%,$(TEX))))) \
+	$(eval $(call DIR_template,$(_dir),$(_basename))) \
+)
+
+show-errors:
+	grep -e "Overfull" -C 3 tmp/*.log
 
 clean:
 	rm -rf $(TEMPDIR)
 
-clean-all: clean
+uninstall: clean
 	rm -rf $(OUTDIR)
-
 
