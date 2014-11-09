@@ -51,9 +51,12 @@
 	\frame{
 		\frametitle{Составляющие управления конфигурацией}
 		
-		\input{fig-config.tex}
-		\\[0.5ex]
-		\figureexpl{\textbf{Сокращения:} SC = software configuration; SCM = software configuration management.}
+		\begin{center}
+			{\small\input{fig-config.tex}}
+		
+			\vspace{1ex}
+			\figureexpl{\textbf{Сокращения:} SC = software configuration; SCM = software configuration management.}
+		\end{center}
 	}
 	
 	\subsection{Управление процессом конфигурации}
@@ -284,7 +287,7 @@
 		
 		\vspace{2ex}
 		{\linespread{1.0}
-		\begin{tikz*}[every node/.style={rectangle,align=center,minimum height=3em}]
+		\begin{tikz*}[every node/.style={rectangle,align=center,minimum height=3em},node distance=2em and 2.5em]
 			\node(def) {определение \\ метрик};
 			\node(org) [right=of def] {организация}; 
 			\node(plan) [right=of org] {планирование}; 
@@ -302,7 +305,7 @@
 			\item усовершенствование процессов управления проектом;
 			\item оценка и регулировка временных затрат и стоимости ПО;
 			\item определение категорий рисков и отслеживание факторов для расчета вероятностей их~возникновения;
-			\item проверка заданных в требованиях показателей качества продуктов и проекта в целом.
+			\item проверка заданных в требованиях показателей качества продуктов и~проекта в~целом.
 		\end{itemize}
 	}
 

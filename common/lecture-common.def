@@ -30,7 +30,7 @@
 
 %% Explanation for a figure
 \def\figureexpl#1{%
-	{\linespread{1.0}\footnotesize\color{gray}{#1}\par}
+	{\footnotesize\color{gray}{#1}\par}
 }
 %% English term
 \def\engterm#1{(англ. \textit{#1})}
@@ -41,5 +41,5 @@
 %% Internal link
 \def\inlink#1#2{\hyperlink{#1}{\color[rgb]{0.7,0.7,1.0}\dashbar{#2}}}
 %% Explanation for a list item
-\def\itemexpl#1{\begingroup\linespread{1.0}\small\vspace{0.75ex}#1\par\endgroup}
+\def\itemexpl#1{\begingroup\small\vspace{0.75ex}#1\par\endgroup}
 
