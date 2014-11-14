@@ -1,0 +1,30 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3em},
+	every label/.style={draw=none,minimum height=0pt,font=\bfseries}
+]
+	\node(server1){
+		Сервер \\ статики
+	};
+	\node(server2) [right=of server1] {
+		Веб-сервер
+	};
+	\node(server3) [right=of server2] {
+		Сервер БД
+	};
+	
+	\node(middleware) [below=of $ (server1.south west)!0.5!(server3.south east) $,minimum width=30em,minimum height=4.5em] {};
+	\node(intranet) [dashed,below=of $ (server1.south west)!0.5!(server3.south east) $,minimum width=20em,minimum height=2em] 
+		{Сеть хостинга};
+	\node [above=0pt of middleware.south,draw=none,minimum height=0pt] {Интернет};
+	
+	\node(client2) [below=of middleware] {\textbf{Клиент 2:} \\ web-crawler};
+	\node(client1) [left=of client2] {\textbf{Клиент 1:} \\ пользователь};
+	\node(client3) [right=of client2] {\textbf{Клиент 3:} \\ веб-админ};
+	
+	\draw[<->] (server1.south) to (middleware.north -| server1.south);
+	\draw[<->] (server2.south) to (middleware.north -| server2.south);
+	\draw[<->] (server3.south) to (middleware.north -| server3.south);
+	\draw[<->] (client1.north) to (middleware.south -| client1.north);
+	\draw[<->] (client2.north) to (middleware.south -| client2.north);
+	\draw[<->] (client3.north) to (middleware.south -| client3.north);
+\end{tikz*}

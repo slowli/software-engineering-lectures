@@ -1,0 +1,22 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3em},
+	every label/.style={draw=none,minimum height=0pt,font=\bfseries}
+]
+	\node(input) [font=\bfseries] {Входные \\ данные};
+	\node(filter1) [right=of input]{Фильтр 1};
+	\node(filter2) [right=of filter1]{Фильтр 2};
+	\node(filter3) [below=of $ (filter1.south east)!0.5!(filter2.south west) $,anchor=north]{Фильтр 3};
+	\node(filter4) [above=of filter2]{Фильтр 4};
+	\node(filter5) [right=of filter2]{Фильтр 5};
+	\node(output1) [right=of filter5,font=\bfseries]{Выход 1};
+	\node(output2) [right=of filter4,font=\bfseries]{Выход 2};
+	
+	\draw[->] (input) to (filter1);
+	\draw[->] (filter1) to (filter2);
+	\draw[->] (filter1.south) |- (filter3.west);
+	\draw[->] (filter3.east) -| (filter2.south);
+	\draw[<->] (filter2) to (filter4);
+	\draw[->] (filter2) to (filter5);
+	\draw[->] (filter5) to (output1);
+	\draw[->] (filter4) to (output2);
+\end{tikz*}

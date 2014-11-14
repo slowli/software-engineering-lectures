@@ -1,0 +1,26 @@
+\begin{tikz*}[%
+	node distance=2em and 3em,
+	every node/.style={rectangle,draw,align=center,minimum height=2.5em,minimum width=4em},
+	data/.style={rounded rectangle,minimum width=7.5em},
+	label/.style={draw=none,minimum height=0pt,,minimum width=0pt,font=\footnotesize}
+]
+	\node(kb) [data]{Клавиатура};
+	\node(ls) [right=of kb]{ls};
+	\node(grep) [right=of ls]{grep};
+	\node(tee) [right=of grep]{tee};
+	\node(less) [right=of tee]{less};
+	\node(console) [data,below=of grep]{Консоль};
+	\node(file) [data,above=of tee]{error-files.txt};
+	
+	\draw[->] (kb) -- node[label,above]{in} (ls);
+	\draw[->] (ls) -- node[label,above]{in/out} (grep);
+	\draw[->] (grep) -- node[label,above]{in/out} (tee);
+	\draw[->] (tee) -- node[label,above]{in/out} (less);
+	\draw[->] (less) |- node[label,below,pos=0.7]{out} (console);
+	\draw[->] (tee) -- node[label,left]{out,+a} (file);
+	
+	\draw[->] (ls) -- node[label,left]{err} (console);
+	\draw[->] (grep) -- node[label,left]{err} (console);
+	\draw[->] (tee) -- node[label,left]{err} (console);
+	\draw[->] (less) -- node[label,below]{err} (console);
+\end{tikz*}

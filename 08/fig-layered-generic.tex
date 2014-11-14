@@ -1,0 +1,18 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum width=22em,minimum height=3em}
+]
+	\node(ui) {Пользовательский интерфейс};
+	\node(hi) [below=of ui] { Управление интерфейсом; \\ аутентификация и авторизация};
+	\node(low) [below=of hi] {Логика предметной области и приложения; \\ общесистемные утилиты};
+	\node(sys) [below=of low] {Поддержка системы (ОС, СУБД, …)};
+
+	\node(_tmp) [coordinate] at ($ (ui.south) + (-2em, 0) $) {};
+	\draw[->] (ui.south -| _tmp) to (hi.north -| _tmp);
+	\draw[->] (hi.south -| _tmp) to (low.north -| _tmp);
+	\draw[->] (low.south -| _tmp) to (sys.north -| _tmp);
+	
+	\node(_tmp) [coordinate] at ($ (ui.south) + (2em, 0) $) {};
+	\draw[<-] (ui.south -| _tmp) to (hi.north -| _tmp);
+	\draw[<-] (hi.south -| _tmp) to (low.north -| _tmp);
+	\draw[<-] (low.south -| _tmp) to (sys.north -| _tmp);
+\end{tikz*}
