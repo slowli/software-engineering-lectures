@@ -1,0 +1,49 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3em}
+]
+	\node(logical) {\alert<2>{Логическое} \\ \alert<2>{представление}};
+	\node(process) [below=8em of logical] {\alert<4>{Процессное} \\ \alert<4>{представление}};
+	\node(devel) [right=14em of logical] {\alert<3>{Представление} \\ \alert<3>{разработки}};
+	\node(phys) [below=8em of devel] {\alert<5>{Физическое} \\ \alert<5>{представление}};
+	\node(use-case) [below right=4em and 7em of logical,anchor=center,rounded rectangle] {\alert<6>{Сценарии}};
+	\draw[->] (logical) to (process);
+	\draw[->] (logical) to (devel);
+	\draw[->] (process) to (phys);
+	\draw[->] (devel) to (phys);
+	\draw[->,dotted] (logical) to (use-case);
+	\draw[->,dotted] (process) to (use-case);
+	\draw[->,dotted] (devel) to (use-case);
+	\draw[->,dotted] (phys) to (use-case);
+	
+	\node [draw=none,below=0em of phys.south] {};
+	
+	\node<2> [note={(logical.south east)},below right=1em and 0.5em of logical.south,anchor=north west] {%
+		\textbf{Логическое представление} \engterm{logical view} — \\ ключевые сущности системы как объекты \\ и классы объектов.
+		\\[1.5ex]
+		\textbf{Цель:} реализация функциональных требований \\ в объектах.
+	};
+	\node<3> [note={(devel.south west)},below left=1em and 0.5em of devel.south,anchor=north east] {%
+		\textbf{Представление разработки} \engterm{development view} — \\ 
+		распределение компонентов системы \\ для имплементации различными разработчиками \\ и командами.
+		\\[1.5ex]
+		\textbf{Цель:} организация разработки.
+	};
+	\node<4> [note={(process.north east)},above right=1em and 0.5em of process.north,anchor=south west] {%
+		\textbf{Процессное представление} \engterm{process view} — \\
+		взаимодействие процессов во время выполнения \\ системы.
+		\\[1.5ex]
+		\textbf{Цель:} анализ нефункциональных требований \\ (производительности, доступности, …).
+	};
+	\node<5> [note={(phys.north west)},above left=1em and 0.5em of phys.north,anchor=south east] {%
+		\textbf{Физическое представление} \engterm{physical view} — \\
+		организация компонентов в распределенной среде.
+		\\[1.5ex]
+		\textbf{Цель:} планирование развертывания системы.
+	};
+	\node<6> [note={(use-case.south)},below=1em of use-case.south] {%
+		\textbf{Сценарии} \engterm{use case view} — взаимодействие \\
+		между компонентами системы.
+		\\[1.5ex]
+		\textbf{Цель:} выделение компонентов, проверка \\ и уточнение архитектуры.
+	};
+\end{tikz*}
