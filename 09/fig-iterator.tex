@@ -1,0 +1,41 @@
+\begin{tikz*}[%
+	class/.style={draw,rectangle split,rectangle split parts=3,align=left},
+	qty/.style={font=\footnotesize}
+]
+	\node(container) [class,text width=12em] {%
+		\hfill\textbf{Container}\hfill\strut{}
+		\nodepart{two}
+		$-$ elements
+		\nodepart{three}
+		$+$ iterator() : Iterator
+	};
+
+	\node(element) [class,right=8em of container,text width=12em] {%
+		\hfill\textbf{Element}\hfill\strut{}
+		\nodepart{two}
+		\nodepart{three}
+	};
+
+	\node(iterator) [class,below=5em of element,text width=12em] {%
+		\hfill\textbf{\textit{Iterator}}\hfill\strut{}
+		\nodepart{two}
+		\nodepart{three}
+		$+$ \textit{hasNext()} : bool \\
+		$+$ \textit{next()} : Element
+	};
+
+	\node(citerator) [class,text width=12em] at (container.south |- iterator.west) {%
+		\hfill\textbf{ConcreteIterator}\hfill\strut{}
+		\nodepart{two}
+		\nodepart{three}
+		$+$ hasNext() : bool \\
+		$+$ next() : Element
+	};
+
+	\draw[->,>=open diamond] (element) -- (container)
+		node[qty,very near start,below]{0..*}
+		node[qty,very near end,below]{0..*};
+	\draw[->,>=open triangle 60] (citerator) to (iterator);
+	\draw[->,dashed] (container) -- node[right]{«создает»} (citerator);
+	\draw[->,dashed] (iterator) -- node[left]{«перечисляет»} (element);
+\end{tikz*}

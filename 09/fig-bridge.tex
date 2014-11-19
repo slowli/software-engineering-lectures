@@ -1,0 +1,44 @@
+\begin{tikz*}[%
+	class/.style={draw,rectangle split,rectangle split parts=3,align=left},
+	code/.style={draw,rectangle,minimum height=2.5em,font=\ttfamily\small}
+]
+	\node(abs) [class,text width=12em] {%
+		\hfill\textbf{Abstraction}\hfill\strut{}
+		\nodepart{two}
+		$-$ engine : Engine
+		\nodepart{three}
+		$+$ function()
+	};
+	\node(abs-function) [code,below=1em of abs.south east,anchor=north west] {
+		\textbf{this}.engine.run();
+	};
+	\draw[o-,dashed] ($ (abs.south east) + (-2em,1em) $) |- (abs-function);
+
+	\node(r-abs) [class,text width=12em,below=6em of abs] {%
+		\hfill\textbf{RefinedAbstraction}\hfill\strut{}
+		\nodepart{two}
+		\nodepart{three}
+		$+$ refinedFunction()
+	};
+	\node(r-abs-function) [code,below=1em of r-abs.south east,anchor=north west] {
+		\textbf{this}.function();
+	};
+	\draw[o-,dashed] ($ (r-abs.south east) + (-2em,1em) $) |- (r-abs-function);
+
+	\node(engine) [class,text width=12em,right=8em of abs] {%
+		\hfill\textbf{\textit{Engine}}\hfill\strut{}
+		\nodepart{two}
+		\nodepart{three}
+		$+$ run()
+	};
+	\node(cengine) [class,text width=12em,below=6em of engine] {%
+		\hfill\textbf{ConcreteEngine}\hfill\strut{}
+		\nodepart{two}
+		\nodepart{three}
+		$+$ run()
+	};
+
+	\draw[->,>=open diamond] (engine) to (abs);
+	\draw[->,>=open triangle 60] (r-abs) to (abs);
+	\draw[->,>=open triangle 60] (cengine) to (engine);
+\end{tikz*}

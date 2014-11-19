@@ -1,0 +1,32 @@
+\begin{tikz*}[%
+	class/.style={draw,rectangle split,rectangle split parts=3,align=left}
+]
+	\node(builder) [class,text width=12em] {%
+		\hfill\textbf{\textit{Builder}}\hfill\strut{}
+		\nodepart{two}
+		\nodepart{three}
+		$+$ \textit{buildPart1()} : void \\
+		$+$ \textit{buildPart2()} : void \\
+		\hfill $\vdots$ \hfill\strut{} \\
+		$+$ \textit{create()} : Product
+	};
+	
+	\node(cbuilder) [class,text width=12em,right=6em of builder] {%
+		\hfill\textbf{ConcreteBuilder}\hfill\strut{}
+		\nodepart{two}
+		\nodepart{three}
+		$+$ buildPart1() : void \\
+		$+$ buildPart2() : void \\
+		\hfill $\vdots$ \hfill\strut{} \\
+		$+$ create() : Product
+	};
+
+	\node(product) [class,text width=12em,below=4em of cbuilder]{%
+		\hfill\textbf{Product}\hfill\strut{}
+		\nodepart{two}
+		\nodepart{three}
+	};
+
+	\draw[->,>=open triangle 60] (cbuilder) to (builder);
+	\draw[->,dashed] (cbuilder) -- node[left] {«создает»} (product);
+\end{tikz*}

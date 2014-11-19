@@ -1,0 +1,492 @@
+\documentclass{a4beamer}
+\input{lecture-common.def}
+
+\def\code#1{\texttt{#1}}
+\def\classfield#1{\underbar{#1}}
+
+\usepackage{listings}
+\lstset{%
+	language=java,
+	morekeywords={assert},
+	tabsize=4,
+	showstringspaces=false,
+	basicstyle=\linespread{1.25}\ttfamily\small,
+	keywordstyle=\bfseries,
+	commentstyle=\normalfont\itshape,
+	numbers=left,
+	numberstyle=\footnotesize\color{gray},
+	xleftmargin=2.5em,
+	texcl=true,
+	escapechar=\#
+}
+
+\lecturetitle{Программная инженерия. Лекция №9 — ООП. Шаблоны проектирования.}
+\title[ООП. Шаблоны проектирования]{Объектно-ориентированное проектирование. Шаблоны~проектирования}
+\author{Алексей Островский}
+\institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
+\date{21 ноября 2014 г.}
+
+\begin{document}
+	\frame{\titlepage}
+
+	\section[ООП]{Объектно-ориентированное проектирование}
+
+	\frame{
+		\frametitle{Объектно-ориентированное проектирование}
+
+		\begin{Definition}
+			\textbf{Объектно-ориентированное проектирование} \engterm{object-oriented design} — 
+			решение задачи проектирования программной системы с~использованием объектов и~взаимодействий между~ними.
+		\end{Definition}
+
+		\vspace{1ex}
+		\begin{Definition}
+			\textbf{Объект} — сильная связь между структурами данных и методами ($\simeq$ функциями), 
+			обрабатывающими эти данные. 
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Составляющие объекта:} 
+		\begin{itemize}
+			\item идентификатор; 
+			\item свойства; 
+			\item методы.
+		\end{itemize}
+	}
+
+	\subsection{Концепции ООП}
+
+	\frame{	
+		\frametitle{Концепции ООП}
+
+		\begin{itemize}
+			\item \textbf{Объекты};
+
+			\item
+			\textbf{инкапсуляция} — скрытие информации от~внешних (по~отношению к~системе/объекту) сущностей;
+
+			\item
+			\textbf{наследование} — повторное использование методов работы с~данными в~различных условиях; 
+			дополнение функциональности объектов;
+
+			\item
+			\textbf{интерфейсы} — формальное описание методов и~данных, используемое для~взаимодействия 
+			между~объектами; разделение описания и~имплементации;
+
+			\item
+			\textbf{полиморфизм} — возможность использования одного интерфейса для объекта и~наследованных от~него подобъектов.
+		\end{itemize}
+	}
+
+	\subsection{Процесс ООП}
+
+	\frame{
+		\frametitle{Процесс ООП}
+
+		\textbf{Входные данные} для ООП:
+		\begin{itemize}
+			\item
+			концептуальная модель (диаграмма классов UML с основными понятиями предметной области, независимая от реализации);
+			\item
+			варианты применения;
+			\item
+			диаграммы последовательности для вариантов применения;
+			\item
+			реляционная модель данных (может разрабатываться параллельно с объектами).
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Процесс ООП (продолжение)}
+
+		\textbf{Процесс ООП:}
+		\begin{itemize}
+			\item 
+			разграничение объектов, составление диаграммы классов (сущности $\Rightarrow$ объекты);
+			\item
+			конкретизация диаграмм последовательности;
+			\item
+			определение контекста: используемых библиотек, КПИ, …; 
+			\item
+			подбор и реализация шаблонов проектирования;
+			\item
+			определение взаимодействия объектов с источниками данных (базы данных, удаленные объекты).
+		\end{itemize}
+	}
+
+	\section[Шаблоны]{Шаблоны проектирования}
+
+	\frame{
+		\frametitle{Шаблоны проектирования}
+
+		\begin{Definition}
+			\textbf{Шаблон проектирования} \engterm{design pattern} — типовой конструктивный элемент программной системы, 
+			задающий взаимодействие нескольких компонентов системы, а~также роли и~сферы ответственности исполнителей. 
+		\end{Definition}
+
+		\vspace{1ex}
+		\begin{center}
+			{\small\input{fig-patterns-in-dev.tex}}
+
+			\vspace{0.5ex}
+			\figureexpl{Роль шаблонов в разработке ПО}
+		\end{center}
+	}
+
+	\subsection{Составляющие шаблонов}
+
+	\frame{
+		\frametitle{Составляющие шаблонов}
+
+		\textbf{Составляющие:}
+		\begin{itemize}
+			\item название;
+			\item область применения, описание проблемы, которую решает шаблон проектирования;
+			\item обобщенная структура шаблона: основные компоненты, их взаимоотношения и выполняемые функции 
+			(на естественном языке или диаграмма классов UML);
+			\item результат применения шаблона, возможные отрицательные последствия.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Чем не являются шаблоны:}
+		\begin{itemize}
+			\item
+			\textbf{Шаблон $\neq$ архитектура:} архитектура системы более абстрактна, 
+			шаблон подразумевает конкретную реализацию;
+
+			\item
+			\textbf{Шаблон $\neq$ КПИ:} шаблон требует имплементации, КПИ — это готовый код.
+		\end{itemize}
+	}
+
+	\subsection{Классификация шаблонов}
+
+	\frame{
+		\frametitle{Классификация шаблонов проектирования}
+
+		\textbf{Область применения:} 
+		\begin{itemize}
+			\item общего назначения; 
+			\item для конкретной предметной области (пользовательский интерфейс, защита информации, веб-дизнайн, …)
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Уровень проектирования:}
+		\begin{itemize} 
+			\item уровень архитектуры; 
+			\item уровень отдельных компонентов.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Цель применения:} 
+		\begin{itemize}
+			\item порождающие шаблоны \engterm{creational patterns};
+			\item структурные шаблоны \engterm{structural patterns};
+			\item поведенческие шаблоны \engterm{behavioral patterns}.
+		\end{itemize}
+	}
+
+	\section[Примеры]{Примеры шаблонов}
+
+	\frame{
+		\frametitle{Примеры шаблонов}
+
+		\textbf{Порождающие:} фабрика, \inlink{sec:Builder}{строитель}, \inlink{sec:Singleton}{одиночка}, прототип, …
+
+		\vspace{1ex}
+		\textbf{Структурные:} адаптер, \inlink{sec:Bridge}{мост}, \inlink{sec:Decorator}{декоратор}, фасад, компоновщик, Proxy, …
+
+		\vspace{1ex}
+		\textbf{Поведенческие:} \inlink{sec:Iterator}{итератор}, \inlink{sec:Observer}{наблюдатель}, команда, 
+			состояние, хранитель, посредник, цепочка обязанностей, …
+
+		\vspace{2ex}
+		\textbf{Архитектурные:} \inlink{sec:AR}{ActiveRecord}, Data Mapper, ленивая загрузка, …
+
+		\vspace{1ex}
+		\textbf{Параллелизация:} блокировка, семафоры, монитор, пул нитей исполнения, …
+	}
+
+	\subsection{ActiveRecord}\label{sec:AR}
+
+	\frame{
+		\frametitle{Архитектурный шаблон: ActiveRecord}
+
+		\input{fig-AR.tex}
+
+		\vspace{0.5ex}
+		\figureexpl{Шаблон доступа к БД ActiveRecord. Черта снизу в UML обозначает статические поля и методы. 
+			«+» обозначает общедоступные поля/методы.}
+	}
+
+	\frame{
+		\frametitle{ActiveRecord — описание}
+
+		\begin{tabular}{lp{0.75\textwidth}}
+			\textbf{Название:} & ActiveRecord \cr
+			\textbf{Проблема:} & \raggedright обеспечение доступа к~реляционным базам данных 
+				в~объектно-ориентированных приложениях. \cr
+			\textbf{Решение:} & \raggedright Каждой таблице (представлению) в БД соответствует свой класс; 
+				каждой строке таблицы — экземпляр класса; столбцам таблицы — поля объекта. 
+				В классе определены методы для~сохранения объекта в~БД, удаления и~поиска. 
+				Ключи (foreign key) определяют отношения между классами AR. \cr
+			\textbf{Недостатки:} & \raggedright избыточное количество и/или непрозрачность запросов к~СУБД (ср.~с~Data Mapper); 
+				проблема идентичности структуры класса и~таблицы БД. \cr
+			\textbf{Примеры:} & \raggedright в составе MVC в~веб-фреймворках (напр., CakePHP, Propel, Yii, Ruby on Rails).
+		\end{tabular}
+	}
+
+	\subsection{Singleton}\label{sec:Singleton}
+
+	\frame{
+		\frametitle{Порождающий шаблон: Singleton}
+
+		\begin{center}
+			\input{fig-singleton.tex}
+			
+			\vspace{0.5ex}
+			\figureexpl{UML-диаграмма классов для шаблона Singleton}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Singleton — описание}
+
+		\begin{tabular}{lp{0.75\textwidth}}
+			\textbf{Название:} & Singleton (одиночка) \cr
+			\textbf{Проблема:} & \raggedright необходимость в строго одном объекте определенного класса 
+				(напр., для координации действий в системе; из соображений производительности). \cr
+			\textbf{Решение:} & \raggedright публичный статический метод для доступа к объекту, 
+				создающий при необходимости экземпляр класса и~сохраняющий~его в~скрытой статической переменной. \cr
+			\textbf{Недостатки:} & \raggedright усложнение тестирования; введение скрытых зависимостей 
+				(\extlink{https://code.google.com/p/google-singleton-detector/wiki/WhySingletonsAreControversial}{детальнее}). \cr
+			\textbf{Примеры:} & Системы ведения логов. \cr
+			\textbf{Замена:} & \extlink{https://en.wikipedia.org/wiki/Dependency_injection}{внедрение зависимости}.
+		\end{tabular}
+	}
+
+	\frame{
+		\frametitle{Singleton — реализация}
+
+		\lstinputlisting[]{code-Singleton.java}
+	}
+
+	\subsection{Builder}\label{sec:Builder}
+
+	\frame{
+		\frametitle{Порождающий шаблон: Builder}
+
+		\input{fig-builder.tex}
+
+		\vspace{1ex}
+		\figureexpl{UML-диаграмма классов для шаблона Builder. \textit{Курсивом} в UML обозначаются интерфейсы и абстрактные методы.}
+	}
+
+	\frame{
+		\frametitle{Builder — описание}
+
+		\begin{tabular}{lp{0.75\textwidth}}
+			\textbf{Название:} & Builder (строитель) \cr
+			\textbf{Проблема:} & \raggedright создание объектов с заданным набором свойств 
+				без~имплементации большого количества конструкторов. \cr
+			\textbf{Решение:} & \raggedright использование служебного объекта для пошагового задания 
+				свойств и~создания результирующего объекта. \cr
+			\textbf{Преимущества:} & \raggedright тип объекта может варьироваться в засимости от заданных параметров. \cr
+			\textbf{Примеры:} & \raggedright создание документов с жесткой структурой (SQL-запросов, XML/HTML-документов).
+		\end{tabular}
+	}
+
+	\frame{
+		\frametitle{Builder — реализация}
+
+		\lstinputlisting[]{code-Builder.java}
+	}
+
+	\subsection{Bridge}\label{sec:Bridge}
+
+	\frame{
+		\frametitle{Структурный шаблон: Bridge}
+
+		\begin{center}
+			\input{fig-bridge.tex}
+
+			\vspace{0.5ex}
+			\figureexpl{UML-диаграмма классов для шаблона Bridge}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Bridge — описание}
+
+		\begin{tabular}{lp{0.75\textwidth}}
+			\textbf{Название:} & Bridge (мост) \cr
+			\textbf{Проблема:} & \raggedright отделение функциональности, предоставляемой интерфейсом, 
+				от~конкретной имплементации, чтобы они могли меняться независимо. \cr
+			\textbf{Решение:} & \raggedright выделение методов с несколькими реализациями 
+				в~отдельные классы; создание интерфейса, общего для~всех~реализаций. \cr
+			\textbf{Недостатки:} & \raggedright возможно излишнее усложнение кода при наличии одной имплементации. \cr
+			\textbf{Примеры:} & \raggedright мультиплатформенные графические интерфейсы (Java AWT, Qt).
+		\end{tabular}
+	}
+
+	\frame{
+		\frametitle{Bridge — реализация}
+
+		\lstinputlisting[]{code-Bridge.java}
+	}
+
+	\subsection{Decorator}\label{sec:Decorator}
+
+	\frame{
+		\frametitle{Структурный шаблон: Decorator}
+
+		\begin{center}
+			\input{fig-decorator.tex}
+
+			\vspace{0.5ex}
+			\figureexpl{UML-диаграмма классов для шаблона Decorator}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Decorator — описание}
+
+		\begin{tabular}{lp{0.75\textwidth}}
+			\textbf{Название:} & Decorator (декоратор) \cr
+			\textbf{Проблема:} & \raggedright Изменение поведения конкретного объекта (при~сохранении интерфейса), 
+				а~не~его~класса в~целом. \cr
+			\textbf{Решение:} & \raggedright Создание класса с интерфейсом исходного класса,
+				который направляет вызовы методов исходному объекту после~определенной обработки. \cr
+			\textbf{Недостатки:} & \raggedright усложнение читаемости кода; 
+				некорректное использование вместо создания подклассов. \cr
+			\textbf{Примеры:} & \raggedright ввод/вывод в Java; по~аналогичному принципу работают декораторы в~Python.
+		\end{tabular}
+	}
+
+	\frame{
+		\frametitle{Decorator — реализация}
+
+		\lstinputlisting[]{code-Decorator.java}
+	}
+
+	\subsection{Iterator}\label{sec:Iterator}
+
+	\frame{
+		\frametitle{Поведенческий шаблон: Iterator}
+
+		\begin{center}
+			\input{fig-iterator.tex}
+
+			\vspace{0.5ex}
+			\figureexpl{UML-диаграмма классов для шаблона Iterator}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Iterator — описание}
+
+		\begin{tabular}{lp{0.75\textwidth}}
+			\textbf{Название:} & Iterator (итератор) \cr
+			\textbf{Проблема:} & \raggedright Отделение функциональности последовательного доступа 
+				к~элементам контейнера от~внутренней структуры контейнера. \cr
+			\textbf{Решение:} & \raggedright Создание объекта-итератора, возвращаемого контейнером 
+				и содержащего в~себе необходимую функциональность. \cr
+			\textbf{Недостатки:} & \raggedright некоторые алгоритмы не~могут использовать итераторы, 
+				так~как зависят от~внутренней структуры контейнера. \cr
+			\textbf{Примеры:} & \raggedright коллекции в большинстве языков программирования.
+		\end{tabular}
+	}
+
+	\frame{
+		\frametitle{Iterator — реализация}
+
+		\lstinputlisting[]{code-Iterator.java}
+	}
+
+	\subsection{Observer}\label{sec:Observer}
+
+	\frame{
+		\frametitle{Поведенческий шаблон: Observer}
+
+		\begin{center}
+			\input{fig-observer.tex}
+
+			\vspace{0.5ex}
+			\figureexpl{UML-диаграмма классов для шаблона Observer}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Observer — описание}
+
+		\begin{tabular}{lp{0.75\textwidth}}
+			\textbf{Название:} & Observer (наблюдатель) \cr
+			\textbf{Проблема:} & \raggedright своевременное обновление состояния 
+				для~зависимых друг~от~друга объектов. \cr
+			\textbf{Решение:} & \raggedright Хранение списка зависимых объектов 
+				и~уведомление~их об~изменении состояния. \cr
+			\textbf{Недостатки:} & \raggedright Утечки памяти (зависимые объекты хранятся в~памяти 
+				до~явного удаления зависимости с~помощью метода \code{unregister}). \cr
+			\textbf{Примеры:} & \raggedright системы графического пользовательского интерфейса.
+		\end{tabular}
+	}
+
+	\frame{
+		\frametitle{Observer — реализация}
+
+		\lstinputlisting[]{code-Observer.java}
+	}
+
+	\section{Заключение}
+
+	\subsection{Выводы}
+	
+	\frame{
+		\frametitle{Выводы}
+		
+		\begin{enumerate}
+			\item
+			Объектно-ориентированное проектирование — один из~основных подходов к~проектированию ПО. 
+			В~его~рамках предметная область разбивается на объекты, взаимодействующие между собой.
+
+			\item
+			Ключевые понятия ООП — наследование, полиморфизм, инкапсуляция, интерфейсы.
+
+			\item
+			В рамках ООП часто используются стандартные элементы (шаблоны) программных систем. 
+			Выделяют архитектурные, порождающие, структурные и~поведенческие шаблоны.
+		\end{enumerate}
+	}
+	
+	\subsection{Материалы}
+	
+	\frame{
+		\frametitle{Материалы}
+		
+		\begin{thebibliography}{9}
+			\bibitem[1]{1}
+			Gamma, Erich et al.
+			\newblock Design Patterns.
+			\newblock {\footnotesize Addison-Wesley, 1995.}
+		
+			\bibitem[2]{2}
+			Fowler, Martin et al.
+			\newblock Patterns of Enterprise Application Architecture.
+			\newblock {\footnotesize Addison-Wesley, 2002.}
+
+			\bibitem[3]{3}
+			Ward Cunningham et al.
+			\newblock Portland Pattern Repository.
+			\newblock {\footnotesize \url{http://c2.com/cgi/wiki?DesignPatterns}}
+			\newblock {\footnotesize (Вики по шаблонам проектирования. По совместительству — первая вики в мире.)}
+		\end{thebibliography}
+	}
+	
+	\frame{
+		\frametitle{}
+		
+		\begin{center}
+			\Huge Спасибо за внимание!
+		\end{center}
+	}
+\end{document}

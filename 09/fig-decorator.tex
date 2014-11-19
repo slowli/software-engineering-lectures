@@ -1,0 +1,35 @@
+\begin{tikz*}[%
+	class/.style={draw,rectangle split,rectangle split parts=3,align=left},
+	code/.style={draw,rectangle,minimum height=2.5em,font=\ttfamily\small}
+]
+	\node(component) [class,text width=12em] {%
+		\hfill\textbf{\textit{Component}}\hfill\strut{}
+		\nodepart{two}
+		\nodepart{three}
+		$+$ \textit{operation()}
+	};
+
+	\node(ccomponent) [class,below left=4em and -0.5em of component,text width=12em] {%
+		\hfill\textbf{ConcreteComponent}\hfill\strut{}
+		\nodepart{two}
+		\nodepart{three}
+		$+$ operation()
+	};
+
+	\node(decorator) [class,below right=4em and -0.5em of component,text width=12em] {%
+		\hfill\textbf{Decorator}\hfill\strut{}
+		\nodepart{two}
+		$-$ component
+		\nodepart{three}
+		$+$ operation()
+	};
+	\node(deco-operation) [code,below=1em of decorator.south,anchor=north east] {%
+		\textbf{this}.component.operation();
+	};
+	\draw[o-,dashed] ($ (decorator.three east) + (-1em,0) $) |- (deco-operation);
+
+	\node(_tmp) [coordinate,below=2em of component.south]{};
+	\draw (ccomponent.north) |- (_tmp);
+	\draw (decorator.north) |- (_tmp);
+	\draw[->,>=open triangle 60] (_tmp) -- (component.south);
+\end{tikz*}

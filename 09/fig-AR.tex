@@ -1,0 +1,33 @@
+\begin{tikz*}[%
+	class/.style={draw,rectangle split,rectangle split parts=3,align=left}
+]
+	\node(AR) [class,text width=8em] {%
+		\hfill\textbf{ActiveRecord}\hfill\strut{}
+		\nodepart{two}
+		$+$ Поле 1 \\
+		$+$ Поле 2 \\
+		$+$ Поле $n$
+		\nodepart{three}
+		$+$ \classfield{создать()} \\
+		$+$ \classfield{поиск()} \\
+		$+$ сохранить() \\
+		$+$ удалить()
+	};
+
+	\node(table) [text width=20em,right=4em of AR,align=center,draw] {%
+		\textbf{База данных} \\[.5ex]
+		\renewcommand{\arraystretch}{1.5}%
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\textbf{Поле 1} & \textbf{Поле 2} & … & \textbf{Поле $n$} \cr
+			\hline
+			$a_{11}$ & $a_{12}$ & … & $a_{1n}$ \cr
+			\hline
+			$a_{21}$ & $a_{22}$ & … & $a_{2n}$ \cr
+			\hline
+			\multicolumn{4}{c}{$\vdots$}
+		\end{tabular}
+	};
+
+	\draw[<->] (AR) -- (table);
+\end{tikz*}
