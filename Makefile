@@ -12,7 +12,7 @@ TEMPDIR=tmp
 # Source TeX files
 TEX=01/intro.tex 02/disciplines.tex 03/base-areas.tex \
 	04/aux-areas.tex 05/lifecycle.tex 06/requirements.tex \
-	07/modeling.tex 08/architecture.tex
+	07/modeling.tex 08/architecture.tex 09/design-patterns.tex
 
 DIRS=$(subst /,,$(dir $(TEX)))
 DIRS_a4=$(addsuffix -a4,$(DIRS))
@@ -28,14 +28,14 @@ $(1): $(1)-a4 $(1)-beamer
 $(1)-a4: $(OUTDIR)/$(1)-$(2).pdf
 $(1)-beamer: $(OUTDIR)/$(1)-$(2)-beamer.pdf
 
-$(OUTDIR)/$(1)-$(2).pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*.tex)
+$(OUTDIR)/$(1)-$(2).pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*) $(wildcard $(1)/code-*)
 	mkdir -p $(TEMPDIR)
 	mkdir -p $(OUTDIR)
 	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(1)-$(2) $$<
 	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(1)-$(2) $$<
 	mv $(TEMPDIR)/$$(notdir $$@) $$@
 
-$(OUTDIR)/$(1)-$(2)-beamer.pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*.tex)
+$(OUTDIR)/$(1)-$(2)-beamer.pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*) $(wildcard $(1)/code-*)
 	mkdir -p $(TEMPDIR)
 	mkdir -p $(OUTDIR)
 	sed -r "s/documentclass(\[.*\])?\{a4beamer\}/documentclass[page=beamer,scale=8pt]{a4beamer}/" $$< > $(TEMPDIR)/tmp.tex

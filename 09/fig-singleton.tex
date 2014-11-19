@@ -1,0 +1,12 @@
+\begin{tikz*}[%
+	class/.style={draw,rectangle split,rectangle split parts=3,align=left}
+]
+	\node [class,text width=15em] {
+		\hfill\textbf{Singleton}\hfill\strut{}
+		\nodepart{two}
+		$-$ \classfield{instance}: Singleton
+		\nodepart{three}
+		$+$ \classfield{getInstance()}: Singleton \\
+		$-$ Singleton(): void
+	};
+\end{tikz*}

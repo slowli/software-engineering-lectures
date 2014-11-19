@@ -1,0 +1,37 @@
+\begin{tikz*}[%
+	class/.style={draw,rectangle split,rectangle split parts=3,align=left},
+	code/.style={draw,rectangle,minimum height=2.5em,font=\ttfamily\small}
+]
+	\node(subject) [class,text width=12em] {%
+		\hfill\textbf{Subject}\hfill\strut{}
+		\nodepart{two}
+		$-$ observers: Observer[]
+		\nodepart{three}
+		$+$ register(observer) \\
+		$+$ unregister(observer) \\
+		$-$ notifyObservers()
+	};
+	\node(subject-code) [code,below=1em of subject.south,align=left]  {%
+		notifyObservers: \\
+		\hspace{2em}\textbf{for} obs \textbf{in} \textbf{this}.observers: \\
+		\hspace{4em}obs.notify();
+	};
+	\draw[dashed] (subject) -- (subject-code);
+
+	\node(observer) [class,left=8em of subject,text width=12em] {%
+		\hfill\textbf{\textit{Observer}}\hfill\strut{}
+		\nodepart{two}
+		\nodepart{three}
+		$+$ \textit{notify()}
+	};
+
+	\node(c-observer) [class,below=4em of observer,text width=12em] {%
+		\hfill\textbf{ConcreteObserver}\hfill\strut{}
+		\nodepart{two}
+		\nodepart{three}
+		$+$ notify()
+	};
+
+	\draw[->,>=open diamond] (observer) to (subject);
+	\draw[->,>=open triangle 60] (c-observer) to (observer);
+\end{tikz*}
