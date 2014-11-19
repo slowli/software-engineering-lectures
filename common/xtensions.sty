@@ -55,64 +55,12 @@
 	\RequirePackage[latin,english,russian,ukrainian]{babel}
 }
 \def\xten@pg@russian{
-	\setdefaultlanguage[babelshorthands=true]{russian}
-	%\setdefaultlanguage{russian}
+	\setdefaultlanguage{russian}
 	\setotherlanguages{latin,english,ukrainian}
 }
 \def\xten@pg@ukrainian{
 	\setdefaultlanguage{ukrainian}
-	\setotherlanguages{latin,english}
-	\setotherlanguage[babelshorthands=true]{russian}
-}
-
-% Взято из Polyglossia - gloss-russian.ldf
-\def\ukrainian@shorthands{
-	\bbl@activate{"}%
-	  \def\language@group{ukrainian}%
-	%  \declare@shorthand{ukrainian}{"`}{„}%
-	%  \declare@shorthand{ukrainian}{"'}{“}%
-	%  \declare@shorthand{ukrainian}{"<}{«}%
-	%  \declare@shorthand{ukrainian}{">}{»}%
-	  \declare@shorthand{ukrainian}{""}{\hskip\z@skip}%
-	  \declare@shorthand{ukrainian}{"~}{\textormath{\leavevmode\hbox{-}}{-}}%
-	  \declare@shorthand{ukrainian}{"=}{\nobreak-\hskip\z@skip}%
-	  \declare@shorthand{ukrainian}{"|}{\textormath{\nobreak\discretionary{-}{}{\kern.03em}\allowhyphens}{}}%
-	  \declare@shorthand{ukrainian}{"-}{%
-		\def\russian@sh@tmp{%
-		  \if\russian@sh@next-\expandafter\russian@sh@emdash
-		  \else\expandafter\russian@sh@hyphen\fi
-		}%
-		\futurelet\russian@sh@next\russian@sh@tmp}%
-	  \def\russian@sh@hyphen{%
-		\nobreak\-\bbl@allowhyphens}%
-	  \def\russian@sh@emdash##1##2{\cdash-##1##2}%
-	  \def\cdash##1##2##3{\def\tempx@{##3}%
-	  \def\tempa@{-}\def\tempb@{~}\def\tempc@{*}%
-	   \ifx\tempx@\tempa@\@Acdash\else
-		\ifx\tempx@\tempb@\@Bcdash\else
-		 \ifx\tempx@\tempc@\@Ccdash\else
-		  \errmessage{Wrong usage of cdash}\fi\fi\fi}%
-	  \def\@Acdash{\ifdim\lastskip>\z@\unskip\nobreak\hskip.2em\fi
-		\cyrdash\hskip.2em\ignorespaces}%
-	  \def\@Bcdash{\leavevmode\ifdim\lastskip>\z@\unskip\fi
-	   \nobreak\cyrdash\penalty\exhyphenpenalty\hskip\z@skip\ignorespaces}%
-	  \def\@Ccdash{\leavevmode
-	   \nobreak\cyrdash\nobreak\hskip.35em\ignorespaces}%
-	  \ifx\cyrdash\undefined
-		\def\cyrdash{\hbox to.8em{--\hss--}}%
-	  \fi%
-	  \declare@shorthand{ukrainian}{",}{\nobreak\hskip.2em\ignorespaces}%
-}
-\def\blockextras@ukrainian{%
-   %\russian@capsformat%
-   %\ifcyrillic@numerals\russian@numbers\fi
-   %\ifrussian@babelshorthands\russian@shorthands\fi
-   \ukrainian@shorthands%
-}
-
-\def\inlineextras@ukrainian{%
-   %\ifrussian@babelshorthands\russian@shorthands\fi%
-   \ukrainian@shorthands%
+	\setotherlanguages{latin,english,russian}
 }
 
 \PassOptionsToPackage{cm-default,no-math}{fontspec}
@@ -120,7 +68,7 @@
 	\csname xten@babel@\xten@lang\endcsname
 \else
 	\ifxten@polyglossia
-		\RequirePackage[babelshorthands]{polyglossia}
+		\RequirePackage{polyglossia}
 		\let\textlatin\@undefined % Фикс для классов beamer
 		\csname xten@pg@\xten@lang\endcsname
 	\else
@@ -351,7 +299,7 @@
 	\lstset{%
 		language=java,
 		morekeywords={assert},
-		tabsize=6,
+		tabsize=4,
 		showstringspaces=false,
 		keywordstyle=\xten@kwstyle,
 		commentstyle=\normalfont\xten@commentstyle,
@@ -363,14 +311,14 @@
 
 	% Включенные в текст листинги
 	\lstdefinestyle{inline}{
-		basicstyle=\linespread{1.25}\ttfamily\small,
+		basicstyle=\linespread{1.1}\ttfamily\small,
 		commentstyle=\normalfont\normalsize\xten@commentstyle,
 		xleftmargin=2em,
 		numbers=none
 	}
 	% Плавающие листинги
 	\lstdefinestyle{floating}{
-		basicstyle=\linespread{1.25}\ttfamily\footnotesize,
+		basicstyle=\linespread{1.1}\ttfamily\small,
 		xleftmargin=0pt,
 		numbers=left
 	}
@@ -492,7 +440,7 @@
 		\leftmargin=1em
 	}
 	\begin{description}
-		\renewcommand{\makelabel}[1]{##1 \cdash--- }
+		\renewcommand{\makelabel}[1]{##1 — }
 }{%
 	\end{description}
 	\endgroup
