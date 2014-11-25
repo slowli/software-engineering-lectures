@@ -1,0 +1,30 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,minimum height=3em,minimum width=7em},
+	label/.style={draw=none,minimum height=0pt,minimum width=0pt,font=\bfseries},
+	seq/.style={rectangle split,rectangle split parts=4,font=\small},
+	wrapper/.style={}
+]
+	\node(program-seq) [seq,left=4em of inter-seq] {%
+		Инструкция 1
+		\nodepart{two}
+		Инструкция 2
+		\nodepart{three}
+		…
+		\nodepart{four}
+		Инструкция $m$
+	};
+	\node(memory) [right=of program-seq] {Память};
+
+	\node(_center) [coordinate] at ($ (memory.center)!0.5!(program-seq.center) $) {};
+	\node(_north) [coordinate] at (_center |- program-seq.north) {};
+	\node(program-lbl) [label,above=0.25em of _north] {Программа};
+	\node(program) [wrapper,fit=(program-lbl.north west) (program-lbl.north east) (program-seq.south west) (memory.south east)] {};
+
+	\node(data) [left=of program] {Данные};
+	
+	\node(result) [right=of program] {Результат};
+
+	\draw[<->] (program-seq) to (memory);
+	\draw[->] (data) to (program);
+	\draw[->] (program) to (result);
+\end{tikz*}

@@ -1,0 +1,566 @@
+\documentclass{a4beamer}
+\input{lecture-common.def}
+
+\def\code#1{\texttt{#1}}
+\def\classfield#1{\underbar{#1}}
+
+\usepackage{listings}
+\lstset{%
+	language=java,
+	morekeywords={assert},
+	tabsize=4,
+	showstringspaces=false,
+	basicstyle=\linespread{1.25}\ttfamily\small,
+	keywordstyle=\bfseries,
+	commentstyle=\normalfont\itshape,
+	numbers=left,
+	numberstyle=\footnotesize\color{gray},
+	xleftmargin=2.5em,
+	texcl=true,
+	escapechar=\#
+}
+
+\lstdefinelanguage{javascript}%
+	{morekeywords={break,case,catch,%
+		const,constructor,continue,default,do,else,false,%
+		finally,for,function,if,in,instanceof,%
+		new,null,prototype,%
+		return,switch,this,throw,%
+		true,try,typeof,var,while},%
+	sensitive,%
+	morecomment=[l]//,%
+	morecomment=[s]{/*}{*/},%
+	morestring=[b]",%
+	morestring=[b]',%
+}[keywords,comments,strings]%
+
+\lecturetitle{Программная инженерия. Лекция №10 — Парадигмы программирования (часть 1).}
+\title[Парадигмы программирования 1]{Парадигмы программирования (часть 1)}
+\author{Алексей Островский}
+\institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
+\date{28 ноября 2014 г.}
+
+\begin{document}
+	\frame{\titlepage}
+
+	\section[Определение]{Определение парадигмы}
+
+	\frame{
+		\frametitle{Определение парадигмы}
+
+		\begin{Definition}
+			\textbf{Парадигма программирования} \engterm{programming paradigm} — совокупность идей и~понятий, 
+			которые определяют общий стиль написания компьютерных программ, построения их~структуры и~отдельных элементов программной системы. 
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Цель парадигмы программирования:}
+		\begin{itemize}
+			\item разделение программы на базовые составные элементы (напр., функции или~объекты);
+			\item определение модели преобразования данных;
+			\item внедрение ограничений на используемые конструкции.
+		\end{itemize}
+	}
+
+	\subsection{Место парадигмы в разработке}
+
+	\frame{
+		\frametitle{Место парадигмы в разработке}
+
+		{\small\input{fig-paradigm-in-dev.tex}}
+
+		\vspace{0.75ex}
+		\figureexpl{Роль парадигм программирования в~разработке~ПО. Парадигма выбирается, 
+			исходя~из архитектуры системы и~влияет на~построение и~реализацию ее~компонентов}
+	}
+
+	\frame{
+		\frametitle{Место парадигмы в разработке}
+
+		\input{fig-paradigm-and-pl.tex}
+
+		\vspace{0.75ex}
+		\figureexpl{Связь парадигм с языками программирования подобна связи процесса программной инженерии 
+			с~выбранной моделью разработки}
+	}
+
+	\subsection{Классификация парадигм}
+
+	\frame{
+		\frametitle{Классификация парадигм программирования}
+
+		{\small\input{fig-main-paradigms.tex}}
+	}
+
+	\frame{
+		\frametitle{Декларативное программирование}
+
+		\begin{Definition}	
+		\textbf{Декларативное программирование} \engterm{declarative programming} — парадигма, 
+		согласно которой программа представляет логику вычислений без~описания 
+		прямой последовательности действий (действия определяются компилятором или~интерпретатором).
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Области использования:} 
+		\begin{itemize}
+			\item математическое моделирование; 
+			\item искусственный интеллект; 
+			\item анализ данных;
+			\item наука.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Выполнение декларативной программы}
+
+		\begin{center}
+			\input{fig-declarative-program.tex}
+
+			\vspace{0.75ex}
+			\figureexpl{Декларативная программа не взаимодействует напрямую с памятью, поручая эту работу интерпретатору}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Императивное программирование}
+
+		\begin{Definition}
+			\textbf{Императивное программирование} \engterm{imperative programming} — парадигма, 
+			согласно которой программа представляет собой последовательность действий, 
+			изменяющих \emph{состояние программы}.
+		\end{Definition}
+
+		\vspace{1ex}
+		\begin{Definition}
+			\textbf{Состояние программы} \engterm{program state} — совокупность данных, 
+			связанных со~всеми используемыми программой переменными в~конкретный момент времени.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Область использования:} 
+		\begin{itemize}
+			\item системные программы;
+			\item прикладные программы.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Выполнение императивной программы}
+
+		\input{fig-imperative-program.tex}
+
+		\vspace{0.75ex}
+		\figureexpl{Императивная программа использует именованные области памяти (переменные) для хранения состояния вычислений}
+	}
+
+	\section[Декларативное пр.]{Декларативное программирование}
+
+	\subsection{Функциональное программирование}
+
+	\frame{
+		\frametitle{Функциональное программирование}
+
+		\begin{Definition}
+		\textbf{Функциональное программирование} \engterm{functional programming} — парадигма, 
+		согласно которой процесс исполнения программы представляется 
+		последовательностью вычислений значений для математических функций.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Особенности:} 
+		\begin{itemize}
+			\item отказ от явного хранения переменных (функции без побочных эффектов);
+			\item $\Rightarrow$ встроенная поддержка параллелизации, оптимизации и~кэширования 
+			без~необходимости действий со~стороны программиста.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Функциональное программирование (продолжение)}
+
+		\input{fig-functional-pr.tex}
+
+		\vspace{1.5ex}
+		Функции возвращают результат, иначе не меняя состояние программы (напр., через~переменные).
+
+		\vspace{0.5ex}
+		\textbf{Ключевые слова:} \extlink{http://en.wikipedia.org/wiki/Pure_function}{чистая функция}, 
+			\extlink{http://en.wikipedia.org/wiki/Referential_transparency_\%28computer_science\%29}{прозрачность ссылок}.
+	}
+
+	\frame{
+		\frametitle{Функциональное программирование (продолжение)}
+
+		\textbf{Концепции:}
+		\begin{itemize}
+			\item
+			функции высших порядков — функции, которые возвращают другие функции или~принимают функции в~качестве аргументов;
+			\item
+			замыкание \engterm{closure} —сохранение контекста функции при ее создании;
+			\item
+			рекурсия для создания циклов;
+			\item
+			ленивые вычисления \engterm{lazy evaluation} — вычисление аргументов функций по~мере~необходимости (не~при~задании).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Языки программирования:} Lisp, Scheme, Clojure, Erlang, Haskell, F\#.
+	}
+
+	\subsection{Логическое программирование}
+
+	\frame{
+		\frametitle{Логическое программирование}
+
+		\begin{Definition}
+			\textbf{Логическое программирование} \engterm{logic programming} — парадигма, согласно которой 
+			программа представляет собой вывод с помощью правил формальной логики.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Правило вывода:} 
+		\begin{center}
+			$H \mathop{:-} B_1, \dots, B_n$, \quad т.\,е.\quad $H$, \textbf{если} $B_1$ \textbf{и} … \textbf{и} $B_n$.
+		\end{center}
+
+		\vspace{1ex}
+		\textbf{Особенности:} 
+		\begin{itemize}
+			\item
+			данные представляются как факты (безусловные утверждения, аксиомы); 
+			\item
+			результат выполнения — данные, для которых истинно некоторое утверждение.
+		\end{itemize}
+	}
+
+	% TODO figure: logic program execution
+
+	\frame{
+		\frametitle{Логическое программирование (продолжение)}
+
+		\textbf{Концепции:}
+		\begin{itemize}
+			\item
+			процедурная интерпретация правил:
+			\begin{center}
+				$H \mathop{:-} B_1, \dots, B_n$;
+
+				чтобы вычислить $H$, нужно вычислить $B_1$, …, $B_n$.
+			\end{center}
+
+			\vspace{0.75ex}
+			\item
+			контроль над стратегией доказательства утверждений 
+			(параллельный или~последовательный поиск, перебор с~возвратом, …).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Языки программирования:} Prolog и диалекты, Oz.
+	}
+
+	\section[Императивное пр.]{Императивное программирование}
+
+	\subsection{Структурное программирование}
+
+	\frame{
+		\frametitle{Структурное программирование}
+
+		\begin{Definition}
+			\textbf{Структурное программирование} \engterm{structured programming} — парадигма, 
+			в основе которой лежит представление программы  в виде иерархии \emph{блоков}.
+		\end{Definition}
+
+		\vspace{1ex}
+		\begin{Definition}
+			\textbf{Блок инструкций} — логически связанный набор последовательных инструкций, предназначенный для: 
+			\begin{itemize}
+				\item ограничения области видимости; 
+				\item обращения к блоку как к одной инструкции.
+			\end{itemize}
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Особенности:} 
+		\begin{itemize}
+			\item каждый блок должен иметь строго один вход и выход; 
+			\item $\Rightarrow$ отказ от безусловных переходов (\code{\textbf{goto}}).
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Структурное программирование (продолжение)}
+
+		\textbf{Элементы программ:}
+		\begin{center}\linespread{1.0}
+			\begin{tabular}{|l|p{0.4\textwidth}|}
+				\hline
+				\centering\textbf{Конструкция} & \centering\textbf{Псевдокод} \cr
+				\hline
+				последовательность &$ S_1; S_2; S_3; \dots $ \cr
+				\hline
+				ветвление & $\mathrm{if}\ C\ \mathrm{then}\ S_1\ \mathrm{else}\ S_2$ \cr
+				\hline
+				цикл & $\mathrm{while}\ C\ \mathrm{do}\ S$ \cr
+				\hline
+				подпрограммы & $\mathrm{function}\ F(A_1,A_2,\dots,A_n)\ B$ \cr
+				\hline
+			\end{tabular}
+		\end{center}
+
+		\vspace{1ex}
+		\begin{Theorem}[Бём, Якопини]
+			Программы, использующие управляющие конструкции последовательности, ветвления и цикла, способны вычислить любую вычислимую функцию.
+		\end{Theorem}
+	}
+
+	\frame{
+		\frametitle{Структурное программирование (продолжение)}
+
+		\textbf{Концепции:}
+		\begin{itemize}
+			\item
+			выделение повторяющегося кода в подпрограммы (процедуры и функции);
+			\item
+			объединение логически связанных подпрограмм в модули;
+			\item
+			использование блоков инструкций для контроля области видимости переменных и функций;
+			\item
+			проектирование программ сверху вниз;
+ 			\item
+			разделение интерфейсов и имплементаций подпрограмм в модулях.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Языки программирования:} Algol, C, Pascal, Ada, FORTRAN, PL/I.
+	}
+
+	\subsection{ООП}
+
+	\frame{
+		\frametitle{Объектно-ориентированное программирование}
+
+		\begin{Definition}
+			\textbf{Объектно-ориентированное программирование} \engterm{object-oriented programming} — парадигма, 
+			согласно которой программа представляется в виде взаимодействующих объектов.
+		\end{Definition}
+
+		\vspace{1ex}
+		\begin{Definition}
+			\textbf{Объект} — сильная связь между структурами данных и методами ($\simeq$ функциями), 
+			обрабатывающими эти данные. Составляющие объекта: 
+			\begin{itemize}
+				\item идентификатор; 
+				\item свойства;
+				\item методы.
+			\end{itemize}
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Особенность:} развитие структурного программирования с объединением в объектах данных и поведения.
+	}
+
+	\frame{
+		\frametitle{Концепции ООП}
+
+		\begin{itemize}
+			\item 
+			\textbf{объекты};
+			\item 
+			\textbf{инкапсуляция} — скрытие информации от внешних (по~отношению к~системе или~объекту) сущностей;
+			\item
+			\textbf{наследование} — повторное использование методов работы с~данными в~различных условиях; 
+			дополнение функциональности объектов;
+			\item
+			\textbf{полиморфизм подтипов} — возможность использования наследованных от~объекта потомков в~том~же~контексте, что~и~сам~объект;
+			\item
+			\textbf{динамическая диспетчеризация} — выбор, какую реализацию виртуального метода следует вызывать, 
+			во время исполнения программы;
+			\item
+			\textbf{открытая рекурсия} — переменная \code{this}/\code{self}, позволяющая вызывать методы объекта из других методов.
+		\end{itemize}
+
+		\vspace{1ex}
+		\figureexpl{Полиморфизм есть и в структурном программировании, но \extlink{https://en.wikipedia.org/wiki/Ad_hoc_polymorphism}{другой}.}
+	}
+
+	\frame{
+		\frametitle{Виды ООП}
+
+		\begin{itemize}
+			\item
+			ООП на основе \textbf{классов} — вид ООП, в котором поведение объектов и~наследование 
+			определяется с помощью классов (начальный набор данных + поведение).
+
+			\vspace{0.5ex}
+			\textbf{Языки программирования:} C++, Java, C\#, Python.
+
+			\vspace{2ex}
+			\item
+			ООП на основе \textbf{прототипов} — вид ООП, в котором наследование поведения 
+			осуществляется с помощью клонирования существующих объектов (прототипов).
+
+			\vspace{0.5ex}
+			\textbf{Языки программирования:} JavaScript, Lua.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Виды ООП (продолжение)}
+
+		\begin{center}\small
+			\begin{tabular}{|*{3}{p{0.275\textwidth}|}}
+				\hline
+				\centering\textbf{Характеристика} & \multicolumn{2}{c|}{\textbf{Вид ООП}} \cr
+				\cline{2-3}
+				& \centering\textbf{На основе классов} & \centering\textbf{На основе прототипов} \cr
+				\hline
+				Наследование & создание подклассов & клонирование прототипа \cr
+				\hline
+				Содержимое объектов & определяется классом & \raggedright определяется конкретным объектом \cr
+				\hline
+				\raggedright Связь между данными и~поведением & сильная & слабая \cr
+				\hline
+				Интерфейсы & подвид классов & duck typing \cr
+				\hline
+			\end{tabular}
+		\end{center}
+	}
+
+	\section{Примеры}
+
+	\subsection{Императивное и декларативное программирование}
+
+	\frame{
+		\frametitle{Императивное и декларативное программирование}
+
+		\textbf{Вычисление чисел Фибоначчи — императивная программа (Python):}
+		\lstinputlisting[language=python]{code-fib.py}
+
+		\vspace{1ex}
+		\textbf{Вызов:}
+		\begin{quote}\upshape
+			\code{>>> fib(10) \\ 55}
+		\end{quote}
+	}
+
+	\frame{
+		\frametitle{Императивное и декларативное программирование}
+
+		\textbf{Вычисление чисел Фибоначчи — декларативная программа (Prolog):}
+		\lstinputlisting[language=prolog]{code-fib.pro}
+
+		\vspace{1ex}
+		\textbf{Вызов:}
+		\begin{quote}\upshape
+			\code{?- fib(10, X). \\ X = 55.}
+		\end{quote}
+	}
+
+	\subsection{Процедурное программирование и ООП}
+
+	\frame{
+		\frametitle{Процедурное программирование и ООП}
+
+		\begin{center}
+			\input{fig-shapes.tex}
+
+			\vspace{0.75ex}
+			\figureexpl{Структурная модель предметной области}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Процедурное программирование и ООП}
+
+		\textbf{Описание ПрО — процедурный стиль (C):}
+		\lstinputlisting[language=c]{code-shapes.c}
+	}
+
+	\frame{
+		\frametitle{Процедурное программирование и ООП}
+
+		\textbf{Описание ПрО — ООП (Java):}
+		\lstinputlisting[language=java]{code-shapes.java}
+	}
+
+	\frame{
+		\frametitle{Процедурное программирование и ООП}
+
+		\textbf{Концепции ООП (Java):}
+		\lstinputlisting[language=java]{code-shapes-use.java}
+	}
+
+	\subsection{Классы и прототипы}
+
+	\frame{
+		\frametitle{Классы и прототипы}
+
+		\textbf{Описание ПрО — прототипы (JavaScript):}
+		\lstinputlisting[language=javascript]{code-shapes.js}
+	}
+
+	\frame{
+		\frametitle{Классы и прототипы}
+
+		\textbf{Особенности прототипов (JavaScript):}
+		\lstinputlisting[language=javascript]{code-shapes-use.js}
+	}
+
+	\section{Заключение}
+
+	\subsection{Выводы}
+	
+	\frame{
+		\frametitle{Выводы}
+		
+		\begin{enumerate}
+			\item
+			Парадигма программирования определяет общий стиль написания программ. 
+			По~своей сути парадигмы играют в проектировании и~конструировании ту~же~роль, 
+			что~и~модель жизненного цикла в~планировании разработки ПО.
+
+			\vspace{1ex}
+			\item
+			Выделяют две основных группы парадигм программирования: декларативные (определяют цель, но не~метод ее~достижения) 
+			и~императивные (определяют и~то, и~другое).
+
+			\vspace{1ex}
+			\item
+			Объектно-ориентированное программирование — основная парадигма в~разработке современных прикладных приложений. 
+			Ее особенность — представление предметной области в виде объектов, которые сочетают в себе данные и поведение.
+		\end{enumerate}
+	}
+	
+	\subsection{Материалы}
+	
+	\frame{
+		\frametitle{Материалы}
+		
+		\begin{thebibliography}{9}
+			\bibitem[1]{1}
+			Abelson, Hal; Sussman, Gerald Jay. 
+			\newblock Structure and Interpretation of Computer Programs. 
+			\newblock {\footnotesize \url{http://mitpress.mit.edu/sicp/}} 
+			\newblock {\footnotesize (функциональное программирование)}
+
+			\bibitem[2]{2}
+			Н. Вирт. 
+			\newblock Алгоритмы + структуры данных = программы. 
+			\newblock {\footnotesize (структурное программирование)}
+
+			\bibitem[3]{3}
+			Meyer, Bertrand. 
+			\newblock Object-Oriented Software Construction.
+			\newblock {\footnotesize (ООП)}
+		\end{thebibliography}
+	}
+	
+	\frame{
+		\frametitle{}
+		
+		\begin{center}
+			\Huge Спасибо за внимание!
+		\end{center}
+	}
+\end{document}

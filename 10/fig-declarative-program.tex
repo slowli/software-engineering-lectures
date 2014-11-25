@@ -1,0 +1,40 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,minimum height=3em,minimum width=7em},
+	label/.style={draw=none,minimum height=0pt,minimum width=0pt,font=\bfseries},
+	seq/.style={rectangle split,rectangle split parts=4,font=\small},
+	wrapper/.style={}
+]
+	\node(inter-seq) [seq] {
+		Инструкция 1
+		\nodepart{two}
+		Инструкция 2
+		\nodepart{three}
+		…
+		\nodepart{four}
+		Инструкция $m$
+	};
+	\node(inter-lbl) [label,above=0.25em of inter-seq] {Интерпретатор};
+	\node(inter) [wrapper,fit=(inter-lbl.north west) (inter-lbl.north east) (inter-seq.south west) (inter-seq.south east)] {};
+
+	\node(program-seq) [seq,left=4em of inter-seq] {%
+		Утверждение 1
+		\nodepart{two}
+		Утверждение 2
+		\nodepart{three}
+		…
+		\nodepart{four}
+		Утверждение $n$
+	};
+	\node(program-lbl) [label,above=0.25em of program-seq] {Программа};
+	\node(program) [wrapper,fit=(program-lbl.north west) (program-lbl.north east) (program-seq.south west) (program-seq.south east)] {};
+
+	\node(data) [above=of inter] {Данные};
+	\node(memory) [below=of inter] {Память};
+	
+	\node(result) [right=of inter] {Результат};
+
+	\draw[<->] (program) to (inter);
+	\draw[->] (data) to (inter);
+	\draw[<->] (memory) to (inter);
+	\draw[->] (inter) to (result);
+\end{tikz*}
