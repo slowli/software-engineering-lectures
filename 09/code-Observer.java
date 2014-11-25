@@ -3,7 +3,13 @@ public interface ClickListener {
 }
 
 public class Button {
-	public void setListener(ClickListener l) { /* ... */ }
+	private ClickListener listener;
+	public void setListener(ClickListener l) { this.listener = l; }
+
+	protected void doClick() {
+		/* ... */
+		if (this.listener != null) this.listener.onClick(this);
+	}
 }
 
 Button button = new Button();
