@@ -1,0 +1,37 @@
+\begin{tikz*}[%
+	class/.style={draw,rectangle split,rectangle split parts=3,align=flush left}
+]
+	\node(shape) [class,text width=7.5em] {%
+		\hfill\textbf{\textit{Shape}}\hfill\strut{}
+		\nodepart{two}
+		center
+		\nodepart{three}
+		\textit{draw()} \\
+		\textit{fill()} \\
+		drawAndFill()
+	};
+
+	\node(circle) [class,below left=4em and 1em of shape,text width=7.5em] {%
+		\hfill\textbf{Circle}\hfill\strut{}
+		\nodepart{two}
+		radius
+		\nodepart{three}
+		draw() \\
+		fill()
+	};
+
+	\node(rect) [class,below right=4em and 1em of shape,text width=7.5em] {%
+		\hfill\textbf{Rectangle}\hfill\strut{}
+		\nodepart{two}
+		width \\
+		height
+		\nodepart{three}
+		draw() \\
+		fill()
+	};
+
+	\node (_tmp) at ($ (shape.south) + (0,-2em) $) [coordinate]{};
+	\draw (circle.north) |- (_tmp);
+	\draw (rect.north) |- (_tmp);
+	\draw[->,>=open triangle 60] (_tmp) -- (shape.south);
+\end{tikz*}

@@ -1,0 +1,18 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3em},
+	function/.style={font=\bfseries}
+]
+	\node(input) [ellipse] {Входные \\ данные};
+	\node(func1) [function,right=of input] {Функция 1};
+	\node(func2) [function,right=of func1] {Функция 2};
+	\node(func3) [function,below=of func2] {Функция 3};
+	\node(output) [ellipse,right=of func2] {Результат};
+
+	\draw[->] (input) to (func1);
+	\draw[->] (func1) to (func2);
+	\draw[->] (func1) |- (func3);
+	\draw[->] (func3) to (func2);
+	\draw[->] (func2.north) -- ++(0,1em) -| (func1.north);
+	\draw[->] (func3.east) -| ($ (func3.south east) + (1em,-2em) $) -- ($ (func3.south) + (0em,-2em) $) -- (func3.south);
+	\draw[->,dotted] (func2) to (output);
+\end{tikz*}

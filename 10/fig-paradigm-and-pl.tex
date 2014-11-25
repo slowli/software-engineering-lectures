@@ -1,0 +1,18 @@
+\begin{tikz*}[%
+	block/.style={rectangle,draw,align=center,minimum height=3em,minimum width=10em},
+	label/.style={font=\footnotesize}
+]
+	\node(se-process) [block] {Процесс ПИ};
+	\node(lc-model) [block,right=12em of se-process] {Модель ЖЦ};
+	\node(pl) [block,below=6em of se-process] {Язык \\ программирования};
+	\node(paradigm) at (pl.east -| lc-model.south) [block] {Парадигма \\ программирования};
+
+	\draw[->] (se-process) -- node[label,above] {характеризуется} (lc-model);
+	\draw[->] (se-process) -- 
+		node[label,midway,right] {использует} 
+		node[label,very near end,left] {1..*} (pl);
+	\draw[->] (pl) -- 
+		node[label,very near start,below] {1..*}
+		node[label,midway,above] {характеризуется} 
+		node[label,very near end,below] {1..*} (paradigm);
+\end{tikz*}
