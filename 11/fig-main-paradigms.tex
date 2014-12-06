@@ -1,0 +1,29 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,minimum height=2.25em,minimum width=7.5em}
+]
+	\node(paradigm) {\large\textbf{Программирование}};
+	\node(declarative) [above=of paradigm] {Декларативное};
+	\node(functional) [left=of declarative] {Функциональное};
+	\node(logic) [right=of declarative] {Логическое};
+	\node(imperative) [below=of paradigm] {Императивное};
+	\node(struct) [below left=of imperative] {Структурное};
+	\node(modular) [below=of imperative] {Модульное};
+	\node(oo) [below right=of imperative] {ООП};
+
+	\node(component) [below=of oo] {\textbf{Компонентное}};
+	\node(service) [below=of component] {\textbf{Сервисное}};
+	\node(aspect) [left=of service] {\textbf{Аспектное}};
+	\node(agent) [right=of service] {\textbf{Агентное}};
+
+	\draw[->] (paradigm) to (declarative);
+	\draw[->] (paradigm) to (imperative);
+	\draw[->] (declarative) to (functional);
+	\draw[->] (declarative) to (logic);
+	\draw[->] (imperative) to (struct);
+	\draw[->] (imperative) to (modular);
+	\draw[->] (imperative) to (oo);
+	\draw[->] (oo) to (component);
+	\draw[->] (component) to (service);
+	\draw[->] (component) to (aspect);
+	\draw[->] (component) to (agent);
+\end{tikz*}

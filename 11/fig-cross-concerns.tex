@@ -1,0 +1,22 @@
+%(рис.: Основная функциональность: Добавление пользователей, Работа с учетной записью, Управление пользователями. Сквозная функциональность: Безопасность данных, %Отказоустойчивость)
+\begin{tikz*}[%
+	every node/.style={align=center},
+	concern/.style={minimum width=1em,minimum height=15em,draw=blue,fill=blue!15},
+	cross-concern/.style={minimum width=30em,minimum height=1em,draw,fill=white},
+	label/.style={font=\bfseries}
+]
+	\node(main-1-label) {Добавление \\ пользователей};
+	\node(main-2-label) [right=of main-1-label] {Работа с \\ учетной записью};
+	\node(main-3-label) [right=of main-2-label] {Управление \\ пользователями};
+	\node(main-label) [label,above=1em of main-2-label] {Основная функциональность};
+
+	\node(main-1) [concern,below=of main-1-label]{};
+	\node(main-2) [concern,below=of main-2-label]{};
+	\node(main-3) [concern,below=of main-3-label]{};
+
+	\node(cross-1) [cross-concern,below=4em of main-2.north] {};
+	\node(cross-2) [cross-concern,above=4em of main-2.south] {};
+	\node(cross-2-label) [right=1em of cross-2] {Отказоустойчивость};
+	\node(cross-1-label) at (cross-2-label.center |- cross-1.center) {Безопасность \\ данных};
+	\node(cross) [label,below=of cross-2-label] {Сквозная \\ функциональность};
+\end{tikz*}

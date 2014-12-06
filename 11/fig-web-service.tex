@@ -1,0 +1,15 @@
+\begin{tikz*}[%
+	every node/.style={align=center},
+	label/.style={font=\small},
+	item/.style={ellipse,draw,minimum height=3em}
+]
+	\node(consumer) [item] {Потребитель};
+	\node(registry) [item,above right=5em and 6em of consumer] {Реестр};
+	\node(provider) [item,right=12em of consumer] {Поставщик};
+	\node(service) [item,rectangle,below=4em of provider] {Сервис};
+
+	\draw[<->] (consumer) -- node[label,above left] {поиск (UDDI)} (registry);
+	\draw[<->] (consumer) -- node[label,below] {связывание (SOAP)} (provider);
+	\draw[<->] (registry) -- node[label,above right] {публикация} (provider);
+	\draw[->] (service) -- node[label,left] {спецификация (WSDL)} (provider);
+\end{tikz*}

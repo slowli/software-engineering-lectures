@@ -1,0 +1,25 @@
+\begin{tikz*}[%
+	description/.style={rectangle,fill=blue!15,align=center,font=\small}
+]
+	\node(component) [rectangle,draw,minimum width=10em,minimum height=10em] {\textbf{Компонент}};
+
+	\node(req-2) [left=4em of component.west,coordinate] {};
+	\node(req-1) [above=2em of req-2,coordinate] {};
+	\node(req-3) [below=2em of req-2,coordinate] {};
+	\node(req) [description,left=5em of component.west,anchor=east] {Функциональность, \\ которую должны \\ предоставить \\ внешние компоненты};
+
+	\node(provides-2) [above right=1em and 4em of component.east,coordinate] {};
+	\node(provides-3) [below right=1em and 4em of component.east,coordinate] {};
+	\node(provides-1) [above=2em of provides-2,coordinate] {};
+	\node(provides-4) [below=2em of provides-3,coordinate] {};
+	\node(provides) [description,right=5em of component.east,anchor=west] {Функциональность, \\ предоставляемая \\ компонентом};
+	
+	\draw[)-] (req-1) -- (req-1 -| component.west);
+	\draw[)-] (req-2) -- (req-2 -| component.west);
+	\draw[)-] (req-3) -- (req-3 -| component.west);
+
+	\draw[o-] (provides-1) -- (provides-1 -| component.east);
+	\draw[o-] (provides-2) -- (provides-2 -| component.east);
+	\draw[o-] (provides-3) -- (provides-3 -| component.east);
+	\draw[o-] (provides-4) -- (provides-4 -| component.east);
+\end{tikz*}

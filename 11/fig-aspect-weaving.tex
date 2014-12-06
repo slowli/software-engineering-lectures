@@ -1,0 +1,32 @@
+\begin{tikz*}[%
+	every node/.style={draw,align=center,minimum height=2.5em},
+	aspect/.style={rectangle,draw,minimum width=12.5em},
+	class/.style={rectangle split,rectangle split parts=2,align=left}
+]
+	\node(aspect-auth) [aspect] {Аспект аутентификации};
+	\node(aspect-log) [aspect,below=of aspect-auth] {Аспект ведения лога};
+	\node(class-main) [class,text width=12.5em,below=of aspect-log] {%
+		\hfill\textbf{Reader}\hfill\strut{}
+		\nodepart{two}
+		…\strut{} \\
+		\code{updateInfo(…);} \\
+		…
+	};
+
+	\node(weaver) [rounded rectangle,right=4em of aspect-log] {\textbf{Компоновщик}};
+
+	\node(class-patched) [class,text width=12.5em,right=4em of weaver] {%
+		\hfill\textbf{Reader}\hfill\strut{}
+		\nodepart{two}
+		…\strut{} \\
+		\textit{аутентификация} \\
+		\code{updateInfo(…);} \\
+		\textit{запись в лог} \\
+		…
+	};
+
+	\draw[->] (aspect-auth.east) -| (weaver.north);
+	\draw[->] (aspect-log) -- (weaver);
+	\draw[->] (class-main.east) -| (weaver.south);
+	\draw[->] (weaver) -- (class-patched);
+\end{tikz*}

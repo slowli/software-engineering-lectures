@@ -1,0 +1,14 @@
+\begin{tikz*}[%
+	every node/.style={minimum height=2.5em,align=center}
+]
+	\node(def) {Определение \\ функциональности};
+	\node(op) [right=of def] {Описание операций \\ и сообщений};
+	\node(impl) [right=of op] {Имплементация};
+	\node(test) [right=of impl] {Тестирование};
+	\node(deploy) [right=of test] {Развертывание};
+
+	\draw[->] (def) -- (op);
+	\draw[->] (op) -- (impl);
+	\draw[->] (impl) -- (test);
+	\draw[->] (test) -- (deploy);
+\end{tikz*}
