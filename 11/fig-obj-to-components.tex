@@ -1,0 +1,25 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,minimum height=2.5em},
+	label/.style={draw=none,minimum height=3em,font=\itshape}
+]
+	\node(object-1) {Объект 1};
+	\node(object-2) [below=4em of object-1] {Объект 2};
+	\node(object-3) [right=6em of object-1] {Объект 3};
+	\node(object-4) [below=4em of object-3] {Объект 4};
+	\node(input) [circle,fill,minimum height=1.25em,left=4em of object-1] {};
+	\node(output-i) [circle,fill,minimum height=1.25em,right=4em of object-4] {};
+	\node(output) [circle,draw,minimum height=1.5em] at (output-i.center) {};
+
+	\node(brace-start) at ($ (object-4.south east) + (0.5em, 0) $) [coordinate]{};
+	\node(brace-end) at ($ (object-2.south west) + (-0.5em, 0) $) [coordinate]{};
+	\draw<2>[decorate,decoration={brace,amplitude=6pt}] (brace-start) -- node[label,below]{Компонент} (brace-end);
+
+	\draw[<->] (object-1) to (object-2);
+	\draw[<->] (object-1) to (object-3);
+	\draw[<->] (object-1) to (object-4);
+	\draw[<->] (object-3) to (object-4);
+	\draw[->] (input) to (object-1);
+	\draw[->] (input) to (object-2);
+	\draw[->] (object-3) to (output);
+	\draw[->] (object-4) to (output);
+\end{tikz*}
