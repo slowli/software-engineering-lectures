@@ -1,0 +1,639 @@
+\documentclass{a4beamer}
+\input{lecture-common.def}
+
+\def\code#1{\texttt{#1}}
+\def\classfield#1{\underbar{#1}}
+
+\usepackage{listings}
+\lstset{%
+	language=java,
+	morekeywords={assert},
+	tabsize=4,
+	showstringspaces=false,
+	basicstyle=\linespread{1.25}\ttfamily\small,
+	keywordstyle=\bfseries,
+	commentstyle=\normalfont\itshape,
+	numbers=left,
+	numberstyle=\footnotesize\color{gray},
+	xleftmargin=2.5em,
+	texcl=true,
+	escapechar=\#
+}
+
+\lstdefinelanguage{javascript}%
+	{morekeywords={break,case,catch,%
+		const,constructor,continue,default,do,else,false,%
+		finally,for,function,if,in,instanceof,%
+		new,null,prototype,%
+		return,switch,this,throw,%
+		true,try,typeof,var,while},%
+	sensitive,%
+	morecomment=[l]//,%
+	morecomment=[s]{/*}{*/},%
+	morestring=[b]",%
+	morestring=[b]',%
+}[keywords,comments,strings]%
+
+\lecturetitle{Программная инженерия. Лекция №12 — ЯП. Метапрограммирование.}
+\title[Метапрограммирование]{Языки программирования. Метапрограммирование}
+\author{Алексей Островский}
+\institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
+\date{12 декабря 2014 г.}
+
+\begin{document}
+	\frame{\titlepage}
+
+	\section[ЯП]{Языки программирования}
+
+	\frame{
+		\frametitle{Языки программирования}
+
+		\begin{Definition}
+			\textbf{Язык программирования} — формальный язык для записи инструкций, выполняемых исполнителем (чаще всего — ЭВМ).
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Составляющие языка:}
+		\begin{itemize}
+			\item
+			Синтаксис — набор правил, определяющих последовательности символов, 
+			составляющих допустимую программу или ее фрагмент.
+
+			\item
+			Семантика — правила, определяющие значение различных конструкций языка.
+
+			\item
+			Система выполнения и стандартная библиотека — определяют функциональность, 
+			доступную для всех имплементаций языка без подключения внешних модулей.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Классификация языков программирования}
+
+		\textbf{Способы классификации ЯП:}
+		\begin{itemize}
+			\item
+			по способу представления инструкций — текстовые, графические, смешанные;
+			\item
+			по конкретизации инструкций — императивные (инструкции определяют последовательность действий), 
+			декларативные (инструкции определяют конечный результат, но не способ его достижения);
+			\item
+			по поддерживаемым парадигмам программирования;
+			\item
+			по выразительной силе — полные и неполные по Тьюрингу;
+			\item
+			по области применения — общего назначения и предметно-ориентированные;
+			\item
+			по семантическим характеристикам, напр., особенностям системы типов данных.
+		\end{itemize}
+	}
+
+	\subsection{Синтаксис ЯП}
+
+	\frame{
+		\frametitle{Синтаксис ЯП}
+
+		\begin{center}
+			\textbf{Синтаксис = форма ЯП.}
+		\end{center}
+
+		\vspace{1ex}
+		\textbf{Описание синтаксиса:}
+		\extlink{http://ru.wikipedia.org/wiki/\%D0\%A4\%D0\%BE\%D1\%80\%D0\%BC\%D0\%B0_\%D0\%91\%D1\%8D\%D0\%BA\%D1\%83\%D1\%81\%D0\%B0_\%E2\%80\%94_\%D0\%9D\%D0\%B0\%D1\%83\%D1\%80\%D0\%B0}{формы Бэкуса — Наура} (БНФ).
+
+		\vspace{1ex}
+		\textbf{Роль в обработке программы:}
+		\begin{itemize}
+			\item
+			лексический анализ — группирование символов программы в лексемы (напр., числа, строки, ключевые слова);
+			\item
+			синтаксический анализ — построение дерева разбора на основе лексем.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Синтаксис БНФ:}
+		\begin{center}
+			\code{<выражение> ::= <альтернатива 1> | <альтернатива 2> | … |  <альтернатива n>}
+		\end{center}
+
+		\figureexpl{
+			В БНФ может использоваться синтаксис регулярных выражений (\code{+} = повтор 1 или~более раз, 
+			\code{[]} — выбор из~нескольких вариантов и~т.\,п.).
+		}
+	}
+
+	\frame{
+		\frametitle{Пример БНФ}
+
+		\textbf{БНФ для списков:}
+		\lstinputlisting[language={}]{code-bnf.yacc}
+
+		\vspace{1ex}
+		\textbf{Допустимые списки:}
+		\begin{itemize}
+			\item \code{[]}
+			\item \code{[1, [2, 3], foo, Bar]}
+			\item \code{[-123456789, [[[]], [+987654321, baZZ]]]}
+		\end{itemize}
+	}
+
+	\subsection{Семантика ЯП}
+
+	\frame{
+		\frametitle{Семантика ЯП}
+
+		\begin{center}
+			\textbf{Семантика = содержание или смысл ЯП.}
+		\end{center}
+
+		\vspace{1ex}
+		\textbf{Описание семантики:} математические и логические модели.
+
+		\vspace{1ex}
+		\textbf{Составляющие семантики:}
+		\begin{itemize}
+			\item
+			статическая семантика — ограничение на инструкции, не формализуемые в БНФ 
+			(напр., декларирование переменных, \extlink{http://en.wikipedia.org/wiki/Definite_assignment_analysis}{анализ инициализации}, 
+			ограничения, связанные с системой типов);
+
+			\item
+			динамическая семантика — определение поведения отдельных конструкций языка, 
+			преобразование дерева разбора в машинные инструкции;
+
+			\item
+			формальная семантика — анализ кода программы для получения ее~характеристик, напр., 
+			для доказательства корректности (логика Хоара) или~оптимизации.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Различия между синтаксисом и семантикой}
+
+		\textbf{Синтаксические и семанические ошибки в Java:}
+		\lstinputlisting[language=java]{code-semantics.java}
+	}
+
+	\subsection{Система типов}
+
+	\frame{
+		\frametitle{Система типов}
+
+		\begin{Definition}
+		\textbf{Система типов языка программирования} — совокупность правил, определяющих свойство типа 
+		для конструкций языка (переменных, выражений, функций, модулей, …).
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Цели системы типов:}
+		\begin{itemize}
+			\item
+			\textbf{основная:} определение интерфейсов для взаимодействия с частями программы и~обеспечение 
+			их~корректного использования с~целью устранения ошибок;
+
+			\item обеспечение функциональности языка (напр., динамическая диспетчеризация в~ООП);
+			\item рефлексия;
+			\item оптимизация;
+			\item повышение доступности программы для понимания.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Классификация типов}
+
+		\textbf{Категории типов в ЯП:}
+		\begin{itemize}
+			\item примитивные типы (булев тип, целые и вещ. числа);
+			\item ссылки и указатели;
+			\item составные типы (напр., массивы и записи);
+			\item объекты;
+			\item функции;
+			\item типы типов (напр., \code{Class<?>} в Java).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Унификация типов в ООП:}
+		\begin{itemize}
+			\item языки, в которых все типы наследуются от базового типа (C\#, Python);
+			\item языки с изолированными примитивными типами (C++, Java, JavaScript).
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Проверка типов в различных ЯП}
+
+		\textbf{Java:}
+		\lstinputlisting[language=java]{code-str-int.java}
+
+		\vspace{0.5ex}
+		\textbf{Python:}
+		\lstinputlisting[language=python,escapechar=\$]{code-str-int.py}
+
+		\vspace{0.5ex}
+		\textbf{PHP:}
+		\lstinputlisting[language=php]{code-str-int.php}
+
+		\vspace{0.5ex}
+		\textbf{C:}
+		\lstinputlisting[language=c]{code-str-int.c}
+	}
+
+	\frame{
+		\frametitle{Статическая и динамическая типизация}
+
+		\textbf{Статическая типизация} — определение типов всех конструкций языка на этапе компиляции программы.
+
+		\vspace{1ex}
+		\textbf{Виды статической типизации:}
+		\begin{itemize}
+			\item
+			явная — типы конструкций декларируются программистом (напр., при объявлении переменных);
+			\item
+			неявная — тип переменных выводится в процессе компиляции. Примеры:
+			\begin{itemize}
+				\item \code{\textbf{var} x = 5} в C\#; 
+				\item \code{List<> list = \textbf{new} ArrayList<String>()} в Java 7+.
+			\end{itemize}
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{ЯП со статической типизацией:} C++, Pascal, Java, C\#.
+
+		\vspace{2.5ex}
+		\textbf{Динамическая типизация} — определение типов некоторых конструкций и проверка соответствующих ограничений 
+		во время выполнения программы.
+
+		\vspace{1ex}
+		\textbf{ЯП с динамической типизацией:} Python, PHP, Perl, JavaScript.
+	}
+
+	\frame{
+		\frametitle{Утиная типизация}
+
+		\begin{Definition}
+			\textbf{Утиная типизация} \engterm{duck typing} — вид динамической типизации, при которой 
+			корректность использования объекта определяется набором его методов и свойств, а~не~типом.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{ЯП с утиной типизацией:}
+		\begin{itemize}
+			\item языки с ООП на основе прототипов (JavaScript, Lua);
+			\item Python; 
+			\item Smalltalk.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Пример динамической не утиной типизации:} подсказки типов \engterm{data hinting} в~PHP.
+	}
+
+	\frame{
+		\frametitle{Сильная и слабая типизация}
+
+		\textbf{Типобезопасность} \engterm{type safety} — предотвращение языком программирования ошибок 
+		согласования типов (напр., интерпретации целого числа \code{int} как вещественного \code{float}).
+
+		\vspace{1ex}
+		\textbf{Безопасность памяти} \engterm{memory safety} — предотвращение ЯП доступа к~оперативной памяти, 
+		не выделенной в ходе выполнения программы.
+
+		\vspace{2.5ex}
+		\textbf{Сильная типизация} — высокая степень типобезопасности и~безопасности памяти 
+		(напр., отсутствие неявных приведений типов, указателей).
+
+		\vspace{0.5ex}
+		\textbf{Примеры ЯП с сильной типизацией:} Python, Java, функциональные ЯП.
+
+		\vspace{1.5ex}
+		\textbf{Слабая типизация} — возможность обхода безопасности типов и~памяти 
+		с~помощью конструкций ЯП (напр., \code{void*} в С/С++).
+
+		\vspace{0.5ex}
+		\textbf{Примеры ЯП со слабой типизацией:} C, C++, Visual Basic.
+	}
+
+	\frame{
+		\frametitle{Полиморфизм}
+
+		\begin{Definition}
+			\textbf{Полиморфизм} — использование единого интерфейса для сущностей различных типов.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Виды полиморфизма:}
+		\begin{itemize}
+			\item
+			Специальный (ad hoc) полиморфизм — определение различных реализаций для~конечного числа 
+			фиксированных наборов входных типов (напр., перегрузка функций / методов).
+
+			\item
+			Параметрический полиморфизм — определение обобщенной реализации для~произвольного типа 
+			(напр., шаблоны / generics в C++ и Java).
+
+			\item
+			Полиморфизм подтипов — использование интерфейса класса для любого производного от него подкласса (применяется в ООП).
+		\end{itemize}
+	}
+
+	\subsection{Реализация ЯП}
+
+	\frame{
+		\frametitle{Реализация ЯП}
+
+		\begin{itemize}
+			\item
+			\textbf{Компилируемые ЯП} — исходный код преобразуется в машинный \emph{до начала} выполнения.
+
+			\vspace{0.5ex}
+			\textbf{Примеры:} C/C++, Pascal.
+
+			\vspace{1ex}\item
+			\textbf{Интерпретируемые ЯП} — преобразование кода в машинные инструкции \emph{по ходу} выполнения.
+
+			\vspace{0.5ex}
+			\textbf{Примеры:} PHP, JavaScript.
+
+			\vspace{1ex}\item
+			Компиляция в независимый от платформы код и его интерпретация.
+
+			\vspace{0.5ex}
+			\textbf{Примеры:} Java (байт-код), C\# (CLR — common language runtime).
+		\end{itemize}
+	}
+
+	\section{Метапрограммирование}
+
+	\frame{
+		\frametitle{Метапрограммирование}
+
+		\begin{Definition}
+			\textbf{Метапрограммирование} — разработка программ, обращающихся с~программами как с~данными:
+			\begin{itemize}
+				\item
+				создание программ, порождающих другие программы (в том числе во время компиляции);
+				\item
+				разработка программ, модифицирующих свой код во время исполнения.
+			\end{itemize}
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Цели метапрограммирования:}
+		\begin{itemize}
+			\item минимизация затрат на разработку;
+			\item оптимизация кода;
+			\item автоматизация разработки за счет использования высокоуровневых абстракций.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Виды метапрограммирования}
+
+		\begin{enumerate}
+			\item
+			Шаблоны — автоматическая генерация мало различающихся параметризованных фрагментов кода. 
+			Примеры параметров: типы данных, размеры массивов.
+
+			\vspace{0.5ex}
+			\textbf{Примеры:} препроцессоры в C и сходных языках; шаблоны в C++.
+
+			\vspace{1ex}\item
+			Интерпретация произвольного исходного кода с помощью специальных функций.
+
+			\vspace{0.5ex}
+			\textbf{Примеры:} Функция \code{eval} в Python, PHP, JavaScript и других интерпретируемых ЯП.
+
+			\vspace{1ex}\item
+			Использование рефлексии \engterm{reflection} для самомодификации программы во~время выполнения.
+
+			\vspace{1ex}\item
+			Использование предметно-специфичных языков \engterm{domain-specific languages} 
+			с~последующей трансляцией или интерпретацией при помощи ЯП общего назначения.
+		\end{enumerate}
+	}
+
+	\subsection{Рефлексия}
+
+	\frame{
+		\frametitle{Рефлексия}
+
+		\begin{Definition}
+			\textbf{Рефлексия} или \textbf{отражение} \engterm{reflection} — отслеживание и изменение 
+			структуры и~поведения программы во время ее выполнения.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Возможности рефлексии:}
+		\begin{itemize}
+			\item
+			поиск и извлечение информации о типах во время исполнения;
+			\item
+			определение дополнительной информации о классах / методах (напр., данные об~аннотациях в Java);
+			\item
+			создание или переопределение классов / методов во время работы программы.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Варианты использования рефлексии}
+
+		\begin{itemize}
+			\item
+			\textbf{Тестирование:} создание mock-объектов — заглушек, реализующих требуемые функции программного окружения.
+
+			\vspace{1ex}\item
+			\textbf{Контейнеры объектов} (напр., серверы приложений): управление жизненным циклом объектов.
+
+			\vspace{1ex}\item
+			\textbf{Интерпретация предметно-ориентированных языков:} установление связи между объектами ЯП 
+			общего назначения и инструкциями DSL.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Пример рефлексии}
+
+		\textbf{Рефлексия в JavaScript:}
+		\lstinputlisting[language=javascript]{code-reflection.js}
+	}
+
+	\section{DSL}
+
+	\frame{
+		\frametitle{DSL}
+
+		\begin{Definition}
+			\textbf{Предметно-ориентированный язык} \engterm{domain-specific language} — компьютерный язык, 
+			специализированный для конкретной области применения.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Примеры ПОЯ}
+
+		\begin{center}
+			\begin{tabular}{|l|p{0.5\textwidth}|}
+				\hline
+				\centering\textbf{Область} & \centering\textbf{Язык(и)} \cr
+				\hline
+				Веб-страницы (отображение) & HTML, CSS \cr
+				Компьютерная верстка & \TeX / \LaTeX \cr
+				Веб-страницы (генерация) & \raggedright Языки шаблонов (\extlink{http://en.wikipedia.org/wiki/Twig_\%28template_engine\%29}{Twig}, 
+					\extlink{http://en.wikipedia.org/wiki/Jinja_(template_engine)}{Jinja} / шаблоны Django, 
+					\extlink{http://en.wikipedia.org/wiki/JavaServer_Pages}{JSP}) \cr
+				Матричное программирование & Matlab, Octave \cr
+				Реляционные СУБД & SQL \cr
+				\hline
+			\end{tabular}
+		\end{center}
+	}
+
+	\subsection{Причины появления}
+
+	\frame{
+		\frametitle{Причины появления DSL}
+
+		\textbf{Задача:} создание представлений (view) в рамках архитектуры MVC.
+
+		\textbf{Наивное решение:} использование ЯП общего назначения (напр., Python).
+
+		\vspace{1ex}
+		\textbf{Наивное представление в ЯП Python}
+		\lstinputlisting[language=python,escapechar=\$]{code-view.py}
+	}
+
+	\frame{
+		\frametitle{Причины появления DSL}
+
+		\textbf{Недостатки использования ЯП общего назначения:} 
+		\begin{itemize}
+			\item
+			громоздкость кода (избыток функций вывода и т.\,п.); 
+			\item 
+			соблазн внести код, не относящийся к созданию представления; 
+			\item 
+			разработчик интерфейса сайта может не знать ЯП общего назначения.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Решение:} использование языка шаблонов (HTML с дополнительными управляющими конструкциями).
+
+		\vspace{1ex}
+		\lstinputlisting[language=html]{code-view.html}
+	}
+
+	\frame{
+		\frametitle{Место DSL в разработке ПО}
+
+		\textbf{Варианты использования DSL:}
+		\begin{enumerate}
+			\item DSL используется для конфигурации компонентов, написанных на ЯП общего назначения;
+			\item DSL встраивается в ЯП общего назначения (напр., Java Scripting Engine);
+			\item DSL транслируется (чаще всего — в код на ЯП высокого уровня).
+		\end{enumerate}
+
+		\vspace{1ex}
+		\textbf{Инструменты для разработки DSL:}
+		\begin{itemize}
+			\item
+			средства лексического и синтаксического анализа (yacc, lex, bison, ANTLR);
+			\item
+			инструменты моделирования предметной области (Eclipse Modeling Framework).
+		\end{itemize}
+	}
+
+	\subsection{Преимущества и недостатки}
+
+	\frame{
+		\frametitle{Преимущества DSL}
+
+		\begin{itemize}
+			\item
+			Разделение ответственности \engterm{separation of concerns} — независимость семантики языка от его реализации;
+
+			\vspace{1ex}\item
+			высокий уровень абстракции DSL — позволяет сократить объем решения, повысить его доступность и упростить отладку;
+
+			\vspace{1ex}\item
+			упрощение портирования — при переносе в другую среду меняется лишь имплементация DSL;
+
+			\vspace{1ex}\item
+			легкость в освоении использовании профильными специалистами.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Недостатки DSL}
+
+		\begin{itemize}
+			\item
+			Затраты на проектирование, имплементацию и сопровождение языка и~соответствующих инструментов 
+			(напр., поддержки среды разработки);
+
+			\vspace{1ex}\item
+			проблема определения границ DSL;
+
+			\vspace{1ex}\item
+			трудности интеграции DSL в программную систему;
+
+			\vspace{1ex}\item
+			проблема стандартизации языков одной предметной области;
+
+			\vspace{1ex}\item
+			низкая производительность по сравнению с языками общего назначения.
+		\end{itemize}
+	}
+
+	\section{Заключение}
+
+	\subsection{Выводы}
+	
+	\frame{
+		\frametitle{Выводы}
+
+		\begin{enumerate}
+			\item
+			Языки программирования характеризуются синтаксисом (формой) и семантикой (содержанием). 
+			Семантика языка может использоваться не только в процессе компиляции / интерпретации, 
+			но и при анализе программ, напр., при~доказательстве их корректности.
+
+			\item
+			Важная часть семантики языка программирования — система типов. 
+			ЯП может обладать статической или динамической, строгой или слабой типизацией.
+
+			\item
+			Метапрограммирование (порождающее программирование) — парадигма программирования, 
+			в которой код программ рассматривается как данные. 
+			Основными инструментами метапрограммирования являются рефлексия и~использование предметно-ориентированных языков.
+		\end{enumerate}
+	}
+	
+	\subsection{Материалы}
+	
+	\frame{
+		\frametitle{Материалы}
+		
+		\begin{thebibliography}{9}
+			\bibitem[1]{1}
+			Czarnecki, K.; Eisenecker, U.\,W.
+			\newblock Generative Programming.
+
+			\bibitem[2]{2}
+			Fowler, M.
+			\newblock Domain Specific Languages. 
+			\newblock {\footnotesize\url{http://martinfowler.com/dsl.html}}
+
+			\bibitem[3]{3}
+			Лавріщева К.\,М. 
+			\newblock Програмна інженерія (підручник). 
+			\newblock {\footnotesize К., 2008. — 319 с.}
+		\end{thebibliography}
+	}
+	
+	\frame{
+		\frametitle{}
+		
+		\begin{center}
+			\Huge Спасибо за внимание!
+		\end{center}
+	}
+\end{document}
