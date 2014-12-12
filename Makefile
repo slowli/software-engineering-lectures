@@ -13,7 +13,7 @@ TEMPDIR=tmp
 TEX=01/intro.tex 02/disciplines.tex 03/base-areas.tex \
 	04/aux-areas.tex 05/lifecycle.tex 06/requirements.tex \
 	07/modeling.tex 08/architecture.tex 09/design-patterns.tex \
-	10/paradigms-1.tex 11/paradigms-2.tex
+	10/paradigms-1.tex 11/paradigms-2.tex 12/metaprogramming.tex
 
 DIRS=$(subst /,,$(dir $(TEX)))
 DIRS_a4=$(addsuffix -a4,$(DIRS))
