@@ -1,0 +1,21 @@
+\begin{tikz*}[%
+	node distance=2.0em and 3.0em,
+	every node/.style={rectangle,draw,align=center,minimum height=2.5em}
+]
+	\node(init) {Начальные \\ требования};
+	\node(proto) [below=of init] {Разработка \\ прототипа};
+	\node(req) [right=of proto] {Конкретизация \\ требований};
+	\node(testing) [ellipse,right=of req] {\alert{Тестирование}};
+	\node(diff) [below=of $(proto.south)!0.5!(req.south)$] {Внесение \\ изменений};
+	\node(release) [below=of diff] {Выпуск};
+	\node(customer) [above=of req,ellipse] {Заказчик};
+	
+	\draw[dashed] (req) to (testing);
+	\draw[->] (init) to (proto);
+	\draw[->] (proto) to (req);
+	\draw[->] (req) to (diff);
+	\draw[->] (diff) to (proto);
+	\draw[->] (diff) to (release);
+	\draw[<->,dashed] (init) to (customer);
+	\draw[<->,dashed] (req) to (customer);
+\end{tikz*}
