@@ -1,0 +1,29 @@
+\begin{tikz*}[%
+	every node/.style={align=center},
+	action/.style={rounded rectangle,draw,minimum height=2.25em,minimum width=10em},
+	decision/.style={diamond,draw,minimum width=1em,minimum height=1em},
+	label/.style={font=\footnotesize}
+]
+	\node(func) [action] {Выделение \\ функциональности};
+	\node(new-test) [action,below=of func] {Написание теста};
+	\node(test) [action,below=of new-test] {Проверка теста};
+	
+	\node(decision-test) [decision,right=of test] {};
+	\node(impl) [action,right=5em of decision-test] {Реализация};
+	\node(reg) [action,below=of impl] {Регрессионное \\ тестирование};
+	\node(decision-reg) [decision,right=5em of reg] {};
+	\node(refactor) [action,below=3.5em of decision-reg] {Рефакторинг};
+
+	\draw[->] (func) -- (new-test);
+	\draw[->] (new-test) -- (test);
+	\draw[->] (test) -- (decision-test);
+	\draw[->] (decision-test) -- node[below,label]{[ошибка]} (impl);
+	\draw[->] (decision-test) |- node[right,label,pos=0.25]{[успех]} (new-test);
+	\draw[->] (impl) -- (reg);
+	\draw[->] (reg) -- (decision-reg);
+	\draw[->] (decision-reg) -- node[left,label]{[успех]} (refactor);
+	\draw[->] (decision-reg) |- node[right,label,pos=0.25]{[ошибка]} (impl);
+
+	\node(_tmp) [coordinate,left=1.5em of func.west] {};
+	\draw[dotted] (refactor) -| (_tmp) [->] -- (func.west);
+\end{tikz*}
