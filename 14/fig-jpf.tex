@@ -1,0 +1,16 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3.25em,minimum width=13em}
+]
+	\node(app) {Приложение};
+	\node(cls) [right=of app] {Классы / Библиотеки};
+	\node(jpf-vm) [below=of app] {Виртуальная машина \\ Pathfinder};
+	\node(jpf-cls) [right=of jpf-vm] {Переопределенные \\ стандартные классы};
+	\node(jvm) [below=of jpf-vm] {Базовая \\ виртуальная машина};
+	\node(rt) [right=of jvm] {Стандартная библиотека \\ \textbf{rt.jar}};
+
+	\draw[<->] (app) -- (cls);
+	\draw[<->] (jpf-vm) -- (jpf-cls);
+	\draw[<->] (jvm) -- (rt);
+	\draw[->] (app) -- (jpf-vm);	
+	\draw[->] (jpf-vm) -- (jvm);
+\end{tikz*}
