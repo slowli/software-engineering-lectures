@@ -1,0 +1,25 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3.25em}
+]
+	\node(spec) {Спецификация \\ требований};
+	\node(arch) [right=of spec] {Архитектура ПО};
+	\node(uml) [right=of arch] {Модели UML};
+	\node(schema) [right=of uml] {Схемы БД};
+	\node(program) [right=of schema] {Программы};
+	\node(proto) [below=of spec] {Прототипы \\ системы};
+
+	\node(inspect) [rounded rectangle,above=of uml] {Инспекции};
+	\node(testing) [rounded rectangle] at (uml.south |- proto.west) {Тестирование};
+
+	\draw[->] (spec) -- (proto);
+	\draw[->] (testing) -- (proto);
+	\draw[->] (testing) -| (program);
+
+	\node(_tmp) [coordinate] at ($ (inspect.south)!0.5!(uml.north) $) {};
+	\draw (inspect) -- (_tmp);
+	\draw[->] (_tmp) -| (spec);
+	\draw[->] (_tmp) -| (arch);
+	\draw[->] (_tmp) -- (uml);
+	\draw[->] (_tmp) -| (schema);
+	\draw[->] (_tmp) -| (program);
+\end{tikz*}

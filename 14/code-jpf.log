@@ -1,0 +1,7 @@
+====== error #1
+gov.nasa.jpf.listener.PreciseRaceDetector
+race for field Racer@13d.d
+  main at Racer.main(Racer.java:15)
+		"int c = 420 / racer.d;"  : getfield
+  Thread-0 at Racer.run(Racer.java:6)
+		"d = 0;"  : putfield

@@ -1,0 +1,21 @@
+\begin{tikz*}[%
+	every node/.style={align=center}
+]
+	\node(arrow-st) [coordinate] {};
+	\node(arrow-tip) [coordinate,right=30em of arrow-st] {};
+
+	\node(testing-c) [coordinate,right=7.5em of arrow-st] {};
+	\node(testing) [above=0.5em of testing-c] {Тестирование};
+	\node(analysis-c) [coordinate,right=15em of arrow-st] {};
+	\node(analysis) [above=0.5em of analysis-c] {Анализ кода};
+	\node(formal-c) [coordinate,right=22.5em of arrow-st] {};
+	\node(formal) [above=0.5em of formal-c] {Формальные \\ методы};
+
+	\node(speed) [below=0.5em of arrow-st] {Скорость};
+	\node(complete) [below=0.5em of arrow-tip] {Полнота};
+
+	\draw[->] (arrow-st) -- (arrow-tip);
+	\draw (testing-c) ++(0,0.5em) -- ++(0,-1em);
+	\draw (analysis-c) ++(0,0.5em) -- ++(0,-1em);
+	\draw (formal-c) ++(0,0.5em) -- ++(0,-1em);
+\end{tikz*}
