@@ -6,7 +6,7 @@
 ]
 	\node(func) [action] {Выделение \\ функциональности};
 	\node(new-test) [action,below=of func] {Написание теста};
-	\node(test) [action,below=of new-test] {Проверка теста};
+	\node(test) [action,below=of new-test] {Запуск теста};
 	
 	\node(decision-test) [decision,right=of test] {};
 	\node(impl) [action,right=5em of decision-test] {Реализация};
