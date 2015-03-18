@@ -1,0 +1,14 @@
+\begin{tikz*}[%
+	every node/.style={align=center,minimum width=10em,minimum height=3.25em,draw}
+]
+	\node(dev) [rounded rectangle] {Разработка}; 
+	\node(dev-team) [rectangle,below=of dev] {Группа \\ разработки}; 
+	\node(release) [rounded rectangle,right=of dev] {Выпуск};
+	\node(maint) [rounded rectangle,right=of release] {Сопровождение}; 
+	\node(maint-team) [rectangle,below=of maint] {Группа \\ сопровождения};
+
+	\draw[->] (dev) -- (release);
+	\draw[->] (release) -- (maint);
+	\draw[dashed] (dev) -- (dev-team);
+	\draw[dashed] (maint) -- (maint-team);
+\end{tikz*}

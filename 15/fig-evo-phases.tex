@@ -1,0 +1,27 @@
+%Запросы на изменение; Анализ влияния; Планирование выпуска; Реализация изменений; Выпуск системы; (Типы изменений: ) Исправление дефектов; Миграция; Усовершенствование.
+\begin{tikz*}[%
+	every node/.style={align=center,rounded rectangle,draw,minimum width=10em,minimum height=3.25em}
+]
+	\node(req) [rectangle] {Запросы \\ на изменение};
+	\node(impact) [below=of req] {Анализ \\ влияния};
+	\node(plan) [below=of impact] {Планирование \\ выпуска};
+	\node(impl) [below=of plan] {Реализация \\ изменений};
+	\node(release) [below=of impl] {Выпуск \\ системы};
+
+	\node(defects) [right=4em of impact] {Исправление \\ дефектов};
+	\node(adapt) [right=4em of plan] {Миграция};
+	\node(improve) [right=4em of impl] {Улучшение};
+
+	\draw[->] (req) -- (impact);
+	\draw[->] (impact) -- (plan);
+	\draw[->] (plan) -- (impl);
+	\draw[->] (impl) -- (release);
+	\draw[->] (release.west) -- ++(-4em,0) |- (req.west);
+	\draw[->] (impl.west) -- ++(-2em,0) |- (plan.west);
+
+	\node (_tmp) [coordinate,right=2em of plan.east] {};
+	\draw (plan.east) -- (_tmp);
+	\draw[->] (_tmp) |- (defects.west);
+	\draw[->] (_tmp) -- (adapt.west);
+	\draw[->] (_tmp) |- (improve.west);
+\end{tikz*}

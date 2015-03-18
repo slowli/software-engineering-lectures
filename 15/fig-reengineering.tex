@@ -1,0 +1,38 @@
+\begin{tikz*}[%
+	every node/.style={align=center,rounded rectangle,draw,minimum width=8.5em,minimum height=3.25em}
+]
+	\node(orig) [rectangle] {Исходная \\ программа};
+	\node(trans) [below=of orig] {\alert<2>{Трансляция} \\ \alert<2>{исходного кода}};
+	\node(improve) [right=of trans] {\alert<4>{Модификация} \\ \alert<4>{структуры}};
+	\node(rev-eng) [above=of improve] {\alert<3>{Обратная} \\ \alert<3>{инженерия}};
+	\node(module) [right=of improve] {\alert<5>{Модуляризация}};
+	\node(doc) [rectangle,above=of module] {Документация};
+	\node(restruct) [rectangle,below=of improve] {Структур. \\ программа};
+	\node(reeng) [rectangle,below=of module] {Модиф. \\ программа};
+	\node(data-reeng) [right=of module] {\alert<6>{Реинженерия} \\ \alert<6>{данных}};
+	\node(orig-data) [rectangle,above=of data-reeng] {Исходные \\ данные};
+	\node(data) [rectangle,below=of data-reeng] {Модиф. \\ данные};
+
+	\draw[->] (orig) -- (trans);
+	\draw[->] (trans) -- (rev-eng);
+	\draw[->] (trans) -- (improve);
+	\draw[->] (rev-eng) -- (doc);
+	\draw[->] (improve) -- (restruct);
+	\draw[->] (doc) -- (module);
+	\draw[->] (restruct) -- (module);
+	\draw[->] (module) -- (reeng);
+	\draw[->] (orig-data) -- (data-reeng);
+	\draw[->] (reeng) -- (data-reeng);
+	\draw[->] (data-reeng) -- (data);
+
+	\node<2> [note={(trans.south)},below=1em of trans.south,anchor=north west] {%
+		автоматизированный перевод программы \\ на новую версию ЯП или другой ЯП};
+	\node<3> [note={(rev-eng.south)},below=1em of rev-eng.south,anchor=north] {%
+		автоматизированное создание документации \\ на основе структуры программы};
+	\node<4> [note={(improve.south)},below=1em of improve.south,anchor=north] {%
+		упрощение структуры программы \\ (частичная автоматизация)};
+	\node<5> [note={(module.south)},below=1em of module.south,anchor=north] {%
+		группирование связанных частей программы \\ и удаление избыточности (вручную)};
+	\node<6> [note={(data-reeng.south)},below=1em of data-reeng.south,anchor=north east] {%
+		обработка данных для согласования \\ с изменениями в системе \\ (напр., изменение схемы БД)};
+\end{tikz*}
