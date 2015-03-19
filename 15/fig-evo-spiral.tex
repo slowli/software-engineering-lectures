@@ -1,0 +1,17 @@
+\begin{tikz*}[%
+	every node/.style={align=center}
+]
+	\draw[thick,draw=blue,domain=4.712:23.562,samples=150,smooth,variable=\t,xscale=0.15,yscale=0.15] 
+		plot({\t*sin(\t r)}, {\t*cos(\t r)});
+
+	\draw (-3.5, 0) -- (3.5, 0);
+	\draw (0, -3.5) -- (0, 3.5);
+
+	\node at (-3.5, 3) [draw,font=\bfseries] {Спецификация};
+	\node at (3.5, 3) [draw,font=\bfseries] {Реализация};
+	\node at (-3.5, -3) [draw,font=\bfseries] {Функционирование};
+	\node at (3.5, -3) [draw,font=\bfseries] {Валидация};
+	\node at (0, 0) [anchor=north east] {Начало};
+	\node(release) at (-3.5, 0.5) {Выпуски};
+	\draw[->] (release) -- (-3, 0);
+\end{tikz*}

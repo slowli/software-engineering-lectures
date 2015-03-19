@@ -1,0 +1,28 @@
+\begin{tikz*}[%
+	xscale=2.0,
+	every node/.style={rectangle,draw,align=center,minimum height=2.5em,font=\small}
+]
+	\node(customer) [ellipse] {Заказчик};
+	\node(init) at (90:6em) {Планирование \\ итерации};
+	\node(req) at (45:6em) {Анализ \\ требований};
+	\node(design) at (0:6em) {Проектирование};
+	\node(code) at (-45:6em) {Кодирование};
+	\node(test) at (-90:6em) {Тестирование};
+	\node(doc) at (-135:6em) {Документирование};
+	\node(release) at (180:6em) [ellipse] {Выпуск};
+	\node(prior) at (135:6em) {Переоценка \\ приоритетов};
+	
+	\draw[->] (init) to (req);
+	\draw[->] (req) to (design);
+	\draw[->] (design) to (code);
+	\draw[->] (code) to (test);
+	\draw[->] (test) to (doc);
+	\draw[->] (doc) to (release);
+	\draw[->] (release) to (prior);
+	\draw[->] (prior) to (init);
+	
+	\draw[<->,dashed] (customer) to (init);
+	\draw[<->,dashed] (customer) to (req);
+	\draw[<->,dashed] (customer) to (test);
+	\draw[<->,dashed] (customer) to (release);
+\end{tikz*}
