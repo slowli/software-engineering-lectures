@@ -1,0 +1,16 @@
+Our basic C program consists of the five parts:
+<<*>>=
+<<Header files to include>>
+<<Type definitions>>
+<<Global variables>>
+<<Function definitions>>
+<<The main program>>
+@
+
+As we intend to present information to the user, 
+we should include the standard I/O library.
+<<Header files to include>>=
+#include <stdio.h>
+@
+
+So it goes.

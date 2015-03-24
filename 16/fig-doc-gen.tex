@@ -1,0 +1,20 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3.25em,minimum width=8.5em}
+]
+	\node(src) {Исходный код};
+	\node(comments) [below left=2em and 0em of src] {Комментарии};
+	\node(struct) [below right=2em and 0em of src] {Структура};
+	\node(gen) [below=of comments] {Генератор \\ документации};
+	\node(output) [below=3em of gen,anchor=north] {HTML-страницы, PDF, \\ UML-схемы, …};
+	\node(parser) [below=of struct] {Синтаксический \\ анализатор IDE};
+	\node(help) [below=3em of parser,anchor=north] {Контекстная \\ помощь};
+
+	\draw[->] (src) -- (comments);
+	\draw[->] (src) -- (struct);
+	\draw[->] (comments) -- (gen);
+	\draw[->] (struct) -- (gen);
+	\draw[->] (comments) -- (parser);
+	\draw[->] (struct) -- (parser);
+	\draw[->] (gen) -- (output);
+	\draw[->] (parser) -- (help);
+\end{tikz*}
