@@ -1,0 +1,23 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,align=center,minimum height=3.25em,minimum width=8.5em}
+]
+	\node(req) [draw] {Инженерия \\ требований};
+	\node(req-doc) [right=5em of req] {Спецификация \\ требований};
+	\node(design) [below=of req,draw] {Проектирование};
+	\node(des-doc) at (req-doc.south |- design.east) {архитектурная / проектная \\ документация};
+	\node(impl) [below=of design,draw] {Имплементация};
+	\node(impl-doc) at (req-doc.south |- impl.east) {Техническая \\ документация};
+	\node(test) [below=of impl,draw] {Тестирование};
+	\node(maint) [below=of test,draw] {Сопровождение};
+	
+	\draw[->] (req) to (design);
+	\draw[->,dashed] (req) to (req-doc);
+	\draw[->] (design) to (impl);
+	\draw[->,dashed] (design) to (des-doc);
+	\draw[->] (impl) to (test);
+	\draw[->,dashed] (impl) to (impl-doc);
+	\draw[->] (test) to (maint);
+
+	\draw[decorate,decoration={brace,amplitude=0.4em,raise=5pt}] (req.west |- test.west) 
+		-- node[left,minimum width=12em] {Пользовательская \\ документация; \\ маркетинговая \\ документация} (req.west);
+\end{tikz*}
