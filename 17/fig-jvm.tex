@@ -1,0 +1,25 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3.25em,minimum width=5em},
+	cat/.style={font=\bfseries,draw=none}
+]
+	\node(loaders) [draw] {Загрузчики байткода \\ (напр., из файлов \textbf{*.class})};
+	\node(class) [cat,left=of loaders] {Классы};
+
+	\node(methods) [below=of loaders.south west,anchor=north west] {Методы};
+	\node(heap) [right=1.5em of methods] {Куча};
+	\node(stack) [right=1.5em of heap] {Стек JVM};
+	\node(stack-native) [right=1.5em of stack] {Стек нативных \\ методов};
+	\node(class) [cat,left=of methods] {Память};
+
+	\node(interp) [below=of methods.south west,anchor=north west] {Интерпретатор};
+	\node(jit) [right=1.5em of interp] {JIT-компилятор};
+	\node(machine-code) [right=1.5em of jit] {Машинный код};
+	\node(jni) [below=of interp.south west,anchor=north west] {Java Native Interface};
+	\node(nat-libs) [right=1.5em of jni] {Нативные библиотеки};
+	\node(exec) [cat,left=of interp] {Выполнение};
+
+	\draw[->] (interp) -- (jit);
+	\draw[->] (interp.south) -- (jni.north -| interp.south);
+	\draw[->] (jit) -- (machine-code);
+	\draw[->] (jni) -- (nat-libs);
+\end{tikz*}
