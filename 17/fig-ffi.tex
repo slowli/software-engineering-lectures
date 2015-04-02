@@ -1,0 +1,11 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3.5em,minimum width=8.5em},
+	label/.style={minimum height=0pt,minimum width=0pt,font=\small,draw=none}
+]
+	\node(hi-level) {Программа на \\ высокоуровневом \\ ЯП};
+	\node(ffi-lib) [right=5em of hi-level] {Библиотека \\ FFI};
+	\node(lo-level) [right=5em of ffi-lib] {Программа на \\ низкоуровневом \\ ЯП (C, C++, ASM)};
+
+	\draw[->] (hi-level) -- node[above,label]{API} (ffi-lib);
+	\draw[->] (ffi-lib) -- node[above,label]{ABI} (lo-level);
+\end{tikz*}

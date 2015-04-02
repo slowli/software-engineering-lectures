@@ -1,0 +1,26 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center},
+	big/.style={minimum width=10em,minimum height=7.5em},
+	small/.style={minimum width=6em,minimum height=2.5em,fill=white},
+	flow/.style={blue}
+]
+	\node(lib) [big] {Библиотека};
+	\node(lib-func1) [above right=2em and 1em of lib.east,anchor=center,small] {\code{func1}};
+	\node(lib-func2) [below right=2em and 1em of lib.east,anchor=center,small] {\code{func2}};
+
+	\node(app) [big,right=15em of lib] {Приложение};
+	\node(app-call1) [above left=2em and 1em of app.west,anchor=center,small] {\code{func1();}};
+	\node(app-call2) [below left=2em and 1em of app.west,anchor=center,small] {\code{func2();}};
+
+	\node(start) [coordinate, above=2em of app-call1.north] {};
+	\node(finish) [coordinate, below=2em of app-call2.south] {};
+
+	\draw[->,flow] (start)
+		|- ($ (lib-func1.east) + (-0.5em, 0.75em) $)
+		-- ++(0, -1.5em)
+		-| (app-call1.south)
+		|- ($ (lib-func2.east) + (-0.5em, 0.75em) $)
+		-- ++(0, -1.5em)
+		-| (app-call2.south)
+		-- (finish);
+\end{tikz*}

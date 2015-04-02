@@ -1,0 +1,721 @@
+\documentclass{a4beamer}
+\input{lecture-common.def}
+
+\usepackage{listings}
+\lstset{%
+	language=java,
+	morekeywords={assert},
+	tabsize=4,
+	showstringspaces=false,
+	basicstyle=\linespread{1.25}\ttfamily\small,
+	keywordstyle=\bfseries,
+	commentstyle=\normalfont\itshape,
+	numbers=left,
+	numberstyle=\footnotesize\color{gray},
+	xleftmargin=2.5em,
+	texcl=true,
+	escapechar=\#
+}
+
+\lstdefinelanguage{javascript}%
+	{morekeywords={break,case,catch,%
+		const,constructor,continue,default,do,else,false,%
+		finally,for,function,if,in,instanceof,%
+		new,null,prototype,%
+		return,switch,this,throw,%
+		true,try,typeof,var,while},%
+	sensitive,%
+	morecomment=[l]//,%
+	morecomment=[s]{/*}{*/},%
+	morestring=[b]",%
+	morestring=[b]',%
+}[keywords,comments,strings]%
+
+\def\code#1{\texttt{#1}}
+
+\deftranslation[to=russian]{Fact}{Наблюдение}
+
+\lecturetitle{Программная инженерия. Лекция №17 — Интерфейсы в программировании}
+\title[Интерфейсы]{Интерфейсы в программировании}
+\author{Алексей Островский}
+\institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
+\date{2 апреля 2015 г.}
+
+
+\begin{document}
+	\frame{\titlepage}
+
+	\section{Введение}
+
+	\frame{
+		\frametitle{Интерфейсы в программировании}
+
+		\begin{Definition}
+			\textbf{Интерфейс} — связь между двумя отдельными компонентами программной системы, 
+			предназначенная для обмена информацией, а также спецификация этой связи.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Виды интерфейсов:}
+		\begin{itemize}
+			\item аппаратные (в т.\,ч. для периферийных устройств);
+			\item программные \engterm{software interfaces};
+			\item пользовательские.
+		\end{itemize}
+		\textbf{NB.} Software interface $\supset$ (application) programming interface.
+
+		\vspace{1ex}
+		\textbf{Направленность} передачи данных:
+		\begin{itemize}
+		\item
+			однонаправленные интерфейсы (напр., работа с мышью, микрофоном и другими устройствами);
+			\item
+			двунаправленные интерфейсы (напр., большинство программных).
+		\end{itemize}
+	}
+
+	\subsection{Аппаратные интерфейсы}
+
+	\frame{
+		\frametitle{Аппаратные интерфейсы}
+
+		\begin{center}
+			\ifbigpages
+				\includegraphics[scale=0.5]{fig-svga-port.jpg}
+				\hspace{2em}
+				\includegraphics[scale=0.5]{fig-usb-connector.jpg}
+			\else
+				\includegraphics[scale=0.25]{fig-svga-port.jpg}
+				\hspace{2em}
+				\includegraphics[scale=0.25]{fig-usb-connector.jpg}
+			\fi
+		\end{center}
+
+		\vspace{2ex}
+		\figureexpl{Примеры аппаратных интерфейсов: %
+			SVGA-вход для подключения видеоустройства и универсальная последовательная шина (USB).}
+	}
+
+	\frame{
+		\frametitle{Аппаратные интерфейсы}
+
+		\textbf{Виды:} шины, устройства хранения данных, радиоволны, …
+
+		\vspace{1ex}
+		\textbf{Спецификация:} 
+		\begin{itemize}
+			\item характеристики механических, электрических или логических сигналов, пересылаемых через~интерфейс; 
+			\item последовательность передачи сигналов.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Цель:}
+		\begin{itemize}
+			\item унификация связи с базовыми и периферийными устройствами; 
+			\item большие возможности при конструировании и~сборке компьютерных систем.
+		\end{itemize}
+	}
+
+	\subsection{Программные интерфейсы}
+
+	\frame{
+		\frametitle{Программные интерфейсы}
+
+		\textbf{Уровень операционной системы:}
+		\begin{itemize}
+		\item связь программ с оборудованием (напр., с~помощью драйверов);
+		\item связь программ с операционной системой или с~другими программами средствами~ОС.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Уровень приложения:}
+		\begin{itemize}
+		\item связь компонентов системы, написанных на разных ЯП, 
+		с помощью вспомогательной среды (middleware);
+		\item связь компонентов распределенных приложений.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Уровень компонента:}\\
+		связь между базовыми элементами программы (напр., между объектами в~ООП; 
+		между функциями в~функциональном программировании).
+	}
+
+	\frame{
+		\frametitle{Уровень детализации интерфейса}
+
+		\textbf{Двоичные интерфейсы} (ABI) — спецификации, связанные с \emph{машинным} кодом программной системы.
+
+		\vspace{0.5ex}
+		\textbf{Примеры:} 
+		\begin{itemize}
+			\item размер в байтах типов данных; 
+			\item особенности вызовов функций / методов; 
+			\item формат двоичных исполняемых файлов.
+		\end{itemize}
+
+		\vspace{1.5ex}
+		\textbf{Программные интерфейсы} (API) — спецификации, выражающиеся через \emph{исходный} код программы.
+
+		\vspace{0.5ex}
+		\textbf{Пример:} 
+		\begin{itemize}
+			\item сигнатуры задекларированных функций / классов; 
+			\item протоколы обмена данными.
+		\end{itemize}
+	}
+
+	\subsection{ABI}
+
+	\frame{
+		\frametitle{ABI}
+
+		\begin{Definition}
+			\textbf{Двоичный интерфейс приложений} \engterm{application binary interface, ABI} 
+			— программный интерфейс между двумя модулями (чаще всего, ОС~или~библиотекой и~прикладной программой), 
+			заданный на~уровне машинного кода.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Примеры спецификаций:}
+		\begin{itemize}
+			\item вызов функций (порядок аргументов, размещение аргументов в~стеке / регистрах);
+			\item формат передачи данных (порядок передачи байтов, выравнивание);
+			\item системные вызовы;
+			\item формат исполняемых файлов, библиотек и~т.\,п.;
+			\item обработка исключительных ситуаций.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{ABI}
+
+		\textbf{Способы согласования ABI:}
+			\begin{itemize}
+			\item
+			(в большинстве случаев) автоматически при компиляции / интерпретации программы;
+
+			\vspace{1ex}
+			\item
+			при помощи специальных средств ЯП (напр., спецификаторы \code{safecall}, \code{stdcall} и~т.\,п. 
+			для~функций в~C/C++);
+
+			\vspace{1ex}
+			\item
+			явно при использовании низкоуровневых средств взаимодействия между программами на~разных ЯП 
+			или при работе с~оборудованием (напр., чтение / запись данных в~память видеоускорителя).
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Примеры ABI}
+
+		\begin{itemize}
+			\item
+			Спецификация \textbf{операционных систем}: Linux (\extlink{http://en.wikipedia.org/wiki/Linux_Standard_Base}{Linux Standard Base}), 
+			Windows, Mac~OS;
+
+			\vspace{1ex}
+			\item
+			спецификация \textbf{виртуальных машин} и \textbf{сред выполнения}, напр., Java Virtual Machine:
+			\begin{itemize}
+				\item общая для всех имплементаций (напр., формат .class-файлов JVM);
+				\item особенности имплементации в различных средах (напр., размеры указателей~JVM и~принципы сборки мусора).
+			\end{itemize}
+
+			\vspace{1ex}
+			\item
+			спецификация \textbf{языков программирования} (напр., размер, двоичное представление и~выравнивание типов данных);
+
+			\vspace{1ex}
+			\item
+			EABI (embedded-application binary interface) — ABI для \textbf{встроенных} в~микропроцессор \textbf{программ}.
+		\end{itemize}
+	}
+
+	\subsection{API}
+
+	\frame{
+		\frametitle{API}
+
+		\begin{Definition}
+			\textbf{Программный интерфейс приложений} \engterm{application programming interface, API} 
+			— спецификация утилит, протоколов и~инструментов для~интеграции компонентов приложений.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Примеры спецификаций:}
+		\begin{itemize}
+			\item
+			характеристики компонентов повторного использования (операции, входные и~выходные данные);
+			\item
+			точки входа для расширения функциональности существующих приложений (плагины);
+			\item
+			программные «обертки» для доступа к оборудованию и~источникам данных (напр., СУБД).
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{API}
+
+		\textbf{Формы API:}
+		\begin{itemize}
+			\item
+			Библиотека, содержащая функции / объекты, структуры данных, константы и~переменные.
+
+			\vspace{0.5ex}
+			\textbf{Примеры:} \extlink{http://en.wikipedia.org/wiki/Standard_Template_Library}{STL} для~С++; Java~API.
+
+			\item
+			Протокол для передачи данных.
+
+			\vspace{0.5ex}
+			\textbf{Примеры:} протоколы SOAP и REST для реализации веб-сервисов.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Формы спецификации:}
+		\begin{itemize}
+			\item международный стандарт (напр., \extlink{http://en.wikipedia.org/wiki/POSIX}{POSIX});
+			\item документация производителя, независимая от ЯП + привязки к ЯП (напр., Windows~API, OpenGL);
+			\item встроенная / подключаемая библиотека на определенном ЯП (STL, Java~APIs).
+		\end{itemize}
+	}
+
+	\subsection{Сравнение API и ABI}
+
+	\frame{
+		\frametitle{Сравнение API и ABI}
+
+		\textbf{API и ABI в C:}
+		\lstinputlisting[language=c,escapechar=\$]{code-api-abi.c}
+	}
+
+	\frame{
+		\frametitle{Сравнение API и ABI}
+
+		\begin{itemize}
+			\item
+			GCC с опцией \code{-m32} (32-битный код для архитектуры i386):
+		
+			\vspace{0.5ex}
+			\texttt{\small%
+				sizeof(int) == 4\\%
+				sizeof(long) == 4\\%
+				sizeof(long double) == 12\\
+				sizeof(void*) == 4\\%
+			}
+
+			\vspace{1ex}
+			\item
+			GCC с опцией \code{-mx32} (32-битный код для архитектуры x86\_64):
+
+			\vspace{0.5ex}
+			\texttt{\small%
+				sizeof(int) == 4\\%
+				sizeof(long) == 4\\%
+				sizeof(long double) == 16\\%
+				sizeof(void*) == 4\\%
+			}
+
+			\vspace{1ex}
+			\item
+			GCC с опцией \code{-m64} (64-битный код для архитектуры x86\_64):
+
+			\vspace{0.5ex}
+			\texttt{\small%
+				sizeof(int) == 4\\%
+				sizeof(long) == 8\\%
+				sizeof(long double) == 16\\%
+				sizeof(void*) == 8\\%
+			}
+		\end{itemize}
+	}
+
+	\section{Использование интерфейсов}
+
+	\frame{
+		\frametitle{Использование интерфейсов}
+
+		\textbf{Варианты использования:}
+		\begin{itemize}
+			\item
+			Интеграция компонентов, реализованных с помощью \emph{одного} ЯП.
+
+			\vspace{1ex}
+			\textbf{Реализация:} 
+			\begin{itemize}
+				\item спецификация типов данных; 
+				\item контрактное программирование (напр., с помощью интерфейсов ЯП или утиной типизации); 
+				\item инверсия управления.
+			\end{itemize}
+
+			\item
+			Интеграция компонентов, реализованных в \emph{разных} ЯП.
+
+			\vspace{1ex}
+			\textbf{Реализация:} 
+			\begin{itemize}
+				\item использование общей исполняемой среды (виртуальной машины); 
+				\item вызов внешних функций; 
+				\item использование посредников (middleware).
+			\end{itemize}
+		\end{itemize}
+	}
+
+	\subsection{Интерфейсы ЯП}
+
+	\frame{
+		\frametitle{Пример: использование интерфейсов ЯП}
+
+		\textbf{Процедурный подход}
+
+		Интерфейсы ЯП определяются как спецификация структур данных и функций для работы с ними.
+
+		\vspace{2ex}
+		\textbf{Пример (C):}
+		\lstinputlisting[language=c,escapechar=\$]{code-interfaces.c}
+	}
+
+	\frame{
+		\frametitle{Пример: использование интерфейсов ЯП}
+
+		\textbf{Объектно-ориентированный подход}
+
+		Интерфейсы собраны в методах (конструкторах, свойствах и т.\,п.) объектов и классов, 
+		содержащих в себе данные и зачастую скрывающих их.
+
+		\vspace{2ex}
+		\textbf{Пример (Java)}
+		\lstinputlisting[language=java]{code-interfaces.java}
+	}
+
+	\subsection{Инверсия управления}
+
+	\frame{
+		\frametitle{Инверсия управления}
+
+		\begin{Definition}
+			\textbf{Инверсия управления} \engterm{inversion of control} — принцип проектирования приложений, 
+			позволяющий передавать управление коду приложения во время выполнения сторонних библиотек.
+		\end{Definition}
+
+		\vspace{3ex}
+		\begin{overlayarea}{\textwidth}{0.6\textheight}
+			\only<1>{%
+				\begin{center}
+					\input{fig-control-trad.tex}
+				\end{center}
+
+				\vspace{2ex}
+				\figureexpl{\textbf{Традиционный подход} к работе с библиотеками.
+					Библиотека определяет интерфейсы реализованных функций, которые вызываются приложением.
+					{\color{blue}Синим} обозначен поток выполнения.}
+			}
+			\only<2>{%
+				\begin{center}
+						\input{fig-control-IoC.tex}
+				\end{center}
+
+				\vspace{2ex}
+				\figureexpl{\textbf{Инверсия управления.}
+					Основной код выполняется библиотекой; передача управления приложению происходит
+					с~помощью точек расширения.}
+			}
+		\end{overlayarea}
+	}
+
+	\frame{
+		\frametitle{Применение инверсии управления}
+
+		\begin{itemize}
+			\item
+			Обработка событий, в частности при конструировании пользовательского интерфейса;
+
+			\vspace{1ex}
+			\item
+			расширение функциональности приложений (плагины);
+
+			\vspace{1ex}
+			\item
+			упрощение построения приложений на основе готовых каркасов (например, JavaBeans; аннотации в JUnit);
+
+			\vspace{1ex}
+			\item
+			наследование в ООП, когда контроль выполнения задан в родительском классе 
+			(точки входа — абстрактные виртуальные методы).
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Пример: инверсия управления в DOM}
+
+		Инверсия контроля — основной метод создания интерактивных HTML-документов 
+		с~помощью JavaScript.
+
+		\vspace{1ex}
+		\lstinputlisting[language=javascript]{code-dom.js}
+	}
+
+	\subsection{Виртуализация}
+
+	\frame{
+		\frametitle{Взаимодействие разноязыковых программ}
+
+		\textbf{Методы взаимодействия} (по возрастанию усилий для реализации):
+		\begin{itemize}
+			\item
+			вызов функций / методов в пределах одной среды выполнения (JVM, CLR);
+			\item
+			использование интерфейса внешних функций;
+			\item
+			использование распределенных систем (CORBA, RMI) \textcolor{gray}{— рассматриваются в~отдельной лекции.}
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Проблемы} (следуют из различия ABI для разных ЯП):
+		\begin{itemize}
+			\item
+			трансляция типов данных;
+			\item
+			различающиеся среды выполнения (напр., принципы сбора мусора);
+			\item
+			работа с разделяемой памятью.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Виртуализация}
+
+		\begin{Definition}
+		\textbf{Виртуальная машина} \engterm{virtual machine} — программная среда 
+		для эмуляции вычислительной системы с~заданной конфигурацией и~интерфейсом.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Цели:}
+		\begin{itemize}
+		\item
+			унификация доступных для программ интерфейсов в различных окружениях, улучшение переносимости;
+			\item
+			повышение отказоустойчивости и надежности;
+			\item
+			упрощение взаимодействия между программами в пределах ВМ;
+			\item
+			тестирование поведения ПО при заданной архитектуре или конфигурации оборудования.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Спецификация ВМ}
+
+		\begin{itemize}
+			\item
+			\textbf{Модель вычислений:} \extlink{http://en.wikipedia.org/wiki/Stack_machine}{стековая},
+				\extlink{http://en.wikipedia.org/wiki/Register_machine}{регистровая};
+
+			\vspace{1ex}
+			\item
+			\textbf{управление памятью:} автоматическое, вручную, смешанное, принцип работы сборщика мусора;
+
+			\vspace{1ex}
+			\item
+			\textbf{метод выполнения кода:} интерпретация, \extlink{http://en.wikipedia.org/wiki/Just-in-time_compilation}{JIT}, компиляция); 
+			принципы комбинирования различных методов;
+
+			\vspace{1ex}
+			\item
+			\textbf{взаимодействие модулей:} трансляция типов данных для различных ЯП, 
+			совместимость объектов в различных языках, работа с нативными библиотеками;
+
+			\vspace{1ex}
+			\item
+			\textbf{безопасность:} возможность ограничений на выполняемые инструкции.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Примеры ВМ}
+
+		\begin{itemize}
+			\item
+			\textbf{Java Virtual Machine}
+
+			\textbf{ЯП:} Java, Groovy, Scala, Clojure, Jython, JRuby, …
+
+			\vspace{1ex}
+			\item
+			\textbf{Dalvik; Android Runtime (ART)}
+
+			\textbf{ЯП:} поддерживаемые JVM (вход — байткод для JVM).
+
+			\textbf{Примечание:} Dalvik / ART и JVM почти совместимы на уровне API, 
+			но используют разные ABI (регистровая машина в Dalvik / ART против стековой в JVM).
+
+			\vspace{1ex}
+			\item
+			\textbf{Common Language Runtime; Mono}
+
+			\textbf{ЯП:} C\#, F\#, Visual Basic .NET, IronPython, …
+
+			\vspace{1ex}
+			\item
+			\textbf{LLVM} (Low Level Virtual Machine)
+
+			\textbf{ЯП:} C, C++, D, Objective-C, Ada, Fortran
+
+			\textbf{Примечание:} часто используется в качестве компилятора.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Пример ВМ: Java Virtual Machine}
+
+		\begin{center}
+			\input{fig-jvm.tex}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Пример: взаимодействие программ в JVM}
+
+		\begin{itemize}
+			\item
+			Языки, созданные с расчетом на JVM (Groovy, Scala) поддерживают импорт произвольных классов Java 
+			(из стандартной библиотеки и сторонние).
+
+			\vspace{1ex}
+			\item
+			Версии адаптированных для JVM языков (Jython, JRuby) поддерживают классы Java 
+			с~определенными предостережениями из-за различия спецификаций.
+
+			\vspace{1ex}
+			Например, конфликты между Java и Jython: 
+			\begin{itemize}
+				\item кодировки строк; 
+				\item области видимости; 
+				\item названия переменных и методов класса, совпадающие между~собой 
+				или~с~ключевыми словами Python.
+			\end{itemize}
+
+			\vspace{1ex}
+			\item
+			Использование языков JVM из Java возможно за счет увеличения сложности структуры программ 
+			(напр., применение
+			\extlink{http://www.jython.org/jythonbook/en/1.0/JythonAndJavaIntegration.html}{фабрик объектов} 
+			или \extlink{http://docs.oracle.com/javase/7/docs/technotes/guides/scripting/programmer_guide/}{Java Scripting API} для Jython).
+		\end{itemize}
+	}
+
+	\subsection{Интерфейс внешних функций}
+
+	\frame{
+		\frametitle{Интерфейс внешних функций}
+
+		\begin{Definition}
+			\textbf{Интерфейс внешних функций} \engterm{foreign function interface} — механизм поддержки вызова программой, 
+			написанной на~одном~ЯП, функций, реализованных на~других~ЯП.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Цели:}
+		\begin{itemize}
+			\item повышение производительности;
+			\item вызов специфичных для платформы функций.
+		\end{itemize}
+
+		\vspace{1.5ex}
+		\begin{center}
+			\input{fig-ffi.tex}
+
+			\vspace{1ex}
+			\figureexpl{Типичная архитектура интерфейса внешних функций}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Примеры FFI}
+
+		\begin{itemize}
+			\item
+			Директивы \code{\textbf{extern} "C"} в С++ для вызова C-функций.
+
+			\vspace{1ex}
+			\item
+			Java Native Interface, Java Native Access.
+
+			\vspace{1ex}
+			\item
+			Модуль \code{ctypes} в Python для вызова функций C:
+
+			\vspace{1ex}
+			\lstinputlisting[language=python,escapechar=\$]{code-ffi.py}
+		\end{itemize}
+	}
+
+	\section{Заключение}
+
+	\subsection{Выводы}
+	
+	\frame{
+		\frametitle{Выводы}
+
+		\begin{enumerate}
+			\item
+			Интерфейсы — необходимая часть системы, составленной из разнородных компонентов. 
+			Интерфейс определяет способ обмена данными между компонентами программной системы.
+
+			\item
+			Выделяют два типа программных интерфейсов: определяющие характеристики данных 
+			на~уровне машинного кода (ABI) и~на~уровне языков программирования (API).
+
+			\item
+			Интерфейсы применяются для связи компонентов в~пределах одного~ЯП 
+			(за~счет спецификации типов данных, протоколов работы с~ними, инверсии управления и~т.\,д.) 
+			или~для~связи разноязычных компонентов.
+
+			\item
+			Основные способы взаимодействия~ЯП: общая среда выполнения (виртуальная машина); 
+			интерфейсы внешних функций; протоколы передачи данных с~помощью посредников.
+		\end{enumerate}
+	}
+	
+	\subsection{Материалы}
+	
+	\frame{
+		\frametitle{Материалы}
+		
+		\begin{thebibliography}{9}
+			\bibitem[1]{1}
+			Лавріщева К.\,М. 
+			\newblock Програмна інженерія (підручник). 
+			\newblock {\footnotesize К., 2008. — 319 с.}
+
+			\bibitem[2]{2}
+			Bloch, Joshua
+			\newblock Руководство по написанию API.
+			\newblock {\footnotesize \url{http://lcsd05.cs.tamu.edu/slides/keynote.pdf}}
+
+			\bibitem[3]{3}
+			Fowler, Martin
+			\newblock Inversion of Control
+			\newblock {\footnotesize \url{http://martinfowler.com/bliki/InversionOfControl.html}}
+		\end{thebibliography}
+	}
+	
+	\frame{
+		\frametitle{}
+		
+		\begin{center}
+			\Huge Спасибо за внимание!
+		\end{center}
+	}
+\end{document}
+
+
+		\vspace{1ex}
+		\textbf{Применение:}
+		\begin{itemize}
+			\item обработка событий, в частности при конструировании пользовательского интерфейса;
+			\item расширение функциональности приложений (плагины).
+		\end{itemize}

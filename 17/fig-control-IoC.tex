@@ -1,0 +1,26 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center},
+	big/.style={minimum width=10em,minimum height=7.5em},
+	small/.style={minimum width=6em,minimum height=2.5em,fill=white},
+	flow/.style={blue}
+]
+	\node(lib) [big] {Библиотека};
+	\node(lib-event1) [above right=2em and 1em of lib.east,anchor=center,small] {\code{event1}};
+	\node(lib-event2) [below right=2em and 1em of lib.east,anchor=center,small] {\code{event2}};
+
+	\node(app) [big,right=15em of lib] {Приложение};
+	\node(app-handler1) [above left=2em and 1em of app.west,anchor=center,small] {\code{onEvent1}};
+	\node(app-handler2) [below left=2em and 1em of app.west,anchor=center,small] {\code{onEvent2}};
+
+	\node(start) [coordinate, above=2em of lib-event1.north] {};
+	\node(finish) [coordinate, below=2em of lib-event2.south] {};
+
+	\draw[->,flow] (start)
+		|- ($ (app-handler1.west) + (0.5em, 0.75em) $)
+		-- ++(0, -1.5em)
+		-| (lib-event1.south)
+		|- ($ (app-handler2.west) + (0.5em, 0.75em) $)
+		-- ++(0, -1.5em)
+		-| (lib-event2.south)
+		-- (finish);
+\end{tikz*}
