@@ -1,0 +1,33 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,align=center,minimum width=7.5em,minimum height=3em}
+]
+	\node(Object) {\textbf{Базовый класс} \\ (Object)};
+	\node(wrapper) [above=of Object] {Обертки \\ (Boolean, Byte, …, \\ Float, Double)};
+	\node(primitive) [right=of wrapper] {Примитивные ТД: \\ 
+		\codekw{boolean}, \codekw{byte}, \codekw{char}, \codekw{short}, \\
+		\codekw{int}, \codekw{long}, \codekw{float}, \codekw{double}};
+
+	\node(array) [left=of Object] {Массивы};
+	\node(String) [left=of wrapper] {Строки \\ (String)};
+	\node(Throwable) [right=of Object] {Прерывания \\ (Throwable)};
+	\node(Error) [right=of Throwable] {Ошибки \\ (Error)};
+	\node(Exception) [below=of Throwable] {Исключения \\ (Exception)};
+
+	\node(Class) [below left=of Object] {Метаклассы \\ (Class<?>)};
+
+	\node(intf) [below=of Object] {Интерфейсы};
+	\node(annot) [below left=2em and -1em of intf] {Аннотации};
+	\node(func) [below right=2em and -1em of intf] {Функциональные \\ интерфейсы \\ (в Java 8)};
+
+	\draw[->] (Object) -- (array);
+	\draw[->] (Object) -- (String);
+	\draw[->] (Object) -- (Throwable);
+	\draw[->] (Object) -- (Class);
+	\draw[->] (Throwable) -- (Error);
+	\draw[->] (Throwable) -- (Exception);
+	\draw[->] (Object) -- (wrapper);
+	\draw[<->,dashed] (wrapper) -- (primitive);
+	\draw[->,dashed] (Object) -- (intf);
+	\draw[->] (intf) -- (annot);
+	\draw[->] (intf) -- (func);
+\end{tikz*}

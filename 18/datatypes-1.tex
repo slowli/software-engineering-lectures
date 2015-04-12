@@ -1,0 +1,710 @@
+\documentclass{a4beamer}
+\input{lecture-common.def}
+
+\usepackage{listings}
+\lstset{%
+	language=java,
+	morekeywords={assert},
+	tabsize=4,
+	showstringspaces=false,
+	basicstyle=\linespread{1.25}\ttfamily\small,
+	keywordstyle=\bfseries,
+	commentstyle=\color{gray},
+	numbers=left,
+	numberstyle=\footnotesize\color{gray},
+	xleftmargin=2.5em,
+	texcl=true,
+	extendedchars=true,
+	escapechar=\$
+}
+
+\def\code#1{\texttt{#1}}
+\def\codekw#1{\texttt{\textbf{#1}}}
+
+\deftranslation[to=russian]{Fact}{Наблюдение}
+
+\lecturetitle{Программная инженерия. Лекция №18 — Интерфейсы и типы данных (часть 1)}
+\title[Типы данных 1]{Интерфейсы и типы данных (часть 1)}
+\author{Алексей Островский}
+\institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
+\date{9 апреля 2015 г.}
+
+
+\begin{document}
+	\frame{\titlepage}
+
+	\section{Вступление}
+
+	\frame{
+		\frametitle{Типы данных в программировании}
+
+		Интерпретация строки в C++ как разных типов данных:
+		\begin{center}
+			\begin{tabular}{|p{0.2\textwidth}|p{0.35\textwidth}|}
+				\hline
+				\textbf{Тип} & \textbf{Представление} \cr
+				\hline
+				std::string & "Datatype" \cr
+				\hline
+				signed char[8] & 68 97 116 97 116 121 112 101 \cr
+				\hline
+				char[8] & D a t a t y p e \cr
+				\hline
+				short[4] & 24900 24948 31092 25968 \cr
+				\hline
+				int[2] & 1635017028 1701869940 \cr
+				\hline
+				long & 7309475735980499268 \cr
+				\hline
+				float[2] & 2.81751e+20 7.09755e+22 \cr
+				\hline
+				double & 4.27256e+180 \cr
+				\hline
+			\end{tabular}
+		\end{center}
+
+		\vspace{2ex}
+		Каков смысл заданной последовательности байт? 
+		Какие операции к ней применимы?
+	}
+
+	\subsection{Система типов}
+
+	\frame{
+		\frametitle{Система типов}
+
+		\begin{Definition}
+			\textbf{Тип данных} — множество представимых в машинной памяти величин, 
+			которые характеризуются своими свойствами и производимыми над ними операциями.
+		\end{Definition}
+
+		\vspace{1ex}
+		\begin{Definition}
+			\textbf{Система типов языка программирования} — совокупность правил, определяющих свойство типа 
+			для конструкций языка (переменных, выражений, функций, модулей, …).
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Цели системы типов:}
+		\begin{itemize}
+			\item
+			\textbf{основная:} определение интерфейсов для взаимодействия с частями программы и~обеспечение 
+			их~корректного использования с~целью устранения ошибок;
+
+			\item обеспечение функциональности языка (напр., динамическая диспетчеризация в~ООП);
+			\item повышение доступности программы для понимания.
+		\end{itemize}
+	}
+
+	\subsection{Типы данных и интерфейсы}
+
+	\frame{
+		\frametitle{Типы данных и интерфейсы}
+
+		\textbf{Роль ТД в определении интерфейсов:}
+		\begin{itemize}
+			\item
+			\textbf{Функциональные ЯП:} \\ 
+			спецификация допустимых аргументов и возвращаемых результатов для определяемых функций.
+
+			\vspace{1ex}
+			\item
+			\textbf{Процедурные ЯП:} \\ 
+			то же + спецификация глобального состояния программы.
+
+			\vspace{1ex}
+			\item
+			\textbf{Объектно-ориентированные ЯП:} \\
+			спецификация классов / объектов в виде набора допустимых методов для работы с~инкапсулированными данными.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Интерфейсы классов}
+
+		\textbf{Области видимости интерфейса:}
+		\begin{itemize}
+			\item
+			публичные \engterm{public} операции — доступны всем клиентам;
+			\item
+			защищенные \engterm{protected} операции — доступны классу и подклассам;
+			\item
+			частные \engterm{private} операции — доступны только классу;
+			\item
+			внутренние \engterm{package-wide} операции 
+			— доступны классам, находящимся в~одном модуле с~данным (методы без спецификатора видимости в~Java, \textbf{internal} в~C\#).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Способ определения:}
+		\begin{itemize}
+			\item методы;
+			\item свойства;
+			\item точки расширения (напр., события).
+		\end{itemize}
+	}
+
+	\section{ISO 11404}
+
+	\frame{
+		\frametitle{Стандарт ISO/IEC 11404}
+
+		\textbf{Стандарт ISO/IEC 11404} «Типы данных общего назначения» \engterm{General purpose datatypes} 
+		— содержит описание типов данных, независимое от языка программирования.
+
+		\vspace{1.5ex}
+		\textbf{Содержание стандарта:}
+		\begin{itemize}
+			\item
+			спецификация для формального описания типов данных, независимого от~реализации (ЯП~и~среды выполнения);
+			\item
+			определение базовых типов данных (содержимое + допустимые операции);
+			\item
+			способы генерации новых типов данных из базовых.
+		\end{itemize}
+	}
+
+	\subsection{Классификация ТД}
+
+	\frame{
+		\frametitle{Классификация типов данных}
+
+		\textbf{Типы данных по способу определения:}
+		\begin{itemize}
+			\item
+			примитивные — задаваемые через аксиомы, т.\,е. независимые от других определений типов данных;
+			\item
+			генерируемые \engterm{generated} — определяемые через другие типы данных.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{По структуре:}
+		\begin{itemize}
+			\item
+			атомарные — ТД, значения которых семантически неделимы (напр., целые числа);
+
+			\vspace{1ex}
+			\item
+			агрегационные — ТД со сложной внутренней структурой (напр., массивы). Подвиды:
+			\begin{itemize}
+				\item однородные / неоднородные — компоненты структуры имеют один / разные типы;
+				\item фиксированный / переменный размер;
+				\item уникальность и упорядоченность компонент;
+				\item метод доступа (произвольный / последовательный).
+			\end{itemize}
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Общие свойства типов}
+
+		\textbf{Операция сравнения} ($=$):
+		\begin{itemize}
+			\item
+			универсальная: $\forall a, b \in T \quad (a = b) \lor (a \neq b)$;
+			\item
+			непротиворечивая: $\nexists a, b \in T \quad (a = b) \land (a \neq b)$;
+			\item
+			тривиальная: $\forall a \in T \quad a = a$;
+			\item
+			коммутативная: $\forall a, b \in T \quad (a = b) \Leftrightarrow (b = a)$;
+			\item
+			транзитивная: $\forall a, b, c \in T \quad (a = b) \land (b = c) \Rightarrow (a = c)$.
+		\end{itemize}
+
+		{\small%
+			\textbf{Примечание.} Во многих ЯП сущесвуют две операции сравнения — по содержимому и по ссылке 
+			(\code{.equals()} и \code{==} в~Java, \code{==} и \codekw{is} в~Python).
+		}
+
+		\vspace{1.5ex}
+		\textbf{Необязательная операция упорядочивания ($\leq$):}
+		\begin{itemize}
+			\item
+			универсальная: $\forall a, b \in T \quad (a \leq b) \lor (a \leq b)$;
+			\item
+			связанная с равенством: $\forall a, b \in T \quad (a \leq b) \land (a \leq b) \Rightarrow (a = b)$;
+			\item
+			транзитивная: $\forall a, b, c \in T \quad (a \leq b) \land (b \leq c) \Rightarrow (a \leq c)$.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Общие свойства типов}
+
+		\textbf{(Не)ограниченность:}
+		\begin{itemize}
+			\item
+			Тип данных $T$ называется ограниченным сверху, если в нем задана операция упорядочивания 
+			и~существует значение $U \in T$: $\forall a \in T \quad a \leq U$.
+			\item
+			Ограниченность снизу: $\exists L \in T: \forall a \in T \quad L \leq a$.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Аппроксимация:}
+		\begin{itemize}
+			\item
+			точные типы;
+			\item
+			типы, в которых вычислительная модель налагает ограничения на точность операций 
+			(напр., числа с плавающей запятой согласно стандарту IEEE 754).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Мощность:}
+		\begin{itemize}
+			\item
+			конечное множество значений;
+			\item
+			счетное множество значений;
+			\item
+			несчетное множество значений (требуют аппроксимации, т.\,к. представление в~ЭВМ 
+			несчетного множества значений невозможно).
+		\end{itemize}
+	}
+
+	\subsection{Примитивные типы данных}
+
+	\frame{
+		\frametitle{Примитивные типы данных}
+
+		\begin{itemize}
+			\item
+			\textbf{Булев тип.} \\
+			\codekw{bool} в~C\#; \codekw{boolean} в~Java; \codekw{bool} в~Python.
+
+			\vspace{0.5ex}\item
+			\textbf{Состояние} \engterm{state} — конечное множество различимых неупорядоченных значений.
+
+			\vspace{0.5ex}\item
+			\textbf{Перечисление} — конечное множество упорядоченных значений. \\
+			\codekw{enum} в~C / C++, C\#, Java.
+
+			\vspace{0.5ex}\item
+			\textbf{Символ.} \\ \codekw{char} в~C / C++, C\#, Java.
+
+			\vspace{0.5ex}\item
+			\textbf{Ординальный тип} \engterm{ordinal}: \code{"first"}, \code{"second"}, \code{"third"}, …
+
+			\vspace{0.5ex}\item
+			\textbf{Дата и время.} \\ \code{DATETIME} в~SQL.
+
+			\vspace{0.5ex}\item
+			\textbf{Целые числа.} \\
+			$\sim$BigInteger в~Java, \codekw{long} в~Python.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Примитивные типы данных (продолжение)}
+
+		\begin{itemize}
+			\item
+			\textbf{Рациональные числа.} \\
+			\code{fractions.Fraction} в~Python.
+
+			\vspace{0.5ex}\item
+			\textbf{Масштабированный тип} \engterm{scaled} — рациональные числа с фиксированным знаменателем,
+			напр., валютный тип (знаменатель равен 100). \\
+			$\sim$BigDecimal в~Java, \code{decimals.Decimal} в~Python.
+
+			\vspace{0.5ex}\item
+			\textbf{Действительные числа.} \\
+			\codekw{float} и \codekw{double} в~С++, C\#, Java, 
+			\codekw{float} в~Python.
+
+			\vspace{0.5ex}\item
+			\textbf{Комплексные числа.} \\
+			\codekw{complex} в~Python.
+
+			\vspace{0.5ex}\item
+			\textbf{Пустой тип} \engterm{void} — объект, необходимый с точки зрения синтаксиса или~семантики, 
+			не~содержащий информации. \\
+			\codekw{void} в~C++, C\#, Java.
+		\end{itemize}
+	}
+
+	\subsection{Генерируемые ТД}
+
+	\frame{
+		\frametitle{Подтипы}
+
+		\textbf{Подтипы типов данных:}
+		\begin{itemize}
+			\item диапазон значений;
+			\vspace{0.5ex}\item перечисление значений из базового типа;
+			\vspace{0.5ex}\item исключение значений из базового типа;
+			\vspace{0.5ex}\item ограничение размера базового типа-коллекции;
+			\vspace{0.5ex}\item расширение базового типа.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Примеры:} целочисленные типы в ЯП, напр., \codekw{short}, \codekw{int}
+		и~\codekw{long} в~C++, C\#, Java; \codekw{int}~в~Python.
+	}
+
+	\frame{
+		\frametitle{Генерируемые типы данных}
+
+		\textbf{Генерируемые типы данных:}
+		\begin{itemize}
+			\item
+			\textbf{Выбор} \engterm{choice} — значение типа принадлежит одному из конечного набора базовых типов, 
+			в~зависимости от~состояния. \\
+			\codekw{union} в С / С++.
+
+			\vspace{0.5ex}\item
+			\textbf{Указатель} на другой тип. \\ 
+			Указатели и ссылки в С / С++.
+
+			\vspace{0.5ex}\item
+			\textbf{Процедурный тип}, задаваемый типами и направлением аргументов (входные / выходные) и~типом возвращаемого значения. \\
+			Функции в функциональных ЯП; в Python, JavaScript (без выделения подтипов).
+		\end{itemize}
+	}
+
+	\subsection{Агрегационные типы данных}
+
+	\frame{
+		\frametitle{Агрегационные типы данных}
+
+		\begin{itemize}
+			\item
+			\textbf{Запись} \engterm{record} — компоненты (значения различных типов) 
+			определяются с~помощью именованных полей.
+
+			\vspace{0.5ex}\item
+			\textbf{Класс} \engterm{class} — компоненты (значения различных типов, а~также методы) 
+			определяются с помощью именованных полей; определены наследование и~перегрузка компонентов.
+
+			\vspace{0.5ex}\item
+			\textbf{Множество} \engterm{set} — имплементация математического понятия подмножества 
+			пространства базового типа.
+
+			\vspace{0.5ex}\item
+			\textbf{Мешок} \engterm{bag} — неупорядоченный набор с~повторениями значений базового типа.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Агрегационные типы данных (продолжение)}
+
+		\begin{itemize}
+			\item
+			\textbf{Последовательность} \engterm{sequence} — упорядоченный набор значений базового типа с~повторениями 
+			(упорядочивание задано извне).
+			\begin{itemize}
+				\item
+				\textbf{Строка} \engterm{string} — последовательность символов.
+			\end{itemize}
+
+			\vspace{0.5ex}\item
+			\textbf{Массив} \engterm{array} — отображение между конечным пространством индексов 
+			(декартово произведение одного или более конечных типов) и~значениями типа элементов.
+
+			\vspace{0.5ex}\item
+			\textbf{Таблица} \engterm{table} — конечное множество ассоциаций, заданное на декартовом произведении базовых типов 
+			($\sim$ реляционная таблица SQL).
+		\end{itemize}
+	}
+
+	\subsection{Примеры}
+
+	\frame{
+		\frametitle{Примеры определений ТД}
+
+		\begin{itemize}
+			\item
+			Целочисленный тип со знаком, занимающий 4 байта памяти:
+
+			\code{\textbf{type} Int = \textbf{new integer range} (-2147483648 .. 2147483647)}
+
+			\vspace{0.5ex}
+			\item
+			Строка символов Unicode:
+
+			\code{\textbf{type} String = \textbf{new sequence of character} (\{ iso standard 10646 \})}
+
+			\vspace{0.5ex}
+			\item
+			Дерево:
+
+			\code{%
+			\textbf{type} Tree = \textbf{record} (\\
+			\quad label: String, \\
+			\quad branches: \textbf{set of} (Tree) \\
+			)}
+
+			\vspace{0.5ex}
+			\item
+			Интерфейс процедуры для вычисления чисел Фибоначчи:
+
+			\code{\textbf{type} Fib = \textbf{procedure} ( \textbf{in} n: Int \textbf{selecting} (0 .. *) ) \textbf{returns} ( \textbf{integer} )}
+		\end{itemize}
+	}
+
+	\section{Иерархия ТД}
+
+	\subsection{Система ТД с изолированными типами}
+
+	\frame{
+		\frametitle{Иерархия типов данных (Java)}
+
+		\begin{center}
+			\input{fig-types-java.tex}
+
+			\vspace{1ex}
+			\figureexpl{В C / C++, Java, PHP примитивные типы объектов изолированы (не являются потомками других типов).}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Боксинг типов данных}
+
+		\begin{Definition}
+			\textbf{Боксинг} \engterm{boxing} — преобразование примитивного~ТД 
+			к~соответствующему \inlink{p:ref-types}{ссылочному типу данных} и~обратно.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Пример:}
+		\lstinputlisting[language=java]{code-boxing.java}
+	}
+
+	\subsection{Унифицировання система типов}
+
+	\frame{
+		\frametitle{Иерархия типов данных (Python)}
+
+		\begin{center}
+			\input{fig-types-python.tex}
+
+			\vspace{1ex}
+			\figureexpl{Python — ЯП с унифицированной системой типов: все ТД наследуются от базового.}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Иерархия типов данных (Python)}
+
+		\lstinputlisting[language=python,firstline=4]{code-inheritance.py}
+	}
+
+	\subsection{Интерфейс типов данных в ООП}
+
+	\frame{
+		\frametitle{Интерфейс базового типа данных}
+
+		\textbf{Методы класса Object (Java):}
+		\lstinputlisting[language=java]{code-Object.java}
+	}
+
+	\frame{
+		\frametitle{Интерфейс типов данных в ООП}
+
+		\textbf{Спецификация интерфейса объектов:}
+		\begin{itemize}
+			\item
+			Методы.
+
+			\vspace{0.5ex}
+			\item
+			Свойства (синтаксический сахар для методов).
+
+			\vspace{0.5ex}
+			\item
+			События (свойства процедурного типа).
+
+			\vspace{0.5ex}
+			\item
+			Перегрузка операций помимо сравнения (напр., арифметических):
+			\begin{itemize}
+				\item \codekw{operator} в C++; 
+				\item методы \code{\_\_lt\_\_}, \code{\_\_le\_\_} и т.\,д. в~Python.
+			\end{itemize}
+
+			\vspace{0.5ex}
+			\item
+			Приведение к другим ТД помимо строкового:
+			\begin{itemize}
+				\item \code{\textbf{operator} <Type>()} в С++; 
+				\item методы \code{\_\_int\_\_}, \code{\_\_float\_\_} и т.\,д. в~Python.
+			\end{itemize}
+
+			\vspace{0.5ex}
+			\item
+			Манипуляции с содержимым объекта, напр., методы для изменения логики доступа к~полям:
+			\begin{itemize}
+				\item методы \code{\_\_getattr\_\_}, \code{\_\_setattr\_\_}, \code{\_\_delattr\_\_} в~Python; 
+				\item методы \code{\_\_get} и \code{\_\_set} в PHP.
+			\end{itemize}
+		\end{itemize}
+	}
+
+	\section{Заключение}
+
+	\subsection{Выводы}
+	
+	\frame{
+		\frametitle{Выводы}
+
+		\begin{enumerate}
+			\item
+			Система типов данных — основной инструмент спецификации интерфейсов в~языках программирования. 
+			Использование типов данных позволяет повысить понимание программы и~служит средством верификации программы.
+
+			\item
+			Стандарт ISO/IEC 11404 определяет классификацию типов данных и~базовые типы, независимые от~языка программирования. 
+			В~этом стандарте также даны способы построения новых типов данных на основе базовых.
+
+			\item
+			ЯП имплементируют систему типов данных в различном объеме и с различными средствами для~ее~расширения. 
+			В объектно-ориентированных ЯП система типов данных представляет собой иерархию с~одним или~несколькими корневыми классами.
+		\end{enumerate}
+	}
+	
+	\subsection{Материалы}
+	
+	\frame{
+		\frametitle{Материалы}
+		
+		\begin{thebibliography}{9}
+			\bibitem[1]{1}
+			Лавріщева К.\,М. 
+			\newblock Програмна інженерія (підручник). 
+			\newblock {\footnotesize К., 2008. — 319 с.}
+
+			\bibitem[2]{2}
+			ISO / IEC
+			\newblock General Purpose Datatypes.
+			\newblock {\footnotesize \url{http://standards.iso.org/ittf/PubliclyAvailableStandards/c039479_ISO_IEC_11404_2007(E).zip}}
+
+			\bibitem[3]{3}
+			Документация Python
+			\newblock Data Model.
+			\newblock {\footnotesize \url{https://docs.python.org/2/reference/datamodel.html}}
+		\end{thebibliography}
+	}
+	
+	\frame{
+		\frametitle{}
+		
+		\begin{center}
+			\Huge Спасибо за внимание!
+		\end{center}
+	}
+
+	\subsection{Приложения}
+
+	\frame{
+		\frametitle{Приложение. Ссылочные типы данных}
+		\label{p:ref-types}
+
+		\begin{Definition}
+			\textbf{Ссылочный тип} \engterm{reference type} — тип данных, ссылающийся на область памяти 
+			($\sim$указатель с автоматическим разыменованием).
+		\end{Definition}
+
+		\vspace{0.5ex}
+		\begin{center}\small
+			\begin{tabular}{|p{0.4\textwidth}|p{0.4\textwidth}|}
+				\hline
+				\centering\textbf{Типы, содержащие значение} \engterm{value type} & \centering\textbf{Ссылочные типы} \cr
+				\hline
+				\raggedright присвоение — копирование данных & \raggedright присвоение — копирование ссылки \cr
+				\hline
+				\raggedright сравнение по значению & \raggedright сравнение по ссылке или значению \cr
+				\hline
+				\raggedright размещаются в стеке & \raggedright размещаются в куче \cr
+				\hline
+			\end{tabular}
+
+			\vspace{3ex}
+			\begin{tabular}{|p{0.2\textwidth}|p{0.35\textwidth}|p{0.25\textwidth}|}
+				\hline
+				\centering\textbf{ЯП} & \centering\textbf{Типы, содержащие значение} 
+					& \centering\textbf{Ссылочные типы} \cr
+				\hline
+				Java & примитивные типы & все остальные \cr
+				\hline
+				C\# & примитивные, структуры (\codekw{struct}) & классы (\codekw{class}) \cr
+				\hline
+				Python & \raggedright числовые, булев (размещаются в~куче) & все остальные \cr
+				\hline
+				Функциональные & все & $-$ \cr
+				\hline
+			\end{tabular}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Приложение. Агрегационные типы данных в ЯП}
+
+		\begin{center}\small
+			\begin{tabular}{|p{0.2\textwidth}|p{0.3\textwidth}|p{0.3\textwidth}|}
+				\hline
+				\centering\textbf{Тип} & \centering\textbf{Java} & \centering\textbf{Python} \cr
+				\hline
+				Массив & \raggedright \code{T[]} (одномерный), \code{T[]…[]} (многомерный)
+					& \raggedright Есть в модулях \code{array} и~\code{numpy} \cr
+				\hline
+				Строка & \code{String} & \code{str}, \code{unicode} \cr
+				\hline
+				Последовательность & \code{List<T>}
+					& \raggedright \code{list} (изменяемая), \code{tuple} (неизменяемая) \cr
+				\hline
+				Множество & \code{Set<T>} & \raggedright \code{set} (изменяемое), \code{frozenset} (неизменяемое) \cr
+				\hline
+				\raggedright Ассоциативная таблица & \code{Map<K, V>} & \code{dict} \cr
+				\hline
+			\end{tabular}
+		\end{center}
+
+		{\small%
+			\textbf{Обозначения:} \code{T} — тип элементов; \code{K} — тип ключей, \code{V} — тип значений.
+		}
+
+		\vspace{1ex}
+		\begin{itemize}
+			\item
+			\textbf{Статическая типизация:} тип элементов агрегационного типа указывается с~помощью шаблонов 
+			(\codekw{template}~в~C++; generics в~Java, C\#).
+			\item
+			\textbf{Динамическая типизация:} агрегационные типы могут содержать произвольные элементы.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Приложение. Функции как тип данных}
+
+		\begin{Definition}
+			Наличие \textbf{функций первого класса} в ЯП — работа с функциями как с другими типами данных, в~частности:
+			\begin{itemize}
+				\item
+				поддержка передачи функций как параметров и~возврата~их как~результатов функций;
+				\item
+				присваивание функций переменным;
+				\item
+				(опционально) наличие анонимных функций, вложенных функций и~замыканий.
+			\end{itemize}
+		\end{Definition}
+
+		\textbf{ЯП с функциями первого класса:} Python, JavaScript, функциональные ЯП (Scheme, Haskell, ML, Scala).
+
+		\vspace{1ex}
+		\textbf{Частичная поддержка функций как типа данных:}
+		\begin{itemize}
+			\item C\# (делегаты и анонимные функции); 
+			\item Java 8 (функциональные интерфейсы и анонимные классы для замыканий); 
+			\item C / C++ (указатели на функции).
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Приложение. Работа с функциями в Python}
+
+		\lstinputlisting[language=python,firstline=4]{code-func.py}
+	}
+\end{document}
+
