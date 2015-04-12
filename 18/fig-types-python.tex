@@ -1,0 +1,26 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,align=center,minimum width=7.5em,minimum height=3em}
+]
+	\node(object) {\textbf{Базовый класс} \\ (object)};
+	\node(number) [above=of object] {Числовые ТД \\ (\codekw{int}, \codekw{long}, \codekw{float}, \codekw{complex})};
+	\node(set) [left=of object] {Множества \\ (\codekw{set}, \codekw{frozenset})};
+	\node(dict) [below left=of object] {Ассоциации \\ (\codekw{dict})};
+	\node(seq) [below=of dict] {Последовательности \\ (\codekw{tuple}, \codekw{list}, \codekw{xrange})};
+	\node(str) [right=of seq] {Строки \\ (\codekw{str}, \codekw{unicode})};
+	\node(bool) [above left=of object] {Булев тип \\ (\codekw{bool})};
+	\node(module) [above right=of object] {Модули \\ (\code{module})};
+	\node(function) [right=of object] {Функции \\ (\code{function})};
+	\node(type) [below=of object] {Метакласс \\ (\codekw{type})};
+	\node(Exception) [below right=of object] {Исключения \\ (Exception)};
+
+	\draw[->] (object) -- (number);
+	\draw[->] (object) -- (seq);
+	\draw[->] (object) -- (set);
+	\draw[->] (object) -- (dict);
+	\draw[->] (object) -- (bool);
+	\draw[->] (object) -- (module);
+	\draw[->] (object) -- (function);
+	\draw[->] (object) -- (type);
+	\draw[->] (seq) -- (str);
+	\draw[->] (object) -- (Exception);
+\end{tikz*}
