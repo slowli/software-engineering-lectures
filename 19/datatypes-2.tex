@@ -1,0 +1,662 @@
+\documentclass{a4beamer}
+\input{lecture-common.def}
+
+\usepackage{listings}
+\lstset{%
+	morekeywords={assert},
+	tabsize=4,
+	showstringspaces=false,
+	basicstyle=\linespread{1.25}\ttfamily\small,
+	keywordstyle=\bfseries,
+	commentstyle=\color{gray},
+	numbers=left,
+	numberstyle=\footnotesize\color{gray},
+	xleftmargin=2.5em,
+	texcl=true,
+	extendedchars=true,
+	escapechar=\$
+}
+
+\lstdefinelanguage{csharp}%
+	{morekeywords={abstract,as,%
+		base,bool,byte,case,catch,char,%
+		checked,class,const,continue,%
+		decimal,default,delegate,do,double,%
+		else,enum,event,explicit,extern,%
+		false,finally,fixed,float,for,foreach,%
+		goto,if,implicit,in,int,interface,%
+		internal,is,lock,long,%
+		namespace,new,null,object,operator,out,%
+		override,params,private,protected,public,%
+		readonly,ref,return,sbyte,sealed,%
+		short,sizeof,stackalloc,static,string,%
+		struct,switch,this,throw,true,try,%
+		typeof,uint,ulong,unchecked,unsafe,ushort,%
+		using,virtual,void,volatile,while%
+	},%
+	sensitive,%
+	morecomment=[l]//,%
+	morecomment=[s]{/*}{*/},%
+	morestring=[b]",%
+	morestring=[b]',%
+}[keywords,comments,strings]%
+
+\def\code#1{\texttt{#1}}
+\def\codekw#1{\texttt{\textbf{#1}}}
+
+\deftranslation[to=russian]{Fact}{Наблюдение}
+
+\lecturetitle{Программная инженерия. Лекция №19 — Интерфейсы и типы данных (часть 2)}
+\title[Типы данных 2]{Интерфейсы и типы данных (часть 2)}
+\author{Алексей Островский}
+\institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
+\date{16 апреля 2015 г.}
+
+
+\begin{document}
+	\frame{\titlepage}
+
+	\section{Типобезопасность}
+
+	\frame{
+		\frametitle{Типобезопасность}
+
+		\begin{Definition}
+			\textbf{Типобезопасность} \engterm{type safety} — мера, в~которой язык программирования 
+			или~стиль написания программы предотвращает ошибки типов.
+		\end{Definition}
+
+		\begin{Definition}
+			\textbf{Ошибка типа} \engterm{type error} — дефектное или нежелательное поведение программы, 
+			вызванное различием между~ожидаемым и~действительным смыслом данных, связанных с~переменной 
+			или~функцией / методом.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Виды типобезопасности:}
+		\begin{itemize}
+			\item статическая (определение ошибок во время компиляции);
+			\item динамическая (поиск ошибок во время выполнения).
+		\end{itemize}
+
+		\vspace{1ex}
+		В «хорошем» ЯП результат любого выражения является корректным значением типа, 
+		который может~быть определен на~основе выражения во~время компиляции.
+	}
+
+	\frame{
+		\frametitle{Безопасность памяти}
+
+		\begin{Definition}
+			\textbf{Безопасность памяти} \engterm{memory safety} — мера, в которой язык или стиль программирования 
+			защищены от ошибок доступа к памяти.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Ошибки, связанные с памятью:}
+		\begin{itemize}
+			\item переполнение буфера, кучи в целом или стека;
+			\item использование неинициализированных переменных;
+			\item некорректная работа с динамической памятью:
+			\item работа с указателем после освобождения памяти;
+			\item многократное высвобождение одного указателя;
+			\item неправильная обработка нулевых указателей.
+		\end{itemize}
+	}
+
+	\subsection{Безопасность и системы ТД}
+
+	\frame{
+		\frametitle{Сильная и слабая типизация}
+
+		\begin{Definition}
+			\textbf{Сильная / слабая типизация} \engterm{strong / weak type system} — 
+			степень соблюдения языком программирования безопасности типов и памяти.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Сильная типизация:}
+		\begin{itemize}
+			\item
+			отсутствие указателей / ссылок, арифметики указателей;
+			\item
+			отсутствие различающихся представлений одних и тех же данных 
+			(таких как \codekw{union} в~C / C++);
+			\item
+			минимальное количество неявных приведений типов;
+			\item
+			отсутствие неочевидных для программиста спецификаций операций 
+			(таких как перегрузка операторов в~C++).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{ЯП с сильной типизацией:} Python, Java, функциональные ЯП.
+
+		\textbf{ЯП со слабой типизацией:} C, C++, Visual Basic.
+	}
+
+	\frame{
+		\frametitle{Статическая и динамическая типизация}
+
+		\textbf{Статическая типизация} — определение типов всех конструкций языка на этапе компиляции программы
+		(слабая форма верификации программы).
+
+		\vspace{1ex}
+		\textbf{Виды статической типизации:}
+		\begin{itemize}
+			\item
+			явная — типы конструкций декларируются программистом (напр., при объявлении переменных);
+			\item
+			неявная — тип переменных выводится в процессе компиляции. Примеры:
+			\begin{itemize}
+				\item \code{\textbf{var} x = 5} в C\#; 
+				\item \code{List<> list = \textbf{new} ArrayList<String>()} в Java 7+.
+			\end{itemize}
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{ЯП со статической типизацией:} C++, Pascal, Java, C\#.
+
+		\vspace{2.5ex}
+		\textbf{Динамическая типизация} — определение типов некоторых конструкций и проверка соответствующих ограничений 
+		во время выполнения программы.
+
+		\vspace{1ex}
+		\textbf{ЯП с динамической типизацией:} Python, PHP, Perl, JavaScript.
+	}
+
+	\subsection{Совместимость типов}
+
+	\frame{
+		\frametitle{Совместимость типов}
+
+		\begin{Problem}
+			Проверить соответствие типа всех выражений ожидаемому в конкретной ситуации. 
+			Понятие соответствия специфично для конкретного ЯП.
+		\end{Problem}
+
+		\vspace{1ex}
+		\textbf{Конексты, где необходимо согласование:}
+		\begin{itemize}
+			\item присвоение \code{<переменная> = <выражение>} (типы переменной и выражения);
+			\item вызов функции / метода (соответствие аргументов сигнатуре).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Методы определения совместимости:}
+		\begin{itemize}
+			\item
+			\textbf{«Плоская» система типов:} совместимость = эквивалентность; 
+			определяется исходя из~деклараций или структуры данных.
+
+			\vspace{1ex}
+			\item
+			\textbf{Иерархическая система типов:} совместимость определяется отношениями 
+			тип — подтип (задекларированными или неявными).
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Номинальная и структурная типизация}
+
+		\textbf{Номинальная типизация} — вид системы типов, при которой совместимость и~эквивалентность типов 
+		определяется на~основе явных деклараций (наследования, имплементации интерфейсов и~т.\,п.).
+
+		\vspace{0.5ex}
+		\textbf{ЯП с номинальной типизацией:} C\#, Java; C++ (основные типы).
+
+		\vspace{1.5ex}
+		\textbf{Структурная типизация} — вид системы типов, при~которой совместимость и~эквивалентность типов 
+		определяется на~основе внутренней структуры объектов \emph{во~время компиляции}.
+
+		\vspace{0.5ex}
+		\textbf{ЯП со структурной типизацией:} C++ (шаблоны); функциональные ЯП (Haskell, ML).
+
+		\vspace{1.5ex}
+		\textbf{Утиная типизация} — вид системы типов, при~которой совместимость и~эквивалентность типов 
+		определяется на~основе структуры объектов \emph{во~время выполнения}.
+
+		\vspace{0.5ex}
+		\textbf{ЯП с утиной типизацией:} Python, JavaScript.
+	}
+
+	\subsection{Утиная типизация}
+
+	\frame{
+		\frametitle{Утиная типизация}
+
+		\begin{Definition}
+			\textbf{Утиная типизация} \engterm{duck typing} — вид динамической типизации, при которой 
+			корректность использования объекта определяется набором его методов и свойств, а~не~типом.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{ЯП с утиной типизацией:}
+		\begin{itemize}
+			\item языки с ООП на основе прототипов (JavaScript, Lua);
+			\item Python; 
+			\item Smalltalk.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Пример динамической не утиной типизации:} подсказки типов \engterm{data hinting} в~PHP.
+	}
+	
+	\frame{
+		\frametitle{Пример: утиная типизация в Python}
+
+		\lstinputlisting[language=python,firstline=4]{code-duck.py}
+	}
+
+	\section{Приведение ТД}
+
+	\frame{
+		\frametitle{Приведение типов в различных ЯП}
+
+		\textbf{Java:}
+		\lstinputlisting[language=java]{code-str-int.java}
+
+		\vspace{0.5ex}
+		\textbf{Python:}
+		\lstinputlisting[language=python]{code-str-int.py}
+
+		\vspace{0.5ex}
+		\textbf{PHP:}
+		\lstinputlisting[language=php,escapechar=\#]{code-str-int.php}
+
+		\vspace{0.5ex}
+		\textbf{C:}
+		\lstinputlisting[language=c]{code-str-int.c}
+	}
+
+	\subsection{Виды приведения ТД}
+
+	\frame{
+		\frametitle{Неявное приведение типов данных}
+
+		\begin{Definition}
+			\textbf{Неявное приведение ТД} \engterm{implicit conversion, coercion} — приведение типов данных, 
+			осуществляемое автоматически компилятором.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Примеры:}
+		\begin{itemize}
+			\item
+			Преобразование между числовыми типами с повышением разрядности или множества представимых чисел 
+			(\codekw{byte}~$\rightarrow$ \codekw{short}~$\rightarrow$ \codekw{int}~$\rightarrow$ 
+				\codekw{long}~$\rightarrow$ \codekw{float}~$\rightarrow$ \codekw{double}).
+
+			\textbf{Код (Java):}
+			\lstinputlisting{code-coerce.java}
+
+			\vspace{0.5ex}
+			\item
+			Приведение объектов к строковому представлению; зачастую — с помощью средств ООП: 
+			\begin{itemize}
+				\item метод \code{toString()} в Java; 
+				\item метод \code{ToString()} в C\#; 
+				\item метод \code{str.format()} и ключевое слово / функция \code{print} в~Python.
+			\end{itemize}
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Явное приведение типов данных}
+
+		\begin{Definition}
+			\textbf{Явное приведение ТД} \engterm{explicit conversion} — приведение ТД, 
+			специфицируемое в~исходном коде программы.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Подвиды:}
+		\begin{itemize}
+			\item
+			С динамической проверкой типа во время выполнения:
+			\begin{itemize}
+				\item приведение типов в Java; 
+				\item оператор \code{\textbf{dynamic\_cast}<T>} в C++.
+			\end{itemize}
+
+			\vspace{1ex}
+			\item
+			Без динамической проверки типа:
+			\begin{itemize}
+				\item \code{\textbf{static\_cast}<T>} в C++; 
+				\item оператор \codekw{as} в C\#.
+			\end{itemize}
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Пример: приведение ТД в C\#}
+
+		\lstinputlisting[language=csharp]{code-conversion.cs}
+	}
+
+	\subsection{Полиморфизм}
+
+	\frame{
+		\frametitle{Полиморфизм}
+
+		\begin{Definition}
+			\textbf{Полиморфизм} — использование единого интерфейса для сущностей различных типов.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Виды полиморфизма:}
+		\begin{itemize}
+			\item
+			Специальный (ad hoc) полиморфизм — определение различных реализаций для~конечного числа 
+			фиксированных наборов входных типов (напр., перегрузка функций / методов).
+
+			\item
+			Параметрический полиморфизм — определение обобщенной реализации для~произвольного типа 
+			(напр., шаблоны в C++; generics в Java и C\#).
+
+			\item
+			Полиморфизм подтипов — использование интерфейса класса для любого производного от~него подкласса (применяется в ООП).
+		\end{itemize}
+	}
+
+	\subsubsection{Специальный полиморфизм}
+
+	\frame{
+		\frametitle{Пример: специальный полиморфизм (Java)}
+
+		\lstinputlisting[language=java]{code-poly-special.java}
+	}
+
+	\subsubsection{Параметрический полиморфизм}
+
+	\frame{
+		\frametitle{Пример: параметрический полиморфизм (C++)}
+
+		\lstinputlisting[language=c++]{code-poly-parametric.cpp}
+	}
+
+	\frame{
+		\frametitle{Пример: параметрический полиморфизм (Java)}
+
+		\lstinputlisting[language=java]{code-poly-parametric.java}
+
+		Информация о параметризации типа в Java доступна только во~время компиляции; 
+		во~время выполнения эти~сведения \extlink{http://en.wikipedia.org/wiki/Type_erasure}{стираются}:
+
+		\lstinputlisting[language=java]{code-poly-parametric-2.java}
+	}
+
+	\frame{
+		\frametitle{Особенности параметрического полиморфизма}
+
+		\textbf{C++:} шаблоны \engterm{templates}.
+		\begin{itemize}
+			\item
+			Используется для объявления широкого круга конструкций (функции, структуры, классы);
+			\item
+			аргументы — произвольные переменные (не обязательно типы данных);
+			\item
+			возможность явного указания частных реализаций;
+			\item
+			для каждого набора аргументов генерируется свой код.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Java и C\#:} шаблонные типы \engterm{generics}.
+		\begin{itemize}
+			\item
+			Используется для объявления классов / интерфейсов и отдельных методов;
+			\item
+			аргументы — типы данных (в Java — только ссылочные);
+			\item
+			общий код для всех аргументов;
+			\item
+			стирание типов во время выполнения (Java).
+		\end{itemize}
+	}
+
+	\subsubsection{Полиморфизм подтипов}
+
+	\frame{
+		\frametitle{Полиморфизм подтипов}
+
+		\textbf{Принцип подстановки Барбары Лисков} \engterm{Liskov substitution principle, LSP}:
+
+		Функции, использующие базовый тип данных (напр., в качестве аргументов), 
+		должны уметь использовать произвольные подтипы этого типа, не зная об этом.
+
+		\vspace{1ex}
+		{\small(LSP — один из пяти базовых принципов объектно-ориентированного проектирования 
+			\extlink{http://en.wikipedia.org/wiki/SOLID_\%28object-oriented_design\%29}{SOLID}.)}
+
+		\vspace{2ex}
+		\textbf{NB.} Полиморфизм подтипов означает наследование интерфейсов, наследование в~ООП — наследование имплементации. 
+		Один тип может быть подтипом неродственных типов в~ЯП без~множественного наследования.
+
+		\vspace{1ex}
+		\textbf{Пример (Java):}
+		\begin{itemize} 
+			\item 
+			ArrayList — подтип интерфейсов List, Iterable, Collection, Cloneable, Serializable, RandomAccess;
+			\item 
+			ArrayList — подтип классов AbstractList, AbstractCollection и Object.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Пример: полиморфизм подтипов (Java)}
+
+		\lstinputlisting[language=java]{code-poly-subtypes.java}
+	}
+
+	\section{Подтипы в ООП}
+
+	\frame{
+		\frametitle{Подтипы и наследование}
+
+		\begin{Definition}
+			\textbf{Наследование} ($=$ наследование реализации, \textit{code inheritance}) — 
+			перенос для~использования, расширения или~модификации \emph{реализации} методов класса.
+		\end{Definition}
+
+		{\small%
+			\textbf{Множественное наследование} — копирование реализации из нескольких источников.
+
+			\textbf{ЯП с множественным наследованием:} C++, Python.
+		}
+
+		\vspace{1ex}
+		\begin{Definition}
+			\textbf{Отношение «тип — подтип»} ($=$ наследование интерфейса, \textit{subtyping}) — 
+			копирование \emph{описания} методов класса для определения совместимости типов.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Промежуточные варианты:} \\
+		типажи \engterm{traits}, примеси \engterm{mixins} — $\sim$ интерфейсы с частично реализованными методами.
+
+		\textbf{ЯП с типажами / примесями:} методы в интерфейсах по умолчанию (Java~8); \codekw{trait} в~PHP.
+	}
+
+	\subsection{Интерфейсы ООП}
+
+	\frame{
+		\frametitle{Интерфейсы ООП}
+
+		\begin{Definition}
+			\textbf{Интерфейс в ООП} — способ задания отношения подтипов на~основе контрактов 
+			(т.\,е. описания требуемой функциональности).
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{ЯП, поддерживающие интерфейсы:} C\#, D, Delphi / Object Pascal, Java, PHP.
+
+		\vspace{0.5ex}
+		\textbf{Эмуляция интерфейсов:} C++ (за счет классов с чистыми виртуальными функциями и~множественного наследования).
+
+		\vspace{1ex}
+		\textbf{Примеры интерфейсов (Java):}
+		\begin{itemize}
+			\item Cloneable — указывает на то, что класс поддерживает клонирование;
+			\item Serializable — класс поддерживает сохранение данных;
+			\item Comparable<T> — объекты класса сравнимы с объектами класса T;
+			\item List<T> — класс представляет собой список элементов класса T.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Пример: интерфейсы в Java}
+
+		\lstinputlisting[language=java]{code-intf.java}
+	}
+
+	\frame{
+		\frametitle{Сравнение наследования и подтипов}
+
+		\begin{center}\small
+			\begin{tabular}{|p{0.03\textwidth}|p{0.03\textwidth}|p{0.375\textwidth}|p{0.375\textwidth}|}
+				\hline
+				\multicolumn{2}{|c|}{} & \multicolumn{2}{c|}{Наследование} \cr
+				\cline{3-4}
+				\multicolumn{2}{|c|}{} & \centering $+$ & \centering $-$ \cr
+				\hline
+				\multirow{2}*{\rotatebox{90}{Подтип\hspace{2ex}\strut{}}} & \centering $+$ 
+					& \raggedright Наследование в Java, C\# 
+						\vspace{0.5ex}\par \code{\textbf{class} A \{ \}} 
+						\par \code{\textbf{class} B \textbf{extends} A \{ \}}
+					& \raggedright Расширение интерфейсов в Java, C\# 
+						\vspace{0.5ex}\par \code{\textbf{intefrace} A \{ \}} 
+						\par \code{\textbf{interface} B \textbf{extends} A \{ \}} \cr
+				\cline{2-4}
+				& \centering $-$ 
+					& \raggedright Наследование в С++ с~модификаторами \codekw{protected} и~\codekw{private}
+						\vspace{0.5ex}\par \code{\textbf{class} A \{ \};} 
+						\par \code{\textbf{class} B : \textbf{protected} A \{ \};}
+					& \raggedright Независимые типы данных 
+						\vspace{0.5ex}\par \code{\textbf{class} A \{ \}} 
+						\par \code{\textbf{class} B \{ \}} \cr
+				\hline
+			\end{tabular}
+		\end{center}
+	}
+
+	\subsection{Ковариантность и контравариантность}
+
+	\frame{
+		\frametitle{Ковариантность и контравариантность}
+
+		\textbf{Ковариантность:} 
+		\code{ParametricType<S>} — подтип \code{ParametricType<T>}, если \code{S} — подтип \code{T}.
+
+		\vspace{1ex}
+		\textbf{Примеры использования:}
+		\begin{itemize}
+			\item
+			итераторы (C\#):
+			\lstinputlisting[language=csharp]{code-covariance.cs}
+
+			\item
+			массивы в C\#, Java:
+			\lstinputlisting[language=java]{code-covariance.java}
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Ковариантность и контравариантность}
+
+		\textbf{Контравариантность:} \code{ParametricType<T>} — подтип \code{ParametricType<S>}, 
+		если \code{S} — подтип \code{T}.
+
+		\vspace{1ex}
+		\textbf{Пример использования:} сравнение (C\#):
+		\lstinputlisting[language=csharp]{code-contravariance.cs}
+
+		\vspace{1ex}
+		\textbf{Инвариантность:} \code{ParametricType<T>} и \code{ParametricType<S>} не связаны.
+
+		\vspace{1ex}
+		\textbf{Пример:} изменяемые коллекции (C\#):
+		\lstinputlisting[language=csharp]{code-invariance.cs}
+	}
+
+	\frame{
+		\frametitle{Ковариантность и контравариантность (Java)}
+
+		Декларации ко/контравариантности в Java: во время использования типа, а~не~во~время его~декларации:
+		\begin{itemize}
+			\item
+			\code{? \textbf{extends} T} — ковариантное определение типа данных в шаблоне;
+			\item
+			\code{? \textbf{super} T} — контравариантное определение типа данных в шаблоне.
+		\end{itemize}
+
+		\vspace{0.5ex}
+		\begin{overlayarea}{\textwidth}{0.575\textheight}
+			\only<1,2>{%
+				\textbf{Пример (ковариантное определение):}
+				\lstinputlisting[language=java,escapechar=\#]{code-wildcards-1.java}
+			}
+			\only<3,4>{%
+				\textbf{Пример (контравариантное определение):}
+				\lstinputlisting[language=java,escapechar=\#]{code-wildcards-2.java}
+			}
+		\end{overlayarea}
+	}
+
+	\section{Заключение}
+
+	\subsection{Выводы}
+	
+	\frame{
+		\frametitle{Выводы}
+
+		\begin{enumerate}
+			\item
+			Основное применение системы типов данных — устранение ошибок, связанных с~некорректной интерпретацией данных 
+			(слабая форма верификации программы). Для~решения этой~задачи вводится понятие совместимых типов~данных.
+
+			\item
+			Совместимость типов может определяться с~помощью явных или~неявных приведений, 
+			а~также с~помощью полиморфизма, в~частности отношений «тип — подтип».
+
+			\item
+			Определение подтипов и наследование в~ООП — связанные, но~различные понятия. 
+			В~некоторых случаях определение подтипов нетривиально (например, правила ковариантности / контравариантности 
+			для~параметрических типов).
+		\end{enumerate}
+	}
+	
+	\subsection{Материалы}
+	
+	\frame{
+		\frametitle{Материалы}
+		
+		\begin{thebibliography}{9}
+			\bibitem[1]{1}
+			Лавріщева К.\,М. 
+			\newblock Програмна інженерія (підручник). 
+			\newblock {\footnotesize К., 2008. — 319 с.}
+
+			\bibitem[2]{2}
+			Tratt, Laurence
+			\newblock Dynamically typed languages.
+			\newblock {\footnotesize\url{http://tratt.net/laurie/research/pubs/html/tratt__dynamically_typed_languages/}}
+
+			\bibitem[3]{3}
+			Cardelli Luca, Wegner Peter
+			\newblock On understanding types, data abstraction, and polymorphism.
+			\newblock {\footnotesize\url{http://lucacardelli.name/Papers/OnUnderstanding.A4.pdf}}
+		\end{thebibliography}
+	}
+	
+	\frame{
+		\frametitle{}
+		
+		\begin{center}
+			\Huge Спасибо за внимание!
+		\end{center}
+	}
+
+\end{document}
+
