@@ -1,0 +1,16 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3em,minimum width=7.5em},
+	label/.style={draw=none,font=\small\itshape,minimum height=0pt,minimum width=0pt},
+	wrap/.style={inner sep=1em,dashed}
+]
+
+	\node(queue) [fill=blue!25] {Очередь};
+	\node(client1) [below left=4em of queue]{Клиент 1};
+	\node(broker) [above=of queue,label] {Брокер сообщений};
+	\node(client2) [below right=4em of queue] {Клиент 2};
+	\node [fit=(broker.north west) (broker.north east) (queue.south),wrap] {};
+
+	\draw[->] (client1) -- node[label,left] {отправка\ } (queue);
+	\draw[->,bend left] (queue) to node[label,above right] {прием} (client2);
+	\draw[<-,bend right] (queue) to node[label,below left] {подтверждение} (client2);
+\end{tikz*}

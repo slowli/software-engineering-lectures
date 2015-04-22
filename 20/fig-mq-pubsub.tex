@@ -1,0 +1,19 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3em,minimum width=7.5em},
+	label/.style={draw=none,font=\small\itshape,minimum height=0pt,minimum width=0pt},
+	wrap/.style={inner sep=1em,dashed}
+]
+
+	\node(topic) [fill=blue!25] {Тема (topic)};
+	\node(client1) [below=4em of queue]{Клиент 1};
+	\node(broker) [above=of queue,label] {Брокер сообщений};
+	\node(client2) [right=8em of queue] {Клиент 2};
+	\node(client3) [left=8em of queue] {Клиент 3};
+	\node [fit=(broker.north west) (broker.north east) (queue.south),wrap] {};
+
+	\draw[->] (client1) -- node[label,left] {отправка\ } (queue);
+	\draw[->,bend left=15] (topic) to node[label,above] {прием} (client2);
+	\draw[<-,bend right=15] (topic) to node[label,below] {подписка} (client2);
+	\draw[->,bend left=15] (topic) to node[label,below] {прием} (client3);
+	\draw[<-,bend right=15] (topic) to node[label,above] {подписка} (client3);
+\end{tikz*}
