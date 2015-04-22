@@ -1,0 +1,21 @@
+// Типы ответов на запрос члена последовательности.
+enum ResponseType {
+	t_int, // целое число, занимающее 4 байта
+	t_string, // строка произвольной длины
+	t_error // сообщение об ошибке
+};
+
+// Объединение — ответ на запрос.
+union Response switch(ResponseType) {
+	case t_int: long intVal;
+	case t_string: string stringVal;
+	case t_error: string message;
+};
+
+interface IntegerSequence {
+	readonly attribute string name;
+	readonly attribute string description;
+	readonly attribute long maxIndex;
+	// Возвращает член послеовательности с заданным индексом.
+	Response number(in long index);
+};

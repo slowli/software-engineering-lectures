@@ -1,0 +1,22 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,minimum height=2.5em,minimum width=7.5em},
+	label/.style={draw=none,font=\small\itshape,minimum height=0},
+	wrap/.style={inner sep=1em,dashed}
+]
+	\node(idl) {Интерфейс (IDL)};
+
+	\node(i-srv) [below right=2em and 1em of idl] {Интерфейс (ЯП 2)};
+	\node(impl) [below=of i-srv] {Реализация};
+	\node(srv) [label,below=1em of impl] {Сервер};
+	\node [fit=(i-srv.north west) (i-srv.north east) (srv.south east),wrap] {};
+
+	\node(i-cli) [below left=2em and 1em of idl] {Интерфейс (ЯП 1)};
+	\node(use) [below=of i-cli] {Вызовы методов};
+	\node(cli) [label,below=1em of use] {Клиент};
+	\node [fit=(i-cli.north west) (i-cli.north east) (cli.south east),wrap] {};
+
+	\draw[<->] (idl) -- (i-srv);
+	\draw[<->] (i-srv) -- (impl);
+	\draw[<->] (idl) -- (i-cli);
+	\draw[<->] (i-cli) -- (use);
+\end{tikz*}

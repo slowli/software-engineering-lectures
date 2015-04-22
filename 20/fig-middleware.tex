@@ -1,0 +1,19 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=2.5em},
+	computer/.style={minimum width=10em,minimum height=6em}
+]
+	\node(c1) [computer] {Компьютер 1};
+	\node(comp1) [below=-2em of c1,fill=white]{Компонент \\ (ЯП 1)};
+	\node(intf1) [below=of comp1]{Интерфейс};
+
+	\node(c2) [computer,right=12.5em of c1] {Компьютер 2};
+	\node(comp2) [below=-2em of c2,fill=white]{Компонент \\ (ЯП 2)};
+	\node(intf2) [below=of comp2]{Интерфейс};
+
+	\node(middleware) [minimum width=30em,anchor=north] at ($ (intf1.south)!0.5!(intf2.south) + (0, -2em) $) {\textbf{Промежуточное ПО}};
+
+	\draw[<->] (comp1) -- (intf1);
+	\draw[<->] (intf1.south) -- (intf1.south |- middleware.north);
+	\draw[<->] (comp2) -- (intf2);
+	\draw[<->] (intf2.south) -- (intf2.south |- middleware.north);
+\end{tikz*}

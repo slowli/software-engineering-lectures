@@ -1,0 +1,779 @@
+\documentclass{a4beamer}
+\input{lecture-common.def}
+
+\usepackage{listings}
+\lstset{%
+	morekeywords={assert},
+	tabsize=4,
+	showstringspaces=false,
+	basicstyle=\linespread{1.25}\ttfamily\small,
+	keywordstyle=\bfseries,
+	commentstyle=\color{gray},
+	numbers=left,
+	numberstyle=\footnotesize\color{gray},
+	xleftmargin=2.5em,
+	texcl=true,
+	extendedchars=true,
+	escapechar=\$
+}
+
+\def\code#1{\texttt{#1}}
+\def\codekw#1{\texttt{\textbf{#1}}}
+
+\deftranslation[to=russian]{Fact}{Наблюдение}
+
+\lecturetitle{Программная инженерия. Лекция №20 — Интероперабельность}
+\title[Интероперабельность]{Интероперабельность}
+\author{Алексей Островский}
+\institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
+\date{23 апреля 2015 г.}
+
+
+\begin{document}
+	\frame{\titlepage}
+
+	\frame{
+		\frametitle{Проблемы взаимодействия сред выполнения}
+
+		\begin{itemize}
+			\item
+			\textbf{Байт (8 бит):} целое число со знаком (Java) или без знака (C / C++, C\#)?
+
+			\vspace{0.5ex}
+			\item
+			Формат и объем поддержки \textbf{сложных типов:} структур, массивов (как реализована многомерность?), 
+			множеств, перечислений, объединений.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Порядок байтов} в сложных объектах: от младшего к~старшему или~наоборот (определяется ABI конкретной среды)?
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Кодирование строк:} в UTF-16 (1 символ $=$ 2 байта, представление данных в~оперативной памяти в~Java, C\#, …) 
+			или~UTF-8 (переменная длина символа, представление при~постоянном хранении данных)?
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Сжатие данных?}
+		\end{itemize}
+	}
+
+	\section{Введение}
+
+	\subsection{Определения}
+
+	\frame{
+		\frametitle{Интероперабельность}
+
+		\begin{Definition}
+			\textbf{Интероперабельность} \engterm{interoperability} — возможность обмениваться данными для~программ, 
+			выполняемых в различных операционных средах.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Инструменты} достижения интероперабельности:
+		\begin{itemize}
+			\item
+			стандартизация протоколов взаимодействия;
+			\item
+			поддержка базовых форматов передачи информации (файлов и т.\,п.);
+			\item
+			использование согласованного представления данных.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Причины использования:}
+		\begin{itemize}
+			\item
+			разделение приложения на слабо связанные компоненты в~соответствии 
+			с~компонентно-ориентированным программированием, разделение «зон ответственности» разработчиков;
+			\item
+			максимизация повторного использования кода;
+			\item
+			повышение отказоустойчивости и производительности.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Межпроцессное взаимодействие}
+
+		\begin{Definition}
+			\textbf{Межпроцессное взаимодействие} \engterm{inter-process communication, IPC} 
+			— спецификации для~организации обмена данными между несколькими потоками выполнения 
+			и / или процессами.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Категории:}
+		\begin{itemize}
+			\item локальное — взаимодействие в пределах одного компьютера;
+			\item распределенное — в рамках нескольких компьютеров (через сеть).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Уровень:}
+		\begin{itemize}
+			\item 
+			низкоуровневое — взаимодействие средствами операционной системы 
+			(с~использованием сведений об~ABI);
+			\item 
+			высокоуровневое — с помощью посредника, позволяющего абстрагироваться от~ABI.
+		\end{itemize}
+	}
+
+	\subsection{Спецификация взаимодействия}
+
+	\frame{
+		\frametitle{Спецификация взаимодействия}
+
+		\textbf{Способ коммуникации:} 
+		\begin{itemize}
+			\item файлы; 
+			\item анонимные / именованные каналы; 
+			\item сигналы; 
+			\item разделяемая память; 
+			\item сокеты; 
+			\item сообщения.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Формат данных:} 
+		\begin{itemize}
+			\item бинарный (с согласованной спецификацией);
+			\item текстовый (на основе XML, JSON, других форматов).
+		\end{itemize}
+	}
+
+	\subsection{Низкоуровневое взаимодействие}
+
+	\frame{
+		\frametitle{Низкоуровневое взаимодействие: POSIX / System V}
+
+		\textbf{Способы обмена данными:}
+		\begin{itemize}
+			\item
+			\textbf{Сигнал} — пересылка системных сообщений между процессами (обычно с~минимальной нагрузкой данными).
+			\item
+			\textbf{Сокет} — взаимодействие через физический сетевой интерфейс.
+			\item
+			Системная \textbf{очередь сообщений}.
+			\item
+			\textbf{Канал взаимодействия} \engterm{pipe} — двусторонний поток данных, 
+			связывающий ввод / вывод двух процессов с последовательным доступом.
+			\item
+			\textbf{Разделяемая память} — участок оперативной памяти, доступный для~чтения / записи для~нескольких процессов.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Низкоуровневое взаимодействие: POSIX / System V}
+
+		\textbf{Достоинства:}
+		\begin{itemize}
+			\item
+			высокая скорость передачи данных;
+			\item
+			широкий круг систем с поддержкой технологии;
+			\item
+			минимальная зависимость от стороннего ПО.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Недостатки:}
+		\begin{itemize}
+			\item
+			ограниченность одним компьютером (кроме сокетов);
+			\item
+			отсутствие спецификации формата данных ($\Rightarrow$~сложно обнаруживаемые и~локализуемые ошибки);
+			\item
+			сложность восприятия и модификации программ;
+			\item
+			необходимость написания шаблонного кода \engterm{boilerplate code}.
+		\end{itemize}
+	}
+
+	\subsection{Промежуточное ПО}
+
+	\frame{
+		\frametitle{Middleware}
+
+		\begin{Definition}
+			\textbf{Промежуточное программное обеспечение} \engterm{middleware} — ПО, 
+			предоставляющее инструменты для обмена и управления данными для~межпроцессного взаимодействия, 
+			которые расширяют встроенные средства операционной системы.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Достоинства:}
+		\begin{itemize}
+			\item
+			стандартизация формата данных $\Rightarrow$~поддержка взаимодействия 
+			между~различными языками программирования и~ОС;
+			\item
+			упрощение процесса разработки, улучшение качества кода;
+			\item
+			инструменты для контроля взаимодействия (отладка, профилирование и т.\,п.).
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Роль промежуточного ПО в построении приложений}
+
+		\begin{center}
+			\input{fig-middleware.tex}
+		\end{center}
+
+		\figureexpl{Промежуточное ПО связывает компоненты, определяя их~унифицированный интерфейс
+				для~всех~поддерживаемых сред выполнения.}
+	}
+
+	\frame{
+		\frametitle{Типы промежуточного ПО}
+
+		\begin{center}
+			Типы промежуточного ПО $\simeq$ парадигмы программирования.
+		\end{center}
+
+		\begin{itemize}
+			\item
+			Процедурное программирование — \textbf{удаленный вызов процедур}
+			\engterm{remote procedure call}.
+
+			\itemexpl{Посредник связывает интерфейсы и реализации отдельных процедур.}
+
+			\item
+			Объектно-ориентированное программирование — \textbf{посредник доступа к~объектам}
+			\engterm{object request broker}.
+
+			\itemexpl{Посредник хранит интерфейсы и реализации объектов, содержащих методы и атрибуты.}
+
+			\item
+			Событийно-ориентированное программирование — \textbf{очередь сообщений} \engterm{message queue}.
+
+			\itemexpl{Посредник позволяет клиентам производить и потреблять сообщения определенного формата.}
+
+			\item
+			Реляционное программирование — \textbf{доступ к СУБД} \engterm{SQL data access}.
+
+			\itemexpl{Посредник предоставляет доступ к БД с помощью программных интерфейсов.}
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Характеристики промежуточного ПО}
+
+		\textbf{Метод согласования интерфейсов:}
+		\begin{itemize}
+			\item
+			на основе отдельного языка спецификации;
+			\item
+			с помощью языков программирования (при поддержке ограниченного набора сред выполнения).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Роли пользователей:}
+		\begin{itemize}
+			\item
+			архитектура «клиент — сервер»;
+			\item
+			однородная среда (peer to peer).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Метод обмена данными:}
+		\begin{itemize}
+			\item
+			синхронный (с блокированием выполнения);
+			\item
+			асинхронный (без блокирования, т.\,е. на основе событий).
+		\end{itemize}
+	}
+
+	\section{RPC}
+
+	\frame{
+		\frametitle{RPC}
+
+		\begin{Definition}
+			\textbf{Удаленный вызов процедур} \engterm{remote procedure call, RPC} — протокол межпроцессного взаимодействия, 
+			предоставляющий возможность выполнять процедуры в других процессах как локальные.
+		\end{Definition}
+
+		\begin{Definition}
+			\textbf{Удаленный вызов методов} \engterm{remote method invocation, RMI} — аналог RPC 
+			в~объектно-ориентированном программировании.
+		\end{Definition}
+
+		\vspace{2.5ex}
+		\begin{overlayarea}{\textwidth}{0.275\textheight}
+			\begin{center}
+				\input{fig-rpc.tex}
+			\end{center}
+		\end{overlayarea}
+	}
+
+	\subsection{Виды RPC}
+
+	\frame{
+		\frametitle{Виды RPC}
+
+		\textbf{Процедурный и смешанный подход:}
+		\begin{itemize}
+			\item JSON-RPC;
+			\item XML-RPC, SOAP.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Объектно-ориентированный подход:}
+		\begin{itemize}
+			\item CORBA;
+			\item Java RMI;
+			\item Microsoft .NET Remoting, Microsoft DCOM;
+			\item Apache Thrift;
+			\item ZeroC Internet Communication Engine (ICE).
+		\end{itemize}
+	}
+
+	\subsection{CORBA}
+
+	\frame{
+		\frametitle{CORBA}
+
+		\begin{Definition}
+			\textbf{CORBA} (common object request broker architecture) — набор спецификаций, 
+			разработанных Object Management Group (OMG) для обеспечения обмена данными на~основе 
+			объектно-ориентированных интерфейсов.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Составляющие CORBA:}
+		\begin{itemize}
+			\item
+			язык описания интерфейсов объектов (OMG interface description language, IDL);
+			\item
+			отображение типов данных IDL для различных языков программирования;
+			\item
+			протокол передачи данных: general inter-orb protocol (GIOP) и его реализация через HTTP 
+			— Internet inter-orb protocol (IIOP);
+			\item
+			вспомогательные средства для передачи (stub / skeleton);
+			\item
+			инструменты, напр., сервис имен.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Схема работы CORBA}
+
+		\begin{center}
+			\input{fig-corba.tex}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Генерация кода в CORBA}
+
+		В CORBA предусмотрены инструменты, которые автоматически генерируют:
+		\begin{itemize}
+			\item
+			\textbf{интерфейс объекта} на поддерживаемом ЯП на основе IDL-описания;
+
+			\vspace{0.5ex}
+			\item
+			\textbf{IDL-описание} на основе интерфейса / класса поддерживаемого ЯП;
+
+			\vspace{0.5ex}
+			\item
+			\textbf{stub} (клиентский вспомогательный код) на основе IDL, который:
+			\begin{itemize}
+				\item реализует интерфейс объекта;
+				\item адресует вызовы методов посреднику и обрабатывает получаемые результаты.
+			\end{itemize}
+
+			\vspace{0.5ex}
+			\item
+			\textbf{skeleton} (серверный вспомогательный код) на основе IDL, который:
+			\begin{itemize}
+				\item реализует интерфейс объекта;
+				\item является основой для построения имплементации;
+				\item преобразует принятые от посредника данные.
+			\end{itemize}
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Реализации CORBA}
+
+		\textbf{Системы, поддерживающие архитектуру CORBA:}
+		\begin{itemize}
+			\item
+			Java Development Kit, как альтернатива / дополнение для Java RMI;
+
+			\vspace{0.5ex}
+			\item
+			WildFly (ранее JBoss) (Java);
+
+			\vspace{0.5ex}
+			\item
+			omniORB (C++, Python);
+
+			\vspace{0.5ex}
+			\item
+			ORBit (C, Python);
+
+			\vspace{0.5ex}
+			\item
+			IIOP.NET (C\# и другие языки MS .NET; поддерживаются не все стандарты).
+		\end{itemize}
+
+		\vspace{1ex}
+		Несмотря на объектную ориентацию CORBA, для реализации сервисов и клиентов 
+		можно использовать другие подходы (напр., процедурное программирование в~C).
+	}
+
+	\subsection{IDL}
+
+	\frame{
+		\frametitle{IDL}
+
+		\begin{Definition}
+			\textbf{Язык описания объектов} \engterm{interface description language / interface definition language} — 
+			частный случай языка спецификации, служащий для описания интерфейса объекта независимым от языка реализации способом.
+		\end{Definition}
+
+		\vspace{1ex}
+		\begin{center}
+			\input{fig-idl.tex}
+
+			\vspace{0.5ex}
+			\figureexpl{Промежуточное ПО содержит средства для преобразования от конкретных ЯП к IDL и обратно.}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{OMG IDL}
+
+		\textbf{Типы данных:}
+		\begin{itemize}
+			\item
+			базовые типы данных:
+			\begin{itemize}
+				\item булев тип; 
+				\item целые числа 2, 4, 8 байт со знаком и без; 
+				\item байты; 
+				\item 32-, 64- и 96/128-битные числа с плавающей запятой; 
+				\item символы и строки ASCII и UTF-16);
+			\end{itemize}
+
+			\vspace{1ex}
+			\item
+			конструкции: 
+			\begin{itemize}
+				\item структуры \engterm{struct}, 
+				\item перечисления \engterm{enum}, 
+				\item маркированные объединения \engterm{tagged union}; 
+				\item массивы (фиксированное число элементов); 
+				\item последовательности (ограниченное сверху или произвольное число элементов);
+			\end{itemize}
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{OMG IDL}
+
+		\textbf{Типы данных (продолжение):}
+		\begin{itemize}
+			\item исключения ($\sim$ структуры с особой семантикой);
+
+			\vspace{1ex}
+			\item
+			интерфейсы объектов, содержащие:
+			\begin{itemize}
+				\item операции ($\sim$ методы), характеризующиеся входными / выходными параметрами, 
+				возвращаемым типом и исключениями;
+				\item атрибуты ($\sim$ свойства), в т.\,ч. только для чтения;
+			\end{itemize}
+
+			\vspace{1ex}
+			\item
+			any (произвольный объект); 
+
+			\vspace{1ex}
+			\item
+			типы, передаваемые по значению \engterm{valuetype} — 
+			$\sim$ классы в ООП (поля + методы); методы выполняются на стороне клиента.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{OMG IDL}
+
+		\textbf{Характеристики языка:}
+		\begin{itemize}
+			\item
+			декларации типов (в т.\,ч. вложенные), именованные константы;
+			\item
+			наследование интерфейсов (в т.\,ч. множественное);
+			\item
+			модули для группировки связанных интерфейсов;
+			\item
+			наличие препроцессора, возможность условной компиляции;
+			\item
+			подключение деклараций из других IDL-файлов.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Привязки к языкам программирования:}
+		\begin{itemize}
+			\item C++;
+			\item Java;
+			\item Python;
+			\item Ruby;
+			\item C\# и другие языки CLR (неполные).
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Пример: интерфейс числовой последовательности}
+
+		\lstinputlisting[language={[CORBA]IDL}]{code-int-seq.idl}
+	}
+
+	\subsection{Модули и ссылки ORB}
+
+	\frame{
+		\frametitle{Модули ORB}
+
+		\textbf{Сервис имен} — идентификация объектов по имени ($\simeq$URI), 
+		состоящем из $\geq 0$ контекстов (директорий) и названия (и, возможно, типа) объекта.
+
+		\textbf{Применение:} упрощение доступа к объектам.
+
+		\vspace{2ex}
+		\textbf{POA} (portable object adapter) — разделение реализации объекта на 2 части:
+		\begin{itemize}
+			\item
+			CORBA-совместимый объект — код, связанный с преобразованием данных;
+			\item
+			слуга \engterm{servant} — реализация методов и атрибутов объекта.
+		\end{itemize}
+
+		\textbf{Применение:} динамический подбор реализации (напр., в зависимости от метода); 
+		балансировка нагрузки.
+
+		\vspace{2ex}
+		\textbf{Репозиторий интерфейсов} — содержит все зарегистрированные в CORBA определения типов.
+
+		\textbf{Применение:} получение динамических сведений о структуре объектов.
+	}
+
+	\frame{
+		\frametitle{Объекты CORBA}
+
+		CORBA предоставляет доступ к объектам в виде ссылок. 
+		Интерфейс ссылки состоит из~2~частей: 
+		\begin{itemize}
+			\item интерфейс, определенный в IDL;
+			\item базовый интерфейс \code{CORBA::Object}.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Методы базового интерфейса:}
+		\begin{itemize}
+			\item
+			динамическое определение интерфейса: \code{get\_interface}, \code{repository\_id}, \code{is\_a};
+			\item
+			копирование и удаление ссылок на объект (для управления сборкой мусора): \code{duplicate}, \code{release};
+			\item
+			тестирование доступности объекта: \code{is\_nil}, \code{non\_existent};
+			\item
+			сравнение объектов: \code{is\_equivalent}, \code{hash};
+			\item
+			приведение типов: \code{narrow}.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Пример: работа с удаленным объектом в Python}
+
+		\lstinputlisting[language=python]{code-corba.py}
+	}
+
+	\section{Очередь сообщений}
+
+	\frame{
+		\frametitle{Очередь сообщений}
+
+		\begin{Definition}
+			\textbf{Очередь сообщений} \engterm{message queue, mailbox} — вид межпроцессного взаимодействия, 
+			при котором отправитель и получатель данных слабо связаны \engterm{loosely coupled}.
+		\end{Definition}
+
+		\vspace{0.5ex}
+		\begin{itemize}
+			\item
+			Роли сторон
+
+			\textbf{RPC:} ассиметричные — клиент (потребитель) и сервер (реализация); \\
+			\textbf{MQ:} симметричные — каждый клиент может получать и отправлять сообщения.
+
+			\item
+			Связь 
+
+			\textbf{RPC:} сильная — клиент знает интерфейс сервера; \\
+			\textbf{MQ:} слабая — получатель знает только формат сообщений.
+
+			\item
+			Передача данных
+
+			\textbf{RPC:} синхронная — по запросу клиента; сервер должен быть активен на момент запроса. \\
+			\textbf{MQ:} асинхронная — сообщения хранятся в очереди до доставки клиенту.
+		\end{itemize}
+	}
+
+	\subsection{Характеристики}
+
+	\frame{
+		\frametitle{Характеристики очередей сообщений}
+
+		\textbf{Преимущества по сравнению с RPC:}
+		\begin{itemize}
+			\item
+			отсутствие необходимости спецификации интерфейсов компонентов;
+			\item
+			быстрая замена и модификация компонентов;
+			\item
+			нет необходимости в одновременном функционировании всех компонентов;
+			\item
+			возможность построения сложной архитектуры поставщиков и потребителей сообщений.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Недостатки:}
+		\begin{itemize}
+			\item
+			асинхронная модель подходит не для всех архитектур приложений (напр., малопригодна для систем реального времени);
+			\item
+			затраты на организацию и обеспечение отказоустойчивости брокера сообщений.
+		\end{itemize}
+	}
+
+	\subsection{Способы организации}
+
+	\frame{
+		\frametitle{Организация очереди сообщений}
+
+		\begin{center}
+			\input{fig-mq-ptp.tex}
+		\end{center}
+
+		Организация очереди сообщений в формате \textbf{point-to-point} (PTP):
+		\begin{itemize}
+			\item один потребитель для каждого сообщения;
+			\item асинхронная работа отправителя и приемника;
+			\item сохранение сведений о приеме сообщений.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Организация очереди сообщений}
+
+		\begin{center}
+			\input{fig-mq-pubsub.tex}
+		\end{center}
+
+		Организация очереди сообщений в формате \textbf{publish / subscribe}:
+		\begin{itemize}
+			\item
+			неограниченное количество потребителей для каждого сообщения;
+			\item
+			прием сообщений потребителями только в периоды активности (сообщения не~«откладываются»).
+		\end{itemize}
+	}
+
+	\subsection{Реализации}
+
+	\frame{
+		\frametitle{Реализации очереди сообщений}
+
+		\textbf{Java Message Queue} — стандарт обмена сообщениями в Java, часть Java Enterprise Edition (Java~EE).
+
+		\textbf{Реализации:}
+		\begin{itemize}
+			\item Apache ActiveMQ;
+			\item OpenMQ (часть сервера приложений Glassfish);
+			\item IBM WebSphere MQ.
+		\end{itemize}
+
+		\vspace{2ex}
+		\textbf{AMQP} (advanced message queuing protocol) — протокол передачи сообщений на уровне приложения.
+
+		\textbf{Реализации:}
+		\begin{itemize}
+			\item Apache Qpid; 
+			\item RabbitMQ; 
+			\item Microsoft Azure Service Bus; 
+			\item ZeroMQ.
+		\end{itemize}
+	}
+
+	\section{Заключение}
+
+	\subsection{Выводы}
+	
+	\frame{
+		\frametitle{Выводы}
+
+		\begin{enumerate}
+			\item
+			Интероперабельность — технологии взаимодействия между компонентами программной системы, 
+			написанными и~выполняемыми в~различных средах. 
+			Близкое к~интероперабельности понятие — межпроцессное взаимодействие (IPC).
+
+			\item
+			Низкоуровневые средства для межпроцессного взаимодействия встроены во~все~операционные системы. 
+			Высокоуровневые методы IPC используют промежуточное~ПО (\emph{middleware}).
+
+			\item
+			Есть две основные категории промежуточного ПО: на~основе процедур / объектов и~на~основе сообщений.
+
+			\item
+			Одним из наиболее полных стандартов промежуточного~ПО является CORBA, 
+			технология, позволяющая работать с~удаленными объектами как~с~локальными.
+		\end{enumerate}
+	}
+	
+	\subsection{Материалы}
+	
+	\frame{
+		\frametitle{Материалы}
+		
+		\begin{thebibliography}{9}
+			\bibitem[1]{1}
+			Лавріщева К.\,М. 
+			\newblock Програмна інженерія (підручник). 
+			\newblock {\footnotesize К., 2008. — 319 с.}
+
+			\bibitem[2]{2}
+			Object Management Group
+			\newblock CORBA specifications.
+			\newblock {\footnotesize\url{http://www.omg.org/spec/}}
+
+			\bibitem[3]{3}
+			Oracle
+			\newblock The Java EE Tutorial. Chapter 45 "Java Message Service Concepts".
+			\newblock {\footnotesize\url{http://docs.oracle.com/javaee/7/tutorial/jms-concepts001.htm}}
+		\end{thebibliography}
+	}
+	
+	\frame{
+		\frametitle{}
+		
+		\begin{center}
+			\Huge Спасибо за внимание!
+		\end{center}
+	}
+
+\end{document}
+

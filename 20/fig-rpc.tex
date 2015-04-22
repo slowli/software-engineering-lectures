@@ -1,0 +1,19 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=2.5em,minimum width=5em}
+]
+	\node(client) {Клиент};
+	\node(stub) [right=of client] {Stub};
+	\node(mw) [right=of stub] {\textbf{Промежуточное} \\ \textbf{ПО}};
+	\node(skel) [right=of mw] {Skeleton};
+	\node(server) [right=of skel] {Сервер};
+
+	\draw[<->] (client) -- (stub);
+	\draw[<->] (stub) -- (mw);
+	\draw[<->] (mw) -- (skel);
+	\draw[<->] (skel) -- (server);
+
+	\node<2> [note={(stub.south)},below=1em of stub.south,anchor=north west] {%
+		преобразует параметры вызываемых процедур \\ для передачи промежуточному ПО \engterm{marshalling}};
+	\node<3> [note={(skel.south)},below=1em of skel.south,anchor=north east] {%
+		преобразует сообщения от промежуточного ПО \\ в локальные вызовы \engterm{unmarshalling}};
+\end{tikz*}

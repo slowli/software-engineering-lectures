@@ -1,0 +1,32 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=2.5em,minimum width=6em},
+	big/.style={minimum width=10em,minimum height=6em},
+	label/.style={minimum height=0pt,minimum width=0pt,font=\footnotesize\itshape,draw=none}
+]
+	\node(client) [big] {Код клиента};
+	\node(intf-cl) [below=-1.5em of client,fill=white] {Интерфейс \\ объекта};
+	\node(stub) [below=of intf-cl] {Stub};
+	\node(orb-cl) [below=of stub] {Посредник доступа \\ к объектам (ORB)};
+	\draw[<->] (intf-cl) -- (stub);
+	\draw[<->] (stub) -- (orb-cl);
+
+	\node(server) [big,right=13em of client] {Код сервера};
+	\node(intf-srv) [below=-1.5em of server,fill=white] {Имплементация \\ объекта};
+	\node(skel) [below=of intf-srv] {Skeleton};
+	\node(orb-srv) [below=of skel] {Посредник доступа \\ к объектам (ORB)};
+	\draw[<->] (intf-srv) -- (skel);
+	\draw[<->] (skel) -- (orb-srv);
+
+	\draw[<->,dashed] (orb-cl) -- node(net) [above,label]{сетевое соединение} (orb-srv);
+
+	\node<2> [note={(orb-cl.north east)},above=3em of net] {%
+		код, предоставляемый поставщиком ORB};
+	\node<3> [note={(orb-srv.north west)},above=3em of net] {%
+		код, предоставляемый поставщиком ORB};
+	\node<4> [note={(stub.east)},above=3em of net] {%
+		код, генерируемый утилитами \\ от поставщика ORB};
+	\node<5> [note={(skel.west)},above=3em of net] {%
+		код, генерируемый утилитами \\ от поставщика ORB};
+	\node<6> [note={(intf-cl.south east)},above=3em of net] {%
+		код, генерируемый утилитами \\ от поставщика ORB};
+\end{tikz*}
