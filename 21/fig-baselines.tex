@@ -1,0 +1,48 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center},
+	label/.style={draw=none,font=\bfseries}
+]
+	\node(compA) [label] {Компонент A};
+	\node(compA-10) [right=2em of compA]{1.0};
+	\node(compA-11) [right=3em of compA-10]{1.1};
+	\node(compA-12) [right=5em of compA-11]{1.2};
+	\node(compA-13) [right=3em of compA-12]{1.3};
+	\node(right) [right=4em of compA-13,coordinate] {};
+	\draw (compA-10) -- (compA-11);
+	\draw (compA-11) -- (compA-12);
+	\draw (compA-12) -- (compA-13);
+	\draw[dashed] (compA-13) -- (right);
+
+	\node(compB) [label,below=of compA.east,anchor=east] {Компонент B};
+	\node(compB-10) [right=2em of compB]{1.0};
+	\node(compB-11) [right=7em of compB-10]{1.1};
+	\node(compB-12) [right=2em of compB-11]{1.2};
+	\draw (compB-10) -- (compB-11);
+	\draw (compB-11) -- (compB-12);
+	\draw[dashed] (compB-12.east) -- (right |- compB-12.east);
+
+	\node(compC) [label,below=of compB.east,anchor=east] {Компонент C};
+	\node(compC-10) [right=3em of compC]{1.0};
+	\node(compC-11) [right=6em of compC-10]{1.1};
+	\node(compC-12) [right=5em of compC-11]{1.2};
+	\draw (compC-10) -- (compC-11);
+	\draw (compC-11) -- (compC-12);
+	\draw[dashed] (compC-12.east) -- (right |- compC-12.east);
+
+	\node(lib1) [label,below=of compC.east,anchor=east] {Библиотека Lib1};
+	\node(lib1-10) [right=2em of lib1]{1.0};
+	\node(lib1-11) [right=9em of lib1-10]{1.1};
+	\draw(lib1-10) -- (lib1-11);
+	\draw[dashed] (lib1-11.east) -- (right |- lib1-11.east);
+
+	\node(lib2) [label,below=of lib1.east,anchor=east] {Библиотека Lib2};
+	\node(lib2-10) [right=12em of lib2]{1.0};
+	\node(lib2-11) [right=6em of lib2-10]{1.1};
+	\draw(lib2-10) -- (lib2-11);
+	\draw[dashed] (lib2-11.east) -- (right |- lib2-11.east);
+
+	\node(base1) [label,below right=2em and 10em of lib2,anchor=north] {Уровень v1};
+	\draw[draw=blue,thick] (base1.north) -- (base1.north |- compA.north);
+	\node(base2) [label,right=8em of base1] {Уровень v2};
+	\draw[draw=blue,thick] (base2.north) -- (base2.north |- compA.north);
+\end{tikz*}

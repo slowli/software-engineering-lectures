@@ -1,0 +1,22 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3em,minimum width=7em},
+	label/.style={draw=none,font=\footnotesize\itshape,minimum height=0pt,minimum width=0pt},
+	actor/.style={human,minimum width=2.5em,minimum height=4em,outer sep=6pt}
+]
+	\node(repo) [draw=none] {Хранилище};
+	\node(repo-cloud) at (repo.center) [cloud,dashed,aspect=1,minimum width=10em,minimum height=7.5em]{};
+	\node(repo-label) [label,above=0pt of repo-cloud,font=\bfseries,anchor=south east] {Удаленный сервер};
+
+	\node(wcopy1) [below left=4em and 1em of repo] {Рабочая копия};
+	\node(dev1) [left=1em of wcopy1,actor] {};
+	\node(dev1-label) [label,below=0pt of dev1,font=\bfseries] {Разработчик};
+	\node(wcopy2) [below right=4em and 1em of repo] {Рабочая копия};
+	\node(dev2) [right=1em of wcopy2,actor] {};
+	\node(dev2-label) [label,below=0pt of dev2,font=\bfseries] {Разработчик};
+
+	\draw[->,bend right=120,looseness=3.5] (repo.east) to node[label,above right]{merge / branch / label} (repo.north);
+	\draw[->,bend left] (repo) to node[label,left] {check-out} (wcopy1);
+	\draw[<-,bend right] (repo) to node[label,left] {check-in} (wcopy1);
+	\draw[->,bend left] (repo) to node[label,right] {check-out} (wcopy2);
+	\draw[<-,bend right] (repo) to node[label,right] {check-in} (wcopy2);
+\end{tikz*}

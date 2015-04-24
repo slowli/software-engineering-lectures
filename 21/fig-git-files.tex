@@ -1,0 +1,32 @@
+%создание; удаление; редактирование; подготовка (stage); фиксирование (commit);
+%файл добавлен в индекс Git
+\begin{tikz*}[%
+	every node/.style={rectangle,align=center},
+	label/.style={font=\bfseries,minimum height=3.25em},
+	edge/.style={font=\footnotesize\itshape}
+]
+	\node(untracked) [label] {Не отслеживается \\ (untracked)};
+	\node(unmod) [label,right=of untracked] {Актуальный \\ (unmodified)};
+	\node(mod) [label,right=of unmod] {Измененный \\ (modified)};
+	\node(staged) [label,right=of mod] {Подготовленный \\ (staged)};
+
+	\draw (untracked) -- ++(0, -10em);
+	\draw (unmod) -- ++(0, -10em);
+	\draw (mod) -- ++(0, -10em);
+	\draw (staged) -- ++(0, -10em);
+
+	\node (_tmp) [coordinate,below=2.5em of untracked.south] {};
+	\draw[->] (_tmp) -- node[above,edge]{создание} (_tmp -| unmod.south);
+
+	\node (_tmp) [coordinate,below=5em of untracked.south] {};
+	\draw[<-] (_tmp) -- node[above,edge]{удаление} (_tmp -| unmod.south);
+
+	\node (_tmp) [coordinate,below=3.75em of unmod.south] {};
+	\draw[->] (_tmp) -- node[above,edge]{редактирование} (_tmp -| mod.south);
+
+	\node (_tmp) [coordinate,below=5em of mod.south] {};
+	\draw[->] (_tmp) -- node[above,edge]{подготовка (stage)} (_tmp -| staged.south);
+
+	\node (_tmp) [coordinate,below=6.75em of unmod.south] {};
+	\draw[<-] (_tmp) -- node[below,edge,fill=white!50]{фиксирование (commit)} (_tmp -| staged.south);
+\end{tikz*}
