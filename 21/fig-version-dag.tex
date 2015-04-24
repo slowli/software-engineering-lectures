@@ -1,0 +1,39 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center},
+	label/.style={draw=none,font=\bfseries},
+	edge/.style={draw=none,font=\footnotesize\itshape},
+	tag/.style={signal,signal to=east,signal from=west}
+]
+	\node(commit1) {\# 1};
+	\node(commit2) [above right=4em and 1em of commit1] {\# 2};
+	\node(commit3) [right=4em of commit2] {\# 4};
+	\node(commit4) [right=3em of commit3] {\# 6};
+	\node(commit5) [right=4em of commit1] {\# 3};
+	\node(commit6) [below right=4em and 2em of commit5] {\# 5};
+	\node(commit7) [right=5em of commit6] {\# 7};
+	\node(commit8) [right=12em of commit5] {\# 8};
+
+	\node(tag1) [tag,below=9em of commit1] {v1.0};
+	\node(tag2) [tag,below=9em of commit8] {v1.1};
+	\draw[dashed] (commit1) -- (tag1);
+	\draw[dashed] (commit8) -- (tag2);
+
+	\node(trunk) [label,left=4em of commit1] {Ствол};
+	\node(branch1) at (trunk.east |- commit2.west) [label,anchor=east] {Ветвь 1};
+	\node(branch2) at (trunk.east |- commit6.west) [label,anchor=east] {Ветвь 2};
+	\node(branch2) at (trunk.east |- tag1.west) [label,anchor=east] {Метки};
+
+	\draw[->] (commit1) -- (commit5);
+	\draw[->] (commit5) -- (commit8);
+	\draw[->] (commit2.south |- commit1.east) -- node[edge,left]{создание ветви} (commit2.south);
+	\draw[->] (commit2) -- (commit3);
+	\draw[->] (commit3) -- (commit4);
+	\draw[->] (commit4.south) -- node[edge,right] {слияние} (commit4.south |- commit1.east);
+	\draw[->] (commit6.north |- commit1.east) -- node[edge,left]{создание ветви} (commit6.north);
+	\draw[->] (commit6) -- (commit7);
+	\draw[dotted] (commit7) -- ++(6em, 0);
+	\draw[dotted] (commit8) -- ++(3em, 0);
+
+	\node<2> [note={(commit6.south)},below=2em of commit6.south] {операция фиксации \\ (commit)};
+	\node<2> [note={(commit3.south)},below=2em of commit3.south] {операция фиксации \\ (commit)};
+\end{tikz*}

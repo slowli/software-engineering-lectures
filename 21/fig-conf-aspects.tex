@@ -1,0 +1,23 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3em,minimum width=7em},
+	action/.style={rounded rectangle}
+]
+	\node(comp-ver) {Версии \\ компонентов};
+	\node(sys-ver) [right=6em of comp-ver] {Версии \\ системы};
+	\node(sys-rel) [right=6em of sys-ver] {Выпуски \\ системы};
+	\node(build) [action,above right=2em and 3em of comp-ver,anchor=south] {Построение \\ системы};
+	\node(versions) [action,below right=2em and 3em of comp-ver,anchor=north] {Управление \\ версиями};
+	\node(release) [action,below right=2em and 3em of sys-ver,anchor=north] {Управление \\ выпусками};
+	\node(change) [action,above right=2em and 3em of sys-ver,anchor=south] {Управление \\ изменениями};
+	\node(change-req) [above=of change] {Запросы \\ на изменение};
+
+	\draw (comp-ver) -- (build);
+	\draw (comp-ver) -- (versions);
+	\draw (sys-ver) -- (build);
+	\draw (sys-ver) -- (versions);
+	\draw (change-req) -- (change);
+	\draw (sys-ver) -- (change);
+	\draw (sys-ver) -- (release);
+	\draw (sys-rel) -- (change);
+	\draw (sys-rel) -- (release);
+\end{tikz*}
