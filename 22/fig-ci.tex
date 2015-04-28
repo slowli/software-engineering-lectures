@@ -1,0 +1,33 @@
+\begin{tikz*}[%
+	every node/.style={align=center},
+	edge/.style={font=\footnotesize\itshape},
+	label/.style={font=\bfseries},
+	line/.style={minimum height=1em,draw=blue,fill=blue!50,minimum width=#1},
+	point/.style={circle,fill=black,minimum size=0.333em,inner sep=0pt}
+]
+	\node(label-dev) [label] {Среда разработки};
+	\node(dev) [right=of label-dev,line=7.5em] {};
+	\node [edge,above=0pt of dev] {построение, разработка, \\ тестирование};
+	\node(rbound) [coordinate,right=15em of dev.east] {};
+	\draw (label-dev.east) -- (dev.west);
+	\draw (dev.east) -- (rbound);
+
+	\node(label-build) [label,below=5em of label-dev.south east,anchor=north east] {Сервер построения};
+	\node(build) [right=12.5em of label-build,line=7.5em] {};
+	\node [edge,below=0pt of build] {построение, \\ тестирование};
+	\draw (label-build.east) -- (build.west);
+	\draw (build.east) -- (build.east -| rbound);
+
+	\node(label-repo) [label,below=5em of label-build.south east,anchor=north east] {Хранилище версий}; 
+	\draw (label-repo.east) -- (label-repo.east -| rbound);
+
+	\node(checkin-src) [point,right=1em of label-repo.east] {};
+	\node(checkin-dst) [point,right=1em of label-dev.east] {};
+	\draw[->] (checkin-src) -- node[pos=0.75,right,edge]{check-in} (checkin-dst);
+	\node(build-src) [point,right=1em of dev.east] {};
+	\node(build-dst) at (build-src |- build.west) [point] {};
+	\draw[->] (build-src) -- node[right,edge]{отправка} (build-dst);
+	\node(commit-src) [point,right=1em of build.east] {};
+	\node(commit-dst) at (commit-src |- label-repo.east) [point] {};
+	\draw[->] (commit-src) -- node[right,edge]{commit, merge} (commit-dst);
+\end{tikz*}

@@ -1,0 +1,21 @@
+\begin{tikz*}[%
+	every node/.style={align=center}
+]
+	\node(arrow-st) [coordinate] {};
+	\node(arrow-tip) [coordinate,right=30em of arrow-st] {};
+
+	\node(make-c) [coordinate,right=7.5em of arrow-st] {};
+	\node(make) [above=0.5em of make-c,anchor=south] {make, \\ nmake};
+	\node(ant-c) [coordinate,right=15em of arrow-st] {};
+	\node(ant) [above=0.5em of ant-c,anchor=south] {Ant, \\ NAnt, \\ MSBuild};
+	\node(maven-c) [coordinate,right=22.5em of arrow-st] {};
+	\node(maven) [above=0.5em of maven-c,anchor=south] {Maven, \\ Gradle};
+
+	\node(speed) [below=0.5em of arrow-st] {Явная конфигурация};
+	\node(complete) [below=0.5em of arrow-tip] {Соглашение};
+
+	\draw[->] (arrow-st) -- (arrow-tip);
+	\draw (make-c) ++(0,0.5em) -- ++(0,-1em);
+	\draw (ant-c) ++(0,0.5em) -- ++(0,-1em);
+	\draw (maven-c) ++(0,0.5em) -- ++(0,-1em);
+\end{tikz*}
