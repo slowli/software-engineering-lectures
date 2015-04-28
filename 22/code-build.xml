@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<project name="Test" default="compile">
+  <property name="dir.src" value="src"/>
+  <property name="dir.dest" value="classes"/>
+  <property name="jar" value="test.jar"/>
+  <target name="compile" description="Compile Java sources">
+    <mkdir dir="${dir.dest}"/>
+    <javac srcdir="${dir.src}" destdir="${dir.dest}"/>
+  </target>
+  <target name="jar" depends="compile" description="Create JAR archive">
+    <jar destfile="${jar}">
+      <fileset dir="${dir.dest}" includes="**/*.class"/>
+      <manifest>
+        <attribute name="Main-Class" value="test.Program"/>
+      </manifest>
+    </jar>
+  </target>
+  <target name="clean" description="Remove intermediate files">
+    <delete dir="${dir.dest}"/>
+  <target>
+</project>

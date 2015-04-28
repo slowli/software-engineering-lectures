@@ -1,0 +1,58 @@
+\begin{tikz*}[%
+	every node/.style={align=center},
+	label/.style={font=\bfseries},
+	point/.style={circle,fill=black,minimum size=0.333em,inner sep=0pt},
+	ver/.style={rectangle,draw,minimum height=2em}
+]
+	\node(label-beta) [label] {Бета-выпуски};
+	\node(label-pub) [label,below=5em of label-beta.south east,anchor=north east] {Публичные \\ выпуски};
+	\node(label-tech) [label,below=5em of label-pub.south east,anchor=north east] {Технические \\ выпуски};
+
+	\node(01) [ver,right=1em of label-beta] {0.1.0};
+	\node(02) [ver,right=1.5em of 01] {0.2.0};
+	\node(09) [ver,right=3em of 02] {0.9.0};
+	\node(010) [ver,right=1.5em of 09] {0.10.0};
+	\node(011) [ver,right=1.5em of 010] {0.11.0};
+	\node(beta-src) [point,right=1em of 011] {};
+
+	\draw[->] (01) -- (02);
+	\draw[->,dashed] (02) -- (09);
+	\draw[->] (09) -- (010);
+	\draw[->] (010) -- (011);
+	\draw[->] (011) -- (beta-src);
+
+	\node(beta-dst) [point,right=1em of label-pub] {};
+	\draw[->] (beta-src) |- ($ (beta-dst.center) + (0,3.5em) $) -- (beta-dst);
+
+	\node(tech-src) [point,right=1em of beta-dst] {};
+	\node(tech-dst) at (tech-src |- label-tech) [point] {};
+	\node(pub-dst) [point,right=1em of tech-src] {};
+
+	\node(100) [ver,right=1em of pub-dst] {1.0.0};
+	\node(101) [ver,right=1.5em of 100] {1.0.1};
+	\node(102) [ver,right=1.5em of 101] {1.0.2};
+	\node(110) [ver,right=1.5em of 102] {1.1.0};
+	\node(111) [ver,right=1.5em of 110] {1.1.1};
+	\node(200) [ver,right=3em of 111] {2.0.0};
+
+	\draw[->] (beta-dst) -- (tech-src);
+	\draw[->] (tech-src) -- (tech-dst);
+	\draw[->] (pub-dst) -- (100);
+	\draw[->] (100) -- (101);
+	\draw[->] (101) -- (102);
+	\draw[->] (102) -- (110);
+	\draw[->] (110) -- (111);
+	\draw[->,dashed] (111) -- (200);
+
+	\node(100-alpha) [ver,right=1em of tech-dst] {1.0.0-alpha};
+	\node(100-beta) [ver,right=1.5em of 100-alpha] {1.0.0-beta\strut{}};
+	\node(100-rc1) [ver,right=1.5em of 100-beta] {1.0.0-rc.1\strut{}};
+	\node(100-rc2) [ver,right=1.5em of 100-rc1] {1.0.0-rc.2\strut{}};
+	\node(pub-src) [point,right=1em of 100-rc2] {};
+	\draw[->] (tech-dst) -- (100-alpha);
+	\draw[->] (100-alpha) -- (100-beta);
+	\draw[->] (100-beta) -- (100-rc1);
+	\draw[->] (100-rc1) -- (100-rc2);
+	\draw[->] (100-rc2) -- (pub-src);
+	\draw[->] (pub-src) |- ($ (pub-dst.center) + (0,-3.5em) $) -- (pub-dst);
+\end{tikz*}

@@ -1,0 +1,5 @@
+target [target...]: [dependency...]
+	command1
+	command2
+	...
+	commandN
