@@ -1,0 +1,26 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3em},
+	label/.style={draw=none,font=\footnotesize\itshape,minimum height=0pt},
+	action/.style={rounded rectangle}
+]
+	\node(models) {Модели качества \\ ISO 9001};
+	\node(manual) [below=4em of models] {Руководство качества \\ организации};
+	\node(plan2) [below=4em of manual] {План качества \\ проекта 2};
+	\node(plan1) [left=of plan2] {План качества \\ проекта 1};
+	\node(plan3) [right=of plan2] {План качества \\ проекта 3};
+	\node(management) [right=of plan3,action] {Управление качеством \\ проекта};
+	\node(process) at (management.center |- manual.center) [action] {Процессы поддержки \\ качества};
+
+	\draw[->] (models) -- node[label,right] {реализованы в} (manual);
+	\draw[->] (manual) -- (plan1);
+	\draw[->] (manual) -- (plan3);
+	\draw[->] (manual) -- node[label,fill=white] {используется для разработки} (plan2);
+	\draw[->] (manual) -- node[label,above] {документирует} (process);
+	\draw[->] (process) -- node[label,left] {реализованы в} (management);
+
+	\node(_tmp) [coordinate,below=2em of management.south] {};
+	\draw (plan1.south) |- node[label,below,pos=0.75] {поддерживают} (_tmp);
+	\draw[->] (_tmp) -- (management.south);
+	\draw (plan2.south) -- (plan2.south |- _tmp);
+	\draw (plan3.south) -- (plan3.south |- _tmp);
+\end{tikz*}

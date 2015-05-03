@@ -1,0 +1,63 @@
+\def\submember#1{\small\color{gray}#1\strut{}}
+\begin{tikz*}[%
+	every node/.style={draw,align=center},
+	attr/.style={rectangle split,rectangle split parts=2,minimum width=10.5em}
+]
+	\node(attr) [minimum width=35em,font=\large\bfseries] {Характеристики ПО};
+
+	\node(functionality) [attr,above=of attr] {%
+		\textbf{Функциональность} 
+		\nodepart{two}
+		\submember{полнота функций} \\ 
+		\submember{точность} \\ 
+		\submember{интероперабельность} \\ 
+		\submember{защищенность}
+	};
+	\node(reliability) [attr,left=of functionality.south west,anchor=south east] {%
+		\textbf{Надежность} 
+		\nodepart{two}
+		\submember{зрелость} \\ 
+		\submember{отказоустойчивость} \\ 
+		\submember{возобновляемость}
+	};
+	\node(efficiency) [attr,right=of functionality.south east,anchor=south west] {%
+		\textbf{Эффективность} 
+		\nodepart{two}
+		\submember{реактивность} \\ 
+		\submember{ресурсоемкость} \\ 
+		\submember{емкость}
+	};
+
+
+	\node(portability) [attr,below=of attr] {%
+		\textbf{Переносимость} 
+		\nodepart{two}
+		\submember{простота адаптации} \\
+		\submember{простота установки} \\
+		\submember{совместимость} \\
+		\submember{заменяемость}
+	};
+	\node(usability) [attr,right=of portability.north east,anchor=north west] {%
+		\textbf{Удобство} \\ \textbf{использования} 
+		\nodepart{two}
+		\submember{понятность} \\ 
+		\submember{обучаемость} \\ 
+		\submember{работоспособность} \\ 
+		\submember{привлекательность}
+	};
+	\node(maintainability) [attr,left=of portability.north west,anchor=north east] {%
+		\textbf{Удобство} \\ \textbf{сопровождения} 
+		\nodepart{two}
+		\submember{простота анализа} \\
+		\submember{простота изменений} \\
+		\submember{стабильность} \\
+		\submember{простота тестирования}
+	};
+
+	\draw[->] (attr) -- (functionality);
+	\draw[->] (attr.north -| reliability.south) -- (reliability.south);
+	\draw[->] (attr.north -| efficiency.south) -- (efficiency.south);
+	\draw[->] (attr) -- (portability);
+	\draw[->] (attr.south -| usability.north) -- (usability.north);
+	\draw[->] (attr.south -| maintainability.north) -- (maintainability.north);
+\end{tikz*}
