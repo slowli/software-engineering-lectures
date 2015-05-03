@@ -1,0 +1,32 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=3em,minimum width=10em},
+	label/.style={draw=none,font=\bfseries}
+]
+	\node(tree) {Глубина дерева \\ наследования};
+	\node(cycle) [below=of tree] {Цикломатическая \\ сложность};
+	\node(size) [below=of cycle] {Размер программ};
+	\node(error) [below=of size] {Число сообщений \\ об ошибках};
+	\node(manual) [below=of error] {Размер руководства \\ по использованию};
+	\node(metrics) [label,above=0pt of tree] {Метрики};
+
+	\node(maint) [above left=1em and 25em of size.center,anchor=south] {Удобство \\ сопровождения};
+	\node(port) [below left=1em and 25em of size.center,anchor=north] {Переносимость};
+	\node(rely) [above=of maint] {Надежность};
+	\node(use) [below=of port] {Удобство \\ использования};
+	\node(attr) [label,left=25em of metrics.center,anchor=center] {Характеристики качества};
+
+	\draw (rely.east) -- (cycle.west);
+	\draw (rely.east) -- (size.west);
+	\draw (rely.east) -- (error.west);
+
+	\draw (maint.east) -- (tree.west);
+	\draw (maint.east) -- (cycle.west);
+	\draw (maint.east) -- (size.west);
+	\draw (maint.east) -- (manual.west);
+
+	\draw (use.east) -- (error.west);
+	\draw (use.east) -- (manual.west);
+
+	\draw (port.east) -- (tree.west);
+	\draw (port.east) -- (size.west);
+\end{tikz*}
