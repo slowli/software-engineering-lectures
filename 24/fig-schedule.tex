@@ -1,0 +1,52 @@
+\begin{tikz*}[%
+	milestone/.style={diamond,fill,minimum width=0.5em,minimum height=0.5em,inner sep=0pt},
+	task/.style={rectangle,minimum height=0.75em,fill}
+]
+	\node(week) {Неделя};
+	\node(w0) [right=1em of week] {0};
+	\node(w1) [right=3em of w0.center,anchor=center] {1};
+	\node(w2) [right=3em of w1.center,anchor=center] {2};
+	\node(w3) [right=3em of w2.center,anchor=center] {3};
+	\node(w4) [right=3em of w3.center,anchor=center] {4};
+	\node(w5) [right=3em of w4.center,anchor=center] {5};
+	\node(w6) [right=3em of w5.center,anchor=center] {6};
+	\node(w7) [right=3em of w6.center,anchor=center] {7};
+	\node(w8) [right=3em of w7.center,anchor=center] {8};
+	\node(w9) [right=3em of w8.center,anchor=center] {9};
+
+	\node(start) [milestone,below=1em of w0.south] {};
+	\node [right=0em of start] {Начало};
+	\node(t1) [task,minimum width=6em,below=1em of start,anchor=west] {};
+	\node [left=0em of t1] {T1};
+	\node(t2) [task,minimum width=9em,below=1.5em of t1.west,anchor=west] {};
+	\node [left=0em of t2] {T2};
+	\node(m1) [milestone,below=2.5em of t1.east] {};
+	\node [right=0em of m1] {M1 / T1};
+	\node(t3) [task,minimum width=9em,below=1em of m1,anchor=west] {};
+	\node [left=0em of t3] {T3};
+	\node(t4) [task,minimum width=6em,below=4em of t2.west,anchor=west] {};
+	\node [left=0em of t4] {T4};
+	\node(m2) [milestone,below right=1em and 3em of t4.east] {};
+	\node [right=0em of m2] {M2 / T2 \& T4};
+	\node(t5) [task,minimum width=6em,below=1em of m2,anchor=west] {};
+	\node [left=0em of t5] {T5};
+	\node(m3) [milestone,below=1em of t5.west] {};
+	\node [right=0em of m3] {M3 / T1 \& T2};
+	\node(t6) [task,minimum width=3em,below=1em of m3,anchor=west] {};
+	\node [left=0em of t6] {T6};
+	\node(t7) [task,minimum width=12em,below=6.5em of t4.east,anchor=west] {};
+	\node [left=0em of t7] {T7};
+	\node(m4) [milestone,below=2.5em of t6.east] {};
+	\node [right=0em of m4] {M4 / T6};
+	\node(t8) [task,minimum width=9em,below=1em of m4,anchor=west] {};
+	\node [left=0em of t8] {T8};
+	\node(m5) [milestone,below=4em of t7.east] {};
+	\node [right=0em of m5] {M5 / T3 \& T7};
+	\node(t9) [task,minimum width=9em,below=1em of m5,anchor=west] {};
+	\node [left=0em of t9] {T9};
+
+	\node<2> [note={(t2.south)},below=1em of t2.south] {задания};
+	\node<2> [note={(t7.south)},below=1em of t7.south] {задания};
+	\node<3> [note={(m1.south)},below=1em of m1.south] {рубежи и задания, \\ от которых они зависят};
+	\node<3> [note={(m4.south)},below=1em of m4.south] {рубежи и задания, \\ от которых они зависят};
+\end{tikz*}
