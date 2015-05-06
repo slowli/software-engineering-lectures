@@ -1,0 +1,45 @@
+\begin{tikz*}[%
+	every node/.style={draw,align=center,font=\small},
+	activity/.style={rounded rectangle,minimum height=3em},
+	decision/.style={diamond,minimum width=1em,minimum height=1em},
+	label/.style={draw=none,font=\footnotesize},
+	sink/.style={rectangle,fill,inner sep=0.1em}
+]
+	\node(start) [circle,fill,minimum width=1em,minimum height=1em] {};
+	\node(sink1) [sink,minimum height=12.5em,right=1.5em of start] {};
+	\node(risk) [activity,right=1em of sink1] {Идентификация \\ рисков};
+	\node(constr) [activity,above=of risk] {Выделение \\ ограничений};
+	\node(milestone) [activity,below=of risk] {Определение \\ рубежей \\ и артефактов};
+	\node(sink2) [sink,minimum height=12.5em,right=1em of risk] {};
+	\node(schedule) [activity,right=1.5em of sink2] {Составление \\ расписания};
+	\node(sink3) [sink,minimum height=8em,right=1.5em of schedule] {};
+	\node(work) [activity,above right=1em and 5em of sink3.center,anchor=south] {Выполнение \\ работы}; 
+	\node(monitor) [activity,below right=1em and 5em of sink3.center,anchor=north] {Мониторинг \\ прогресса};
+	\node(dec-problems) [decision,below=3em of monitor] {};
+	\node(dec-complete) [decision,right=7.5em of dec-problems] {};
+	\node(end1) [circle,fill,minimum width=1em,minimum height=1em,below=4em of dec-complete] {};
+	\node(end) [circle,draw,minimum width=1.35em,minimum height=1.35em] at (end1.center) {};
+	\node(sink4) [sink,minimum width=13.5em,below=6em of dec-problems] {};
+	\node(strategy) [activity,below left=4em and 1em of sink4.south,anchor=east] {Противодействие \\ рискам};
+	\node(replan) [activity,below right=4em and 1em of sink4.south,anchor=west] {Перепланирование};
+
+	\draw[->] (start) -- (sink1);
+	\draw[->] (sink1.east |- constr.west) -- (constr.west);
+	\draw[->] (sink1.east |- risk.west) -- (risk.west);
+	\draw[->] (sink1.east |- milestone.west) -- (milestone.west);
+	\draw[<-] (sink2.west |- constr.east) -- (constr.east);
+	\draw[<-] (sink2.west |- risk.east) -- (risk.east);
+	\draw[<-] (sink2.west |- milestone.east) -- (milestone.east);
+	\draw[->] (sink2) -- (schedule);
+	\draw[->] (schedule) -- (sink3);
+	\draw[->] (sink3.east |- work.west) -- (work.west);
+	\draw[->] (sink3.east |- monitor.west) -- (monitor.west);
+	\draw[->] (monitor) -- (dec-problems);
+	\draw[->] (dec-problems) -- node[label,above]{[нет проблем]} (dec-complete);
+	\draw[->] (dec-problems) -| node[label,pos=0.25,above]{[незначительные \\ проблемы]} (schedule);
+	\draw[->] (dec-complete) |- node[label,pos=0.25,right]{[есть работа]} (work);
+	\draw[->] (dec-complete) -- node[label,right] {[проект \\ завершен]} (end);
+	\draw[->] (dec-problems) -- node[label,left]{[серьезные проблемы]} (sink4);
+	\draw[->] (sink4.south -| strategy.north) -- (strategy.north);
+	\draw[->] (sink4.south -| replan.north) -- (replan.north);
+\end{tikz*}
