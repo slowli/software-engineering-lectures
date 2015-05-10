@@ -1,0 +1,13 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center},
+	label/.style={draw=none,font=\footnotesize\itshape}
+]
+	\node(object) [minimum width=7.5em,minimum height=6.5em] {Объект};
+	\node(service) [minimum width=7.5em,minimum height=6.5em,right=7.5em of object,dashed] {Сервис \\ сериализации};
+	\node(stream) [minimum width=7.5em,minimum height=6.5em,right=7.5em of service] {Поток \\ данных};
+
+	\node(_tmp) [coordinate,above=1.5em of object.east] {};
+	\draw[->] (_tmp) -- node[label,above,pos=0.175] {сериализация} (_tmp -| stream.west);
+	\node(_tmp) [coordinate,below=1.5em of object.east] {};
+	\draw[<-] (_tmp) -- node[label,below,pos=0.175] {десериализация} (_tmp -| stream.west);
+\end{tikz*}

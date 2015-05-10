@@ -1,0 +1,55 @@
+\begin{tikz*}[%
+	table/.style={draw,rectangle split,rectangle split parts=2,align=left},
+	qty/.style={font=\footnotesize},
+	fkey/.style={font=\footnotesize\ttfamily}
+]
+	\node(reader) [table] {%
+		reader
+		\nodepart{two}
+		id: integer \\
+		firstname: varchar(30) \\
+		lastname: varchar(30) \\
+		location\_id: integer
+	};
+
+	\node(checked-out) [table,right=10em of reader] {%
+		checkedout
+		\nodepart{two}
+		reader\_id: integer \\
+		book\_id: integer \\
+		takendate: date \\
+		duedate: date
+	};
+
+	\node(book) [table,below=5em of checked-out] {%
+		book
+		\nodepart{two}
+		id: integer \\
+		isbn: varchar(20) \\
+		title: varchar(100) \\
+		language\_id: tinyint \\
+		author\_id: integer \\
+		publisher\_id: smallint
+	};
+
+	\node(location) at (reader.center |- book.center) [table] {%
+		location
+		\nodepart{two}
+		id: integer \\
+		country: varchar(20) \\
+		city: varchar(20)
+	};
+
+	\draw (reader) -- (location)
+		node[qty,right,very near start] {1..*}
+		node[qty,right,very near end] {1}
+		node[fkey,left,midway,align=right] {FOREIGN KEY(location\_id) \\ REFERENCES location(id)};
+
+	\draw (reader) -- (checked-out)
+		node[qty,below,very near start] {0..*}
+		node[fkey,above,midway,align=center] {FOREIGN KEY(reader\_id) \\ REFERENCES reader(id)};
+
+	\draw (book) -- (checked-out)
+		node[qty,right,very near start] {0..*}
+		node[fkey,left,midway,align=right] {FOREIGN KEY(book\_id) \\ REFERENCES book(id)};
+\end{tikz*}

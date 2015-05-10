@@ -1,0 +1,968 @@
+\documentclass{a4beamer}
+\input{lecture-common.def}
+
+\usepackage{multicol}
+\usetikzlibrary{shapes.misc}
+
+\lecturetitle{Программная инженерия. Лекция №25 — Хранение данных}
+\title[Хранение данных]{Хранение данных. Сериализация и объектно-реляционные отображения}
+\author{Алексей Островский}
+\institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
+\date{14 мая 2015 г.}
+
+\usepackage{listings}
+\lstset{%
+	tabsize=4,
+	showstringspaces=false,
+	basicstyle=\linespread{1.25}\ttfamily\small,
+	keywordstyle=\bfseries,
+	commentstyle=\color{gray},
+	numbers=left,
+	numberstyle=\footnotesize\color{gray},
+	xleftmargin=2.5em,
+	texcl=true,
+	extendedchars=true,
+	escapechar=\$
+}
+
+\lstdefinelanguage{javascript}%
+	{morekeywords={break,case,catch,%
+		const,constructor,continue,default,do,else,false,%
+		finally,for,function,if,in,instanceof,%
+		new,null,prototype,%
+		return,switch,this,throw,%
+		true,try,typeof,var,while},%
+	sensitive,%
+	morecomment=[l]//,%
+	morecomment=[s]{/*}{*/},%
+	morestring=[b]",%
+	morestring=[b]',%
+}[keywords,comments,strings]%
+
+
+\def\code#1{\texttt{#1}}
+\def\codekw#1{\texttt{\textbf{#1}}}
+
+\begin{document}
+	\frame{\titlepage}
+
+	\section{Введение}
+
+	\subsection{Задача хранения данных}
+
+	\frame{
+		\frametitle{Data persistence}
+
+		\begin{Definition}
+			\textbf{Постоянное хранение данных} \engterm{data persistence} — сохранение информации 
+			после~прекращения существования процесса, породившего эту~информацию.
+		\end{Definition}
+
+		\vspace{1ex}
+		\begin{center}
+			\input{fig-persistence.tex}
+		\end{center}
+
+		\figureexpl{Data persistence подразумевает двусторонний процесс: 
+			загрузку данных из~постоянной памяти в~оперативную и~наоборот}
+	}
+
+	\frame{
+		\frametitle{Задача хранения данных}
+
+		\begin{Problem}
+			Добавить к~функциональности объекта возможность его~хранения в~постоянном хранилище данных 
+			(напр., в~двоичном файле или~в~реляционной базе данных) 
+			при~условии минимальной модификации его~внутренней структуры.
+		\end{Problem}
+
+		\vspace{1ex}
+		\textbf{Проблемы:}
+		\begin{itemize}
+			\item
+			хранение отношений с другими объектами, в~т.\,ч.~рекурсивных;
+			\item
+			работа с избыточностью (напр., с~множественными ссылками на~один~объект);
+			\item
+			прозрачное преобразование информации (напр., для~минимизации объема хранимых данных);
+			\item
+			независимость от среды выполнения.
+		\end{itemize}
+	}
+
+	\subsection{Представления данных}
+
+	\frame{
+		\frametitle{Представления данных}
+
+		\textbf{Оперативная память:}
+		\begin{itemize}
+			\item
+			формат определяется ABI среды выполнения; 
+			\item
+			оптимизация скорости произвольного доступа к~данным (напр., выравнивание полей объектов); 
+			\item 
+			связь с другими объектами через указатели.
+		\end{itemize}
+
+		\vspace{0.5ex}
+		\textbf{Потоки данных} (сериализация): 
+		\begin{itemize}
+			\item
+			формат определяется ABI сервиса сериализации или стандартом (JSON, XML, …); 
+			\item
+			оптимизация объема данных (напр., преобразование строк UTF-16 $\rightarrow$ UTF-8); 
+			\item
+			связь с другими объектами через специальные средства.
+		\end{itemize}
+
+		\vspace{0.5ex}
+		\textbf{Реляционная БД} (объектно-реляционные отображения):
+		\begin{itemize}
+			\item
+			формат определяется схемой БД; 
+			\item
+			оптимизация отношений между данными; 
+			\item
+			связь с другими объектами через внешние ключи.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Примеры хранения данных}
+
+		\textbf{Двоичные потоки данных:}
+		\begin{itemize}
+			\item
+			сохранение / загрузка объектов в виде локальных файлов;
+			\item
+			передача данных в сети, напр., в CORBA.
+		\end{itemize}
+
+		\vspace{0.5ex}
+		\textbf{Текстовые потоки данных:}
+		\begin{itemize}
+			\item
+			передача данных в сети, напр., при работе с веб-сервисами;
+			\item
+			сохранение объектов с произвольной структурой (напр., в БД).
+		\end{itemize}
+
+		\vspace{0.5ex}
+		\textbf{Базы данных:}
+		\begin{itemize}
+			\item
+			хранение данных о моделях в~архитектуре Model — View — Controller (MVC);
+			\item
+			хранение сущностей предметной области \engterm{entity} в~Enterprise-приложениях.
+		\end{itemize}
+	}
+
+	\section{Сериализация}
+
+	\frame{
+		\frametitle{Сериализация}
+
+		\begin{Definition}
+			\textbf{Сериализация} \engterm{serialization}, \textbf{маршалинг} \engterm{marshalling} — 
+			перевод структур данных или~состояния объекта в~формат, доступный для~хранения или~передачи, 
+			с~возможностью восстановления из~сериализованных данных семантически эквивалентного объекта.
+		\end{Definition}
+
+		\begin{Definition}
+			\textbf{Десериализация} \engterm{deserialization, unmarshalling} — процесс, обратный сериалиазации: 
+			восстановление состояния объекта или~структуры данных из~сериализованного представления.
+		\end{Definition}
+
+		\begin{center}
+			\input{fig-serialization.tex}
+
+			\vspace{0.5ex}
+			\figureexpl{Сериализация и десериализация могут осуществляться с использованием 
+				встроенных или сторонних сервисов}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Достоинства и недостатки сериалиазации}
+
+		\textbf{Достоинства:}
+		\begin{itemize}
+			\item
+			компактность хранения данных (для двоичных форматов);
+			\item
+			легкость восприятия и отладки (для текстовых форматов);
+			\item
+			универсальность;
+			\item
+			независимость от языка программирования (для~текстовых и~двоичных форматов, 
+			определенных внешними стандартами).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Недостатки:}
+		\begin{itemize}
+			\item
+			линейность формата хранения данных $\Rightarrow$ для~извлечения части информации (напр., отдельного поля объекта) 
+			в худшем случае требуется прочесть весь поток данных;
+			\item
+			проблемы валидации данных;
+			\item
+			проблемы совместимости для различных сред выполнения.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Классификация методов сериализации}
+
+		\textbf{Варианты использования:}
+		\begin{itemize}
+			\item
+			передача данных: 
+			\begin{itemize}
+				\item в распределенных приложениях (напр., в~архитектуре~CORBA); 
+				\item при удаленном вызове функций (напр., в веб-сервисах на~основе~SOAP или~REST);
+			\end{itemize}
+
+			\item
+			хранение данных.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Формат данных:}
+		\begin{itemize}
+			\item
+			двоичный — оптимизация объема данных;
+			\item
+			текстовый — читаемость сериализованных данных человеком.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Дополнительные характеристики:}
+		\begin{itemize}
+			\item
+			система типов данных, возможность определения пользовательских типов;
+			\item
+			наличие / отсутствие пользовательских схем данных и возможности валидации;
+			\item
+			поддержка ссылок на части сериализованных данных.
+		\end{itemize}
+	}
+
+	\subsection{Схема данных}
+
+	\frame{
+		\frametitle{Схема данных}
+
+		\begin{Definition}
+			\textbf{Схема данных} \engterm{data schema} — спецификация порядка, 
+			в~котором хранятся сериализованные данные, их~семантики, 
+			а~также описание отображения встроенных и~пользовательских структур данных 
+			в~сериализованный формат и обратно.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Назначение:}
+		\begin{itemize}
+			\item корректная десериализация;
+			\item проверка формата данных, полученных из внешних источников.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Спецификация:}
+		\begin{itemize}
+			\item
+			для двоичных форматов: ABI сервиса сериализации и / или ЯП;
+
+			\item
+			для текстовых форматов:
+			\begin{itemize}
+				\item
+				спецификация формата данных;
+				\item
+				спецификация формата данных + заданная программистом схема валидации 
+				(напр., XML~Schema или~DTD для~XML).
+			\end{itemize}
+		\end{itemize}
+	}
+
+	\subsection{Сериализация в Java}
+
+	\frame{
+		\frametitle{Сериализация в Java}
+
+		\textbf{Принципы сериализации:}
+		\begin{itemize}
+			\item
+			Сериализуемые объекты должны помечаться интерфейсом 
+			\extlink{http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html}{\code{java.io.Serializable}} (не~имеет методов).
+
+			\vspace{1ex}
+			\item
+			Сериализуются все нестатические поля объекта, не~отмеченные ключевым словом \codekw{transient}.
+
+			\vspace{1ex}
+			\item
+			Корректно сериализуются ссылки на другие объекты (в~т.\,ч. множественные ссылки на~один объект 
+			и~рекурсивные ссылки).
+
+			\vspace{1ex}
+			\item
+			К сериализуемым классам относятся:
+			\begin{itemize}
+				\item примитивные типы (\codekw{byte}, \codekw{char}, \codekw{int}, …);
+				\item обертки (Byte, Character, Integer, …);
+				\item массивы;
+				\item встроенные реализации коллекций (ArrayList, HashSet, HashMap, TreeSet, TreeMap), …
+			\end{itemize}
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Сериализация в Java}
+
+		\textbf{Принципы сериализации (продолжение):}
+		\begin{itemize}
+			\item
+			Для чтения / записи используются потоки 
+			\extlink{http://docs.oracle.com/javase/8/docs/api/java/io/ObjectInputStream.html}{ObjectInputStream} / 
+			\extlink{http://docs.oracle.com/javase/8/docs/api/java/io/ObjectOutputStream.html}{ObjectOutputStream}.
+
+			\vspace{1ex}
+			\item
+			Для изменения поведения при чтении / записи используются специальные функции, 
+			декларируемые в классе: 
+			\lstinputlisting[language=java]{code-ser-methods.java}
+
+			\vspace{1ex}
+			\item
+			Специальные функции вызываются в корректном порядке при~наследовании. 
+			Сериализуемый класс может~быть потомком несериализуемого класса.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Сериализация в Java — пример сериализуемого класса}
+
+		\lstinputlisting[language=java]{code-serialization.java}
+	}
+
+	\frame{
+		\frametitle{Сериализация в Java — пример использования}
+
+		\lstinputlisting[language=java]{code-serialization-i.java}
+	}
+
+	\subsection{Сериализация в Python}
+
+	\frame{
+		\frametitle{Сериализация в Python}
+
+		\textbf{Принципы сериализации:}
+		\begin{itemize}
+			\item
+			Для сериализации используется модуль \extlink{https://docs.python.org/2/library/pickle.html}{\code{pickle}}
+			(входит в~стандартную библиотеку).
+
+			\vspace{0.5ex}
+			\item
+			Для быстрой сериализации может использоваться модуль \code{cPickle} (аналог pickle, 
+			написанный на~C).
+
+			\vspace{0.5ex}
+			\item
+			Поддерживается сериализация:
+			\begin{itemize}
+				\item
+				примитивных типов (\codekw{bool}, \codekw{int}, \codekw{long}, \codekw{float}, \codekw{complex}, \codekw{None});
+				\item
+				строк (\codekw{str}, \codekw{unicode}); 
+				\item
+				коллекций (\codekw{tuple}, \codekw{list}, \codekw{set}, \codekw{dict}, …);
+				\item
+				функций и классов, определенных на уровне модуля, т.\,е. не являющихся вложенными 
+				(сериализуется только имя класса / функции, но не код или переменные);
+				\item
+				экземпляров таких классов.
+			\end{itemize}
+
+			\vspace{0.5ex}
+			\item
+			По умолчанию сериализуется словарь объекта (\code{obj.\_\_dict\_\_}).
+
+			\vspace{0.5ex}
+			\item
+			Для изменения поведения при сериализации используются функции \code{\_\_getstate\_\_}, \code{\_\_setstate\_\_}.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Сериализация в Python — пример сериализуемого класса}
+
+		\lstinputlisting[language=python,firstline=4]{code-serialization.py}
+	}
+
+	\frame{
+		\frametitle{Сериализация в Python — пример использования}
+
+		\lstinputlisting[language=python,firstline=4,morekeywords={with,as}]{code-serialization-i.py}
+	}
+
+	\section{XML и JSON}
+
+	\subsection{XML}
+
+	\frame{
+		\frametitle{XML}
+
+		\begin{Definition}
+			\textbf{XML} (extensible markup language) — язык разметки документов, созданный международным комитетом~W3C 
+			и~ориентированный на воспринимаемость человеком и~программами.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Преимущества:}
+		\begin{itemize}
+			\item
+			легок для восприятия и отладки человеком;
+			\item
+			широко используется в веб-приложениях (HTML — $\approx$~частный вариант XML);
+			\item
+			большое количество инструментов для работы с XML во многих ЯП;
+			\item
+			наличие стандартных механизмов валидации (DTD, XML Schema) 
+			и~преобразования формата данных (XSLT).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Недостатки:}
+		\begin{itemize}
+			\item
+			определенная громоздкость языка;
+			\item
+			отсутствие встроенной семантики типов и структур данных.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Структура XML-документов}
+
+		\textbf{Составляющие XML:}
+		\begin{itemize}
+			\item
+			текст;
+
+			\vspace{0.5ex}
+			\item
+			теги (открывающиеся \code{<foo>}, закрывающиеся \code{</foo>}, пустые \code{<foo/>});
+
+			\vspace{0.5ex}
+			\item
+			атрибуты тегов (\code{<foo \alert{bar="bazz"}>});
+
+			\vspace{0.5ex}
+			\item
+			комментарии (\code{<!-- comment -->});
+
+			\vspace{0.5ex}
+			\item
+			сущности \engterm{entity} $\simeq$ макросы, использующиеся в~тексте для~устранения неоднозначностей. 
+
+			\vspace{0.5ex}
+			\textbf{Пример:} \code{\&gt;} заменяет символ \code{>}, \code{\&lt;} — \code{<}.
+
+			\vspace{0.5ex}
+			\item
+			декларация XML, определяющая версию XML (1.0 или 1.1) и кодировку (UTF-8, UTF-16).
+
+			\vspace{0.5ex}
+			\textbf{Пример:} \code{<?xml version="1.1" encoding="UTF-8"?>}.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Пример XML-документа}
+
+		\lstinputlisting[language=xml,morekeywords={encoding}]{code-sample.xml}
+	}
+
+	\frame{
+		\frametitle{Чтение / запись XML}
+
+		\begin{itemize}
+			\item
+			\textbf{На основе событий.} Отдельные события соответствуют появлению текста, открывающих / закрывающих тегов, атрибутов.
+
+			\vspace{1ex}
+			\textbf{Использование:} для извлечения малого объема информации из больших документов.
+
+			\vspace{0.5ex}
+			\textbf{Пример:} Simple API for XML (\extlink{http://www.saxproject.org/}{SAX}).
+
+			\vspace{1ex}
+			\item
+			\textbf{На основе потоков} чтения / записи \engterm{pull parsing}. 
+			Документ представляется как последовательность символов (тегов, атрибутов, текста, …).
+
+			\vspace{1ex}
+			\textbf{Использование:} для извлечения малого объема информации из больших документов.
+
+			\vspace{0.5ex}
+			\textbf{Пример:} \extlink{http://www.xml.com/pub/a/2003/09/17/stax.html}{StAX}.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Чтение / запись XML (продолжение)}
+
+		\begin{itemize}
+			\item
+			\textbf{Объектный анализатор.} 
+			Документ представляется как дерево объектов, соответствующих тегам и другим элементам XML.
+
+			\vspace{1ex}
+			\textbf{Использование:} для анализа документа целиком (напр., в веб-приложениях).
+
+			\vspace{0.5ex}
+			\textbf{Пример:} Document Object Model (\extlink{http://www.w3.org/DOM/}{DOM}).
+
+			\vspace{1ex}
+			\item
+			\textbf{Привязка данных.} Элементы XML-документа отображаются в поля объектов.
+
+			\vspace{1ex}
+			\textbf{Использование:} для быстрой имплементации сериализации в XML.
+
+			\vspace{0.5ex}
+			\textbf{Пример:} Java Architecture for XML Binding (\extlink{https://jaxb.java.net/}{JAXB}).
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Схемы данных в XML}
+
+		\textbf{Схема данных в XML:}
+		\begin{itemize}
+			\item
+			определяет семантику элементов (допустимые атрибуты, дочерние элементы, …);
+			\item
+			позволяет проводить проверку корректности (валидацию) XML при чтении.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Определения схемы данных:}
+		\begin{itemize}
+			\item
+			\textbf{DTD} (document type definition) — на основе регулярных выражений.
+
+			\vspace{1ex}
+			\textbf{+:} широкая распространенность; краткость по сравнению со~схемами на~основе~XML.
+
+			\textbf{\textminus{}:} неполная поддержка свойств XML (напр., пространств имен); 
+			отсутствие поддержки типов данных.
+
+			\vspace{1ex}
+			\item
+			\textbf{XSD} (XML schema definition) — на основе XML.
+
+			\vspace{1ex}
+			\textbf{+:} поддержка типов данных и сложных ограничений на допустимые элементы и~атрибуты; 
+			поддержка всех~возможностей XML~1.1.
+
+			\textbf{\textminus{}:} громоздкость.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{API для работы с XML}
+
+		\begin{itemize}
+			\item
+			\textbf{XSLT} — декларативный язык программирования на основе XML, 
+			позволяющий преобразовывать XML-документы в другие XML-документы.
+
+			\vspace{1ex}
+			\textbf{Пример использования:} преобразование XML, извлеченного из~базы~данных, 
+			в~XHTML (вариант HTML, совместимый с~XML).
+
+			\vspace{1ex}
+			\item
+			\textbf{XPath} — язык запросов для выбора элементов XML-документа.
+
+			\vspace{1ex}
+			\textbf{Пример использования:} эффективное извлечение информации из~XML-документов.
+
+			\vspace{1ex}
+			\item
+			\textbf{XQuery} — функциональный язык программирования для произвольных преобразований XML-документов.
+
+			\vspace{1ex}
+			\textbf{Пример использования:} преобразование XML, извлеченного из~базы~данных,
+			в~HTML или~другой формат (напр., JSON).
+		\end{itemize}
+	}
+
+	\subsection{JSON}
+
+
+	\frame{
+		\frametitle{JSON}
+
+		\begin{Definition}
+			\textbf{JSON} (JavaScript object notation) — формат разметки на~основе языка программирования JavaScript, 
+			предназначенный для~передачи данных в~виде пар «атрибут — значение».
+		\end{Definition}
+
+		\textbf{Использование:} 
+		\begin{itemize}
+			\item в веб-приложениях как альтернатива XML;
+			\item в документно-ориентированных базах данных (напр., \extlink{http://mongodb.org/}{MongoDB}).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Преимущества:}
+		\begin{itemize}
+			\item легкость восприятия человеком;
+			\item меньший объем по сравнению с XML;
+			\item наличие встроенной семантики типов данных.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Недостатки:} \\
+		отсутствие стандартных API для многих задач (напр., валидации).
+	}
+
+	\frame{
+		\frametitle{Структура JSON-документов}
+
+		\textbf{Типы данных:}
+		\begin{itemize}
+			\item
+			числа (напр., \code{1}, \code{-1.5}, \code{+2.71828E+10});
+
+			\vspace{0.5ex}
+			\item
+			булев тип (\codekw{true}, \codekw{false});
+
+			\vspace{0.5ex}
+			\item
+			\codekw{null};
+
+			\vspace{0.5ex}
+			\item
+			строки (напр., \code{"a"}, \code{"string"});
+
+			\vspace{0.5ex}
+			\item
+			массивы — упорядоченная коллекция из нуля или более элементов.
+
+			\vspace{0.5ex}
+			\textbf{Примеры:} \code{[]}; \code{["foo", 5, \textbf{false}]}.
+
+			\vspace{0.5ex}
+			\item
+			объекты — неупорядоченный набор строковых ключей (атрибутов) 
+			и~соответствующих значений.
+
+			\vspace{0.5ex}
+			\textbf{Примеры:} \code{\{\}}; \code{\{"foo": "bar", "bazz": \textbf{false}\}}.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Пример документа JSON}
+
+		\lstinputlisting[language=javascript]{code-sample.json}
+	}
+
+	\frame{
+		\frametitle{API для JSON}
+
+		\begin{itemize}
+			\item
+			\textbf{Чтение / запись:} встроенные или сторонние библиотеки во многих ЯП:
+			\begin{itemize}
+				\item
+				JavaScript: \extlink{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON}{JSON}
+				(также доступен через библиотеки, напр., \extlink{http://jquery.com}{jQuery});
+				\item
+				Java: \extlink{https://code.google.com/p/google-gson/}{Google GSON};
+				\item
+				PHP: функции \extlink{http://php.net/manual/en/book.json.php}{json\_encode, json\_decode};
+				\item
+				Python: модуль \extlink{https://docs.python.org/2/library/json.html}{json}.
+			\end{itemize}
+
+			\vspace{1ex}
+			\item
+			\textbf{Валидация:} \extlink{http://json-schema.org/}{JSON Schema} (на стадии разработки).
+
+			\vspace{1ex}
+			\item
+			\textbf{Удаленный вызов процедур:} \extlink{http://www.jsonrpc.org/specification}{JSON-RPC}.
+
+			\vspace{1ex}
+			\item
+			\textbf{Загрузка данных из сторонних источников:} \extlink{http://www.json-p.org/}{JSONP}.
+
+			\vspace{1ex}
+			\item
+			\textbf{Преобразование в двоичный формат:} \extlink{http://bsonspec.org/}{BSON}.
+		\end{itemize}
+	}
+
+	\section{ORM}
+
+	\frame{
+		\frametitle{Объектно-реляционные отображения}
+
+		\textbf{Реляционные БД:}
+		\begin{itemize}
+			\item
+			сущности — строки таблицы или представления в базе данных (т.\,е.~кортежи разнородных данных);
+			\item
+			нормализация с целью сократить объем хранимой информации;
+			\item
+			идентификация сущностей с помощью первичных ключей (primary~key);
+			\item
+			связи между сущностями с помощью внешних ключей (foreign~key).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{ООП:}
+		\begin{itemize}
+			\item
+			сущности — объекты (набор разнородных свойств + методы);
+			\item
+			идентификация сущностей с помощью сравнения;
+			\item
+			связи между сущностями с помощью ссылок на~другие объекты.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Объектно-реляционные отображения}
+
+		\begin{Problem}
+			Определить двустороннее преобразование от~объектно-ориентированного 
+			к~реляционному представлению данных.
+		\end{Problem}
+
+		\begin{Definition}
+			\textbf{Объектно-реляционное отображение} \engterm{object-relational mapping, ORM} — 
+			технология для~взаимодействия с~базами данных с~использованием парадигмы 
+			объектно-ориентированного программирования.
+		\end{Definition}
+
+		\begin{center}
+			\input{fig-orm.tex}
+
+			\figureexpl{Связь между объектами и СУБД в рамках ORM}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Преимущества и недостатки ORM}
+
+		\textbf{Преимущества} (по~сравнению с~использованием низкоуровневого доступа к~БД):
+		\begin{itemize}
+			\item
+			высокоуровневые структуры данных (объекты вместо массивов или~ассоциативных таблиц) 
+			упрощают программирование;
+			\item
+			упрощение управления БД, в~частности, миграции.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Преимущества} (по сравнению с~сериализацией):
+		\begin{itemize}
+			\item
+			структуризация хранения данных упрощает их~анализ;
+			\item
+			встроенные в~БД ограничения целостности.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Недостатки:}
+		\begin{itemize}
+			\item
+			повышенное потребление памяти;
+			\item
+			иллюзия простоты: неаккуратное использование~ORM может~привести 
+			к~значительному повышению нагрузки на~БД.
+		\end{itemize}
+	}
+
+	\subsection{Базовые понятия}
+
+	\frame{
+		\frametitle{Базовые понятия ORM}
+
+		\begin{itemize}
+			\item
+			\textbf{Сущность} \engterm{entity} — $\sim$ класс в ООП, отдельное понятие предметной области 
+			(соответствует таблице или~представлению~БД). 
+			Экземпляры сущности соответствуют строкам таблицы / представления.
+
+			\vspace{1ex}
+			\item
+			\textbf{Первичный ключ} \engterm{primary key}, \textbf{идентификатор} — поле или~набор полей, 
+			позволяющий идентифицировать и~различать экземпляры сущности. 
+			Соответствует декларации SQL \code{PRIMARY KEY}.
+
+			\vspace{1ex}
+			\item
+			\textbf{Отношения между сущностями} \engterm{entity relationship} — связи, 
+			определяемые через~декларации SQL \code{FOREIGN KEY}:
+			\begin{itemize}
+				\item один к одному;
+				\item один ко многим;
+				\item многие ко многим (через вспомогательную таблицу).
+			\end{itemize}
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Базовые понятия ORM (продолжение)}
+
+		\begin{itemize}
+			\item
+			\textbf{Ленивая загрузка} \engterm{lazy load} / \textbf{немедленная загрузка} \engterm{eager fetching} — 
+			различные стратегии загрузки связанных объектов при~извлечении сущности из~БД 
+			(при~загрузке основного объекта с~помощью~SQL \code{JOIN} или~при~попытке доступа).
+
+			\vspace{1ex}
+			\item
+			\textbf{Ограничения} \engterm{constraint} — условия, накладываемые на~значения полей. 
+			Соответствуют ограничениям на~типы данных SQL 
+			(напр., максимальная длина строки для~поля типа~\code{VARCHAR(n)}). 
+			Ограничения проверяются перед~сохранением данных в~БД.
+
+			\vspace{1ex}
+			\item
+			\textbf{Язык запросов} \engterm{query language} — язык, похожий на~SQL, 
+			предназначенный для~выполнения запросов к~БД, возвращающих сущности.
+		\end{itemize}
+	}
+
+	\subsection{Шаблоны использования}
+
+	\frame{
+		\frametitle{Шаблон ActiveRecord}
+
+		\begin{center}
+			\begin{tabular}{p{0.2\textwidth}p{0.7\textwidth}}
+				\textbf{Описание:} & \raggedright каждый объект обладает методами для~сохранения, 
+					обновления и~удаления из~БД. \cr
+				\raggedright \textbf{Псевдокод (Java):} & \raggedright 
+				\vspace{-2ex}\lstinputlisting[language=java]{code-ar.java} 
+
+				\vspace{-2.5ex}\strut{}\cr
+				\textbf{Примеры:} & \raggedright Yii Framework. \cr
+				\textbf{Достоинства:} & \raggedright краткость и очевидность кода. \cr
+				\textbf{Недостатки:} & \raggedright повышенное число запросов к БД. \cr
+			\end{tabular}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Шаблон DataMapper}
+
+		\begin{center}
+			\begin{tabular}{p{0.2\textwidth}p{0.7\textwidth}}
+				\textbf{Описание:} & \raggedright для извлечения и~сохранения объектов в~БД 
+					используется вспомогательный класс. \cr
+				\raggedright \textbf{Псевдокод (Java):} & \raggedright
+				\vspace{-2ex}\lstinputlisting[language=java]{code-data-mapper.java} 
+
+				\vspace{-2.5ex}\strut{}\cr
+				\textbf{Примеры:} & \raggedright Doctrine (PHP), Java Persistence API. \cr
+				\textbf{Достоинства:} & \raggedright возможность управления агрегацией операций. \cr
+			\end{tabular}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Пример использования}
+
+		\begin{center}
+			\input{fig-orm-tables.tex}
+		\end{center}
+
+		\figureexpl{Схема организации данных в~БД. 
+			Большинство ORM-систем умеют создавать схему на~основе классов сущностей.}
+	}
+
+	\frame{
+		\frametitle{Пример использования}
+
+		\lstinputlisting[language=java]{code-orm.java}
+	}
+
+	\section{Заключение}
+
+	\subsection{Выводы}
+	
+	\frame{
+		\frametitle{Выводы}
+
+		\begin{enumerate}
+			\item
+			Задача хранения данных (напр., состояния объектов) вне~оперативной памяти 
+			может~решаться с~помощью сериализации или~создания объектно-реляционного отображения 
+			для~сущностей предметной области.
+
+			\item
+			Сериализация — сохранение данных в~поток (двоичный или~текстовый). 
+			Средства сериализации присутствуют в~большинстве языков программирования.
+
+			\item
+			Два популярных стандарта текстовой сериализации — XML и~JSON — широко используются при~передаче данных, 
+			напр., в~веб-приложениях.
+
+			\item
+			Объектно-реляционные отображения используются для~установления связи между~БД и~программой, 
+			написанной на~объектно-ориентированном~ЯП.
+		\end{enumerate}
+	}
+	
+	\subsection{Материалы}
+	
+	\frame{
+		\frametitle{Материалы}
+		
+		\begin{thebibliography}{9}
+			\bibitem[1]{1}
+			Walsh, Norman
+			\newblock Technical Introduction to XML.
+			\newblock {\footnotesize\url{http://www.xml.com/pub/a/98/10/guide0.html}}
+
+			\bibitem[2]{2}
+			ECMA
+			\newblock Introducing JSON.
+			\newblock {\footnotesize\url{http://www.json.org/}}
+
+			\bibitem[3]{3}
+			Oracle
+			\newblock Introduction to the Java Persistence API.
+			\newblock {\footnotesize\url{http://docs.oracle.com/javaee/7/tutorial/persistence-intro001.htm}
+			 	\\ (введение в ORM на примере JPA)}
+
+			\bibitem[4]{4}
+			Doctrine DevTeam
+			\newblock Getting Started with Doctrine.
+			\newblock {\footnotesize\url{http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/tutorials/getting-started.html}
+				\\ (введение в ORM на примере Doctrine)}
+		\end{thebibliography}
+	}
+	
+	\frame{
+		\frametitle{}
+		
+		\begin{center}
+			\Huge Спасибо за внимание!
+		\end{center}
+	}
+
+\end{document}
+
