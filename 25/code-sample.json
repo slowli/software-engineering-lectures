@@ -1,0 +1,21 @@
+{
+	"firstname": "Alex",
+	"lastname": "Ostrovski",
+	"location": { "country": "Ukraine", "city": "Kiev" },
+	"contacts": {
+		"emails": [ "ostrovski.alex@gmail.com" ],
+		"phonenumbers": [
+			{ "type": "mobile", "number": "000000000" }
+		]
+	},
+	"checkedout": [
+		{ 
+			"type": "book",
+			"isbn": "0-13-703515-2",
+			"language": "en",
+			"title": "Software Engineering, 9th Edition",
+			"authors": [ "Ian Sommerville" ],
+			"publishers": [ "Addison-Wesley", "Pearson Education, Inc." ]
+		}
+	]
+}

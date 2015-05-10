@@ -1,0 +1,15 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center},
+	label/.style={draw=none,font=\footnotesize\itshape}
+]
+	\node(ram) [minimum width=10em,minimum height=10em] {};
+	\node(ram-lbl) [draw=none,below=0em of ram.north,anchor=north] {Оперативная \\ память};
+	\node(process) [minimum width=7.5em,minimum height=6em,fill=white,
+		below left=1em and 1em of ram.east,anchor=center] {Процесс};
+	\node(db) [minimum width=10em,minimum height=10em,right=15em of ram] {Постоянная \\ память};
+
+	\node(_tmp) [coordinate,above=1em of process.east] {};
+	\draw[->] (_tmp) -- node[label,above] {сохранение} (_tmp -| db.west);
+	\node(_tmp) [coordinate,below=1em of process.east] {};
+	\draw[<-] (_tmp) -- node[label,below] {загрузка} (_tmp -| db.west);
+\end{tikz*}

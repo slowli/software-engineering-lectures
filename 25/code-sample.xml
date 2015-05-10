@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reader firstname="Alex" lastname="Ostrovski">
+	<location country="Ukraine" city="Kiev" />
+	<contacts>
+		<email>ostrovski.alex@gmail.com</email>
+		<phone type="mobile">000000000</phone>
+	</contacts>
+	<checkedout>
+		<book isbn="0-13-703515-2" language="en">
+			<title>Software Engineering, 9th Edition</title>
+			<author>Ian Sommerville</author>
+			<publisher>Addison-Wesley</publisher>
+			<publisher>Pearson Education, Inc.</publisher>
+		</book>
+		<book isbn="1-59822-033-0" language="en">
+			<title>Advanced JavaScript</title>
+			<author>Chuck Easttom </author>
+			<publisher>Worldware Publishing</publisher>
+		</book>
+	</checkedout>
+</reader>
