@@ -1,0 +1,20 @@
+<!-- $Интерфейс сервиса.$ -->
+<interface name="IntegerSequence">
+	<operation name="get" pattern="http://www.w3.org/ns/wsdl/in-out">
+		<input messageLabel="In" element="ws:getRequest"/>
+		<output messageLabel="Out" element="ws:getResponse"/>
+	</operation>
+</interface>
+<!-- $Привязка при помощи протокола SOAP.$ -->
+<binding name="SoapBinding" interface="ws:IntegerSequence" 
+		type="http://www.w3.org/ns/wsdl/soap"
+		xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+		soap:protocol="http://www.w3.org/2003/05/soap/bindings/HTTP/">
+	<operation ref="ws:get" />
+</binding>
+<!-- $Описание сервиса.$ -->
+<service name="IntSeqService" interface="ws:IntegerSequence">
+	<endpoint name="SoapEndpoint" 
+		binding="ws:SoapBinding" 
+		address="http://www.example.com/service/soap/"/>
+</service>
