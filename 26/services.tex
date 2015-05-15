@@ -1,0 +1,745 @@
+\documentclass{a4beamer}
+\input{lecture-common.def}
+
+\usepackage{multicol}
+\usetikzlibrary{shapes.misc}
+
+\lecturetitle{Программная инженерия. Лекция №25 — Веб-сервисы}
+\title[Веб-сервисы]{Сервисная архитектура приложений. Веб-сервисы}
+\author{Алексей Островский}
+\institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
+\date{21 мая 2015 г.}
+
+\usepackage{listings}
+\lstset{%
+	tabsize=4,
+	showstringspaces=false,
+	basicstyle=\linespread{1.25}\ttfamily\small,
+	keywordstyle=\bfseries,
+	commentstyle=\color{gray},
+	numbers=left,
+	numberstyle=\footnotesize\color{gray},
+	xleftmargin=2.5em,
+	texcl=true,
+	extendedchars=true,
+	escapechar=\$
+}
+
+\def\code#1{\texttt{#1}}
+\def\codekw#1{\texttt{\textbf{#1}}}
+
+\begin{document}
+	\frame{\titlepage}
+
+	\section{Введение}
+
+	\subsection{SOA}
+
+	\frame{
+		\frametitle{Сервис-ориентированная архитектура}
+
+		\begin{Definition}
+			\textbf{Сервис-ориентированная архитектура} \engterm{service-oriented architecture, SOA} — 
+			парадигма программирования, в которой для обеспечения модульности применяются 
+			распределенные слабо связанные компоненты (\emph{сервисы}), взаимодействующие с~помощью стандартизованных протоколов.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Характеристики сервисов:}
+		\begin{itemize}
+			\item
+			модульность — сервис представляет логически связанные функции 
+			в~определенной предметной области с~заданными входами и~выходами;
+
+			\item
+			автономность — отсутствие наблюдаемых для пользователей зависимостей;
+
+			\item
+			сокрытие реализации — рассматривается как «черный ящик».
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Преимущества и недостатки SOA}
+
+		\textbf{Достоинства:}
+		\begin{itemize}
+			\item
+			открытость, стандартизация протоколов доступа;
+			\item
+			поддержка параллелизма, масштабируемость (напр., за счет прозрачных для~клиента балансировщиков нагрузки);
+			\item
+			отказоустойчивость.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Недостатки:}
+		\begin{itemize}
+			\item
+			зависимость от состояния сетевых соединений;
+			\item
+			дополнительные вычислительные ресурсы, ПО и~затраты для~поддержки масштабирования;
+			\item
+			проблемы обеспечения безопасности данных, качества обслуживания и~т.\,п.
+		\end{itemize}
+	}
+
+	\subsection{Веб-сервисы}
+
+	\frame{
+		\frametitle{Веб-сервисы}
+
+		\begin{Definition}
+			\textbf{Веб-сервис} \engterm{web service} — программная система с~возможностью взаимодействия 
+			с~другими программами через сеть, обладающая заданным интерфейсом и~протоколом сообщений 
+			для~обмена данными.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Характеристики веб-сервиса:}
+		\begin{itemize}
+			\item
+			\textbf{интерфейс} веб-сервиса ($\simeq$ интерфейс компонента): 
+			определяемые операции, типы входных и~выходных данных;
+
+			\item
+			\textbf{формат спецификации интерфейса:} 
+			на~основе формального представления (языка спецификации) или~неформального описания;
+
+			\item
+			используемый \textbf{протокол передачи данных} (HTTP, UDP, …);
+
+			\item
+			\textbf{формат представления данных:} на основе XML, JSON, простого текста, …
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Разработка веб-сервисов}
+
+		\textbf{Цели разработки:}
+		\begin{itemize}
+			\item минимизация количества обращений к сервису;
+			\item скрытие состояния сервиса (хранение состояния — задача клиента; 
+			состояние может передаваться в сообщениях).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Этапы разработки:}
+		\begin{enumerate}
+			\item определение функциональности; 
+			\item описание операций и сообщений; 
+			\item имплементация; 
+			\item тестирование; 
+			\item развертывание.
+		\end{enumerate}
+	}
+
+	\frame{
+		\frametitle{Классификация веб-сервисов}
+
+		\textbf{Типы веб-сервисов:}
+		\begin{itemize}
+			\item
+			\textbf{Утилитарные} — реализующие функциональность общего назначения, 
+			которая может использоваться в~различных предметных областях другими сервисами.
+
+			\textbf{Пример:} конвертер валюты.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Бизнес-сервисы} — реализующие функциональность, специфичную для предметной области.
+
+			\textbf{Пример:} вычисление кредитного рейтинга.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Координационные} — комплексные бизнес-процессы, 
+			зачастую реализуемые с~помощью более простых веб-сервисов.
+
+			\textbf{Пример:} управление работой магазина (прием заказов, инвентаризация, оплата, …).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Ориентация веб-сервисов:}
+		\begin{itemize}
+			\item
+			сущности — поведение, аналогичное объектам в~ООП (напр., манипуляции с~БД);
+			\item
+			задания — выполнение действий без привязки к сущностям предметной области.
+		\end{itemize}
+	}
+
+	\section{SOAP-сервисы}
+
+	\frame{
+		\frametitle{SOAP-сервисы}
+
+		\begin{Definition}
+			\textbf{Веб-сервис} в узком смысле, \textbf{SOAP-сервис} — веб-сервис, в~котором спецификация интерфейса 
+			и~передача данных определены стандартами W3C.
+		\end{Definition}
+
+		\begin{center}
+			\input{fig-web-service.tex}
+
+			\vspace{1ex}
+			\figureexpl{Схема взаимодействия с веб-сервисом}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Стандарты SOAP-сервисов}
+
+		\textbf{Основные стандарты:}
+		\begin{itemize}
+			\item
+			\textbf{SOAP} — протокол передачи данных для~вызова операций, определенных интерфейсом сервиса;
+
+			\item
+			\textbf{WSDL} — стандарт для~определения интерфейса сервиса;
+
+			\item
+			\textbf{UDDI} (universal description, discovery, and integration) — стандарт для~обнаружения 
+			активных сервисов в~сети (расположение WSDL-описания интерфейса и~т.\,п.);
+
+			\item
+			\textbf{WS-BPEL} — стандарт для высокоуровневого описания программ, использующих веб-сервисы.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Вспомогательные стандарты:} 
+		\begin{itemize}
+			\item защита данных (WS-Security); 
+			\item транзакции в распределенных сервисах (WS-Transactions);
+			\item контроль передачи сообщений (WS-Reliable Messaging), …
+		\end{itemize}
+	}
+
+	\subsection{WSDL}
+
+	\frame{
+		\frametitle{WSDL}
+
+		\begin{Definition}
+			\textbf{WSDL} (web service description language) — язык спецификации интерфейса веб-сервисов, 
+			использующий XML.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Содержимое спецификации:}
+		\begin{itemize}
+			\item
+			Операции, предоставляемые сервисом ($\simeq$ методы в ООП), соответствующие входные и~возвращаемые данные;
+			\item
+			формат сообщений для взаимодействия с сервисом;
+			\item
+			(необязательно) типы данных, используемые в сообщениях;
+			\item
+			определение конкретных протоколов доступа к операциям (с помощью SOAP или~других методов).
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Понятия WSDL 2.0}
+
+		\begin{itemize}
+			\item
+			\textbf{Интерфейс} — набор операций для веб-сервиса.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Операция} — определение способа обращения к~сервису; 
+			$\sim$~вызов функции или~метода в~ЯП.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Типы данных} — определения используемой структуры входных / выходных сообщений 
+			для~операций с~помощью XML Schema.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Привязка} \engterm{binding} — спецификация способа доступа к~определенному интерфейсу, 
+			в~частности, протокол связи.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Конечная точка} \engterm{endpoint} — адрес доступа к~веб-сервису 
+			(чаще всего — простой HTTP-адрес), соответствующий некоторой привязке.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Сервис} — набор конечных точек, обладающих общим интерфейсом.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Структура файлов WSDL 2.0}
+
+		\lstinputlisting[language=xml]{code-wsdl-generic.xml}
+	}
+
+	\frame{
+		\frametitle{Пример: типы данных в WSDL 2.0}
+
+		\lstinputlisting[language=java]{code-wsdl-interface.java}
+
+		\lstinputlisting[language=xml]{code-wsdl-types.xml}
+	}
+
+	\frame{
+		\frametitle{Пример: описание сервиса в WSDL 2.0}
+
+		\lstinputlisting[language=xml]{code-wsdl-service.xml}
+	}
+
+	\subsection{SOAP}
+
+	\frame{
+		\frametitle{SOAP}
+
+		\begin{Definition}
+			\textbf{SOAP} (simple object access protocol) — протокол для обмена структурированными данными 
+			с~веб-сервисами через~сеть (напр., поверх HTTP-соединения).
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Сообщение сервису:}
+		\begin{itemize}
+			\item
+			заголовок сообщения — нефункциональные характеристики запроса (приоритетность, время обработки, …);
+			\item
+			тело сообщения — список операций веб-сервиса и соответствующих параметров.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Ответное сообщение:}
+		\begin{itemize}
+			\item
+			тело сообщения — список с результатами выполнения операций;
+			\item
+			отказы — информация об отказах при проведении операций.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Пример SOAP-сообщения}
+
+		\textbf{Запрос:}
+		\vspace{-0.5ex}
+		\lstinputlisting[language=xml]{code-soap-request.xml}
+
+		\textbf{Ответ:}
+		\vspace{-0.5ex}
+		\lstinputlisting[language=xml]{code-soap-response.xml}
+	}
+
+	\subsection{BPEL}
+
+	\frame{
+		\frametitle{BPEL}
+
+		\begin{Definition}
+			\textbf{WS-BPEL} (web service business process execution language) — язык на~основе XML 
+			для~описания бизнес-процессов, координирующих веб-сервисы.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Базовые инструкции:}
+		\begin{itemize}
+			\item
+			ветвление (\codekw{if} — \codekw{elseif} — \codekw{else});
+			\item
+			цикл (\codekw{while});
+			\item
+			последовательность действий (\codekw{sequence});
+			\item
+			параллельные действия (\codekw{flow}).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Возможности:}
+		\begin{itemize}
+			\item
+			обмен данными с веб-сервисами, извлечение сведений из~ответов с~помощью XPath;
+			\item
+			синхронизация параллельных действий;
+			\item
+			обработка событий и исключительных ситуаций.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Достоинства и недостатки BPEL}
+
+		\textbf{Достоинства:}
+		\begin{itemize}
+			\item
+			высокий уровень абстракции;
+			\item
+			не зависит от парадигмы программирования (ООП, структурное программирование, …);
+			\item
+			ориентация на специфичную для~веб-сервисов функциональность 
+			(параллельные запросы, разбор данных, …);
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Недостатки:}
+		\begin{itemize}
+			\item
+			чрезмерная абстрактность побуждает к~созданию дополнений для~BPEL, 
+			несовместимых между~собой (что~противоречит сути стандарта);
+			\item
+			отсутствие встроенной поддержки новых технологий (WSDL 2.0, REST-сервисов, …);
+			\item
+			централизованная модель управления.
+		\end{itemize}
+	}
+
+	\subsection{Разработка}
+
+	\frame{
+		\frametitle{Разработка с SOAP-сервисами}
+
+		\textbf{Способы разработки сервисов:}
+		\begin{itemize}
+			\item
+			top-down — вначале разрабатывается WSDL-описание сервиса, затем на~его~основе~— реализация на~ЯП;
+
+			\vspace{0.5ex}
+			\item
+			bottom-up — WSDL-описание генерируется на~основе готовых интерфейсов и~классов.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Вспомогательные инструменты:} 
+		обработка поступающих запросов и~их~трансляция в~вызовы методов имплементации 
+		(напр., при~помощи Apache~Axis в Java~EE).
+
+		\vspace{1ex}
+		\textbf{Разработка клиента:}
+		\begin{itemize}
+			\item
+			автоматическая генерация интерфейса и~клиентского стаба 
+			на~основе WSDL-описания сервиса;
+
+			\vspace{0.5ex}
+			\item
+			клиентский стаб позволяет обращаться к~сервису как~к~локальному объекту.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Пример: SOAP-сервис в JavaEE}
+
+		\lstinputlisting[language=java]{code-jax-ws.java}
+	}
+
+	\section{REST}
+
+	\frame{
+		\frametitle{REST}
+
+		\begin{Definition}
+			\textbf{Передача репрезентативного состояния} \engterm{representational state transfer, REST} — 
+			архитектура распределенных приложений, предназначенная для~создания масштабируемых веб-сервисов, 
+			которая определяется как набор ограничений.
+		\end{Definition}
+
+		\begin{problem}
+			Соответствуют ли операции сервиса методам одного объекта?
+		\end{problem}
+
+		Если да, то:
+		\begin{itemize}
+			\item
+			как обрабатывать одновременные запросы?
+			\item
+			как масштабировать сервис?
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Решение:} отсутствие состояния сервиса; 
+		каждая операция выполняется независимо от~других (но~может модифицировать данные, 
+		с~которыми работает сервис).
+	}
+
+	\subsection{Ограничения}
+
+	\frame{
+		\frametitle{REST}
+
+		\textbf{Ограничения REST-архитектуры:}
+		\begin{itemize}
+			\item
+			модель «клиент — сервер» для разделения ответственности;
+			\item
+			отсутствие хранимого состояния при~взаимодействии клиента и~сервера;
+			\item
+			кэшируемость запросов к веб-сервисам (согласно~спецификации HTTP-протокола);
+			\item
+			прозрачная многослойная архитектура (напр., для~подключения балансировщиков нагрузки);
+			\item
+			унифицированный интерфейс сервисов:
+			\item
+			доступ к ресурсам с помощью различных URI-адресов;
+			\item
+			режим обработки возвращенных данных определяется в ответе (напр., как~спецификатор MIME).
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Стандарты в REST}
+
+		\textbf{NB.} REST не определяет стандартов для взаимодействия, определения интерфейса и~т.\,п. 
+		Веб-сервис на~основе~SOAP теоретически может удовлетворять ограничениям REST-архитектуры.
+
+		\vspace{1ex}
+		\textbf{Часто используемые стандарты:}
+		\begin{center}
+			\vspace{-0.5ex}
+			\begin{tabular}{p{0.325\textwidth}p{0.55\textwidth}}
+				\raggedright\textbf{Протокол передачи данных:} & HTTP \cr
+				\hline
+				\raggedright\textbf{Идентификация операции и~параметров:} & 
+					\raggedright с помощью URI (\code{http://example.com/api/\alert{add/2,3}}) и~/~или~параметров~HTTP; \cr
+				\hline
+				\textbf{Возвращаемые данные:} & 
+					\raggedright XML, JSON, plain text (может определяться в~запросе при~помощи параметра HTTP Accept); \cr
+				\hline
+				\raggedright\textbf{Спецификация интерфейса:} & 
+					\raggedright неформальная, с~помощью документации на~API; 
+					определение допустимых операций для~ресурсов согласно~\extlink{http://en.wikipedia.org/wiki/HATEOAS}{HATEOAS}. \cr
+			\end{tabular}
+		\end{center}
+	}
+
+	\subsection{Сравнение с SOAP-сервисами}
+
+	\frame{
+		\frametitle{Сравнение SOAP- и REST-сервисов}
+
+		\textbf{Преимущества SOAP-сервисов:}
+		\begin{itemize}
+			\item
+			стандартизация всех аспектов сервисов;
+			\item
+			наличие вспомогательных технологий (безопасность информации, транзакции, …)
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Преимущества REST-сервисов:}
+		\begin{itemize}
+			\item
+			отсутствие дополнительной нагрузки, связанной с~использованием 
+			«тяжелых» протоколов (SOAP, WSDL);
+			\item
+			более высокая скорость разработки за~счет использования неявных соглашений 
+			\engterm{convention over~configuration};
+			\item
+			легкость доступа и создания клиентов.
+		\end{itemize}
+	}
+
+	\subsection{Пример реализации}
+
+	\frame{
+		\frametitle{HTTP-доступ к REST-сервисам}
+
+		\begin{center}
+			\begin{tabular}{|p{0.1\textwidth}|p{0.375\textwidth}|p{0.375\textwidth}|}
+				\hline
+				\centering\textbf{Метод}
+					& \centering\textbf{Коллекция ресурсов} (напр., {\small\code{http://example.com/api/\alert{books}}})
+					& \centering\textbf{Отдельный ресурс} (напр., {\small\code{http://example.com/api/\alert{books/1000}}}) \cr
+				\hline
+				GET & \raggedright получение списка ресурсов (возможно, с~доп.~информацией)
+					& \raggedright получение представления запрашиваемого ресурса \cr
+				\hline
+				PUT & \raggedright замена коллекции целиком
+					& \raggedright замена или (при~отсутствии) создание нового ресурса с~заданным URI \cr
+				\hline
+				POST & \raggedright создание нового ресурса в~коллекции
+					& \raggedright не используется \cr
+				\hline
+				DELETE & \raggedright удаление коллекции целиком
+					& \raggedright удаление запрашиваемого ресурса \cr
+				\hline
+			\end{tabular}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Пример интерфейса REST-сервиса}
+
+		\textbf{Сервис:} целочисленные последовательности (напр., числа Фибоначчи).
+
+		\textbf{Базовый URL:} http://example.com/api/
+
+		\vspace{1ex}
+		\begin{itemize}
+			\item	
+			\textbf{GET http://example.com/api/}
+
+			Возвращает список зарегистрированных целочисленных последовательностей в~формате~JSON.
+
+			\vspace{1ex}
+			\textbf{Запрос:} \code{GET http://example.com/api/}
+
+			\textbf{Ответ:} \code{HTTP 200 OK; Content-Type: application/json}
+			\lstinputlisting[language={}]{code-list.json}
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Пример интерфейса REST-сервиса (продолжение)}
+
+		\begin{itemize}
+			\item
+			\textbf{GET http://example.com/api/<id>}
+
+			Возвращает сведения о~последовательности~\code{<id>} в~формате~JSON. 
+
+			\vspace{1ex}
+			\textbf{Ошибки:}
+			\begin{itemize}
+				\item
+				Если \code{<id>} не~является зарегистрированной последовательностью, 
+				возвращается ошибка HTTP~404 с~сообщением в~формате text/plain.
+			\end{itemize}
+
+			\vspace{1ex}
+			\textbf{Запрос:} \code{GET http://example.com/api/fib}
+
+			\textbf{Ответ:} \code{HTTP 200 OK; Content-Type: application/json}
+			\lstinputlisting[language={}]{code-seq.json}
+
+			\textbf{Запрос:} \code{GET http://example.com/api/non-existent}
+
+			\textbf{Ответ:} \code{HTTP 404 Not Found; Content-Type: text/plain} \\
+			\code{Unknown integer sequence identifier: 'non-existent'}
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Пример интерфейса REST-сервиса (продолжение)}
+
+		\begin{itemize}
+			\item
+			\textbf{GET http://example.com/api/<id>/<index>}
+
+			Возвращает член последовательности~\code{<id>} в~формате~text/plain.
+
+			\vspace{1ex}
+			\textbf{Ошибки:}
+			\begin{itemize}
+				\item
+				Если~\code{<id>} не~является зарегистрированной последовательностью, 
+				возвращается ошибка HTTP~404 с~сообщением в~формате~text/plain. 
+
+				\item
+				Если~\code{<index>} не~является числом или~не~выполняются ограничения на~индекс, 
+				возвращается ошибка HTTP~400 с~телом, содержащем описание ошибки в~формате~text/plain.
+			\end{itemize}
+
+			\vspace{1ex}
+			\textbf{Запрос:} \code{GET http://example.com/api/fib/100}
+
+			\textbf{Ответ:} \code{HTTP 200 OK; Content-Type: text/plain} \\
+			\code{354224848179261915075}
+
+			\vspace{1ex}
+			\textbf{Запрос:} \code{GET http://example.com/api/fib/1000000000}
+
+			\textbf{Ответ:} \code{HTTP 400 Bad Request; Content-Type: text/plain} \\
+			\code{Index too large: 1000000000}
+		\end{itemize}
+	}
+
+	\subsection{Разработка}
+
+	\frame{
+		\frametitle{Разработка с REST-сервисами}
+
+		\textbf{Способы разработки сервисов:}
+		\begin{itemize}
+			\item
+			как часть веб-приложений с использованием архитектуры MVC;
+
+			\vspace{0.5ex}
+			\item
+			как составляющая модулей для сервера приложений 
+			(напр., \extlink{http://docs.oracle.com/javaee/7/tutorial/jaxrs.htm}{JAX-RS} в~рамках Java~EE).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Способы разработки клиентов:}
+		\begin{itemize}
+			\item
+			с помощью специализированных~API (напр., 
+			\extlink{http://docs.oracle.com/javaee/7/tutorial/jaxrs-client.htm}{JAX-RS Client API} для~Java~EE);
+
+			\vspace{0.5ex}
+			\item
+			при помощи API общего назначения для отправки и~обработки HTTP-запросов наподобие~\extlink{http://curl.haxx.se/}{libcurl} 
+			+~средства для~сериализации / десериализации данных.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Пример: REST-сервис в JavaEE}
+
+		\lstinputlisting[language=java]{code-jax-rs.java}
+	}
+
+	\section{Заключение}
+
+	\subsection{Выводы}
+	
+	\frame{
+		\frametitle{Выводы}
+
+		\begin{enumerate}
+			\item
+			Веб-сервисы — один из способов реализации компонентов в~распределенных приложениях. 
+			Существуют два~типа~веб-сервисов: SOAP-сервисы и~REST-сервисы.
+
+			\item
+			SOAP-сервисы используют стандарты доступа и~описания интерфейса, предложенные W3C, — SOAP и WSDL, соответственно. 
+			SOAP-сервисы громоздки, зато~обладают дополнительными возможностями, отсутствующими в~REST (напр., адресация). 
+			Для~создания композиций сервисов есть~язык~BPEL.
+
+			\item
+			REST-сервисы используют для~передачи данных средства протокола HTTP (напр., кэширование и~определение типа содержимого).
+			В~отличие от~SOAP-сервисов интерфейс REST-сервисов определяется неформально в~документации.
+		\end{enumerate}
+	}
+	
+	\subsection{Материалы}
+	
+	\frame{
+		\frametitle{Материалы}
+		
+		\begin{thebibliography}{9}
+			\bibitem[1]{1}
+			Sommerville, Ian
+			\newblock Software Engineering.
+			\newblock {\footnotesize Pearson, 2011. — 790 p.}
+
+			\bibitem[2]{2}
+			Лавріщева К.\,М. 
+			\newblock Програмна інженерія (підручник). 
+			\newblock {\footnotesize К., 2008. — 319 с.}
+		\end{thebibliography}
+	}
+	
+	\frame{
+		\frametitle{}
+		
+		\begin{center}
+			\Huge Спасибо за внимание!
+		\end{center}
+	}
+
+\end{document}
+

@@ -1,0 +1,20 @@
+<description xmlns="http://www.w3.org/ns/wsdl"
+		xmlns:ws="http://example.com/service"
+		targetNamespace="http://example.com/service">
+	<types>
+		<!-- $Определения типов данных с помощью XML schema.$ -->
+	</types>
+	<!-- $Определение интерфейса веб-сервиса.$ -->
+	<interface name="Foo">
+		<!-- $Описание операций.$ -->
+	</interface>
+	<!-- $Привязки.$ -->
+	<binding name="SoapBinding" interface="ws:Foo" 
+            type="http://www.w3.org/ns/wsdl/soap" ...>
+		<!-- $Ссылки на операции, определенные в интерфейсе.$ -->
+	</binding>
+	<!-- $Декларация веб-сервиса.$ -->
+	<service name="FooService" interface="ws:Foo">
+		<!-- $Точки доступа к веб-сервису.$ -->
+	<service>
+</description>

@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+		xmlns:ws="http://example.com/service">
+	<soapenv:Body>
+		<ws:get>
+			<ws:sequence>fib</ws:sequence> 
+			<ws:index>100</ws:index> 
+		</ws:get>
+	</soapenv:Body>
+</soapenv:Envelope>

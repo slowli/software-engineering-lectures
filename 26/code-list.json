@@ -1,0 +1,8 @@
+[ { "name": "Fibonacci", 
+		"description": "Fibonacci numbers [...]", 
+		"uri": "http://example.com/api/fib" 
+	},
+	{ "name": "Powers of two", 
+		"description": "Integer powers of two [...]", 
+		"uri": "http://example.com/api/pow2" 
+	}, ... ]

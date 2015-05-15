@@ -1,0 +1,16 @@
+<types>
+	<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			targetNamespace="http://example.com/service">
+		<xs:element name="getRequest">
+			<xs:complexType><xs:sequence>
+				<xs:element name="sequence" type="xs:string"/>
+				<xs:element name="index" type="xs:int" />
+			</xs:sequence></xs:complexType>
+		</xs:element>
+		<xs:element name="getResponse">
+			<xs:complexType><xs:sequence>
+				<xs:element name="number" type="xs:integer" />
+			</xs:sequence></xs:complexType>
+		</xs:element>
+	</xs:schema>
+</types>
