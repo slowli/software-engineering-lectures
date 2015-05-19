@@ -1,0 +1,20 @@
+\begin{tikz*}[%
+	every node/.style={align=center,minimum height=2.5em}
+]
+	\node(cloud) [font=\bfseries] {Облако};
+	\node(comp) [below right=2em and 1em of cloud,anchor=north west] {вычислительные \\ мощности};
+	\node(data) [above left=2em and 1em of cloud,anchor=south east] {данные};
+	\node(app) [right=of cloud] {приложения};
+	\node(service) [above right=2em and 1em of cloud,anchor=south west] {сервисы};
+	\node(mon) [below left=2em and 1em of cloud,anchor=north east] {мониторинг}; 
+	\node(conf) [left=of cloud] {конфигурация};
+	\node(wrap) [rectangle,draw,dashed,fit=(conf.west) (app.east) (mon.south west) (comp.south east) %
+			(data.north west) (service.north east)] {};
+
+	\node(srv) [font=\bfseries,right=3em of wrap] {Серверы};
+	\node(laptop) [font=\bfseries,below left=3em and 3em of wrap.west] {Настольные \\ компьютеры};
+	\node(mobile) [font=\bfseries,above left=3em and 3em of wrap.west] {Мобильные \\ устройства};
+	\draw[<->] (srv) -- (wrap);
+	\draw[<->] (laptop) -- (laptop -| wrap.west);
+	\draw[<->] (mobile) -- (mobile -| wrap.west);
+\end{tikz*}

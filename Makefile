@@ -18,7 +18,8 @@ TEX=01/intro.tex 02/disciplines.tex 03/base-areas.tex \
 	16/documentation.tex 17/interfaces.tex \
 	18/datatypes-1.tex 19/datatypes-2.tex 20/interoperability.tex \
 	21/configuration-1.tex 22/configuration-2.tex 23/quality.tex \
-	24/management.tex 25/persistence.tex 26/services.tex
+	24/management.tex 25/persistence.tex 26/services.tex \
+	27/clouds.tex
 
 DIRS=$(subst /,,$(dir $(TEX)))
 DIRS_a4=$(addsuffix -a4,$(DIRS))
