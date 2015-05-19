@@ -1,0 +1,30 @@
+\begin{tikz*}[%
+	every node/.style={rectangle,draw,align=center,minimum height=2.5em},
+	edge/.style={draw=none,font=\footnotesize\itshape,minimum height=0pt}
+]
+	\node(app) {Приложение}; 
+	\node(name-node) [right=7em of app] {Сервер имен}; 
+	\node(shadow-nn) [below=4em of name-node] {Запасной \\ сервер имен}; 
+	\node(block-srv2) [right=7em of name-node] {Сервер блоков 2};
+	\node(block-srv1) [above=4em of block-srv2] {Сервер блоков 1};
+	\node(block-srv3) [below=4em of block-srv2] {Сервер блоков 3};
+	\node(block2) [above=of block-srv1] {Файл 1 \\ блок 2};
+	\node(block1) [left=1em of block2] {Файл 1 \\ блок 1};
+	\node(block3) [right=1em of block2] {Файл 2 \\ блок 2};
+
+	\draw[<-] (app) -- node[above,edge]{соответствия \\ файлов блокам} (name-node);
+	\draw[<-,bend left] (app) to node[above left,edge]{прямой доступ \\ к блокам} (block-srv1);
+
+	\draw[->] (name-node) -- node[left,edge]{дублирование \\ операций} (shadow-nn);
+
+	\draw[->] (name-node) -- node[above left,edge]{контроль} (block-srv1);
+	\draw[->] (name-node) -- (block-srv2);
+	\draw[->] (name-node) -- (block-srv3);
+
+	\draw[<->,dashed] (block-srv1) -- node[right,edge]{автоматическая \\ репликация} (block-srv2);
+	\draw[<->,dashed] (block-srv2) -- (block-srv3);
+
+	\draw (block1) -- (block-srv1);
+	\draw (block2) -- (block-srv1);
+	\draw (block3) -- (block-srv1);
+\end{tikz*}

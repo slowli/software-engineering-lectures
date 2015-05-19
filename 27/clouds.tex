@@ -1,0 +1,856 @@
+\documentclass{a4beamer}
+\input{lecture-common.def}
+
+\usetikzlibrary{shapes.misc}
+
+\lecturetitle{Программная инженерия. Лекция №27 — Облачные вычисления}
+\title[Веб-сервисы]{Введение в облачные вычисления}
+\author{Алексей Островский}
+\institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
+\date{21 мая 2015 г.}
+
+\usepackage{listings}
+\lstset{%
+	tabsize=4,
+	showstringspaces=false,
+	basicstyle=\linespread{1.25}\ttfamily\small,
+	keywordstyle=\bfseries,
+	commentstyle=\color{gray},
+	numbers=left,
+	numberstyle=\footnotesize\color{gray},
+	xleftmargin=2.5em,
+	texcl=true,
+	extendedchars=true,
+	escapechar=\$
+}
+
+\def\code#1{\texttt{#1}}
+\def\codekw#1{\texttt{\textbf{#1}}}
+
+\begin{document}
+	\frame{\titlepage}
+
+	\section[Облако]{Облачные вычисления}
+
+	\frame{
+		\frametitle{Облачные вычисления}
+
+		\begin{Definition}[NIST — Национальный институт стандартов и~технологий~США]
+			\textbf{Облачные вычисления} \engterm{cloud computing} — модель для~предоставления 
+			повсеместного удобного сетевого доступа к~конфигурируемым вычислительным ресурсам, 
+			которые могут~быть введены в~использование быстро и~с~минимальными затратами 
+			на~управление или~взаимодействие с~провайдером.
+		\end{Definition}
+
+		\vspace{1ex}
+		\begin{center}
+			{\small\input{fig-cloud.tex}}
+
+			\vspace{1ex}
+			\figureexpl{Облачная архитектура скрывает детали распределения ресурсов от пользователя}
+		\end{center}
+	}
+
+	\subsection{Характеристики}
+
+	\frame{
+		\frametitle{Характеристики облачных вычислений}
+
+		\begin{itemize}
+			\item
+			\textbf{Самообслуживание} — возможность заказа потребителями дополнительных ресурсов 
+			автоматически с~помощью системы управления (без~взаимодействия со~службой поддержки провайдера).
+
+			\vspace{1ex}
+			\item
+			\textbf{Широкий сетевой доступ} — возможность доступа к~ресурсам через~стандартные сетевые протоколы 
+			для~широкого круга устройств (смартфоны, планшеты, настольные компьютеры).
+
+			\vspace{1ex}
+			\item
+			\textbf{Пулинг (объединение) ресурсов} — динамическое распределение мощностей оборудования провайдера 
+			для~обслуживания актуальных запросов потребителей. 
+			Прозрачность распределения ресурсов для~заказчиков (с~возможностью спецификации высокого уровня, 
+			напр., страны и~информационного центра, на~котором хостится приложение).
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Характеристики облачных вычислений (продолжение)}
+
+		\begin{itemize}
+			\item
+			\textbf{Эластичность} — возможность быстрого выделения дополнительных ресурсов 
+			(по~заказу или~автоматически) для~обеспечения производительности 
+			при~повышении потребления; иллюзия бесконечных ресурсов.
+
+			\vspace{1ex}
+			\item
+			\textbf{Измерение предоставляемых услуг} — автоматизированный контроль и~оптимизация 
+			использования ресурсов; модель оплаты на~основе количества предоставленных услуг 
+			(вычислительных мощностей, объема данных, …). 
+			Возможность мониторинга и~предоставления отчетности потребителям.
+
+			\vspace{1ex}
+			\item
+			\textbf{Минимизация затрат} на приобретение, конфигурацию и поддержку оборудования.
+		\end{itemize}
+	}
+
+	\subsection{Предшествующие технологии}
+
+	\frame{
+		\frametitle{Предшествующие технологии}
+
+		\textbf{Интернет-технологии:}
+		\begin{itemize}
+			\item сервисная архитектура приложений (SOA);
+			\item веб-сервисы (SOAP / WSDL и REST);
+			\item объединения сервисов \engterm{mashup};
+			\item Web 2.0.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Распределенные вычисления:}
+		\begin{itemize}
+			\item
+			грид-вычисления \engterm{grid computing} — форма распределенной архитектуры, 
+			представленная виртуальным суперкомпьютером, составленным из~слабо связанных 
+			и~географически разделенных независимых компьютеров или~кластеров;
+
+			\item
+			утилитарные вычисления \engterm{utility computing} — модель предоставления ресурсов 
+			по~заказу потребителей.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Предшествующие технологии (продолжение)}
+
+		\textbf{Виртуализация:} 
+		\begin{itemize}
+			\item
+			виртуализация на уровне операционной системы \engterm{OS-level virtualization}~— 
+			создание множества изолированных пространств пользователя (контейнеров) 
+			с~поддержкой со~стороны ядра~ОС;
+
+			\item
+			поддержка виртуализации оборудованием (напр., многоядерные процессоры) 
+			и~ПО (гипервизоры — приложения для~управления~ВМ).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Управление:}
+		\begin{itemize}
+			\item
+			автономные вычислительные узлы — компьютеры с~возможностью самостоятельной конфигурации, 
+			оптимизации, восстановления после~сбоев и~защиты;
+
+			\item
+			инструменты для~мониторинга и~управления распределенными конфигурациями 
+			(напр., распределением вычислительных мощностей; предупреждением и~устранением неполадок).
+		\end{itemize}
+	}
+
+	\subsection{Уровни и развертывание}
+
+	\frame{
+		\frametitle{Уровни облачной архитектуры}
+
+		\begin{center}\small
+			\begin{tabular}{|p{0.2\textwidth}|p{0.3\textwidth}|p{0.35\textwidth}|}
+				\hline
+				\centering Уровень & \centering Средства доступа и~управления & \centering Содержимое \cr
+				\hline
+				\raggedright ПО как~сервис (SaaS) & Веб-браузер & 
+					\raggedright\textbf{Облачные приложения:}
+					социальные сети, офисные приложения, системы управления содержимым, 
+					интеллектуальная обработка данных. \cr
+				\hline
+				\raggedright Платформа как~сервис (PaaS) & \raggedright Облачная среда разработки & 
+					\raggedright\textbf{Облачная платформа:}
+					языки программирования, библиотеки, утилиты конфигурирования композиций сервисов, 
+					структурированные данные. \cr
+				\hline
+				\raggedright Инфраструктура как~сервис (IaaS) & 
+					\raggedright Система управления виртуальной инфраструктурой & 
+					\raggedright\textbf{Облачная инфраструктура:} вычислительные сервера, хранилища данных, 
+					организация сетевых соединений (брандмауэры, балансировка нагрузки). \cr
+				\hline
+			\end{tabular}
+		\end{center}
+	}
+
+	\frame{
+		\frametitle{Уровни облачной архитектуры}
+
+		\begin{Definition}
+			\textbf{Инфраструктура как сервис} \engterm{infrastructure as a service, IaaS}~— 
+			предоставление потребителям спецификации базовых ресурсов (для~вычислений, 
+			хранения и~передачи данных, …) с~возможностью развертывания произвольного~ПО 
+			(ОС~и~приложений).
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Степень контроля:}
+		\begin{itemize}
+			\item ОС;
+			\item системы хранения данных;
+			\item развернутые приложения;
+			\item (частично) сетевые компоненты, напр., брандмауэры.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Пример:} Amazon EC2.
+	}
+
+	\frame{
+		\frametitle{Уровни облачной архитектуры}
+
+		\begin{Definition}
+			\textbf{Платформа как сервис} \engterm{platform as a service, PaaS}~— 
+			предоставление возможности развертывания пользовательских и~аналитических приложений 
+			на~основе поддерживаемых провайдером~ЯП, библиотек, сервисов и~инструментов.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Степень контроля:}
+		\begin{itemize}
+			\item развернутые приложения;
+			\item (частично) конфигурация среды выполнения.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Пример:} Google AppEngine.
+	}
+
+	\frame{
+		\frametitle{Уровни облачной архитектуры}
+
+		\begin{Definition}
+			\textbf{ПО как сервис} \engterm{software as a service, SaaS}~— 
+			предоставление возможности использовать приложения, 
+			работающие в~облачном окружении и~доступные с~помощью~клиентов (напр., веб-браузера) или~сетевого~API.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Степень контроля:}
+		\begin{itemize}
+			\item (возможно) конфигурация приложения;
+			\item создаваемые пользователями данные.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Пример:} Microsoft Office 365.
+	}
+
+	\frame{
+		\frametitle{Модели развертывания}
+
+		\begin{itemize}
+			\item
+			\textbf{Частное облако} \engterm{private cloud, enterprise cloud}~— 
+			выделение инфраструктуры для~эксклюзивного использования некоторой организацией.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Общественное облако} \engterm{community cloud}~— 
+			выделение инфраструктуры для~пользования объединением организаций (напр., из~соображений безопасности).
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Публичное облако} \engterm{public cloud, Internet cloud}~— 
+			выделение облачной инфраструктуры для~открытого использования частными лицами или~организациями.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Гибридное облако} \engterm{hybrid cloud} — композиция нескольких видов инфраструктуры, 
+			объединенных средствами коммуникации для~обмена данными и~приложениями.
+		\end{itemize}
+	}
+
+	\subsection{Итоги}
+
+	\frame{
+		\frametitle{Достоинства и недостатки облачных вычислений}
+
+		\textbf{Достоинства:}
+		\begin{itemize}
+			\item
+			минимизация затрат на создание, конфигурацию и~поддержку распределенной инфраструктуры;
+			\item
+			эластичность — возможность быстрой адаптации к~росту нагрузки (в~т.\,ч.~географически неоднородной);
+			\item
+			доступность сервисов для~широкого круга пользователей.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Недостатки:}
+		\begin{itemize}
+			\item
+			угрозы безопасности данных, злонамеренного использования сервисов и~т.\,п.;
+			\item
+			возможная ограниченность средств разработки, необходимость адаптации 
+			к~принципам распределенной / облачной архитектуры;
+			\item
+			отсутствие общепринятых стандартов разработки.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Технологии облачных вычислений}
+
+		\textbf{Оборудование:}
+		\begin{itemize}
+			\item
+			аппаратная виртуализация;
+			\item
+			информационные и вычислительные центры, кластеры;
+			\item
+			сетевые соединения, Интернет.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Программное обеспечение:}
+		\begin{itemize}
+			\item
+			распределенные файловые системы;
+			\item
+			облачные базы данных и~другие технологии хранения (напр., распределенные системы кэширования);
+			\item
+			средства распределения нагрузки в узлах сети;
+			\item
+			инструменты для обработки данных в облачном окружении;
+			\item
+			веб-API и веб-сервисы.
+		\end{itemize}
+	}
+
+	\subsection{Примеры}
+
+	\frame{
+		\frametitle{Примеры облачных платформ}
+
+		\textbf{Amazon Web Services} (\extlink{http://aws.amazon.com/}{ссылка}):
+		\begin{itemize}
+			\item
+			предоставляет услуги IaaS, PaaS;
+			\item
+			Elastic Compute Cloud (EC2) — масштабируемые сервера для~вычислений;
+			\item
+			Elastic MapReduce (EMR) — аналитика;
+			\item
+			Simple Storage Service (S3) — хранилище данных на~основе веб-сервисов;
+			\item
+			DynamoDB, SimpleDB — базы данных.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Google App Engine} (\extlink{https://cloud.google.com/appengine/}{ссылка}):
+		\begin{itemize}
+			\item
+			предоставляет услуги PaaS;
+			\item
+			автоматическое масштабирование в зависимости от количества запросов;
+			\item
+			поддерживаются ЯП Java (+~другие, использующие JVM, напр., Scala), Python, Go и~PHP;
+			\item
+			ограниченный перечень API: БД \extlink{http://en.wikipedia.org/wiki/BigTable}{BigTable}, 
+			HTTP-запросы, обработка изображений, …
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Примеры облачных платформ (продолжение)}
+
+		\textbf{Microsoft Azure} (\extlink{http://azure.microsoft.com/}{ссылка}):
+		\begin{itemize}
+			\item
+			предоставляет услуги PaaS и IaaS;
+			\item
+			управление виртуальными машинами под управлением Windows Server и Linux;
+			\item
+			БД SQL Azure (облачная версия MS SQL Server);
+			\item
+			веб-приложения на основе ASP.NET, PHP, Node.js, Python;
+			\item
+			аналитика при помощи доступных SDK, в~частности, 
+			\extlink{http://azure.microsoft.com/en-in/services/hdinsight/}{Hadoop} 
+			и~\extlink{http://azure.microsoft.com/ru-ru/services/machine-learning/}{машинное обучение}.
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Heroku} (\extlink{http://heroku.com/}{ссылка}):
+		\begin{itemize}
+			\item
+			предоставляет услуги PaaS;
+			\item
+			веб-интефейс и интерфейс командной строки для большинства операций, 
+			поддержка быстрого добавления модулей (Heroku Elements);
+			\item
+			поддержка ЯП Ruby, Java, JavaScript / Node.js, Scala, Clojure, Python, PHP;
+			\item
+			БД PostgreSQL (реляционная), MongoDB, Redis (нереляционные).
+		\end{itemize}
+	}
+
+	\section{Big Data}
+
+	\frame{
+		\frametitle{Big Data}
+
+		\begin{Definition}
+			\textbf{Большие данные} \engterm{big data} — наборы данных, характеризующиеся большим объемом, 
+			высокой скоростью прироста и~слабой структурированностью, 
+			для~которых невозможны или~затруднены традиционные методы хранения и~обработки (напр., реляционные~БД).
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Источники данных:}
+		\begin{itemize}
+			\item мобильные устройства; 
+			\item Web 2.0 (социальные сети, поиск данных, …); 
+			\item наука (метеорология, биоинформатика, физика, …); 
+			\item коммерческие организации (данные клиентов).
+		\end{itemize}
+	}
+
+	\subsection{Характеристики}
+
+	\frame{
+		\frametitle{Характеристики Big Data}
+
+		\textbf{Основные характеристики} (3V):
+		\begin{itemize}
+			\item
+			объем \engterm{volume} — большой размер данных, влияющий на~выбор средств их~обработки;
+
+			\vspace{0.5ex}
+			\item
+			разнообразие \engterm{variety} — отсутствие общей для~данных структуры, 
+			наличие различных типов данных из~многих источников; 
+			неструктурированные (естественный текст) или~полуструктурированные (XML, JSON) данные.
+
+			\vspace{0.5ex}
+			\item
+			скорость \engterm{velocity} — высокие темпы накопления данных и~требования к~скорости их~обработки.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Характеристики Big Data (продолжение)}
+
+		\textbf{Дополнительные характеристики:}
+		\begin{itemize}
+			\item
+			изменчивость \engterm{variability} — несогласованность между данными из~различных источников;
+
+			\vspace{0.5ex}
+			\item
+			(не)достоверность \engterm{veracity} — возможность существенных различий в~качестве исходных данных;
+
+			\vspace{0.5ex}
+			\item
+			сложность \engterm{complexity} — незаурядные требования к~алгоритмам и~реализациям 
+			систем анализа данных для~связывания и~извлечения полезной информации.
+		\end{itemize}
+	}
+
+	\subsection{Теория}
+
+	\frame{
+		\frametitle{Теория распределенных хранилищ}
+
+		\begin{theorem}[CAP-теорема, Э. Брюэр, С. Гильберт, 2002]
+			Не существует распределенной компьютерной системы, удовлетворяющей одновременно трем условиям:
+			\begin{itemize}
+				\item
+				\textbf{согласованность данных} \engterm{consistency} — все узлы системы имеют доступ к~одним и~тем~же~данным 
+				в~произвольный момент времени;
+
+				\item
+				\textbf{доступность} \engterm{availability} — на каждый запрос к~данным будет получен ответ об~успешности 
+				его~выполнения;
+
+				\item
+				\textbf{масштабируемость} \engterm{partition tolerance} — система продолжает функционировать, 
+				несмотря на~возможную потерю сообщений между~узлами или~отказ части системы.
+			\end{itemize}
+		\end{theorem}
+
+		\begin{corollary}
+			При разработке распределенных систем хранения данных выбираются 
+			два~из~трех требований (чаще всего — AP или~CP), в~зависимости от~условий использования.
+		\end{corollary}
+	}
+
+	\frame{
+		\frametitle{MapReduce}
+
+		\begin{Definition}
+			\textbf{MapReduce} — программная модель для~параллельной обработки больших объемов данных 
+			в~распределенных системах, сходная с~применением функций \code{map} и~\code{reduce} 
+			в~функциональном программировании.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Этапы вычисления:}
+		\begin{enumerate}
+			\item
+			подготовка данных для процедуры \code{Map()} на~узлах системы, устранение дублирующихся данных;
+			\item
+			выполнение кода \code{Map()}, заданного пользователем;
+			\item
+			реорганизация данных \engterm{shuffle} для~выполнения функции \code{Reduce()};
+			\item
+			выполнение кода \code{Reduce()}, заданного пользователем;
+			\item
+			вывод полученного результата.
+		\end{enumerate}
+	}
+
+	\frame{
+		\frametitle{Пример MapReduce}
+
+		\textbf{Задача.} Определить файл (один из файлов) с~максимальным количеством слов.
+
+		\vspace{0.5ex}
+		\textbf{Вход:} набор имен файлов.
+
+		\textbf{Выход:} словарь с одним вхождением (файл $\rightarrow$~количество слов).
+
+		\vspace{0.5ex}
+		\textbf{Псевдокод (Python):}
+		\begin{overlayarea}{\textwidth}{0.6\textheight}
+			\only<1>{\vspace{-1ex}\lstinputlisting[language=python]{code-mapreduce.py}}
+			\only<2>{\vspace{-1ex}\lstinputlisting[language=python]{code-mapreduce2.py}}
+		\end{overlayarea}
+	}
+
+	\frame{
+		\frametitle{Характеристики MapReduce}
+
+		\textbf{Особенности:}
+		\begin{itemize}
+			\item
+			Процедура Reduce может выполняться в~несколько этапов по~мере поступления данных 
+			на~каждом узле и~при~агрегации данных на~различных узлах.
+			\item
+			Метод MapReduce эффективен для обработки больших объемов данных ($\sim$~Гб–Тб).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Области применения:}
+		\begin{itemize}
+			\item
+			распределенный поиск и индексирование;
+			\item
+			распределенная сортировка;
+			\item
+			получение статистики по документам в распределенных хранилищах;
+			\item
+			математические приложения (напр., 
+			\extlink{http://en.wikipedia.org/wiki/Singular_value_decomposition}{сингулярное разложение матриц});
+			\item
+			машинное обучение (напр., кластеризация документов, машинный перевод, …).
+		\end{itemize}
+	}
+
+	\subsection{Облачные ФС}
+
+	\frame{
+		\frametitle{Облачные файловые системы}
+
+		\begin{Definition}
+			\textbf{Облачная файловая система} \engterm{distributed file system for cloud}~— 
+			файловая система с~распределенной архитектурой, предоставляющая пользователям 
+			одновременный полноценный сетевой доступ к~данным / файлам.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Цели:}
+		\begin{itemize}
+			\item
+			оптимизация пакетной обработки данных (напр., с помощью MapReduce);
+			\item
+			высокая доступность \engterm{high availability} — доступ к~данным при~возможности отказа узлов системы;
+			\item
+			поддержка сложной топологии системы (географически разделенные узлы и~кластеры);
+			\item
+			поддержка больших файлов (до~нескольких~Тб) и~большого количества файлов;
+			\item
+			использование TCP/IP и удаленного вызова процедур для~доступа к~данным.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Облачные файловые системы}
+
+		\textbf{Характеристики облачных ФС:}
+		\begin{itemize}
+			\item
+			разделение файлов на~блоки ($\sim$~несколько Мб) для~оптимизации доступа;
+			\item
+			дублирование блоков на нескольких узлах для отказоустойчивости. 
+			Часто подбираются географически разделенные узлы для оптимизации скорости доступа.
+			\item
+			выделенные серверы для хранения метаданных (соответствия блоков файлам, 
+			положение файлов в~директориях, …).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Примеры облачных ФС:}
+		\begin{itemize}
+			\item
+			\extlink{http://static.googleusercontent.com/media/research.google.com/en//archive/gfs-sosp2003.pdf}{Google File System};
+			\item
+			Hadoop Distibuted File System (\extlink{http://hadoop.apache.org/}{HDFS});
+			\item
+			\extlink{http://lustre.org/}{Lustre};
+			\item
+			IBM General Parallel File System (\extlink{http://www-01.ibm.com/support/knowledgecenter/SSFKCN/gpfs_welcome.html?lang=en}{GPFS}).
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Архитектура облачных ФС}
+
+		\begin{center}
+			\input{fig-cloud-fs.tex}
+
+			\vspace{1ex}
+			\figureexpl{Типичная архитектура облачных файловых систем}
+		\end{center}
+	}
+
+	\subsection{Распределенные БД}
+
+	\frame{
+		\frametitle{Распределенные БД}
+
+		\textbf{Недостатки реляционных БД для облачных приложений:}
+		\begin{itemize}
+			\item
+			невозможность линейного горизонтального масштабирования (\emph{scaling out} — линейный рост производительности 
+			при~увеличении количества узлов), слабая совместимость с~распределенными системами;
+			\item
+			отсутствие или недостаточность встроенных механизмов кэширования;
+			\item
+			фрагментация при хранении больших объемов данных;
+			\item
+			жесткость схемы данных, необходимость структуризации входящей информации;
+			\item
+			транзакции для соблюдения согласованности данных, замедляющие работу системы;
+			\item
+			уменьшающие производительность операции нормализации данных и~объединения таблиц 
+			(оператор~SQL \codekw{JOIN}).
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{NoSQL}
+
+		\begin{Definition}
+			\textbf{NoSQL} (not only SQL) — модель данных для распределенного хранения данных, 
+			отличающаяся от~реляционной алгебры традиционных~СУБД.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Характеристики:}
+		\begin{itemize}
+			\item
+			отсутствие жесткой схемы данных, проектирование структур данных согласно~заранее заданным 
+			шаблонам запросов (а~не~наоборот, как~в~РСУБД);
+			\item
+			упрощение структуры данных по~сравнению с~реляционными таблицами, отсутствие нормализации;
+			\item
+			отказ от транзакций в пользу отложенной согласованности \engterm{delayed consistency};
+			\item
+			встроенная поддержка распределенной архитектуры и (часто) кэширования.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Структуры данных в NoSQL}
+
+		\textbf{Типы баз данных (от простых к сложным):}
+		\begin{itemize}
+			\item
+			\textbf{Пары «ключ — значение».} 
+			Используются для кэширования; зачастую данные хранятся исключительно в оперативной памяти.
+
+			\vspace{0.5ex}
+			\textbf{Примеры:} \extlink{http://redis.io/}{Redis}; \extlink{http://www.memcached.org/}{memcached}.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{На основе столбцов} \engterm{column-oriented}. 
+			Используются для~хранения просто структурированных данных 
+			при~необходимости быстрого доступа.
+
+			\vspace{0.5ex}
+			\textbf{Примеры:} \extlink{http://cassandra.apache.org/}{Apache Cassandra}, \extlink{http://hbase.apache.org/}{Apache HBase}.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Графовые.}
+			Хранят отношения между сущностями (напр., followers / followed~by в~Twitter).
+
+			\vspace{0.5ex}
+			\textbf{Примеры:} \extlink{http://neo4j.com/}{Neo4j}; \extlink{http://orientdb.com/}{OrientDB}.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Документно-ориентированные.}
+			Используются для~хранения произвольных документов со~схемой, задающейся форматом сериализации (напр., JSON).
+
+			\vspace{0.5ex}
+			\textbf{Примеры:} \extlink{http://couchdb.apache.org/}{Apache CouchDB}, \extlink{https://www.mongodb.org/}{MongoDB}.
+		\end{itemize}
+	}
+
+	\subsection{Обработка данных}
+
+	\frame{
+		\frametitle{Обработка данных}
+
+		\textbf{Машинное обучение} — извлечение полезной информации из~данных 
+		при~помощи методов оптимизации / мат.~статистики:
+		\begin{itemize}
+			\item
+			регрессия (полиномиальная, \extlink{http://en.wikipedia.org/wiki/Multivariate_adaptive_regression_splines}{MARS});
+			\item
+			классификация (байесовские методы, решающие деревья, SVM, бустинг, …);
+			\item
+			структурное распознавание (обработка изображений, текста, …);
+			\item
+			кластеризация (k-means, гауссовские смеси);
+			\item
+			сокращение размерности (сингулярное разложение и другие методы).
+		\end{itemize}
+
+		\vspace{1ex}
+		\textbf{Обратное индексирование данных} — подготовка индекса для~полнотекстового поиска 
+		в~большом объеме документов.
+	}
+
+	\frame{
+		\frametitle{Apache Hadoop}
+
+		\begin{Definition}
+			\textbf{Apache Hadoop} — оболочка для~распределенного хранения и~обработки данных, 
+			написанная на~ЯП~Java.
+		\end{Definition}
+
+		\vspace{1ex}
+		\textbf{Модули:}
+		\begin{itemize}
+			\item
+			HDFS — распределенная файловая система для хранения данных;
+			\item
+			система выполнения заданий MapReduce — JobTracker (центральный модуль управления заданиями), 
+			TaskTracker (выполнение процедур \code{Map} и~\code{Reduce});
+			\item
+			планировщик заданий.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Подключаемые модули Hadoop}
+
+		\begin{itemize}
+			\item
+			\textbf{Файловые системы} (доступны через плагины).
+
+			\vspace{0.5ex}
+			\item
+			\textbf{NoSQL-база данных} \extlink{http://hbase.apache.org/}{HBase} (устанавливается поверх HDFS).
+
+			\vspace{0.5ex}
+			\item
+			\extlink{https://spark.apache.org/}{Apache Spark} — архитектура для~выполнения \textbf{распределенной обработки данных}, 
+			альтернативная MapReduce.
+
+			\vspace{0.5ex}
+			\item
+			\extlink{http://mahout.apache.org/}{Apache Mahout} — библиотека \textbf{машинного обучения}, 
+			написанная на~Java.
+
+			\vspace{0.5ex}
+			\item
+			\extlink{http://pig.apache.org/}{Apache Pig} — высокоуровневая \textbf{платформа для~создания заданий 
+			типа~MapReduce} на~основе процедурного~ЯП Pig~Latin ($\sim$~SQL) и~пользовательских функций 
+			на~Python, Java, JavaScript.
+
+			\vspace{0.5ex}
+			\item
+			\extlink{http://hive.apache.org}{Apache Hive} — \textbf{инфраструктура для~обработки данных} 
+			с~использованием языка запросов~HiveQL, который транслируется в~набор заданий для~Hadoop.
+
+			\vspace{0.5ex}
+			\item
+			\extlink{http://zookeeper.apache.org/}{Apache ZooKeeper} — \textbf{централизованный сервер координации} 
+			в~распределенных системах.
+		\end{itemize}
+	}
+
+	\section{Заключение}
+
+	\subsection{Выводы}
+	
+	\frame{
+		\frametitle{Выводы}
+
+		\begin{enumerate}
+			\item
+			Облачные вычисления — платформа для выполнения распределенных приложений 
+			(как~веб-, так~и~аналитических), основанная на~принципе горизонтальной масштабируемости.
+
+			\item
+			Есть три уровня облачной архитектуры: инфраструктура как~сервис (IaaS), платформа как~сервис (PaaS) 
+			и~ПО~как~сервис (SaaS).
+
+			\item
+			Основой облачной архитектуры является хранение данных (при~помощи распределенных~ФС и~NoSQL-баз данных) 
+			и~их обработка (напр., с~помощью инструментов типа~MapReduce).
+
+			\item
+			Основные характеристики распределенных хранилищ данных — структура хранимых объектов 
+			и~характеристики из~набора доступность, согласованность данных и~масштабируемость. 
+			Согласно CAP-теореме, выполнение трех~характеристик одновременно невозможно.
+		\end{enumerate}
+	}
+	
+	\subsection{Материалы}
+	
+	\frame{
+		\frametitle{Материалы}
+		
+		\begin{thebibliography}{9}
+			\bibitem[1]{1}
+			Sommerville, Ian
+			\newblock Software Engineering.
+			\newblock {\footnotesize Pearson, 2011. — 790 p.}
+
+			\bibitem[2]{2}
+			Voorsluys W., Broberg J., Buyya R.
+			\newblock Introduction to Cloud Computing.
+			\newblock {\footnotesize\url{http://media.johnwiley.com.au/product_data/excerpt/90/04708879/0470887990-180.pdf}}
+
+			\bibitem[3]{3}
+			Cloud Security Alliance
+			\newblock Big Data Taxonomy.
+			\newblock {\footnotesize\url{https://downloads.cloudsecurityalliance.org/initiatives/bdwg/Big_Data_Taxonomy.pdf}}
+		\end{thebibliography}
+	}
+	
+	\frame{
+		\frametitle{}
+		
+		\begin{center}
+			\Huge Спасибо за внимание!
+		\end{center}
+	}
+
+\end{document}
+
