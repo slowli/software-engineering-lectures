@@ -7,7 +7,7 @@ public class SquareRoot {
 
 	// $Предусловие$
 	/*@ $\textbf{requires} x >= 0.0;$ @*/
-	// Постусловие
+	// $Постусловие$
 	/*@ $\textbf{ensures} JMLDouble.approximatelyEqualTo(x, \textbf{\textbackslash{}result} * \textbf{\textbackslash{}result}, EPS);$
 	  @*/
 	public static double sqrt(double x) {
