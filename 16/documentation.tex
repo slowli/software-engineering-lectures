@@ -3,31 +3,12 @@
 
 \usetikzlibrary{decorations.pathreplacing}
 
-\usepackage{listings}
-\lstset{%
-	language=java,
-	morekeywords={assert},
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\normalfont\itshape,
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	escapechar=\#
-}
-\def\code#1{\texttt{#1}}
-
-\deftranslation[to=russian]{Fact}{Наблюдение}
 
 \lecturetitle{Программная инженерия. Лекция №16 — Документирование ПО}
 \title[Документирование]{Документирование ПО}
 \author{Алексей Островский}
 \institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
 \date{26 марта 2015 г.}
-
 
 \begin{document}
 	\frame{\titlepage}
@@ -432,7 +413,7 @@
 	\frame{
 		\frametitle{Пример документации: Javadoc}
 
-		\lstinputlisting{code-doc.java}
+		\lstinputlisting[language=java]{code-doc.java}
 	}
 
 	\frame{

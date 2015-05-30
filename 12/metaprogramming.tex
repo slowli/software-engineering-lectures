@@ -1,38 +1,6 @@
 \documentclass{a4beamer}
 \input{lecture-common.def}
 
-\def\code#1{\texttt{#1}}
-\def\classfield#1{\underbar{#1}}
-
-\usepackage{listings}
-\lstset{%
-	language=java,
-	morekeywords={assert},
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\normalfont\itshape,
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	escapechar=\#
-}
-
-\lstdefinelanguage{javascript}%
-	{morekeywords={break,case,catch,%
-		const,constructor,continue,default,do,else,false,%
-		finally,for,function,if,in,instanceof,%
-		new,null,prototype,%
-		return,switch,this,throw,%
-		true,try,typeof,var,while},%
-	sensitive,%
-	morecomment=[l]//,%
-	morecomment=[s]{/*}{*/},%
-	morestring=[b]",%
-	morestring=[b]',%
-}[keywords,comments,strings]%
 
 \lecturetitle{Программная инженерия. Лекция №12 — ЯП. Метапрограммирование.}
 \title[Метапрограммирование]{Языки программирования. Метапрограммирование}
@@ -228,11 +196,11 @@
 
 		\vspace{0.5ex}
 		\textbf{Python:}
-		\lstinputlisting[language=python,escapechar=\$]{code-str-int.py}
+		\lstinputlisting[language=python]{code-str-int.py}
 
 		\vspace{0.5ex}
 		\textbf{PHP:}
-		\lstinputlisting[language=php]{code-str-int.php}
+		\lstinputlisting[language=php,escapechar=\#]{code-str-int.php}
 
 		\vspace{0.5ex}
 		\textbf{C:}
@@ -498,7 +466,7 @@
 
 		\vspace{1ex}
 		\textbf{Наивное представление в ЯП Python}
-		\lstinputlisting[language=python,escapechar=\$]{code-view.py}
+		\lstinputlisting[language=python]{code-view.py}
 	}
 
 	\frame{

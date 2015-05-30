@@ -1,38 +1,6 @@
 \documentclass{a4beamer}
 \input{lecture-common.def}
 
-\def\code#1{\texttt{#1}}
-\def\classfield#1{\underbar{#1}}
-
-\usepackage{listings}
-\lstset{%
-	language=java,
-	morekeywords={assert},
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\normalfont\itshape,
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	escapechar=\#
-}
-
-\lstdefinelanguage{javascript}%
-	{morekeywords={break,case,catch,%
-		const,constructor,continue,default,do,else,false,%
-		finally,for,function,if,in,instanceof,%
-		new,null,prototype,%
-		return,switch,this,throw,%
-		true,try,typeof,var,while},%
-	sensitive,%
-	morecomment=[l]//,%
-	morecomment=[s]{/*}{*/},%
-	morestring=[b]",%
-	morestring=[b]',%
-}[keywords,comments,strings]%
 
 \lecturetitle{Программная инженерия. Лекция №10 — Парадигмы программирования (часть 1).}
 \title[Парадигмы программирования 1]{Парадигмы программирования (часть 1)}
@@ -435,7 +403,7 @@
 		\frametitle{Императивное и декларативное программирование}
 
 		\textbf{Вычисление чисел Фибоначчи — императивная программа (Python):}
-		\lstinputlisting[language=python]{code-fib.py}
+		\lstinputlisting[language={[doc]python}]{code-fib.py}
 
 		\vspace{1ex}
 		\textbf{Вызов:}

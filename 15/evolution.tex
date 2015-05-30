@@ -3,31 +3,12 @@
 
 \usetikzlibrary{shapes.misc}
 
-\usepackage{listings}
-\lstset{%
-	language=java,
-	morekeywords={assert},
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\normalfont\itshape,
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	escapechar=\#
-}
-\def\code#1{\texttt{#1}}
-
-\deftranslation[to=russian]{Fact}{Наблюдение}
 
 \lecturetitle{Программная инженерия. Лекция №15 — Эволюция ПО}
 \title[Эволюция]{Эволюция ПО}
 \author{Алексей Островский}
 \institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
 \date{19 марта 2015 г.}
-
 
 \begin{document}
 	\frame{\titlepage}
@@ -412,9 +393,9 @@
 		
 		\vspace{1ex}
 		\textbf{До:}
-		\lstinputlisting[lastline=2]{code-inc.java}
+		\lstinputlisting[language=java,lastline=2]{code-inc.java}
 		\textbf{После:}
-		\lstinputlisting[firstline=3]{code-inc.java}
+		\lstinputlisting[language=java,firstline=3]{code-inc.java}
 	}
 
 	\frame{
@@ -425,9 +406,9 @@
 
 		\vspace{1ex}
 		\textbf{До:}
-		\lstinputlisting[lastline=3]{code-generic.java}
+		\lstinputlisting[language=java,lastline=3]{code-generic.java}
 		\textbf{После:}
-		\lstinputlisting[firstline=4]{code-generic.java}
+		\lstinputlisting[language=java,firstline=4]{code-generic.java}
 	}
 
 	\frame{
@@ -437,9 +418,9 @@
 
 		\vspace{1ex}
 		\textbf{До:}
-		\lstinputlisting[lastline=5]{code-pullup.java}
+		\lstinputlisting[language=java,lastline=5]{code-pullup.java}
 		\textbf{После:}
-		\lstinputlisting[firstline=6]{code-pullup.java}
+		\lstinputlisting[language=java,firstline=6]{code-pullup.java}
 	}
 
 	\frame{
@@ -451,12 +432,12 @@
 		\begin{overlayarea}{\textwidth}{0.75\textheight}
 			\only<1>{
 				\textbf{До:}
-				\lstinputlisting[lastline=14]{code-poly.java}
+				\lstinputlisting[language=java,lastline=14]{code-poly.java}
 			}
 			\only<2>{
 				\vspace{4ex}
 				\textbf{После:}
-				\lstinputlisting[firstline=15]{code-poly.java}
+				\lstinputlisting[language=java,firstline=15]{code-poly.java}
 			}
 		\end{overlayarea}
 	}

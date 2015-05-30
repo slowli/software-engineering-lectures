@@ -28,6 +28,89 @@
 	\def\pgfarrowsrightextend#1{\pgfmathsetlength{\pgf@xb}{1.5*#1}}
 \fi
 
+%% Load listings package
+\usepackage{listings}
+
+%% Are we inside a comment?
+\newif\iflstcomment \lstcommentfalse
+
+\lstset{%
+	tabsize=4,
+	showstringspaces=false,
+	basicstyle=\linespread{1.25}\ttfamily\small,
+	keywordstyle=\bfseries,
+	commentstyle=\lstcommentstyle,
+	numbers=left,
+	numberstyle=\footnotesize\color{gray},
+	xleftmargin=2.5em,
+	extendedchars=true,
+	escapechar=\$,
+	escapebegin=\iflstcomment\begingroup\lstcommentstyle\fi,
+	escapeend=\iflstcomment\endgroup\fi
+}
+
+\def\lstcommentstyle{\color{gray}}
+
+\lst@AddToHook{AfterBeginComment}{\global\lstcommenttrue}
+\let\orig@lst@EndComment=\lst@EndComment
+\def\lst@EndComment{\global\lstcommentfalse\orig@lst@EndComment}
+\lst@AddToHookAtTop{EOL}{%
+	\lst@ifLmode\global\lstcommentfalse\fi% XXX Sloppy way to determine comment end
+}
+
+%% Python with docstrings treated as comments
+\lstdefinelanguage[doc]{python}[]{python}{%
+	deletestring=[s]{"""}{"""},%
+	morecomment=[s]{"""}{"""}%
+}%
+
+%% JavaScript language
+\lstdefinelanguage{javascript}%
+	{morekeywords={break,case,catch,%
+		const,constructor,continue,default,do,else,false,%
+		finally,for,function,if,in,instanceof,%
+		new,null,prototype,%
+		return,switch,this,throw,%
+		true,try,typeof,var,while},%
+	sensitive,%
+	morecomment=[l]//,%
+	morecomment=[s]{/*}{*/},%
+	morestring=[b]",%
+	morestring=[b]',%
+}[keywords,comments,strings]%
+
+%% C# language (4.0?)
+\lstdefinelanguage{csharp}%
+	{morekeywords={abstract,as,%
+		base,bool,byte,case,catch,char,%
+		checked,class,const,continue,%
+		decimal,default,delegate,do,double,%
+		else,enum,event,explicit,extern,%
+		false,finally,fixed,float,for,foreach,%
+		goto,if,implicit,in,int,interface,%
+		internal,is,lock,long,%
+		namespace,new,null,object,operator,out,%
+		override,params,private,protected,public,%
+		readonly,ref,return,sbyte,sealed,%
+		short,sizeof,stackalloc,static,string,%
+		struct,switch,this,throw,true,try,%
+		typeof,uint,ulong,unchecked,unsafe,ushort,%
+		using,virtual,void,volatile,while%
+	},%
+	sensitive,%
+	morecomment=[l]//,%
+	morecomment=[s]{/*}{*/},%
+	morestring=[b]",%
+	morestring=[b]',%
+}[keywords,comments,strings]%
+
+%% Translation for fact environment
+\deftranslation[to=russian]{Fact}{Наблюдение}
+
+%% Inline code snippets
+\def\code#1{\texttt{#1}}
+\def\codekw#1{\code{\textbf{#1}}}
+
 %% Explanation for a figure
 \def\figureexpl#1{%
 	{\footnotesize\color{gray}{#1}\par}

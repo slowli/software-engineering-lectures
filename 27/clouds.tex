@@ -3,29 +3,12 @@
 
 \usetikzlibrary{shapes.misc}
 
+
 \lecturetitle{Программная инженерия. Лекция №27 — Облачные вычисления}
 \title[Веб-сервисы]{Введение в облачные вычисления}
 \author{Алексей Островский}
 \institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
 \date{21 мая 2015 г.}
-
-\usepackage{listings}
-\lstset{%
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\color{gray},
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	extendedchars=true,
-	escapechar=\$
-}
-
-\def\code#1{\texttt{#1}}
-\def\codekw#1{\texttt{\textbf{#1}}}
 
 \begin{document}
 	\frame{\titlepage}
@@ -522,8 +505,8 @@
 		\vspace{0.5ex}
 		\textbf{Псевдокод (Python):}
 		\begin{overlayarea}{\textwidth}{0.6\textheight}
-			\only<1>{\vspace{-1ex}\lstinputlisting[language=python]{code-mapreduce.py}}
-			\only<2>{\vspace{-1ex}\lstinputlisting[language=python]{code-mapreduce2.py}}
+			\only<1>{\vspace{-1ex}\lstinputlisting[language={[doc]python}]{code-mapreduce.py}}
+			\only<2>{\vspace{-1ex}\lstinputlisting[language={[doc]python}]{code-mapreduce2.py}}
 		\end{overlayarea}
 	}
 

@@ -2,24 +2,8 @@
 \input{lecture-common.def}
 
 \usetikzlibrary{shapes.misc}
-
-\usepackage{listings}
-\lstset{%
-	language=java,
-	morekeywords={assert},
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\normalfont\itshape,
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	escapechar=\#
-}
-
 \usepackage{multicol}
+
 
 \lecturetitle{Программная инженерия. Лекция №13 — Тестирование}
 \title[Тестирование]{Тестирование программного обеспечения}
@@ -303,7 +287,7 @@
 	\frame{
 		\frametitle{Пример — тестирование чисел Фибоначчи (Java / JUnit)}
 
-		\lstinputlisting{code-junit.java}
+		\lstinputlisting[language=java]{code-junit.java}
 	}
 
 	\subsection{Тестирование компонентов}

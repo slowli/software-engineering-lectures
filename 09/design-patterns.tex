@@ -1,24 +1,8 @@
 \documentclass{a4beamer}
 \input{lecture-common.def}
 
-\def\code#1{\texttt{#1}}
 \def\classfield#1{\underbar{#1}}
 
-\usepackage{listings}
-\lstset{%
-	language=java,
-	morekeywords={assert},
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\normalfont\itshape,
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	escapechar=\#
-}
 
 \lecturetitle{Программная инженерия. Лекция №9 — ООП. Шаблоны проектирования.}
 \title[ООП. Шаблоны проектирования]{Объектно-ориентированное проектирование. Шаблоны~проектирования}
@@ -268,7 +252,7 @@
 	\frame{
 		\frametitle{Singleton — реализация}
 
-		\lstinputlisting[]{code-Singleton.java}
+		\lstinputlisting[language=java]{code-Singleton.java}
 	}
 
 	\subsection{Builder}\label{sec:Builder}
@@ -299,7 +283,7 @@
 	\frame{
 		\frametitle{Builder — реализация}
 
-		\lstinputlisting[]{code-Builder.java}
+		\lstinputlisting[language=java]{code-Builder.java}
 	}
 
 	\subsection{Bridge}\label{sec:Bridge}
@@ -332,7 +316,7 @@
 	\frame{
 		\frametitle{Bridge — реализация}
 
-		\lstinputlisting[]{code-Bridge.java}
+		\lstinputlisting[language=java]{code-Bridge.java}
 	}
 
 	\subsection{Decorator}\label{sec:Decorator}
@@ -366,7 +350,7 @@
 	\frame{
 		\frametitle{Decorator — реализация}
 
-		\lstinputlisting[]{code-Decorator.java}
+		\lstinputlisting[language=java]{code-Decorator.java}
 	}
 
 	\subsection{Iterator}\label{sec:Iterator}
@@ -400,7 +384,7 @@
 	\frame{
 		\frametitle{Iterator — реализация}
 
-		\lstinputlisting[]{code-Iterator.java}
+		\lstinputlisting[language=java]{code-Iterator.java}
 	}
 
 	\subsection{Observer}\label{sec:Observer}
@@ -434,7 +418,7 @@
 	\frame{
 		\frametitle{Observer — реализация}
 
-		\lstinputlisting[]{code-Observer.java}
+		\lstinputlisting[language=java]{code-Observer.java}
 	}
 
 	\section{Заключение}

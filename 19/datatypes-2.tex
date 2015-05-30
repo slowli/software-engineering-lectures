@@ -1,57 +1,12 @@
 \documentclass{a4beamer}
 \input{lecture-common.def}
 
-\usepackage{listings}
-\lstset{%
-	morekeywords={assert},
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\color{gray},
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	extendedchars=true,
-	escapechar=\$
-}
-
-\lstdefinelanguage{csharp}%
-	{morekeywords={abstract,as,%
-		base,bool,byte,case,catch,char,%
-		checked,class,const,continue,%
-		decimal,default,delegate,do,double,%
-		else,enum,event,explicit,extern,%
-		false,finally,fixed,float,for,foreach,%
-		goto,if,implicit,in,int,interface,%
-		internal,is,lock,long,%
-		namespace,new,null,object,operator,out,%
-		override,params,private,protected,public,%
-		readonly,ref,return,sbyte,sealed,%
-		short,sizeof,stackalloc,static,string,%
-		struct,switch,this,throw,true,try,%
-		typeof,uint,ulong,unchecked,unsafe,ushort,%
-		using,virtual,void,volatile,while%
-	},%
-	sensitive,%
-	morecomment=[l]//,%
-	morecomment=[s]{/*}{*/},%
-	morestring=[b]",%
-	morestring=[b]',%
-}[keywords,comments,strings]%
-
-\def\code#1{\texttt{#1}}
-\def\codekw#1{\texttt{\textbf{#1}}}
-
-\deftranslation[to=russian]{Fact}{Наблюдение}
 
 \lecturetitle{Программная инженерия. Лекция №19 — Интерфейсы и типы данных (часть 2)}
 \title[Типы данных 2]{Интерфейсы и типы данных (часть 2)}
 \author{Алексей Островский}
 \institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
 \date{16 апреля 2015 г.}
-
 
 \begin{document}
 	\frame{\titlepage}
@@ -245,7 +200,7 @@
 	\frame{
 		\frametitle{Пример: утиная типизация в Python}
 
-		\lstinputlisting[language=python,firstline=4]{code-duck.py}
+		\lstinputlisting[language={[doc]python},firstline=4]{code-duck.py}
 	}
 
 	\section{Приведение ТД}
@@ -595,11 +550,11 @@
 		\begin{overlayarea}{\textwidth}{0.575\textheight}
 			\only<1,2>{%
 				\textbf{Пример (ковариантное определение):}
-				\lstinputlisting[language=java,escapechar=\#]{code-wildcards-1.java}
+				\lstinputlisting[language=java]{code-wildcards-1.java}
 			}
 			\only<3,4>{%
 				\textbf{Пример (контравариантное определение):}
-				\lstinputlisting[language=java,escapechar=\#]{code-wildcards-2.java}
+				\lstinputlisting[language=java]{code-wildcards-2.java}
 			}
 		\end{overlayarea}
 	}

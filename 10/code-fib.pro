@@ -1,5 +1,5 @@
-% \ Вычисление чисел Фибоначчи.
-% \ $\mathrm{fib}(n, X) \Leftrightarrow X = F_n$.
+% $Вычисление чисел Фибоначчи.$
+% $\(\mathrm{fib}(n, X) \Leftrightarrow X = F_n\)$.
 fib(N, X) :-
 	fibr(0, 1, N, X).
 

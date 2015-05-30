@@ -1,10 +1,10 @@
-# Список книг, взятый из базы данных.
+# $Список книг, взятый из базы данных.$
 books = [
 	{ 'author': 'Ray Bradbury', 'title': '451F' },
 	{ 'author': 'Herman Melville', 'title': 'Moby-Dick' }
 ];
 
-# HTML-код таблицы с данными о книгах.
+# $HTML-код таблицы с данными о книгах.$
 print '<table>';
 print '<thead><tr><th>Author</th><th>Title</th></tr></thead>';
 print '<tbody>';

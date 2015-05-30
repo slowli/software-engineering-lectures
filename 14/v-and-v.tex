@@ -3,21 +3,6 @@
 
 \usetikzlibrary{shapes.misc}
 
-\usepackage{listings}
-\lstset{%
-	language=java,
-	morekeywords={assert},
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\normalfont\itshape,
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	escapechar=\#
-}
 
 \lecturetitle{Программная инженерия. Лекция №14 — Верификация и валидация}
 \title[V \& V]{Верификация и валидация}
@@ -498,7 +483,7 @@
 		\frametitle{Пример спецификации}
 
 		\textbf{Спецификация извлечения квадратного корня на языке JML:}
-		\lstinputlisting{code-jml.java}
+		\lstinputlisting[language=java]{code-jml.java}
 	}
 
 	\subsection{Проверка моделей}
@@ -567,7 +552,7 @@
 		\frametitle{Пример: анализ состояния гонки}
 
 		\textbf{Гонка, возникающая из-за возможности выполнения (1) перед (2)}
-		\lstinputlisting{code-jpf.java}
+		\lstinputlisting[language=java]{code-jpf.java}
 	}
 
 	\frame{

@@ -1,12 +1,12 @@
 public class Arrays {
-	/* … */
+	/* ... */
 
-	// Методы для бинарного поиска в массивах
+	// $Методы для бинарного поиска в массивах$
 	public static int binarySearch(byte[] a, byte key);
 	public static int binarySearch(int[] a, int key);
-	// другие массивы из примитивных ТД
+	// $другие массивы из примитивных ТД$
 
-	// используется для всех массивов, не состоящих из примитивных элементов
+	// $используется для всех массивов, не состоящих из примитивных элементов$
 	public static int binarySearch(Object[] a, Object key);
 }
 
