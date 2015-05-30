@@ -2,7 +2,7 @@
 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 builder.setMessage("Message")
 	.setTitle("text")
-	.setIcon(...)
-	.setPositiveButton(...)
-	.setNegativeButton(...);
+	.setIcon(/* ... */)
+	.setPositiveButton(/* ... */)
+	.setNegativeButton(/* ... */);
 AlertDialog dialog = builder.create();
