@@ -91,15 +91,12 @@
 			\item
 			предотвращение и разрешение конфликтов при внесении изменений в~компоненты.
 		\end{itemize}
-
-		\vspace{1ex}
-		\figureexpl{(Рассматриваются в этой лекции.)}
 	}
 
 	\frame{
 		\frametitle{Составляющие управления конфигурацией (продолжение)}
 
-		\textbf{Построение программной системы} \engterm{system building}:
+		\textbf{Построение программной системы} \engterm{system building}\footnote{Рассматривается в следующей лекции.}:
 		\begin{itemize}
 			\item
 			организация программных компонент, данных и используемых библиотек для~построения;
@@ -110,27 +107,22 @@
 		\end{itemize}
 
 		\vspace{1ex}
-		\textbf{Управление выпусками} \engterm{release management}:
+		\textbf{Управление выпусками} \engterm{release management}\footnote{Рассматривается в следующей лекции.}:
 		\begin{itemize}
 			\item
 			подготовка системы для выпуска для использования вне отдела разработки;
 			\item
 			контроль версий выпущенных компонентов.
 		\end{itemize}
-
-		\vspace{1ex}
-		\figureexpl{(Рассматриваются в следующей лекции.)}
 	}
 
 	\frame{
 		\frametitle{Составляющие управления конфигурацией}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-conf-aspects.tex}
-
-			\vspace{1ex}
-			\figureexpl{Взаимоотношения между аспектами управления конфигурацией}
-		\end{center}
+			\caption{Взаимоотношения между аспектами управления конфигурацией}
+		\end{figure}
 	}
 
 	\frame{
@@ -164,13 +156,12 @@
 	\frame{
 		\frametitle{Управление изменениями}
 
-		\input{fig-conf-control.tex}
-
-		\vspace{1ex}
-		\figureexpl{%
-			\textbf{Управление изменениями} — деятельность по координации и оценке реализованных изменений 
-			элементов конфигурации, а также их утверждению или отбрасыванию.
-		}
+		\begin{figure}
+			\input{fig-conf-control.tex}
+			\caption{%
+				\textbf{Управление изменениями} — деятельность по координации и оценке реализованных изменений 
+				элементов конфигурации, а~также их~утверждению или~отбрасыванию.}
+		\end{figure}
 	}
 
 	\subsection{Запросы на изменение}
@@ -269,11 +260,11 @@
 		\end{Definition}
 
 		\vspace{1ex}
-		\begin{center}
-			\input{fig-baselines.tex}
-
-			\figureexpl{Управление версиями включает управление уровнями \engterm{baseline} и версиями компонентов \engterm{codeline}.}
-		\end{center}
+		\begin{figure}
+			\input{fig-baselines.tex}\vspace{-1ex}
+			\caption{Управление версиями включает управление уровнями \engterm{baseline} 
+				и~версиями компонентов \engterm{codeline}.}
+		\end{figure}
 	}
 
 	\frame{
@@ -377,13 +368,11 @@
 	\frame{
 		\frametitle{Образец схемы изменений}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-version-dag.tex}
-
-			\vspace{2.5ex}
-			\figureexpl{Работа с версиями документов представляется
-				в виде ориентированного ациклического графа}
-		\end{center}
+			\caption{Работа с версиями документов представляется
+				в~виде ориентированного ациклического графа}
+		\end{figure}
 	}
 
 	\subsection{Организация управления версиями}
@@ -391,23 +380,19 @@
 	\frame{
 		\frametitle{Организация управления версиями}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-rc-server.tex}
-
-			\vspace{2ex}
-			\figureexpl{Организация системы управления версиями с архитектурой «клиент — сервер»}
-		\end{center}
+			\caption{Организация системы управления версиями с архитектурой «клиент — сервер»}
+		\end{figure}
 	}
 
 	\frame{
 		\frametitle{Организация управления версиями}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-rc-distr.tex}
-
-			\vspace{2ex}
-			\figureexpl{Организация распеделенной системы управления версиями}
-		\end{center}
+			\caption{Организация распеделенной системы управления версиями}
+		\end{figure}
 	}
 
 	\frame{
@@ -537,11 +522,10 @@
 	\frame{
 		\frametitle{Схема работы с файлами в Git}
 
-		\begin{center}
-			\input{fig-git-files.tex}
-
-			\figureexpl{Статусы файлов в Git}
-		\end{center}
+		\begin{figure}
+			\input{fig-git-files.tex}\vspace{-1ex}
+			\caption{Статусы файлов в Git}
+		\end{figure}
 	}
 
 	\frame{

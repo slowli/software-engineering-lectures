@@ -129,12 +129,10 @@
 		\end{itemize}
 		
 		\vspace{0.5ex}
-		\begin{center}
+		\begin{figure}
 			\input{fig-context.tex}
-		
-			\vspace{1ex}
-			\figureexpl{\textbf{Пример:} контекст электронной библиотечной системы.}
-		\end{center}
+			\caption{\textbf{Пример:} контекст электронной библиотечной системы.}
+		\end{figure}
 	}
 	
 	\subsection{Модель процесса}
@@ -143,12 +141,11 @@
 		\frametitle{Модель процесса}
 		
 		\label{p:activity}
-		\begin{center}
+		\begin{figure}
 			{\small\input{fig-activity.tex}}
-			
-			\vspace{1ex}
-			\figureexpl{Диаграмма деятельности UML \engterm{activity diagram} для обработки запроса на выдачу документа.}
-		\end{center}
+			\caption{Диаграмма деятельности UML \engterm{activity diagram} 
+				для~обработки запроса на~выдачу документа.}
+		\end{figure}
 	}
 	
 	\section[Взаимодействие]{Модели взаимодействия}
@@ -179,14 +176,15 @@
 	\frame{
 		\frametitle{Варианты использования}
 		
-		\begin{center}
+		\begin{figure}
 			\begin{overlayarea}{\textwidth}{0.21\textheight}
 				\input{fig-usecase1.tex}
 			\end{overlayarea}
 			
-			\vspace{0.5ex}
-			\figureexpl{Взаимодействие между читателем и библиотекарем на диаграмме вариантов использования \engterm{use case diagram}}
-		\end{center}
+			\vspace{-1ex}
+			\caption{Взаимодействие между читателем и библиотекарем на диаграмме вариантов использования 
+				\engterm{use case diagram}}
+		\end{figure}
 		
 		\vspace{0.9ex}
 		\begin{center}\linespread{1.0}
@@ -206,12 +204,10 @@
 	\frame{
 		\frametitle{Варианты использования (продолжение)}
 		
-		\begin{center}
+		\begin{figure}
 			{\small\input{fig-usecase2.tex}}
-			
-			\vspace{1ex}
-			\figureexpl{Более сложный пример, демонстрирующий связи между взаимодействиями}
-		\end{center}
+			\caption{Более сложный пример, демонстрирующий связи между взаимодействиями}
+		\end{figure}
 	}
 	
 	\subsection{Диаграммы последовательностей}
@@ -220,12 +216,10 @@
 		\frametitle{Диаграммы последовательностей}
 		
 		\label{p:sequence}
-		\begin{center}
-			\input{fig-sequence.tex}
-			
-			\vspace{1ex}
-			\figureexpl{Диаграмма последовательности для просмотра информации о книге}
-		\end{center}
+		\begin{figure}
+			\input{fig-sequence.tex}\vspace{-0.5ex}
+			\caption{Диаграмма последовательности для просмотра информации о книге}
+		\end{figure}
 	}
 	
 	\frame{
@@ -267,12 +261,10 @@
 		\vspace{0.5ex}
 		\textbf{Диаграмма классов UML:}
 		\vspace{0.5ex}
-		\begin{center}
+		\begin{figure}
 			\input{fig-class1.tex}
-			
-			\vspace{1ex}
-			\figureexpl{Диаграмма для нескольких классов предметной области «Библиотека». \textit{Курсив} = другие классы.}
-		\end{center}
+			\caption{Диаграмма для нескольких классов предметной области «Библиотека». \textit{Курсив} = другие классы.}
+		\end{figure}
 	}
 	
 	\subsection{Отношения обобщения}
@@ -280,12 +272,10 @@
 	\frame{
 		\frametitle{Отношения обобщения}
 		
-		\begin{center}
+		\begin{figure}
 			\input{fig-class2.tex}
-			
-			\vspace{1ex}
-			\figureexpl{Диаграмма классов, демонстрирующая отношения обобщения \engterm{generalization}.}
-		\end{center}
+			\caption{Диаграмма классов, демонстрирующая отношения обобщения \engterm{generalization}.}
+		\end{figure}
 	}
 	
 	\subsection{Отношения агрегации и композиции}
@@ -294,7 +284,7 @@
 		\frametitle{Отношения агрегации и композиции}
 		
 		\textbf{Агрегация («часть/целое», слабая связь)}
-		\begin{center}
+		\begin{figure}
 			\begin{tikz*}[%
 				class/.style={draw,rectangle,align=center,minimum height=3em,minimum width=7.5em,font=\bfseries},
 				qty/.style={font=\footnotesize},
@@ -308,14 +298,12 @@
 					node[role,midway,below] {включает}
 					node[qty,very near end,above] {1};
 			\end{tikz*}
-			
-			\vspace{1ex}
-			\figureexpl{Каждая книга принадлежит одной из библиотек. Эта библиотека может измениться.}
-		\end{center}
+			\caption{Каждая книга принадлежит одной из библиотек. Эта библиотека может измениться.}
+		\end{figure}
 		
 		\vspace{2ex}
 		\textbf{Композиция («часть/целое», сильная связь)}
-		\begin{center}
+		\begin{figure}
 			\begin{tikz*}[%
 				class/.style={draw,rectangle,align=center,minimum height=3em,minimum width=7.5em,font=\bfseries},
 				qty/.style={font=\footnotesize},
@@ -329,10 +317,8 @@
 					node[role,midway,below] {включает}
 					node[qty,very near end,above] {1};
 			\end{tikz*}
-			
-			\vspace{1ex}
-			\figureexpl{Журнал состоит из нескольких статей; для каждой статьи содержащий ее журнал фиксирован.}
-		\end{center}
+			\caption{Журнал состоит из нескольких статей; для каждой статьи содержащий ее журнал фиксирован.}
+		\end{figure}
 	}
 	
 	\section[Поведение]{Модели поведения}
@@ -365,12 +351,10 @@
 	\frame{
 		\frametitle{Диаграммы состояний}
 		
-		\begin{center}
+		\begin{figure}
 			{\small\input{fig-state.tex}}
-			
-			\vspace{1ex}
-			\figureexpl{Упрощенная диаграмма состояний для жизненного цикла программы (\emph{activity}) в Android}
-		\end{center}
+			\caption{Упрощенная диаграмма состояний для жизненного цикла программы (\emph{activity}) в~Android}
+		\end{figure}
 	}
 	
 	\section{Заключение}

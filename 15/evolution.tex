@@ -25,18 +25,16 @@
 		\end{Definition}
 
 		\vspace{0.5ex}
-		\begin{center}
+		\begin{figure}
 			\begin{tikz*}[%
 				every node/.style={align=center,rectangle,draw,minimum height=3.25em}
 			]
 				\node(evo) [minimum width=25em] {Затраты \\ на эволюцию};
 				\node(dev) [right=4pt of evo] {Затраты на разработку \\ нового кода};
-			\end{tikz*}
+			\end{tikz*}\vspace{-1ex}
+			\caption{В реальных проектах эволюция ПО обычно стоит в $\sim$2 раза больше разработки.}
+		\end{figure}
 
-			\figureexpl{В реальных проектах эволюция ПО обычно стоит в $\sim$2 раза больше разработки.}
-		\end{center}
-
-		\vspace{1ex}
 		\textbf{Причины необходимости изменений:}
 		\begin{itemize}
 			\item изменение требований к системе;
@@ -50,21 +48,19 @@
 	\frame{
 		\frametitle{Процесс разработки и эволюции}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-evo-spiral.tex}
-
-			\figureexpl{Спиральный процесс разработки и эволюции ПО}
-		\end{center}
+			\caption{Спиральный процесс разработки и эволюции ПО}
+		\end{figure}
 	}
 
 	\frame{
 		\frametitle{Процессы эволюции ПО}
 
-		\begin{center}
-			\input{fig-evo-phases.tex}
-
-			\figureexpl{Фазы эволюции ПО}
-		\end{center}
+		\begin{figure}
+			\input{fig-evo-phases.tex}\vspace{-1ex}
+			\caption{Фазы эволюции ПО}
+		\end{figure}
 	}
 
 	\frame{
@@ -109,13 +105,12 @@
 	\frame{
 		\frametitle{Эволюция ПО в гибкой методологии}
 
-		\begin{center}
-			\input{fig-agile.tex}
+		\begin{figure}
+			\input{fig-agile.tex}\vspace{-1ex}
+			\caption{Эволюция в гибкой методологии — продолжение итераций разработки после доставки ПО.}
+		\end{figure}
 
-			\vspace{0.5ex}
-			\figureexpl{Эволюция в гибкой методологии — продолжение итераций разработки после доставки ПО.}
-		\end{center}
-
+		\vspace{-1ex}
 		\textbf{Инструменты:} 
 		\begin{itemize}
 			\item регрессионные тесты (выявляют ошибки при внесении изменений); 
@@ -305,12 +300,10 @@
 	\frame{
 		\frametitle{Процессы реинженерии}
 
-		\begin{center}
+		\begin{figure}
 			{\small\input{fig-reengineering.tex}}
-
-			\vspace{1ex}
-			\figureexpl{Общая схема процессов реинженерии программной системы}
-		\end{center}
+			\caption{Общая схема процессов реинженерии программной системы}
+		\end{figure}
 	}
 
 	\frame{
@@ -460,19 +453,18 @@
 
 	\frame{
 		\frametitle{Автоматизация рефакторинга}
-
-		\begin{center}
+		
+		\begin{figure}
 			\ifbigpages
 				\includegraphics[scale=1]{fig-refactor-eclipse.png}
 			\else
 				\includegraphics[scale=0.75]{fig-refactor-eclipse.png}
 			\fi
-		\end{center}
-
-		\figureexpl{%
-			Базовые методы рефакторинга реализованы в большинстве 
-			современных интегрированных сред разработки, например, Eclipse
-			(изображено контекстное меню этой среды для рефакторинга метода класса).}
+			\caption{%
+				Базовые методы рефакторинга реализованы в большинстве 
+				современных интегрированных сред разработки, например, Eclipse
+				(изображено контекстное меню этой среды для рефакторинга метода класса).}
+		\end{figure}
 	}
 
 	\section{Устаревшее ПО}

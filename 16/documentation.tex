@@ -19,8 +19,8 @@
 		\frametitle{Документация на ПО}
 
 		\begin{Definition}
-		\textbf{Документация} — печатный текст, сопровождающий программное обеспечение для~объяснения 
-		принципов его функционирования или использования.
+			\textbf{Документация} — печатный текст, сопровождающий программное обеспечение для~объяснения 
+			принципов его функционирования или использования.
 		\end{Definition}
 
 		\vspace{1ex}
@@ -37,11 +37,10 @@
 	\frame{
 		\frametitle{Документация на ПО}
 
-		\begin{center}
-			\input{fig-waterfall.tex}
-
-			\figureexpl{Документирование в процессе разработки ПО}
-		\end{center}
+		\begin{figure}
+			{\small\input{fig-waterfall.tex}}
+			\caption{Документирование в процессе разработки ПО}
+		\end{figure}
 	}
 
 	\subsection{Типы документации}
@@ -74,8 +73,7 @@
 
 		\begin{quote}
 			\begin{center}Работающее ПО \quad $>$ \quad Исчерпывающая документация\end{center}
-
-			\figureexpl{\hfill— Agile Manifesto}
+			\quoteauthor{Agile Manifesto}
 		\end{quote}
 
 		\vspace{1ex}
@@ -351,12 +349,10 @@
 	\frame{
 		\frametitle{Генерация документации}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-doc-gen.tex}
-
-			\vspace{1ex}
-			\figureexpl{Генерация документации на основе исходного кода}
-		\end{center}
+			\caption{Генерация документации на основе исходного кода}
+		\end{figure}
 	}
 
 	\frame{
@@ -419,30 +415,28 @@
 	\frame{
 		\frametitle{Пример документации: Javadoc}
 
-		\begin{center}
+		\begin{figure}
 			\ifbigpages
 				\includegraphics[scale=1]{fig-doc-html.png}
 			\else
 				\includegraphics[scale=0.5]{fig-doc-html.png}
 			\fi
-
-			\figureexpl{Фрагмент сгенерированной утилитой Javadoc HTML-страницы документации, 
+			\caption{Фрагмент сгенерированной утилитой Javadoc HTML-страницы документации, 
 				соответствующей приведенному методу.}
-		\end{center}
+		\end{figure}
 	}
 
 	\frame{
 		\frametitle{Пример документации: Javadoc}
 
-		\begin{center}
+		\begin{figure}
 			\ifbigpages
 				\includegraphics[scale=1]{fig-doc-eclipse.png}
 			\else
 				\includegraphics[scale=0.75]{fig-doc-eclipse.png}
 			\fi
-
-			\figureexpl{Контекстная помощь для приведенного метода в среде разработки Eclipse.}
-		\end{center}
+			\caption{Контекстная помощь для приведенного метода в среде разработки Eclipse.}
+		\end{figure}
 	}
 
 	\subsection{Грамотное программирование}

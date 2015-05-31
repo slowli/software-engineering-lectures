@@ -15,12 +15,13 @@
 	
 	\frame{
 		\frametitle{Жизненный цикл}
-		
-		\input{fig-lifecycle.tex}
 
-		\vspace{0.5ex}
-		\figureexpl{\textbf{Жизненный цикл} — схема упорядочивания работ, 
-		касающихся проектирования и разработки программного продукта.}
+		\begin{figure}		
+			\input{fig-lifecycle.tex}
+			\caption{%
+				\textbf{Жизненный цикл} — схема упорядочивания работ, 
+				касающихся проектирования и разработки программного продукта.}
+		\end{figure}
 		
 		\vspace{1ex}
 		\visible<2->{\textbf{Проблемы:}}
@@ -210,11 +211,12 @@
 	\frame{
 		\frametitle{Каскадная модель}
 
-		\input{fig-waterfall.tex}
-
-		\vspace{0.5ex}
-		\figureexpl{\textbf{Каскадная модель} \engterm{waterfall model} — применение традиционного инженерного подхода 
-		к разработке ПО.}
+		\begin{figure}
+			\input{fig-waterfall.tex}
+			\caption{%
+				\textbf{Каскадная модель} \engterm{waterfall model} — применение традиционного инженерного подхода 
+				к~разработке~ПО.}
+		\end{figure}
 	}
 	
 	\frame{
@@ -241,11 +243,12 @@
 	\frame{
 		\frametitle{Инкрементная модель}
 		
-		{\small\input{fig-incremental.tex}}
-
-		\vspace{0.5ex}
-		\figureexpl{\textbf{Инкрементная модель} — разработка продукта итерациями, каждая из которых 
-		завершается выпуском работоспособной и~осмысленной версии.}
+		\begin{figure}
+			{\small\input{fig-incremental.tex}}
+			\caption{%
+				\textbf{Инкрементная модель} — разработка продукта итерациями, каждая из которых 
+				завершается выпуском работоспособной и~осмысленной версии.}
+		\end{figure}
 	}
 	
 	\frame{
@@ -271,11 +274,12 @@
 	\frame{
 		\frametitle{Эволюционная модель}
 		
-		\input{fig-evo.tex}
-
-		\vspace{0.5ex}
-		\figureexpl{\textbf{Эволюционная модель} — разработка ПО с использованием функциональных прототипов, 
-			которые \emph{эволюционируют} в~элементы конечного продукта.}
+		\begin{figure}
+			\input{fig-evo.tex}
+			\caption{%
+				\textbf{Эволюционная модель} — разработка ПО с использованием функциональных прототипов, 
+				которые \emph{эволюционируют} в~элементы конечного продукта.}
+		\end{figure}
 	}
 	
 	\frame{
@@ -345,8 +349,7 @@
 				Сотрудничество с заказчиком & $>$ & согласование условий контракта \\
 				Реагирование на изменения & $>$ & следование плану \\
 			\end{tabular}\hfill\strut{}
-			
-			\hfill\figureexpl{— Agile Manifesto, 2001}
+			\quoteauthor{Agile Manifesto, 2001}
 		\end{quote}
 	}
 	

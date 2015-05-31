@@ -123,23 +123,19 @@
 	\frame{
 		\frametitle{Место тестирования в разработке ПО}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-waterfall-testing.tex}
-
-			\vspace{1ex}
-			\figureexpl{В каскадной модели тестирование — отдельный этап разработки, следующий за написанием кода.}
-		\end{center}
+			\caption{В каскадной модели тестирование — отдельный этап разработки, следующий за написанием кода.}
+		\end{figure}
 	}
 
 	\frame{
 		\frametitle{Место тестирования в разработке ПО}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-evo-testing.tex}
-
-			\vspace{1ex}
-			\figureexpl{Согласно эволюционной модели разработки ПО, тестирование неразрывно связано с конструированием.}
-		\end{center}
+			\caption{Согласно эволюционной модели разработки ПО, тестирование неразрывно связано с конструированием.}
+		\end{figure}
 	}
 
 	\frame{
@@ -266,12 +262,10 @@
 			\textbf{Анализ граничных значений} \engterm{boundary-value analysis}.
 
 			\vspace{0.5ex}
-			\begin{center}
+			\begin{figure}
 				\input{fig-boundaries.tex}
-
-				\vspace{1ex}
-				\figureexpl{Граничные значнения для целочисленной величины, обозначающей процент.}
-			\end{center}
+				\caption{Граничные значнения для целочисленной величины, обозначающей процент.}
+			\end{figure}
 
 			\vspace{1ex}
 			\item
@@ -542,19 +536,15 @@
 	\frame{
 		\frametitle{Тестирование производительности}
 
-		\begin{center}
+		\begin{figure}
 			\ifbigpages\input{fig-load-a4.tex}\else\input{fig-load.tex}\fi
-		\end{center}
-
-		\figureexpl{%
-			Различные режимы тестирования производительности: \vspace{-1ex}
-			\begin{multicols}{2}
-				\quad\textbf{\color{gray}1} — нагрузочное тестирование \engterm{load testing}; \\
-				\quad\textbf{\color{green}2} — стресс-тестирование \engterm{stress testing}; \\
-				\quad\textbf{\color{blue}3} — тестирование выносливости \engterm{soak testing}; \\
-				\quad\textbf{\color{red}4} — импульсное тестирование \engterm{spike testing}.
-			\end{multicols}
-		}
+			\caption{%
+				Различные режимы тестирования производительности: 
+				\textbf{\color{gray}1} — нагрузочное тестирование \engterm{load testing};
+				\textbf{\color{green}2} — стресс-тестирование \engterm{stress testing};
+				\textbf{\color{blue}3} — тестирование выносливости \engterm{soak testing};
+				\textbf{\color{red}4} — импульсное тестирование \engterm{spike testing}.}
+		\end{figure}
 	}
 
 	\subsection{Пользовательское тестирование}

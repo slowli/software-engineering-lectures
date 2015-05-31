@@ -77,16 +77,15 @@
 	\frame{
 		\frametitle{Необходимость верификации}
 
-		\begin{center}
+		\begin{figure}
 			\includegraphics[height=0.7\textheight]{fig-Ariane.jpg}
-		\end{center}
-
-		\figureexpl{%
-			Фрагмент спутника \extlink{http://en.wikipedia.org/wiki/Cluster_\%28spacecraft\%29}{«Ariane 5»}, 
-			потерпевшего крушение в~1996~г. 
-			Причиной аварии стало преобразование из~64-битного числа с~плавающей запятой в~16-битное целое без~должной проверки, 
-			что~привело к~переполнению и~аппаратному исключению. 
-			Цена ошибки составила $\sim$350 млн.~\$.}
+			\caption{%
+				Фрагмент спутника \extlink{http://en.wikipedia.org/wiki/Cluster_\%28spacecraft\%29}{«Ariane 5»}, 
+				потерпевшего крушение в~1996~г. 
+				Причиной аварии стало преобразование из~64-битного числа с~плавающей запятой в~16-битное целое без~должной проверки, 
+				что~привело к~переполнению и~аппаратному исключению. 
+				Цена ошибки составила $\sim$350 млн.~\$.}
+		\end{figure}
 	}
 
 	\frame{
@@ -119,11 +118,10 @@
 		\end{Definition}
 
 		\vspace{1ex}
-		\begin{center}
+		\begin{figure}
 			{\small\input{fig-inspections.tex}}
-
-			\figureexpl{Возможности инспекций шире, чем тестирования}
-		\end{center}
+			\caption{Возможности инспекций шире, чем тестирования}
+		\end{figure}
 	}
 
 	\subsection{Преимущества инспекций}
@@ -330,10 +328,8 @@
 		\begin{Definition}
 			\textbf{Логика Хоара} \engterm{Hoare logic} — набор правил вывода для~доказательства 
 			функциональной корректности компьютерных программ, записанных с~помощью императивного языка программирования.
+			\footnote{Существует расширение логики Хоара для доказательства полной корректности.}
 		\end{Definition}
-
-		\vspace{1.5ex}
-		\figureexpl{(Существует расширение логики Хоара для доказательства полной корректности.)}
 	}
 
 	\frame{
@@ -554,11 +550,10 @@
 		\textbf{Java Pathfinder} (JPF) — система для верификации скомпилированных Java-приложений, разработанная в~NASA.
 
 		\vspace{1ex}
-		\begin{center}
+		\begin{figure}
 			\input{fig-jpf.tex}
-
-			\figureexpl{Схема выполнения приложения в Java Pathfinder.}
-		\end{center}
+			\caption{Схема выполнения приложения в Java Pathfinder.}
+		\end{figure}
 	}
 
 	\frame{

@@ -45,7 +45,7 @@
 	\frame{
 		\frametitle{Аппаратные интерфейсы}
 
-		\begin{center}
+		\begin{figure}
 			\ifbigpages
 				\includegraphics[scale=0.5]{fig-svga-port.jpg}
 				\hspace{2em}
@@ -55,11 +55,9 @@
 				\hspace{2em}
 				\includegraphics[scale=0.25]{fig-usb-connector.jpg}
 			\fi
-		\end{center}
-
-		\vspace{2ex}
-		\figureexpl{Примеры аппаратных интерфейсов: %
-			SVGA-вход для подключения видеоустройства и универсальная последовательная шина (USB).}
+			\caption{Примеры аппаратных интерфейсов: %
+				SVGA-вход для подключения видеоустройства и универсальная последовательная шина (USB).}
+		\end{figure}
 	}
 
 	\frame{
@@ -369,24 +367,20 @@
 		\vspace{3ex}
 		\begin{overlayarea}{\textwidth}{0.6\textheight}
 			\only<1>{%
-				\begin{center}
+				\begin{figure}
 					\input{fig-control-trad.tex}
-				\end{center}
-
-				\vspace{2ex}
-				\figureexpl{\textbf{Традиционный подход} к работе с библиотеками.
-					Библиотека определяет интерфейсы реализованных функций, которые вызываются приложением.
-					{\color{blue}Синим} обозначен поток выполнения.}
+					\caption{\textbf{Традиционный подход} к работе с библиотеками.
+						Библиотека определяет интерфейсы реализованных функций, которые вызываются приложением.
+						{\color{blue}Синим} обозначен поток выполнения.}
+				\end{figure}
 			}
 			\only<2>{%
-				\begin{center}
-						\input{fig-control-IoC.tex}
-				\end{center}
-
-				\vspace{2ex}
-				\figureexpl{\textbf{Инверсия управления.}
-					Основной код выполняется библиотекой; передача управления приложению происходит
-					с~помощью точек расширения.}
+				\begin{figure}
+					\input{fig-control-IoC.tex}
+					\caption{\textbf{Инверсия управления.}
+						Основной код выполняется библиотекой; передача управления приложению происходит
+						с~помощью точек расширения.}
+				\end{figure}
 			}
 		\end{overlayarea}
 	}
@@ -435,7 +429,7 @@
 			\item
 			использование интерфейса внешних функций;
 			\item
-			использование распределенных систем (CORBA, RMI) \textcolor{gray}{— рассматриваются в~отдельной лекции.}
+			использование распределенных систем (CORBA, RMI)\footnote{рассматриваются в~отдельной лекции.}
 		\end{itemize}
 
 		\vspace{1ex}
@@ -592,12 +586,10 @@
 		\end{itemize}
 
 		\vspace{1.5ex}
-		\begin{center}
+		\begin{figure}
 			\input{fig-ffi.tex}
-
-			\vspace{1ex}
-			\figureexpl{Типичная архитектура интерфейса внешних функций}
-		\end{center}
+			\caption{Типичная архитектура интерфейса внешних функций}
+		\end{figure}
 	}
 
 	\frame{

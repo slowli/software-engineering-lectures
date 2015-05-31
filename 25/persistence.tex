@@ -26,12 +26,11 @@
 		\end{Definition}
 
 		\vspace{1ex}
-		\begin{center}
+		\begin{figure}
 			\input{fig-persistence.tex}
-		\end{center}
-
-		\figureexpl{Data persistence подразумевает двусторонний процесс: 
-			загрузку данных из~постоянной памяти в~оперативную и~наоборот}
+			\caption{Data persistence подразумевает двусторонний процесс: 
+				загрузку данных из~постоянной памяти в~оперативную и~наоборот}
+		\end{figure}
 	}
 
 	\frame{
@@ -141,13 +140,11 @@
 			восстановление состояния объекта или~структуры данных из~сериализованного представления.
 		\end{Definition}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-serialization.tex}
-
-			\vspace{0.5ex}
-			\figureexpl{Сериализация и десериализация могут осуществляться с использованием 
+			\caption{Сериализация и десериализация могут осуществляться с использованием 
 				встроенных или сторонних сервисов}
-		\end{center}
+		\end{figure}
 	}
 
 	\frame{
@@ -721,11 +718,10 @@
 			объектно-ориентированного программирования.
 		\end{Definition}
 
-		\begin{center}
-			\input{fig-orm.tex}
-
-			\figureexpl{Связь между объектами и СУБД в рамках ORM}
-		\end{center}
+		\begin{figure}
+			\input{fig-orm.tex}\vspace{-1ex}
+			\caption{Связь между объектами и СУБД в рамках ORM}
+		\end{figure}
 	}
 
 	\frame{
@@ -852,12 +848,11 @@
 	\frame{
 		\frametitle{Пример использования}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-orm-tables.tex}
-		\end{center}
-
-		\figureexpl{Схема организации данных в~БД. 
-			Большинство ORM-систем умеют создавать схему на~основе классов сущностей.}
+			\caption{Схема организации данных в~БД. 
+				Большинство ORM-систем умеют создавать схему на~основе классов сущностей.}
+		\end{figure}
 	}
 
 	\frame{
