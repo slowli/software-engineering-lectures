@@ -5,8 +5,8 @@
 \usepackage{multicol}
 \usetikzlibrary{decorations.pathreplacing}
 
-\lecturetitle{Программная инженерия. Лекция №4 — SWEBOK: организационные области знаний.}
 
+\lecturetitle{Программная инженерия. Лекция №4 — SWEBOK: организационные области знаний.}
 \title[SWEBOK. Огранизационные области знаний]{SWEBOK. Огранизационные области знаний}
 \author{Алексей Островский}
 \institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
@@ -51,12 +51,10 @@
 	\frame{
 		\frametitle{Составляющие управления конфигурацией}
 		
-		\begin{center}
+		\begin{figure}
 			{\small\input{fig-config.tex}}
-		
-			\vspace{1ex}
-			\figureexpl{\textbf{Сокращения:} SC = software configuration; SCM = software configuration management.}
-		\end{center}
+			\caption{\textbf{Сокращения:} SC = software configuration; SCM = software configuration management.}
+		\end{figure}
 	}
 	
 	\subsection{Управление процессом конфигурации}
@@ -128,12 +126,12 @@
 	\frame{
 		\frametitle{Контроль конфигурации ПО}
 
-		\input{fig-conf-control.tex}
-		\\[0.5ex]
-		\figureexpl{%
-			\textbf{Контроль конфигурации ПО} — деятельность по координации и оценке реализованных изменений 
-			элементов конфигурации, а также их утверждению или отбрасыванию.
-		}
+		\begin{figure}
+			{\small\input{fig-conf-control.tex}}
+			\caption{%
+				\textbf{Контроль конфигурации ПО} — деятельность по координации и оценке реализованных изменений 
+				элементов конфигурации, а также их утверждению или отбрасыванию.}
+		\end{figure}
 	}
 	
 	\subsection{Учет статуса и аудит}
@@ -492,34 +490,47 @@
 		\frametitle{Основные характеристики качества}
 		
 		\begin{itemize}
-			\item<1- | alertitem@1>
-			\textbf{Функциональность} \engterm{functional suitability}\only<1>{ — степень соответствия продукта явным и~подразумеваемым требованиям 
-			при использовании в определенных условиях}.
-			
-			\item<1- | alertitem@2>
-			\textbf{Эффективность} \engterm{performance efficiency}\only<2>{ — эффективность использования предоставленных ресурсов 
-			(напр., оборудования, ОС, других программ, расходных материалов)}.
-			
-			\item<1- | alertitem@3>
-			\textbf{Совместимость} \engterm{compatibility}\only<3>{ — возможности по обмену информацией с другими программами и совместного оперирования в одной среде}.
-			
-			\item<1- | alertitem@4>
-			\textbf{Удобство применения} \engterm{usability}\only<4>{ — простота обучения, легкость управления системой, 
-			доступность пользовательского интерфейса и т.\,п}.
-			
-			\item<1- | alertitem@5>
-			\textbf{Надежность} \engterm{reliability}\only<5>{ — отказоустойчивость, доступность (\emph{availability}), 
-			возможности по восстановлению после сбоев (\emph{recoverability})}.
-			
-			\item<1- | alertitem@6>
-			\textbf{Безопасность} \engterm{security}\only<6>{ — степень защиты данных пользователей}.
-			
-			\item<1- | alertitem@7>
-			\textbf{Простота сопровождения} \engterm{maintainability}\only<7>{ — эффективность модификации системы, 
-			возможности по повторному использованию (\emph{reusability}), модульность и~т.\,п}.
-			
-			\item<1- | alertitem@8>
-			\textbf{Переносимость} \engterm{portability}\only<8>{ — эффективность переноса ПО в новую среду исполнения}.
+			\item
+			\textbf{Функциональность} \engterm{functional suitability} — степень соответствия продукта явным и~подразумеваемым требованиям 
+			при использовании в определенных условиях.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Эффективность} \engterm{performance efficiency} — эффективность использования предоставленных ресурсов 
+			(напр., оборудования, ОС, других~программ, расходных материалов).
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Совместимость} \engterm{compatibility} — возможности по обмену информацией с~другими~программами 
+			и~совместного оперирования в~одной~среде.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Удобство применения} \engterm{usability} — простота обучения, легкость управления системой, 
+			доступность пользовательского интерфейса и~т.\,п.
+		\end{itemize}
+	}
+
+	\frame{
+		\frametitle{Основные характеристики качества (продолжение)}
+		
+		\begin{itemize}
+			\item
+			\textbf{Надежность} \engterm{reliability} — отказоустойчивость, доступность (\emph{availability}), 
+			возможности по~восстановлению после~сбоев (\emph{recoverability}).
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Безопасность} \engterm{security} — степень защиты данных пользователей.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Простота сопровождения} \engterm{maintainability} — эффективность модификации системы, 
+			возможности по~повторному~использованию (\emph{reusability}), модульность и~т.\,п.
+
+			\vspace{0.5ex}
+			\item
+			\textbf{Переносимость} \engterm{portability} — эффективность переноса~ПО в~новую~среду исполнения.
 		\end{itemize}
 	}
 
@@ -556,9 +567,11 @@
 			процесс инженерии, инженерия качества, а~также методы и~инструменты~ПИ). 
 			Они соответствуют организационным и~управленческим аспектам производства~ПО.
 
+			\vspace{0.5ex}
 			\item
 			Основу организационных областей составляют практические рекомендации.
 
+			\vspace{0.5ex}
 			\item
 			Организационные области SWEBOK связаны между собой, а~также с~основными областями знаний, для~которых они регламентируют деятельность.
 		\end{enumerate}
@@ -576,11 +589,13 @@
 			\newblock {\footnotesize К., 2008. — 319 с.}
 
 			\bibitem[2]{2}
-			Описание стандарта SWEBOK.
+			IEEE Computer Society
+			\newblock Описание стандарта SWEBOK.
 			\newblock {\footnotesize\url{http://www.computer.org/portal/web/swebok/html/contents}}
 			
 			\bibitem[3]{3}
-			Cтандарты ISO. 
+			International Standartization Organization
+			\newblock Cтандарты ISO. 
 			\newblock {\footnotesize\url{http://www.iso.org/iso/home.html}}
 		\end{thebibliography}
 	}

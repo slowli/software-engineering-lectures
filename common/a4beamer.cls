@@ -60,7 +60,7 @@
 	#1\,/\,#2%
 }
 
-\defbeamertemplate*{footline}{title and page}{
+\defbeamertemplate*{footline}{title and page}{%
 	\begin{beamercolorbox}[rightskip=0pt]{title in head/foot}%
 		\vskip .4ex%
 		\hskip .5em%
@@ -155,6 +155,24 @@
 
 %% Disable navigation symbols
 \setbeamertemplate{navigation symbols}{}
+
+%% Special style for captions
+\defbeamertemplate*{caption}{noname}{%
+	\raggedright%
+	\insertcaption\par%
+}
+\setbeamerfont{caption}{size=\footnotesize}
+\setbeamercolor{caption}{fg=gray}
+
+%% Style for footnotes
+\def\footnoterule{\kern-3\p@
+  \hrule \@width 5em \kern 2.6\p@}
+\defbeamertemplate*{footnote}{scalable}{%
+	\parindent 1em\noindent%
+	\raggedright%
+	\hbox to 1.8em{\hfil\insertfootnotemark}\ \insertfootnotetext\par\vspace{1ex}%
+}
+\setbeamercolor{footnote}{fg=gray}
 
 \RequirePackage[%
 	lang=\aiv@lang

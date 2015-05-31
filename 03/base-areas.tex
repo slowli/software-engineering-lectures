@@ -3,6 +3,7 @@
 
 \usepackage{array}
 
+
 \lecturetitle{Программная инженерия. Лекция №3 — SWEBOK: основные области знаний.}
 \title[SWEBOK. Основные области знаний]{SWEBOK. Основные области знаний}
 \author{Алексей Островский}
@@ -55,8 +56,13 @@
 		\end{Definition}
 
 		\vspace{1ex}
-		\textbf{Цель требований:} определение функций, условий и ограничений, присущих ПО; спецификация данных, 
-		технического сопровождения и среды исполнения.
+		\textbf{Цель требований:}
+		\begin{itemize}
+			\item
+			определение функций, условий и~ограничений, присущих~ПО; 
+			\item
+			спецификация данных, технического сопровождения и~среды исполнения.
+		\end{itemize}
 	}
 
 	\subsection{Виды требований}
@@ -64,18 +70,25 @@
 	\frame{	
 		\frametitle{Виды требований}
 
-		\textbf{Требования к продукту и процессу} — условия выполнения и~режим работы~ПО, 
-		ограничения на~среду исполнения; определение принципов взаимодействия
-		с~другими~программами.
+		\begin{itemize}
+			\item
+			\textbf{Требования к продукту и процессу} — условия выполнения и~режим работы~ПО, 
+			ограничения на~среду исполнения; определение принципов взаимодействия
+			с~другими~программами.
 
-		\vspace{1ex}
-		\textbf{Функциональные требования} — определяют назначение и~функции системы.
+			\vspace{1ex}
+			\item
+			\textbf{Функциональные требования} — определяют назначение и~функции системы.
 
-		\vspace{1ex}
-		\textbf{Нефункциональные требования} — определяют условия исполнения~ПО, переносимости и~доступа к~данным.
+			\vspace{1ex}
+			\item
+			\textbf{Нефункциональные требования} — определяют условия исполнения~ПО, 
+			переносимости и~доступа к~данным.
 
-		\vspace{1ex}
-		\textbf{Системные требования} — требования к~программной системе в~целом.
+			\vspace{1ex}
+			\item
+			\textbf{Системные требования} — требования к~программной системе в~целом.
+		\end{itemize}
 	}
 
 	\subsection{Инженерия требований}
@@ -88,18 +101,15 @@
 			и~поддержки требований к~ПО, а~также соответствующая область программной инженерии.
 		\end{Definition}
 		
-		\begin{center}
+		\begin{figure}
 			{\small\input{fig-req-classic.tex}}
-			
-			\vspace{1ex}
-			\figureexpl{В классической модели жизненного цикла \engterm{waterfall model} инженерия требований — \\ начальный процесс разработки~ПО.}
-			
-			\vspace{1.5ex}
+			\caption{В классической модели жизненного цикла \engterm{waterfall model} инженерия требований — начальный процесс разработки~ПО.}
+		\end{figure}
+
+		\begin{figure}
 			{\small\input{fig-req-cont.tex}}
-			
-			%\vspace{1ex}
-			\figureexpl{В других моделях (RUP, extreme programming, Scrum) требования уточняются в процессе разработки.}
-		\end{center}
+			\caption{В других моделях (RUP, extreme programming, Scrum) требования уточняются в процессе разработки.}
+		\end{figure}
 	}
 	
 	\frame{
@@ -202,11 +212,11 @@
 
 				\vspace{1ex}
 				\begin{columns}
-					\begin{column}{0.47\textwidth}\centering
-						\includegraphics[width=\textwidth]{decorator.png}
-						
-						\vspace{-0.5ex}
-						\figureexpl{UML-описание шаблона «Декоратор»}
+					\begin{column}{0.47\textwidth}
+						\begin{figure}
+							\includegraphics[width=\textwidth]{decorator.png}\vspace{-2ex}
+							\caption{UML-описание шаблона «Декоратор»}
+						\end{figure}
 					\end{column}
 					\begin{column}{0.5\textwidth}
 						\textbf{Инструменты:} 
@@ -224,11 +234,11 @@
 				
 				\vspace{1ex}
 				\begin{columns}
-					\begin{column}{0.35\textwidth}\centering
-						\includegraphics[width=0.8\textwidth]{state-diagram.png}
-					
-						\vspace{-0.5ex}
-						\figureexpl{Диаграмма состояний эмулятора}
+					\begin{column}{0.35\textwidth}
+						\begin{figure}
+							\includegraphics[width=0.8\textwidth]{state-diagram.png}\vspace{-2ex}
+							\caption{Диаграмма состояний эмулятора}
+						\end{figure}
 					\end{column}
 					\begin{column}{0.63\textwidth}
 						\textbf{Инструменты:} 
@@ -256,12 +266,23 @@
 		\end{Definition}
 
 		\vspace{1ex}
-		\textbf{Техники конструирования:} кодирование, верификация, модульное тестирование (unit testing), 
-		тестирование итеграции (integration testing), отладка (debugging).
+		\textbf{Техники конструирования:}
+		\begin{itemize}
+			\item кодирование;
+			\item верификация, модульное тестирование (unit testing), 
+			тестирование итеграции (integration testing);
+			\item отладка (debugging).
+		\end{itemize}
 
 		\vspace{1ex}
-		\textbf{Инструменты конструирования:} языки конструирования; программные методы и~инструментальные системы 
-		(компиляторы, СУБД, генераторы отчетов, системы управления версиями, конфигурацией, тестированием).
+		\textbf{Инструменты конструирования:}
+		\begin{itemize}
+			\item
+			языки конструирования; 
+			\item
+			программные методы и~инструментальные системы 
+			(компиляторы, СУБД, генераторы отчетов, системы управления конфигурацией).
+		\end{itemize}
 	}
 
 	\frame{
@@ -272,18 +293,23 @@
 			\textbf{Снижение сложности} \engterm{minimizing complexity} — акцент на~читаемости кода, а~не~его~«красоте». 
 			Keep~it simple, stupid (KISS).
 
+			\vspace{0.5ex}
 			\textbf{Средства достижения:} стандарты кодирования.
 
-			\vspace{0.5ex}\item
+			\vspace{0.5ex}
+			\item
 			\textbf{Ожидание изменений} \engterm{anticipating change} — использование инструментов, 
 			позволяющих оперативно вносить изменения и~дополнять код.
 
+			\vspace{0.5ex}
 			\textbf{Средства достижения:} средства коммуникации (напр., системы документирования), диаграммы UML.
 
-			\vspace{0.5ex}\item
+			\vspace{0.5ex}
+			\item
 			\textbf{Структуризация для проверок} \engterm{constructing for verification} — построение ПО, 
 			ошибки в~котором выявляются на~как~можно более ранних этапах.
 
+			\vspace{0.5ex}
 			\textbf{Средства достижения:} обзоры кода (code reviews), модульное тестирование, автоматизация тестирования.
 		\end{itemize}
 	}
@@ -333,7 +359,6 @@
 			\item модульное (unit testing);
 			\item интеграционное (integration testing);
 			\item системное (system testing);
-
 			\item приемка (acceptance testing).
 		\end{itemize}
 	}
@@ -385,6 +410,7 @@
 			\textbf{Белый ящик} \engterm{white box testing}, структурное тестирование 
 			— тестирование внутренних структур и операций ПО.
 
+			\vspace{0.5ex}
 			\textbf{Виды:} тестирование API, внедрение ошибок (fault injection), покрытие кода (code coverage), 
 			мутационное тестирование (mutation testing), статическое тестирование (static testing).
 
@@ -392,6 +418,7 @@
 			\item
 			\textbf{Черный ящик} \engterm{black box testing} — тестирование функциональности, доступной конечному пользователю ПО.
 
+			\vspace{0.5ex}
 			\textbf{Виды:} анализ граничных значений (boundary value analysis), таблицы принятия решений (decision table testing), 
 			тестирование прецедентов (use case testing), тестирование потоков данных (data flow testing) и~т.\,д.
 
@@ -399,6 +426,7 @@
 			\item
 			\textbf{Серый ящик} \engterm{gray box testing} — тестирование ПО с~частичным знанием о~его~внутренней структуре.
 
+			\vspace{0.5ex}
 			\textbf{Виды:} тестирование интерфейсов компонентов системы, анализ обработки ошибок и~т.\,п.
 		\end{itemize}
 	}
@@ -492,7 +520,17 @@
 		\frametitle{Категории сопровождения}
 
 		\begin{center}
-		\input{table-maint-types.tex}
+			\begin{tabular}{|*{3}{p{0.25\textwidth}|}}
+				\hline
+				\centering По времени & \multicolumn{2}{c|}{По наличию ошибки} \\
+				\cline{2-3}
+				& \centering исправление & \centering совершенствование \cr
+				\hline
+				упреждающее & \centering предотвращение & \centering улучшение \cr
+				\hline
+				ответное & \centering корректировка & \centering адаптация \cr
+				\hline
+			\end{tabular}
 		\end{center}
 
 		\vspace{1ex}
@@ -540,11 +578,17 @@
 			Ядро SWEBOK содержит пять основных областей знаний программной инженерии 
 			(инженерия требований, проектирование, конструирование, тестирование и~сопровождение ПО), 
 			которые соответствуют процессам жизненного цикла ПО.
+
+			\vspace{0.5ex}
 			\item
-			Основные области знаний содержат в~себе как \emph{теоретические основы}, так~и~систематизированные \emph{практические навыки} разработки ПО, 
+			Основные области знаний содержат в~себе как \emph{теоретические основы}, 
+			так~и~систематизированные \emph{практические навыки} разработки ПО, 
 			а~также \emph{методы управления} процессами разработки.
+
+			\vspace{0.5ex}
 			\item
-			Все пять основных процессов ЖЦ тесно связаны между собой; особенности их~взаимодействия сильно зависят от~выбранной модели жизненного цикла.
+			Все пять основных процессов ЖЦ тесно связаны между собой; особенности их~взаимодействия 
+			сильно зависят от~выбранной модели жизненного цикла.
 		\end{enumerate}
 	}
 
@@ -560,7 +604,8 @@
 			\newblock {\footnotesize К., 2008. — 319 с.}
 
 			\bibitem[2]{2}
-			Описание стандарта SWEBOK.
+			IEEE Computer Society
+			\newblock Описание стандарта SWEBOK.
 			\newblock {\footnotesize\url{http://www.computer.org/portal/web/swebok/html/contents}}
 		\end{thebibliography}
 	}

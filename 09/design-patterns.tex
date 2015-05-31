@@ -1,24 +1,8 @@
 \documentclass{a4beamer}
 \input{lecture-common.def}
 
-\def\code#1{\texttt{#1}}
 \def\classfield#1{\underbar{#1}}
 
-\usepackage{listings}
-\lstset{%
-	language=java,
-	morekeywords={assert},
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\normalfont\itshape,
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	escapechar=\#
-}
 
 \lecturetitle{Программная инженерия. Лекция №9 — ООП. Шаблоны проектирования.}
 \title[ООП. Шаблоны проектирования]{Объектно-ориентированное проектирование. Шаблоны~проектирования}
@@ -121,16 +105,14 @@
 
 		\begin{Definition}
 			\textbf{Шаблон проектирования} \engterm{design pattern} — типовой конструктивный элемент программной системы, 
-			задающий взаимодействие нескольких компонентов системы, а~также роли и~сферы ответственности исполнителей. 
+			задающий взаимодействие нескольких компонентов системы, а~также~роли и~сферы ответственности исполнителей. 
 		\end{Definition}
 
 		\vspace{1ex}
-		\begin{center}
+		\begin{figure}
 			{\small\input{fig-patterns-in-dev.tex}}
-
-			\vspace{0.5ex}
-			\figureexpl{Роль шаблонов в разработке ПО}
-		\end{center}
+			\caption{Роль шаблонов в разработке ПО}
+		\end{figure}
 	}
 
 	\subsection{Составляющие шаблонов}
@@ -142,8 +124,8 @@
 		\begin{itemize}
 			\item название;
 			\item область применения, описание проблемы, которую решает шаблон проектирования;
-			\item обобщенная структура шаблона: основные компоненты, их взаимоотношения и выполняемые функции 
-			(на естественном языке или диаграмма классов UML);
+			\item обобщенная структура шаблона: основные компоненты, их~взаимоотношения и~выполняемые функции 
+			(на~естественном языке или~диаграмма классов UML);
 			\item результат применения шаблона, возможные отрицательные последствия.
 		\end{itemize}
 
@@ -155,7 +137,7 @@
 			шаблон подразумевает конкретную реализацию;
 
 			\item
-			\textbf{Шаблон $\neq$ КПИ:} шаблон требует имплементации, КПИ — это готовый код.
+			\textbf{Шаблон $\neq$ КПИ:} шаблон требует имплементации, КПИ — это~готовый~код.
 		\end{itemize}
 	}
 
@@ -212,11 +194,11 @@
 	\frame{
 		\frametitle{Архитектурный шаблон: ActiveRecord}
 
-		\input{fig-AR.tex}
-
-		\vspace{0.5ex}
-		\figureexpl{Шаблон доступа к БД ActiveRecord. Черта снизу в UML обозначает статические поля и методы. 
-			«+» обозначает общедоступные поля/методы.}
+		\begin{figure}
+			\input{fig-AR.tex}
+			\caption{Шаблон доступа к БД ActiveRecord. Черта снизу в UML обозначает статические поля и методы. 
+				«+» обозначает общедоступные поля/методы.}
+		\end{figure}
 	}
 
 	\frame{
@@ -230,7 +212,7 @@
 				каждой строке таблицы — экземпляр класса; столбцам таблицы — поля объекта. 
 				В классе определены методы для~сохранения объекта в~БД, удаления и~поиска. 
 				Ключи (foreign key) определяют отношения между классами AR. \cr
-			\textbf{Недостатки:} & \raggedright избыточное количество и/или непрозрачность запросов к~СУБД (ср.~с~Data Mapper); 
+			\textbf{Недостатки:} & \raggedright избыточное количество и/или непрозрачность запросов к~СУБД (ср.~с~DataMapper); 
 				проблема идентичности структуры класса и~таблицы БД. \cr
 			\textbf{Примеры:} & \raggedright в составе MVC в~веб-фреймворках (напр., CakePHP, Propel, Yii, Ruby on Rails).
 		\end{tabular}
@@ -241,12 +223,10 @@
 	\frame{
 		\frametitle{Порождающий шаблон: Singleton}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-singleton.tex}
-			
-			\vspace{0.5ex}
-			\figureexpl{UML-диаграмма классов для шаблона Singleton}
-		\end{center}
+			\caption{UML-диаграмма классов для шаблона Singleton}
+		\end{figure}
 	}
 
 	\frame{
@@ -257,7 +237,7 @@
 			\textbf{Проблема:} & \raggedright необходимость в строго одном объекте определенного класса 
 				(напр., для координации действий в системе; из соображений производительности). \cr
 			\textbf{Решение:} & \raggedright публичный статический метод для доступа к объекту, 
-				создающий при необходимости экземпляр класса и~сохраняющий~его в~скрытой статической переменной. \cr
+				создающий при~необходимости экземпляр класса и~сохраняющий~его в~скрытой статической переменной. \cr
 			\textbf{Недостатки:} & \raggedright усложнение тестирования; введение скрытых зависимостей 
 				(\extlink{https://code.google.com/p/google-singleton-detector/wiki/WhySingletonsAreControversial}{детальнее}). \cr
 			\textbf{Примеры:} & Системы ведения логов. \cr
@@ -268,7 +248,7 @@
 	\frame{
 		\frametitle{Singleton — реализация}
 
-		\lstinputlisting[]{code-Singleton.java}
+		\lstinputlisting[language=java]{code-Singleton.java}
 	}
 
 	\subsection{Builder}\label{sec:Builder}
@@ -276,10 +256,10 @@
 	\frame{
 		\frametitle{Порождающий шаблон: Builder}
 
-		\input{fig-builder.tex}
-
-		\vspace{1ex}
-		\figureexpl{UML-диаграмма классов для шаблона Builder. \textit{Курсивом} в UML обозначаются интерфейсы и абстрактные методы.}
+		\begin{figure}
+			\input{fig-builder.tex}
+			\caption{UML-диаграмма классов для шаблона Builder. \textit{Курсивом} в UML обозначаются интерфейсы и абстрактные методы.}
+		\end{figure}
 	}
 
 	\frame{
@@ -299,7 +279,7 @@
 	\frame{
 		\frametitle{Builder — реализация}
 
-		\lstinputlisting[]{code-Builder.java}
+		\lstinputlisting[language=java]{code-Builder.java}
 	}
 
 	\subsection{Bridge}\label{sec:Bridge}
@@ -307,12 +287,10 @@
 	\frame{
 		\frametitle{Структурный шаблон: Bridge}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-bridge.tex}
-
-			\vspace{0.5ex}
-			\figureexpl{UML-диаграмма классов для шаблона Bridge}
-		\end{center}
+			\caption{UML-диаграмма классов для шаблона Bridge}
+		\end{figure}
 	}
 
 	\frame{
@@ -332,7 +310,7 @@
 	\frame{
 		\frametitle{Bridge — реализация}
 
-		\lstinputlisting[]{code-Bridge.java}
+		\lstinputlisting[language=java]{code-Bridge.java}
 	}
 
 	\subsection{Decorator}\label{sec:Decorator}
@@ -340,12 +318,10 @@
 	\frame{
 		\frametitle{Структурный шаблон: Decorator}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-decorator.tex}
-
-			\vspace{0.5ex}
-			\figureexpl{UML-диаграмма классов для шаблона Decorator}
-		\end{center}
+			\caption{UML-диаграмма классов для шаблона Decorator}
+		\end{figure}
 	}
 
 	\frame{
@@ -366,7 +342,7 @@
 	\frame{
 		\frametitle{Decorator — реализация}
 
-		\lstinputlisting[]{code-Decorator.java}
+		\lstinputlisting[language=java]{code-Decorator.java}
 	}
 
 	\subsection{Iterator}\label{sec:Iterator}
@@ -374,12 +350,10 @@
 	\frame{
 		\frametitle{Поведенческий шаблон: Iterator}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-iterator.tex}
-
-			\vspace{0.5ex}
-			\figureexpl{UML-диаграмма классов для шаблона Iterator}
-		\end{center}
+			\caption{UML-диаграмма классов для шаблона Iterator}
+		\end{figure}
 	}
 
 	\frame{
@@ -390,9 +364,9 @@
 			\textbf{Проблема:} & \raggedright Отделение функциональности последовательного доступа 
 				к~элементам контейнера от~внутренней структуры контейнера. \cr
 			\textbf{Решение:} & \raggedright Создание объекта-итератора, возвращаемого контейнером 
-				и содержащего в~себе необходимую функциональность. \cr
+				и~содержащего в~себе необходимую функциональность. \cr
 			\textbf{Недостатки:} & \raggedright некоторые алгоритмы не~могут использовать итераторы, 
-				так~как зависят от~внутренней структуры контейнера. \cr
+				так~как они~зависят от~внутренней структуры контейнера. \cr
 			\textbf{Примеры:} & \raggedright коллекции в большинстве языков программирования.
 		\end{tabular}
 	}
@@ -400,7 +374,7 @@
 	\frame{
 		\frametitle{Iterator — реализация}
 
-		\lstinputlisting[]{code-Iterator.java}
+		\lstinputlisting[language=java]{code-Iterator.java}
 	}
 
 	\subsection{Observer}\label{sec:Observer}
@@ -408,12 +382,10 @@
 	\frame{
 		\frametitle{Поведенческий шаблон: Observer}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-observer.tex}
-
-			\vspace{0.5ex}
-			\figureexpl{UML-диаграмма классов для шаблона Observer}
-		\end{center}
+			\caption{UML-диаграмма классов для шаблона Observer}
+		\end{figure}
 	}
 
 	\frame{
@@ -434,7 +406,7 @@
 	\frame{
 		\frametitle{Observer — реализация}
 
-		\lstinputlisting[]{code-Observer.java}
+		\lstinputlisting[language=java]{code-Observer.java}
 	}
 
 	\section{Заключение}
@@ -449,9 +421,11 @@
 			Объектно-ориентированное проектирование — один из~основных подходов к~проектированию ПО. 
 			В~его~рамках предметная область разбивается на объекты, взаимодействующие между собой.
 
+			\vspace{0.5ex}
 			\item
 			Ключевые понятия ООП — наследование, полиморфизм, инкапсуляция, интерфейсы.
 
+			\vspace{0.5ex}
 			\item
 			В рамках ООП часто используются стандартные элементы (шаблоны) программных систем. 
 			Выделяют архитектурные, порождающие, структурные и~поведенческие шаблоны.

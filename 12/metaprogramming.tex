@@ -1,38 +1,6 @@
 \documentclass{a4beamer}
 \input{lecture-common.def}
 
-\def\code#1{\texttt{#1}}
-\def\classfield#1{\underbar{#1}}
-
-\usepackage{listings}
-\lstset{%
-	language=java,
-	morekeywords={assert},
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\normalfont\itshape,
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	escapechar=\#
-}
-
-\lstdefinelanguage{javascript}%
-	{morekeywords={break,case,catch,%
-		const,constructor,continue,default,do,else,false,%
-		finally,for,function,if,in,instanceof,%
-		new,null,prototype,%
-		return,switch,this,throw,%
-		true,try,typeof,var,while},%
-	sensitive,%
-	morecomment=[l]//,%
-	morecomment=[s]{/*}{*/},%
-	morestring=[b]",%
-	morestring=[b]',%
-}[keywords,comments,strings]%
 
 \lecturetitle{Программная инженерия. Лекция №12 — ЯП. Метапрограммирование.}
 \title[Метапрограммирование]{Языки программирования. Метапрограммирование}
@@ -112,15 +80,12 @@
 		\end{itemize}
 
 		\vspace{1ex}
-		\textbf{Синтаксис БНФ:}
+		\textbf{Синтаксис БНФ:}\footnote{%
+			В БНФ может использоваться синтаксис регулярных выражений (\code{+} = повтор 1 или~более раз, 
+			\code{[]} — выбор из~нескольких вариантов и~т.\,п.).}
 		\begin{center}
 			\code{<выражение> ::= <альтернатива 1> | <альтернатива 2> | … |  <альтернатива n>}
 		\end{center}
-
-		\figureexpl{
-			В БНФ может использоваться синтаксис регулярных выражений (\code{+} = повтор 1 или~более раз, 
-			\code{[]} — выбор из~нескольких вариантов и~т.\,п.).
-		}
 	}
 
 	\frame{
@@ -228,11 +193,11 @@
 
 		\vspace{0.5ex}
 		\textbf{Python:}
-		\lstinputlisting[language=python,escapechar=\$]{code-str-int.py}
+		\lstinputlisting[language=python]{code-str-int.py}
 
 		\vspace{0.5ex}
 		\textbf{PHP:}
-		\lstinputlisting[language=php]{code-str-int.php}
+		\lstinputlisting[language=php,escapechar=\#]{code-str-int.php}
 
 		\vspace{0.5ex}
 		\textbf{C:}
@@ -391,24 +356,28 @@
 
 		\begin{enumerate}
 			\item
-			Шаблоны — автоматическая генерация мало различающихся параметризованных фрагментов кода. 
-			Примеры параметров: типы данных, размеры массивов.
+			\textbf{Шаблоны} — автоматическая генерация мало различающихся параметризованных фрагментов~кода.
+
+			\vspace{0.5ex}
+			\textbf{Примеры параметров:} типы данных, размеры массивов.
 
 			\vspace{0.5ex}
 			\textbf{Примеры:} препроцессоры в C и сходных языках; шаблоны в C++.
 
-			\vspace{1ex}\item
-			Интерпретация произвольного исходного кода с помощью специальных функций.
+			\vspace{1ex}
+			\item
+			\textbf{Интерпретация} произвольного исходного кода с~помощью специальных функций.
 
 			\vspace{0.5ex}
-			\textbf{Примеры:} Функция \code{eval} в Python, PHP, JavaScript и других интерпретируемых ЯП.
+			\textbf{Примеры:} Функция \code{eval} в Python, PHP, JavaScript и~других интерпретируемых~ЯП.
 
 			\vspace{1ex}\item
-			Использование рефлексии \engterm{reflection} для самомодификации программы во~время выполнения.
+			Использование \textbf{рефлексии} \engterm{reflection} для самомодификации программы 
+			во~время~выполнения.
 
 			\vspace{1ex}\item
-			Использование предметно-специфичных языков \engterm{domain-specific languages} 
-			с~последующей трансляцией или интерпретацией при помощи ЯП общего назначения.
+			Использование \textbf{предметно-специфичных языков} \engterm{domain-specific languages} 
+			с~последующей трансляцией или~интерпретацией при~помощи~ЯП общего~назначения.
 		\end{enumerate}
 	}
 
@@ -498,7 +467,7 @@
 
 		\vspace{1ex}
 		\textbf{Наивное представление в ЯП Python}
-		\lstinputlisting[language=python,escapechar=\$]{code-view.py}
+		\lstinputlisting[language=python]{code-view.py}
 	}
 
 	\frame{
@@ -548,16 +517,21 @@
 
 		\begin{itemize}
 			\item
-			Разделение ответственности \engterm{separation of concerns} — независимость семантики языка от его реализации;
+			\textbf{Разделение ответственности} \engterm{separation of concerns}~— 
+			независимость семантики языка от~его~реализации;
 
-			\vspace{1ex}\item
-			высокий уровень абстракции DSL — позволяет сократить объем решения, повысить его~доступность и~упростить отладку;
+			\vspace{1ex}
+			\item
+			\textbf{высокий уровень абстракции} DSL — позволяет сократить объем решения, 
+			повысить его~доступность и~упростить отладку;
 
-			\vspace{1ex}\item
-			упрощение портирования — при переносе в другую среду меняется лишь имплементация DSL;
+			\vspace{1ex}
+			\item
+			упрощение \textbf{портирования} — при переносе в~другую~среду меняется лишь имплементация~DSL;
 
-			\vspace{1ex}\item
-			легкость в освоении использовании профильными специалистами.
+			\vspace{1ex}
+			\item
+			легкость в освоении использовании \textbf{профильными специалистами}.
 		\end{itemize}
 	}
 
@@ -566,20 +540,24 @@
 
 		\begin{itemize}
 			\item
-			Затраты на проектирование, имплементацию и сопровождение языка и~соответствующих инструментов 
+			\textbf{Затраты} на проектирование, имплементацию и сопровождение языка и~соответствующих инструментов 
 			(напр., поддержки среды разработки);
 
-			\vspace{1ex}\item
-			проблема определения границ DSL;
+			\vspace{1ex}
+			\item
+			проблема \textbf{определения границ}~DSL;
 
-			\vspace{1ex}\item
-			трудности интеграции DSL в программную систему;
+			\vspace{1ex}
+			\item
+			трудности \textbf{интеграции}~DSL в~программную систему;
 
-			\vspace{1ex}\item
-			проблема стандартизации языков одной предметной области;
+			\vspace{1ex}
+			\item
+			проблема \textbf{стандартизации} языков одной предметной области;
 
-			\vspace{1ex}\item
-			низкая производительность по сравнению с языками общего назначения.
+			\vspace{1ex}
+			\item
+			\textbf{низкая производительность} по~сравнению с~языками общего назначения.
 		\end{itemize}
 	}
 
@@ -596,10 +574,12 @@
 			Семантика языка может использоваться не только в процессе компиляции / интерпретации, 
 			но и при анализе программ, напр., при~доказательстве их корректности.
 
+			\vspace{0.5ex}
 			\item
 			Важная часть семантики языка программирования — система типов. 
 			ЯП может обладать статической или динамической, строгой или слабой типизацией.
 
+			\vspace{0.5ex}
 			\item
 			Метапрограммирование (порождающее программирование) — парадигма программирования, 
 			в которой код программ рассматривается как данные. 

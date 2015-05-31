@@ -13,9 +13,9 @@ public class SerializationTest implements Serializable {
 	/* $Другие поля и методы.$ */
 
 	private void readObject(ObjectInputStream in) throws IOException {
-		in.defaultReadObject(); // Механизм чтения по умолчанию
-		// При десериализации не вызывается конструктор объекта, 
-		// так что несохраненные поля надо инициализировать вручную
+		in.defaultReadObject(); // $Механизм чтения по умолчанию$
+		// $При десериализации не вызывается конструктор объекта,$
+		// $так что несохраненные поля надо инициализировать вручную.$
 		this.cache = new HashMap<Integer, String>();
 	}
 }

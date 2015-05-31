@@ -3,7 +3,6 @@
 
 \usetikzlibrary{shapes.misc}
 
-\def\code#1{\texttt{#1}}
 
 \lecturetitle{Программная инженерия. Лекция №8 — Архитектура программных систем.}
 \title[Моделирование ПС]{Архитектура программных систем}
@@ -41,21 +40,28 @@
 		\frametitle{Виды архитектуры ПО}
 		
 		\begin{itemize}
-			\item Архитектура отдельных программ.
+			\item
+			\textbf{Архитектура отдельных программ.}
 			
+			\vspace{0.5ex}
 			\textbf{Цель:} определить разбиение программы на составляющие.
 			
-			\begin{center}\linespread{1.0}
-					Составляющие = функциональные требования \\
-					Архитектура = нефункциональные требования
+			\begin{center}
+				\begin{tabular}{rcl}
+					Составляющие & $=$ & функциональные требования \cr
+					Архитектура & $=$ & нефункциональные требования \cr
+				\end{tabular}
 			\end{center}
 
 			\vspace{1.5ex}
-			\item Архитектура сложных систем.
+			\item
+			\textbf{Архитектура сложных систем.}
 			
+			\vspace{0.5ex}
 			\textbf{Цель:} определить структуру взаимодействия системы с~другими системами, программами и~компонентами; 
 			определить местоположение системы в~распределенной среде.
-			
+
+			\vspace{0.5ex}
 			\itemexpl{(будет рассмотрена в весеннем семестре)}
 		\end{itemize}
 	}
@@ -104,12 +110,10 @@
 	\frame{
 		\frametitle{Представления архитектуры}
 		
-		\begin{center}
-			\input{fig-4plus1.tex}
-			
-			\vspace{1ex}
-			\figureexpl{Модель представлений \extlink{http://en.wikipedia.org/wiki/4\%2B1_architectural_view_model}{4+1} [Kruchten, 1995]}
-		\end{center}
+		\begin{figure}
+			\input{fig-4plus1.tex}\vspace{-2.5ex}
+			\caption{Модель представлений \extlink{http://en.wikipedia.org/wiki/4\%2B1_architectural_view_model}{4+1} [Kruchten, 1995]}
+		\end{figure}
 	}
 	
 	\subsection{Создание представлений}
@@ -122,16 +126,20 @@
 			\item
 			Упрощение обсуждения решений, касающихся проектирования системы.
 			
+			\vspace{0.5ex}
 			\textbf{Потребители:} заинтересованные стороны (напр., заказчики), менеджеры. 
 			
+			\vspace{0.5ex}
 			\textbf{Средства:} неформальные представления (напр., блочные диаграммы).
 			
-			\vspace{1.5ex}
+			\vspace{1ex}
 			\item
 			Документирование \emph{уже разработанной} архитектуры для улучшения ее понимания и~развития приложения.
-			
+
+			\vspace{0.5ex}			
 			\textbf{Потребители:} разработчики, отдел сопровождения.
-			
+
+			\vspace{0.5ex}			
 			\textbf{Средства:} формальные представления (UML, специализированные языки).
 		\end{itemize}
 		
@@ -191,12 +199,10 @@
 	\frame{
 		\frametitle{MVC}
 		
-		\begin{center}
+		\begin{figure}
 			\input{fig-mvc-generic.tex}
-			
-			\vspace{1ex}
-			\figureexpl{Общая модель архитектуры MVC}
-		\end{center}
+			\caption{Общая модель архитектуры MVC}
+		\end{figure}
 	}
 	
 	\frame{
@@ -216,12 +222,10 @@
 	\frame{
 		\frametitle{MVC — пример}
 		
-		\begin{center}
+		\begin{figure}
 			\input{fig-mvc-web.tex}
-			
-			\vspace{1ex}
-			\figureexpl{Архитектура MVC для веб-приложений}
-		\end{center}
+			\caption{Архитектура MVC для веб-приложений}
+		\end{figure}
 	}
 	
 	\subsection{Многослойная архитектура}\label{sec:layered}
@@ -229,12 +233,10 @@
 	\frame{
 		\frametitle{Многослойная архитектура}
 		
-		\begin{center}
+		\begin{figure}
 			\input{fig-layered-generic.tex}
-		
-			\vspace{1ex}
-			\figureexpl{Общая модель четырехслойной архитектуры ПО}
-		\end{center}
+			\caption{Общая модель четырехслойной архитектуры ПО}
+		\end{figure}
 	}
 	
 	\frame{
@@ -257,12 +259,10 @@
 	\frame{
 		\frametitle{Клиент-серверная архитектура}
 		
-		\begin{center}
+		\begin{figure}
 			\input{fig-server-generic.tex}
-		
-			\vspace{1ex}
-			\figureexpl{Общая модель клиент-серверной архитектуры}
-		\end{center}
+			\caption{Общая модель клиент-серверной архитектуры}
+		\end{figure}
 	}
 	
 	\frame{
@@ -283,12 +283,10 @@
 	\frame{
 		\frametitle{Клиент-серверная архитектура — пример}
 		
-		\begin{center}
+		\begin{figure}
 			\input{fig-server-web.tex}
-			
-			\vspace{1ex}
-			\figureexpl{Клиент-серверная архитектура для веб-сервера}
-		\end{center}
+			\caption{Клиент-серверная архитектура для веб-сервера}
+		\end{figure}
 	}
 	
 	\subsection{Конвейерная архитектура}\label{sec:pipe}
@@ -296,12 +294,10 @@
 	\frame{
 		\frametitle{Конвейерная архитектура}
 		
-		\begin{center}
+		\begin{figure}
 			\input{fig-pipe-generic.tex}
-		
-			\vspace{1ex}
-			\figureexpl{Абстрактная модель конвейерной архитектуры \engterm{pipe and filter architecture}}
-		\end{center}
+			\caption{Абстрактная модель конвейерной архитектуры \engterm{pipe and filter architecture}}
+		\end{figure}
 	}
 	
 	\frame{
@@ -328,12 +324,10 @@
 		и добавляет эту информацию в конец файла \textit{error-files.txt}.
 		
 		\vspace{1ex}
-		\begin{center}	
+		\begin{figure}	
 			\input{fig-pipe-linux.tex}
-			
-			\vspace{1ex}
-			\figureexpl{Пример конвейера для цепочки команд Linux с указанием направления стандартных потоков}
-		\end{center}
+			\caption{Пример конвейера для цепочки команд Linux с указанием направления стандартных потоков}
+		\end{figure}
 	}
 	
 	\section{Заключение}
@@ -348,11 +342,13 @@
 			Архитектура программной системы определяет ее организацию и разбиение на~компоненты. 
 			На архитектуру влияют нефункциональные требования к системе (напр., производительность и надежность). 
 			
+			\vspace{0.5ex}
 			\item
 			Помимо составляющих системы, архитектура может определять распределение работ между разработчиками, 
 			взаимодействие компонентов и их организацию в~распределенной системе. 
 			Для представления архитектуры могут использоваться формальные (UML, ADL) и неформальные (диаграммы) методы.
-			
+
+			\vspace{0.5ex}			
 			\item
 			Опыт разработки архитектуры различных систем собран в архитектурные шаблоны. 
 			Часто используемые шаблоны: MVC, многослойная архитектура, клиент-сервер и~конвейер.

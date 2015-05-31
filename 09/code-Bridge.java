@@ -3,13 +3,13 @@ public abstract class Shape {
 }
 
 public class Circle extends Shape {
-	public Circle(api, center, radius) { /*...*/ }
+	public Circle(api, center, radius) { /* ... */ }
 	public void draw() { api.drawCircle(center, radius); }
 }
 
 public interface DrawingAPI {
 	void drawCircle(Point c, double radius);
-	/* #другие методы# */
+	/* $другие методы$ */
 }
 
 public class WindowsAPI implements DrawingAPI {

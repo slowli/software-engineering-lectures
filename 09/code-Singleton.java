@@ -8,10 +8,10 @@ public class Singleton {
 		return instance;
 	}
 	
-	private Singleton() { /* #код инициализации# */ }
+	private Singleton() { /* $код инициализации$ */ }
 
 	public void run() { /* ... */ }
 }
 
-/* #использование# */
+/* $использование$ */
 Singleton.getInstance().run();

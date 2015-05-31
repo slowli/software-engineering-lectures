@@ -6,8 +6,8 @@ public class Figure {
 
 	public double getArea() {
 		switch (this.type) {
-			case CIRCLE: /*...*/
-			case SQUARE: /*...*/
+			case CIRCLE: /* ... */
+			case SQUARE: /* ... */
 			default: throw new IllegalStateException();
 		}
 	}
@@ -16,8 +16,8 @@ public abstract class Figure {
 	public abstract double getArea();
 }
 public class Circle extends Figure { 
-	public double getArea() { /*...*/ }
+	public double getArea() { /* ... */ }
 }
 public class Square extends Figure {
-	public double getArea() { /*...*/ }
+	public double getArea() { /* ... */ }
 }

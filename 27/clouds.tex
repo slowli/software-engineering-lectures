@@ -3,29 +3,12 @@
 
 \usetikzlibrary{shapes.misc}
 
+
 \lecturetitle{Программная инженерия. Лекция №27 — Облачные вычисления}
 \title[Веб-сервисы]{Введение в облачные вычисления}
 \author{Алексей Островский}
 \institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
 \date{21 мая 2015 г.}
-
-\usepackage{listings}
-\lstset{%
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\color{gray},
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	extendedchars=true,
-	escapechar=\$
-}
-
-\def\code#1{\texttt{#1}}
-\def\codekw#1{\texttt{\textbf{#1}}}
 
 \begin{document}
 	\frame{\titlepage}
@@ -43,12 +26,10 @@
 		\end{Definition}
 
 		\vspace{1ex}
-		\begin{center}
+		\begin{figure}
 			{\small\input{fig-cloud.tex}}
-
-			\vspace{1ex}
-			\figureexpl{Облачная архитектура скрывает детали распределения ресурсов от пользователя}
-		\end{center}
+			\caption{Облачная архитектура скрывает детали распределения ресурсов от пользователя}
+		\end{figure}
 	}
 
 	\subsection{Характеристики}
@@ -522,8 +503,8 @@
 		\vspace{0.5ex}
 		\textbf{Псевдокод (Python):}
 		\begin{overlayarea}{\textwidth}{0.6\textheight}
-			\only<1>{\vspace{-1ex}\lstinputlisting[language=python]{code-mapreduce.py}}
-			\only<2>{\vspace{-1ex}\lstinputlisting[language=python]{code-mapreduce2.py}}
+			\only<1>{\vspace{-1ex}\lstinputlisting[language={[doc]python}]{code-mapreduce.py}}
+			\only<2>{\vspace{-1ex}\lstinputlisting[language={[doc]python}]{code-mapreduce2.py}}
 		\end{overlayarea}
 	}
 
@@ -615,12 +596,10 @@
 	\frame{
 		\frametitle{Архитектура облачных ФС}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-cloud-fs.tex}
-
-			\vspace{1ex}
-			\figureexpl{Типичная архитектура облачных файловых систем}
-		\end{center}
+			\caption{Типичная архитектура облачных файловых систем}
+		\end{figure}
 	}
 
 	\subsection{Распределенные БД}
@@ -806,14 +785,17 @@
 			Облачные вычисления — платформа для выполнения распределенных приложений 
 			(как~веб-, так~и~аналитических), основанная на~принципе горизонтальной масштабируемости.
 
+			\vspace{0.5ex}
 			\item
 			Есть три уровня облачной архитектуры: инфраструктура как~сервис (IaaS), платформа как~сервис (PaaS) 
 			и~ПО~как~сервис (SaaS).
 
+			\vspace{0.5ex}
 			\item
 			Основой облачной архитектуры является хранение данных (при~помощи распределенных~ФС и~NoSQL-баз данных) 
 			и~их обработка (напр., с~помощью инструментов типа~MapReduce).
 
+			\vspace{0.5ex}
 			\item
 			Основные характеристики распределенных хранилищ данных — структура хранимых объектов 
 			и~характеристики из~набора доступность, согласованность данных и~масштабируемость. 
@@ -833,7 +815,7 @@
 			\newblock {\footnotesize Pearson, 2011. — 790 p.}
 
 			\bibitem[2]{2}
-			Voorsluys W., Broberg J., Buyya R.
+			Voorsluys, William; Broberg, James; Buyya, Rajkumar
 			\newblock Introduction to Cloud Computing.
 			\newblock {\footnotesize\url{http://media.johnwiley.com.au/product_data/excerpt/90/04708879/0470887990-180.pdf}}
 

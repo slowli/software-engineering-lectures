@@ -1,51 +1,47 @@
-\linespread{1.0}\small%
-%\def\hilight{\color{red}\bfseries}%
-\begin{tikz*}[xscale=1.25,
+\begin{tikz*}[%
 	every node/.style={rectangle,draw,align=center,minimum height=3em,minimum width=9.5em},
 	condition/.style={diamond,shape aspect=2,minimum width=10.7em,minimum height=5.4em},
 	edge/.style={minimum height=0pt,minimum width=0pt,draw=none,font=\footnotesize\itshape},
-	hilight/.style={font=\only<#1>{\color{red}}},
-	hilight edge/.style={font=\footnotesize\itshape\only<#1>{\color{red}}}
 ]
-	\node(need) at (0, 0) [ellipse,minimum height=4.25em,hilight=1] {
+	\node(need) at (0, 0) [ellipse,minimum height=4.25em] {
 		необходимо \\ изменение
 	};
-	\node(ident) [below=of need,hilight=2] {
+	\node(ident) [below=of need] {
 		идентификация \\ элемента к.
 	};
-	\node(request) [below=of ident,hilight=3] {
+	\node(request) [below=of ident] {
 		запрос изменения \\ элемента к.
 	};
-	\node(compl) [condition,below=of request,hilight=4] {
+	\node(compl) [condition,below=of request] {
 		оценка полноты
 	};
-	\node(enrich) [left=of request,hilight=5] {
+	\node(enrich) [left=of request] {
 		дополнение
 	};
-	\node(content) [condition,right=5em of compl,hilight=6] {
+	\node(content) [condition,right=5em of compl] {
 		оценка сути
 	};
-	\node(inform) [below=of content,hilight=7] {
+	\node(inform) [below=of content] {
 		информирование \\ заказчика
 	};
-	\node(schedule) [above=of content,hilight=8] {
+	\node(schedule) [above=of content] {
 		расписание и \\ проект
 	};
-	\node(test) [above=of schedule,hilight=9] {
+	\node(test) [above=of schedule] {
 		составление \\ тестов
 	};
-	\node(impl) [above=of test,hilight=10] {
+	\node(impl) [above=of test] {
 		внесение \\ изменения
 	};
 	
 	\draw[->] (need) to (ident);
 	\draw[->] (ident) to (request);
 	\draw[->] (request) to (compl);
-	\draw[->] (compl) -| (enrich) node[edge,below,pos=0.3,hilight edge=5]{неполное};
+	\draw[->] (compl) -| (enrich) node[edge,below,pos=0.3]{неполное};
 	\draw[->] (enrich) |- ($ (ident)!0.5!(request) $);
-	\draw[->] (compl) -- node[edge,below,hilight edge=6]{полное} (content);
-	\draw[->] (content) -- node[edge,right,hilight edge=7]{отказ} (inform);
-	\draw[->] (content) -- node[edge,right,hilight edge=8]{утверждение} (schedule);
+	\draw[->] (compl) -- node[edge,below]{полное} (content);
+	\draw[->] (content) -- node[edge,right]{отказ} (inform);
+	\draw[->] (content) -- node[edge,right]{утверждение} (schedule);
 	\draw[->] (schedule) to (test);
 	\draw[->] (test) to (impl);
 \end{tikz*}

@@ -1,34 +1,12 @@
 \documentclass{a4beamer}
 \input{lecture-common.def}
 
-\usepackage{listings}
-\lstset{%
-	language=java,
-	morekeywords={assert},
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\color{gray},
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	extendedchars=true,
-	escapechar=\$
-}
-
-\def\code#1{\texttt{#1}}
-\def\codekw#1{\texttt{\textbf{#1}}}
-
-\deftranslation[to=russian]{Fact}{Наблюдение}
 
 \lecturetitle{Программная инженерия. Лекция №18 — Интерфейсы и типы данных (часть 1)}
 \title[Типы данных 1]{Интерфейсы и типы данных (часть 1)}
 \author{Алексей Островский}
 \institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
 \date{9 апреля 2015 г.}
-
 
 \begin{document}
 	\frame{\titlepage}
@@ -213,8 +191,8 @@
 		\end{itemize}
 
 		{\small%
-			\textbf{Примечание.} Во многих ЯП сущесвуют две операции сравнения — по содержимому и по ссылке 
-			(\code{.equals()} и \code{==} в~Java, \code{==} и \codekw{is} в~Python).
+			\textbf{Примечание.} Во многих ЯП сущесвуют две операции сравнения — по~содержимому и~по~ссылке 
+			(\code{.equals()} и~\code{==}~в~Java, \code{==} и~\codekw{is}~в~Python).
 		}
 
 		\vspace{1.5ex}
@@ -292,7 +270,7 @@
 
 			\vspace{0.5ex}\item
 			\textbf{Целые числа.} \\
-			$\sim$BigInteger в~Java, \codekw{long} в~Python.
+			$\sim$~BigInteger в~Java, \codekw{long} в~Python.
 		\end{itemize}
 	}
 
@@ -307,7 +285,7 @@
 			\vspace{0.5ex}\item
 			\textbf{Масштабированный тип} \engterm{scaled} — рациональные числа с фиксированным знаменателем,
 			напр., валютный тип (знаменатель равен 100). \\
-			$\sim$BigDecimal в~Java, \code{decimals.Decimal} в~Python.
+			$\sim$~BigDecimal в~Java, \code{decimals.Decimal} в~Python.
 
 			\vspace{0.5ex}\item
 			\textbf{Действительные числа.} \\
@@ -359,7 +337,7 @@
 			Указатели и ссылки в С / С++.
 
 			\vspace{0.5ex}\item
-			\textbf{Процедурный тип}, задаваемый типами и направлением аргументов (входные / выходные) и~типом возвращаемого значения. \\
+			\textbf{Процедурный тип}, задаваемый типами и направлением аргументов (входные или~выходные) и~типом возвращаемого значения. \\
 			Функции в функциональных ЯП; в Python, JavaScript (без выделения подтипов).
 		\end{itemize}
 	}
@@ -451,12 +429,10 @@
 	\frame{
 		\frametitle{Иерархия типов данных (Java)}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-types-java.tex}
-
-			\vspace{1ex}
-			\figureexpl{В C / C++, Java, PHP примитивные типы объектов изолированы (не являются потомками других типов).}
-		\end{center}
+			\caption{В C / C++, Java, PHP примитивные типы объектов изолированы (не являются потомками других типов).}
+		\end{figure}
 	}
 
 	\frame{
@@ -477,12 +453,10 @@
 	\frame{
 		\frametitle{Иерархия типов данных (Python)}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-types-python.tex}
-
-			\vspace{1ex}
-			\figureexpl{Python — ЯП с унифицированной системой типов: все ТД наследуются от базового.}
-		\end{center}
+			\caption{Python — ЯП с унифицированной системой типов: все ТД наследуются от базового.}
+		\end{figure}
 	}
 
 	\frame{
@@ -554,10 +528,12 @@
 			Система типов данных — основной инструмент спецификации интерфейсов в~языках программирования. 
 			Использование типов данных позволяет повысить понимание программы и~служит средством верификации программы.
 
+			\vspace{0.5ex}
 			\item
 			Стандарт ISO/IEC 11404 определяет классификацию типов данных и~базовые типы, независимые от~языка программирования. 
 			В~этом стандарте также даны способы построения новых типов данных на основе базовых.
 
+			\vspace{0.5ex}
 			\item
 			ЯП имплементируют систему типов данных в различном объеме и с различными средствами для~ее~расширения. 
 			В объектно-ориентированных ЯП система типов данных представляет собой иерархию с~одним или~несколькими корневыми классами.

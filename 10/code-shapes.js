@@ -10,9 +10,9 @@ function Circle(center, radius) {
 	Shape.call(this, center);
 	this.radius = radius;
 }
-/* #Клонирование прототипа.# */
+/* $Клонирование прототипа.$ */
 Circle.prototype = Object.create(Shape.prototype); 
-Circle.prototype.draw = function() { /*...*/ };
-Circle.prototype.fill = function() { /*...*/ };
+Circle.prototype.draw = function() { /* ... */ };
+Circle.prototype.fill = function() { /* ... */ };
 
 

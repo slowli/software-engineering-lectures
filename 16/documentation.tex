@@ -3,31 +3,12 @@
 
 \usetikzlibrary{decorations.pathreplacing}
 
-\usepackage{listings}
-\lstset{%
-	language=java,
-	morekeywords={assert},
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\normalfont\itshape,
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	escapechar=\#
-}
-\def\code#1{\texttt{#1}}
-
-\deftranslation[to=russian]{Fact}{Наблюдение}
 
 \lecturetitle{Программная инженерия. Лекция №16 — Документирование ПО}
 \title[Документирование]{Документирование ПО}
 \author{Алексей Островский}
 \institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
 \date{26 марта 2015 г.}
-
 
 \begin{document}
 	\frame{\titlepage}
@@ -38,8 +19,8 @@
 		\frametitle{Документация на ПО}
 
 		\begin{Definition}
-		\textbf{Документация} — печатный текст, сопровождающий программное обеспечение для~объяснения 
-		принципов его функционирования или использования.
+			\textbf{Документация} — печатный текст, сопровождающий программное обеспечение для~объяснения 
+			принципов его функционирования или использования.
 		\end{Definition}
 
 		\vspace{1ex}
@@ -56,11 +37,10 @@
 	\frame{
 		\frametitle{Документация на ПО}
 
-		\begin{center}
-			\input{fig-waterfall.tex}
-
-			\figureexpl{Документирование в процессе разработки ПО}
-		\end{center}
+		\begin{figure}
+			{\small\input{fig-waterfall.tex}}
+			\caption{Документирование в процессе разработки ПО}
+		\end{figure}
 	}
 
 	\subsection{Типы документации}
@@ -92,9 +72,8 @@
 		\frametitle{Документация в гибкой методологии}
 
 		\begin{quote}
-			\begin{center}Работающее ПО > Исчерпывающая документация\end{center}
-
-			\figureexpl{\hfill— Agile Manifesto}
+			\begin{center}Работающее ПО \quad $>$ \quad Исчерпывающая документация\end{center}
+			\quoteauthor{Agile Manifesto}
 		\end{quote}
 
 		\vspace{1ex}
@@ -370,12 +349,10 @@
 	\frame{
 		\frametitle{Генерация документации}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-doc-gen.tex}
-
-			\vspace{1ex}
-			\figureexpl{Генерация документации на основе исходного кода}
-		\end{center}
+			\caption{Генерация документации на основе исходного кода}
+		\end{figure}
 	}
 
 	\frame{
@@ -432,36 +409,34 @@
 	\frame{
 		\frametitle{Пример документации: Javadoc}
 
-		\lstinputlisting{code-doc.java}
+		\lstinputlisting[language=java]{code-doc.java}
 	}
 
 	\frame{
 		\frametitle{Пример документации: Javadoc}
 
-		\begin{center}
+		\begin{figure}
 			\ifbigpages
 				\includegraphics[scale=1]{fig-doc-html.png}
 			\else
 				\includegraphics[scale=0.5]{fig-doc-html.png}
 			\fi
-
-			\figureexpl{Фрагмент сгенерированной утилитой Javadoc HTML-страницы документации, 
+			\caption{Фрагмент сгенерированной утилитой Javadoc HTML-страницы документации, 
 				соответствующей приведенному методу.}
-		\end{center}
+		\end{figure}
 	}
 
 	\frame{
 		\frametitle{Пример документации: Javadoc}
 
-		\begin{center}
+		\begin{figure}
 			\ifbigpages
 				\includegraphics[scale=1]{fig-doc-eclipse.png}
 			\else
 				\includegraphics[scale=0.75]{fig-doc-eclipse.png}
 			\fi
-
-			\figureexpl{Контекстная помощь для приведенного метода в среде разработки Eclipse.}
-		\end{center}
+			\caption{Контекстная помощь для приведенного метода в среде разработки Eclipse.}
+		\end{figure}
 	}
 
 	\subsection{Грамотное программирование}
@@ -512,14 +487,17 @@
 			Документация на ПО нужна, чтобы описать его~функционал для~пользователей (пользовательская документация) 
 			и~упростить сопровождение и~эволюцию (системная документация).
 
+			\vspace{0.5ex}
 			\item
 			Согласно гибкой методологии разработки, объем документации (в~особенности документов, описывающих процесс разработки) 
 			должен быть сведен к минимуму.
 
+			\vspace{0.5ex}
 			\item
 			Стандарт IEEE 1063 содержит рекомендации по составлению документации к~ПО, 
 			в~частности, приблизительную структуру документов.
 
+			\vspace{0.5ex}
 			\item
 			Создание документации можно автоматизировать за счет использования генераторов документации наподобие javadoc.
 		\end{enumerate}

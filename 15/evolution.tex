@@ -3,31 +3,12 @@
 
 \usetikzlibrary{shapes.misc}
 
-\usepackage{listings}
-\lstset{%
-	language=java,
-	morekeywords={assert},
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\normalfont\itshape,
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	escapechar=\#
-}
-\def\code#1{\texttt{#1}}
-
-\deftranslation[to=russian]{Fact}{Наблюдение}
 
 \lecturetitle{Программная инженерия. Лекция №15 — Эволюция ПО}
 \title[Эволюция]{Эволюция ПО}
 \author{Алексей Островский}
 \institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
 \date{19 марта 2015 г.}
-
 
 \begin{document}
 	\frame{\titlepage}
@@ -44,18 +25,16 @@
 		\end{Definition}
 
 		\vspace{0.5ex}
-		\begin{center}
+		\begin{figure}
 			\begin{tikz*}[%
 				every node/.style={align=center,rectangle,draw,minimum height=3.25em}
 			]
 				\node(evo) [minimum width=25em] {Затраты \\ на эволюцию};
 				\node(dev) [right=4pt of evo] {Затраты на разработку \\ нового кода};
-			\end{tikz*}
+			\end{tikz*}\vspace{-1ex}
+			\caption{В реальных проектах эволюция ПО обычно стоит в $\sim$2 раза больше разработки.}
+		\end{figure}
 
-			\figureexpl{В реальных проектах эволюция ПО обычно стоит в $\sim$2 раза больше разработки.}
-		\end{center}
-
-		\vspace{1ex}
 		\textbf{Причины необходимости изменений:}
 		\begin{itemize}
 			\item изменение требований к системе;
@@ -69,21 +48,19 @@
 	\frame{
 		\frametitle{Процесс разработки и эволюции}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-evo-spiral.tex}
-
-			\figureexpl{Спиральный процесс разработки и эволюции ПО}
-		\end{center}
+			\caption{Спиральный процесс разработки и эволюции ПО}
+		\end{figure}
 	}
 
 	\frame{
 		\frametitle{Процессы эволюции ПО}
 
-		\begin{center}
-			\input{fig-evo-phases.tex}
-
-			\figureexpl{Фазы эволюции ПО}
-		\end{center}
+		\begin{figure}
+			\input{fig-evo-phases.tex}\vspace{-1ex}
+			\caption{Фазы эволюции ПО}
+		\end{figure}
 	}
 
 	\frame{
@@ -93,12 +70,19 @@
 		начиная с~формализации в~виде требований.
 
 		\vspace{0.5ex}
-		{\small\color{gray}%
-			\textbf{Этапы:} запрос на изменение~$\longrightarrow$ анализ требований~$\longrightarrow$ 
-			обновление требований~$\longrightarrow$ проектирование~$\longrightarrow$ кодирование.
-		}
+		\textbf{Этапы:}
+		\begin{enumerate}
+			\item запрос на изменение;
+			\item анализ требований;
+			\item обновление требований;
+			\item проектирование;
+			\item кодирование.
+		\end{enumerate}
+	}
 
-		\vspace{2ex}
+	\frame{
+		\frametitle{Режимы внесения изменений (продолжение)}
+
 		\textbf{Авральный режим:}
 		\begin{itemize}
 			\item исправление ошибок, мешающих нормальной работе системы; 
@@ -107,10 +91,13 @@
 		\end{itemize}
 
 		\vspace{0.5ex}
-		{\small\color{gray}%
-			\textbf{Этапы:} запрос на изменение~$\longrightarrow$ анализ исходного кода~$\longrightarrow$ 
-			правка кода~$\longrightarrow$ доставка системы.
-		}
+		\textbf{Этапы:}
+		\begin{enumerate}
+			\item запрос на изменение;
+			\item анализ исходного кода;
+			\item правка кода;
+			\item доставка системы.
+		\end{enumerate}
 	}
 
 	\subsection{В гибкой методологии}
@@ -118,13 +105,12 @@
 	\frame{
 		\frametitle{Эволюция ПО в гибкой методологии}
 
-		\begin{center}
-			\input{fig-agile.tex}
+		\begin{figure}
+			\input{fig-agile.tex}\vspace{-1ex}
+			\caption{Эволюция в гибкой методологии — продолжение итераций разработки после доставки ПО.}
+		\end{figure}
 
-			\vspace{0.5ex}
-			\figureexpl{Эволюция в гибкой методологии — продолжение итераций разработки после доставки ПО.}
-		\end{center}
-
+		\vspace{-1ex}
 		\textbf{Инструменты:} 
 		\begin{itemize}
 			\item регрессионные тесты (выявляют ошибки при внесении изменений); 
@@ -132,7 +118,7 @@
 		\end{itemize}
 
 		\vspace{1ex}
-		\textbf{Недостатки:} нарушение процесса при разных командах разработки и сопровождения.
+		\textbf{Недостатки:} нарушение процесса при разных командах разработки и~сопровождения.
 	}
 
 	\subsection{Динамика эволюции}
@@ -226,17 +212,17 @@
 
 			\vspace{1ex}
 			\item
-			\textbf{Предотвращение дефектов:} устранение скрытых дефектов, которые могут привести к сбоям работы.
+			\textbf{Предотвращение дефектов:} устранение скрытых дефектов, которые могут привести к~сбоям~работы.
 
 			\vspace{1ex}
 			\item
-			\textbf{Адаптация к среде:} внесение модификаций в связи с изменением окружения ПО 
+			\textbf{Адаптация к среде:} внесение модификаций в~связи с~изменением окружения~ПО 
 			(оборудования, операционной системы, используемых библиотек, …)
 
 			\vspace{1ex}
 			\item
-			\textbf{Добавление функциональности:} модификация из-за изменения требований 
-			по организационным или коммерческим соображениям.
+			\textbf{Добавление функциональности:} модификация из-за~изменения требований 
+			по~организационным или~коммерческим соображениям.
 		\end{itemize}
 	}
 
@@ -254,12 +240,12 @@
 			необходимость адаптации к системе и понимания ее кода;
 			\item
 			усложнение процессов сопровождения из-за более «дешевых» решений 
-			относительно архитектуры системы на этапе разработки;
+			относительно архитектуры системы на~этапе разработки;
 			\item
-			слабая квалификация команды сопровождения, ее незнакомство с предметной областью 
-			и / или технологиями, использующимися в системе;
+			слабая квалификация команды сопровождения, ее незнакомство с~предметной областью 
+			и~/~или~технологиями, использующимися в~системе;
 			\item
-			«устаревание» системы, усложнение понимания и внесения изменений в ее структуру.
+			«устаревание» системы, усложнение понимания и~внесения изменений в~ее~структуру.
 		\end{itemize}
 	}
 
@@ -314,12 +300,10 @@
 	\frame{
 		\frametitle{Процессы реинженерии}
 
-		\begin{center}
+		\begin{figure}
 			{\small\input{fig-reengineering.tex}}
-
-			\vspace{1ex}
-			\figureexpl{Общая схема процессов реинженерии программной системы}
-		\end{center}
+			\caption{Общая схема процессов реинженерии программной системы}
+		\end{figure}
 	}
 
 	\frame{
@@ -378,29 +362,35 @@
 			\item
 			Дублирование сходного / одинакового кода в различных элементах системы.
 
+			\vspace{0.5ex}
 			\textbf{Решение:} имплементация единого метода или функции с необходимой параметризацией.
 
-			\vspace{1ex}
+			\vspace{0.5ex}
 			\item
 			Чрезмерная длина методов.
 
+			\vspace{0.5ex}
 			\textbf{Решение:} выделение фрагментов кода в более короткие методы.
 
-			\vspace{1ex}
+			\vspace{0.5ex}
 			\item
 			Избыточное использование операторов ветвления или конструкций \textbf{switch} (\textbf{case}).
+
+			\vspace{0.5ex}
 			\textbf{Решение:} использование полиморфизма.
 
-			\vspace{1ex}
+			\vspace{0.5ex}
 			\item
 			Скопление данных — использование одинаковых наборов данных во многих местах программной системы.
 
+			\vspace{0.5ex}
 			\textbf{Решение:} инкапсуляция данных в виде объекта.
 
-			\vspace{1ex}
+			\vspace{0.5ex}
 			\item
 			Чрезмерная универсальность кода.
 
+			\vspace{0.5ex}
 			\textbf{Решение:} удаление / упрощение избыточного кода.
 		\end{itemize}
 	}
@@ -412,9 +402,9 @@
 		
 		\vspace{1ex}
 		\textbf{До:}
-		\lstinputlisting[lastline=2]{code-inc.java}
+		\lstinputlisting[language=java,lastline=2]{code-inc.java}
 		\textbf{После:}
-		\lstinputlisting[firstline=3]{code-inc.java}
+		\lstinputlisting[language=java,firstline=3]{code-inc.java}
 	}
 
 	\frame{
@@ -425,9 +415,9 @@
 
 		\vspace{1ex}
 		\textbf{До:}
-		\lstinputlisting[lastline=3]{code-generic.java}
+		\lstinputlisting[language=java,lastline=3]{code-generic.java}
 		\textbf{После:}
-		\lstinputlisting[firstline=4]{code-generic.java}
+		\lstinputlisting[language=java,firstline=4]{code-generic.java}
 	}
 
 	\frame{
@@ -437,9 +427,9 @@
 
 		\vspace{1ex}
 		\textbf{До:}
-		\lstinputlisting[lastline=5]{code-pullup.java}
+		\lstinputlisting[language=java,lastline=5]{code-pullup.java}
 		\textbf{После:}
-		\lstinputlisting[firstline=6]{code-pullup.java}
+		\lstinputlisting[language=java,firstline=6]{code-pullup.java}
 	}
 
 	\frame{
@@ -451,31 +441,30 @@
 		\begin{overlayarea}{\textwidth}{0.75\textheight}
 			\only<1>{
 				\textbf{До:}
-				\lstinputlisting[lastline=14]{code-poly.java}
+				\lstinputlisting[language=java,lastline=14]{code-poly.java}
 			}
 			\only<2>{
 				\vspace{4ex}
 				\textbf{После:}
-				\lstinputlisting[firstline=15]{code-poly.java}
+				\lstinputlisting[language=java,firstline=15]{code-poly.java}
 			}
 		\end{overlayarea}
 	}
 
 	\frame{
 		\frametitle{Автоматизация рефакторинга}
-
-		\begin{center}
+		
+		\begin{figure}
 			\ifbigpages
 				\includegraphics[scale=1]{fig-refactor-eclipse.png}
 			\else
 				\includegraphics[scale=0.75]{fig-refactor-eclipse.png}
 			\fi
-		\end{center}
-
-		\figureexpl{%
-			Базовые методы рефакторинга реализованы в большинстве 
-			современных интегрированных сред разработки, например, Eclipse
-			(изображено контекстное меню этой среды для рефакторинга метода класса).}
+			\caption{%
+				Базовые методы рефакторинга реализованы в большинстве 
+				современных интегрированных сред разработки, например, Eclipse
+				(изображено контекстное меню этой среды для рефакторинга метода класса).}
+		\end{figure}
 	}
 
 	\section{Устаревшее ПО}
@@ -599,14 +588,17 @@
 			В~гибкой методологии разработки эволюция производится разработчиками; 
 			в~классической модели жизненного цикла эволюция может осуществляться специальной группой (\emph{сопровождение ПО}).
 
+			\vspace{0.5ex}
 			\item
 			Эволюция определяется запросами на~изменение. 
 			Основные фазы внедрения изменений: оценка влияния; планирование выпуска; реализация изменения.
 
+			\vspace{0.5ex}
 			\item
 			Существует три типа сопровождения: исправление дефектов (в~т.\,ч.~упреждающее); 
 			адаптация к~среде выполнения; внесение новой функциональности.
 
+			\vspace{0.5ex}
 			\item
 			Реинженерия ПО заключается в упрощении структуры программы и / или данных и~дополнении документации. 
 			Рефакторинг (внесение в программу малых изменений с~сохранением функциональности) 

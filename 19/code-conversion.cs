@@ -1,16 +1,16 @@
-class SomeClass { /* … */ }
-class Subclass : SomeClass { /* … */ }
+class SomeClass { /* ... */ }
+class Subclass : SomeClass { /* ... */ }
 
-SomeClass obj = // …;
+SomeClass obj = // ...;
 
-// Приведение типа с проверкой; 
-// если obj — не экземпляр Subclass, возбуждается исключение
+// $Приведение типа с проверкой;$
+// $если obj — не экземпляр Subclass, возбуждается исключение.$
 try {
 	Subclass checkedSub = (Subclass) obj;
 } catch (InvalidCastException e) {
-	/* … */
+	/* ... */
 }
 
-// Безусловное приведение; 
-// если obj — не экземпляр Subclass, uncheckedSub == null
+// $Безусловное приведение;$
+// $если obj — не экземпляр Subclass, uncheckedSub == null.$
 Subclass uncheckedSub = obj as Subclass;

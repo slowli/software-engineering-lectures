@@ -13,8 +13,8 @@
 	\draw[->] (construct) to (testing);
 	\draw[->] (testing) to (maint);
 	
-	\draw[->,dotted,bend left] (design) to (req);
-	\draw[->,dotted,bend left] (construct) to (req);
-	\draw[->,dotted,bend left] (testing) to (req);
-	\draw[->,dotted,bend left] (maint) to (req);
+	\draw (design) -- ++(0,-3em);
+	\draw (construct) -- ++(0,-3em);
+	\draw (testing) -- ++(0,-3em);
+	\draw[->] (maint) -- ++(0,-3em) -| (req);
 \end{tikz*}

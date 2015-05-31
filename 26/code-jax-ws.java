@@ -10,11 +10,11 @@ public class IntSequence {
 		if (/* $Последовательность не зарегистрирована$ */) {
 			throw new IntSequenceException(/* ... */);
 		}
-		// Вернуть информацию о последовательности 
+		// $Вернуть информацию о последовательности.$
 	}
 
 	@WebMethod
 	public BigInteger getDetails(String seq, int index) {
-		// Вернуть член последовательности
+		// $Вернуть член последовательности.$
 	}
 }

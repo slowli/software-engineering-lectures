@@ -1,38 +1,6 @@
 \documentclass{a4beamer}
 \input{lecture-common.def}
 
-\def\code#1{\texttt{#1}}
-\def\classfield#1{\underbar{#1}}
-
-\usepackage{listings}
-\lstset{%
-	language=java,
-	morekeywords={assert},
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\normalfont\itshape,
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	escapechar=\#
-}
-
-\lstdefinelanguage{javascript}%
-	{morekeywords={break,case,catch,%
-		const,constructor,continue,default,do,else,false,%
-		finally,for,function,if,in,instanceof,%
-		new,null,prototype,%
-		return,switch,this,throw,%
-		true,try,typeof,var,while},%
-	sensitive,%
-	morecomment=[l]//,%
-	morecomment=[s]{/*}{*/},%
-	morestring=[b]",%
-	morestring=[b]',%
-}[keywords,comments,strings]%
 
 \lecturetitle{Программная инженерия. Лекция №10 — Парадигмы программирования (часть 1).}
 \title[Парадигмы программирования 1]{Парадигмы программирования (часть 1)}
@@ -67,21 +35,21 @@
 	\frame{
 		\frametitle{Место парадигмы в разработке}
 
-		{\small\input{fig-paradigm-in-dev.tex}}
-
-		\vspace{0.75ex}
-		\figureexpl{Роль парадигм программирования в~разработке~ПО. Парадигма выбирается, 
-			исходя~из архитектуры системы и~влияет на~построение и~реализацию ее~компонентов}
+		\begin{figure}
+			{\small\input{fig-paradigm-in-dev.tex}}
+			\caption{Роль парадигм программирования в~разработке~ПО. Парадигма выбирается, 
+				исходя~из архитектуры системы и~влияет на~построение и~реализацию ее~компонентов}
+		\end{figure}
 	}
 
 	\frame{
 		\frametitle{Место парадигмы в разработке}
 
-		\input{fig-paradigm-and-pl.tex}
-
-		\vspace{0.75ex}
-		\figureexpl{Связь парадигм с языками программирования подобна связи процесса программной инженерии 
-			с~выбранной моделью разработки}
+		\begin{figure}
+			\input{fig-paradigm-and-pl.tex}
+			\caption{Связь парадигм с языками программирования подобна связи процесса программной инженерии 
+				с~выбранной моделью разработки}
+		\end{figure}
 	}
 
 	\subsection{Классификация парадигм}
@@ -114,12 +82,10 @@
 	\frame{
 		\frametitle{Выполнение декларативной программы}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-declarative-program.tex}
-
-			\vspace{0.75ex}
-			\figureexpl{Декларативная программа не взаимодействует напрямую с памятью, поручая эту работу интерпретатору}
-		\end{center}
+			\caption{Декларативная программа не взаимодействует напрямую с памятью, поручая эту работу интерпретатору}
+		\end{figure}
 	}
 
 	\frame{
@@ -148,10 +114,10 @@
 	\frame{
 		\frametitle{Выполнение императивной программы}
 
-		\input{fig-imperative-program.tex}
-
-		\vspace{0.75ex}
-		\figureexpl{Императивная программа использует именованные области памяти (переменные) для хранения состояния вычислений}
+		\begin{figure}
+			\input{fig-imperative-program.tex}
+			\caption{Императивная программа использует именованные области памяти (переменные) для хранения состояния вычислений}
+		\end{figure}
 	}
 
 	\section[Декларативное пр.]{Декларативное программирование}
@@ -221,7 +187,7 @@
 		\vspace{1ex}
 		\textbf{Правило вывода:} 
 		\begin{center}
-			$H \mathop{:-} B_1, \dots, B_n$, \quad т.\,е.\quad $H$, \textbf{если} $B_1$ \textbf{и} … \textbf{и} $B_n$.
+			$H \mathop{{:}{-}} B_1, \dots, B_n$, \quad т.\,е.\quad $H$, \textbf{если} $B_1$ \textbf{и} … \textbf{и} $B_n$.
 		\end{center}
 
 		\vspace{1ex}
@@ -234,8 +200,6 @@
 		\end{itemize}
 	}
 
-	% TODO figure: logic program execution
-
 	\frame{
 		\frametitle{Логическое программирование (продолжение)}
 
@@ -244,7 +208,7 @@
 			\item
 			процедурная интерпретация правил:
 			\begin{center}
-				$H \mathop{:-} B_1, \dots, B_n$;
+				$H \mathop{{:}{-}} B_1, \dots, B_n$;
 
 				чтобы вычислить $H$, нужно вычислить $B_1$, …, $B_n$.
 			\end{center}
@@ -324,7 +288,7 @@
 			\item
 			объединение логически связанных подпрограмм в модули;
 			\item
-			использование блоков инструкций для контроля области видимости переменных и функций;
+			использование блоков инструкций для контроля области видимости переменных и~функций;
 			\item
 			проектирование программ сверху вниз;
  			\item
@@ -357,7 +321,7 @@
 		\end{Definition}
 
 		\vspace{1ex}
-		\textbf{Особенность:} развитие структурного программирования с объединением в объектах данных и поведения.
+		\textbf{Особенность:} развитие структурного программирования с объединением в объектах данных и~поведения.
 	}
 
 	\frame{
@@ -372,16 +336,16 @@
 			\textbf{наследование} — повторное использование методов работы с~данными в~различных условиях; 
 			дополнение функциональности объектов;
 			\item
-			\textbf{полиморфизм подтипов} — возможность использования наследованных от~объекта потомков в~том~же~контексте, что~и~сам~объект;
+			\textbf{полиморфизм подтипов}\footnote{%
+				Полиморфизм есть и в структурном программировании, 
+				но \extlink{https://en.wikipedia.org/wiki/Ad_hoc_polymorphism}{другой}.} 
+				— возможность использования наследованных от~объекта потомков в~том~же~контексте, что~и~сам~объект;
 			\item
 			\textbf{динамическая диспетчеризация} — выбор, какую реализацию виртуального метода следует вызывать, 
 			во время исполнения программы;
 			\item
-			\textbf{открытая рекурсия} — переменная \code{this}/\code{self}, позволяющая вызывать методы объекта из других методов.
+			\textbf{открытая рекурсия} — переменная \code{this}/\code{self}, позволяющая вызывать методы объекта из~других~методов.
 		\end{itemize}
-
-		\vspace{1ex}
-		\figureexpl{Полиморфизм есть и в структурном программировании, но \extlink{https://en.wikipedia.org/wiki/Ad_hoc_polymorphism}{другой}.}
 	}
 
 	\frame{
@@ -393,15 +357,25 @@
 			определяется с помощью классов (начальный набор данных + поведение).
 
 			\vspace{0.5ex}
-			\textbf{Языки программирования:} C++, Java, C\#, Python.
+			\textbf{Языки программирования:}
+			\begin{itemize}
+				\item C++;
+				\item Java;
+				\item C\#;
+				\item Python.
+			\end{itemize}
 
-			\vspace{2ex}
+			\vspace{0.5ex}
 			\item
 			ООП на основе \textbf{прототипов} — вид ООП, в котором наследование поведения 
 			осуществляется с помощью клонирования существующих объектов (прототипов).
 
 			\vspace{0.5ex}
-			\textbf{Языки программирования:} JavaScript, Lua.
+			\textbf{Языки программирования:}
+			\begin{itemize}
+				\item JavaScript;
+				\item Lua.
+			\end{itemize}
 		\end{itemize}
 	}
 
@@ -435,7 +409,7 @@
 		\frametitle{Императивное и декларативное программирование}
 
 		\textbf{Вычисление чисел Фибоначчи — императивная программа (Python):}
-		\lstinputlisting[language=python]{code-fib.py}
+		\lstinputlisting[language={[doc]python}]{code-fib.py}
 
 		\vspace{1ex}
 		\textbf{Вызов:}
@@ -462,12 +436,10 @@
 	\frame{
 		\frametitle{Процедурное программирование и ООП}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-shapes.tex}
-
-			\vspace{0.75ex}
-			\figureexpl{Структурная модель предметной области}
-		\end{center}
+			\caption{Структурная модель предметной области}
+		\end{figure}
 	}
 
 	\frame{
@@ -520,12 +492,12 @@
 			По~своей сути парадигмы играют в проектировании и~конструировании ту~же~роль, 
 			что~и~модель жизненного цикла в~планировании разработки ПО.
 
-			\vspace{1ex}
+			\vspace{0.5ex}
 			\item
 			Выделяют две основных группы парадигм программирования: декларативные (определяют цель, но не~метод ее~достижения) 
 			и~императивные (определяют и~то, и~другое).
 
-			\vspace{1ex}
+			\vspace{0.5ex}
 			\item
 			Объектно-ориентированное программирование — основная парадигма в~разработке современных прикладных приложений. 
 			Ее особенность — представление предметной области в виде объектов, которые сочетают в себе данные и поведение.

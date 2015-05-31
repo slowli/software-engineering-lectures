@@ -9,13 +9,13 @@ public class IntegerSequenceContainer {
 			return Response.status(404).entity("Unknown sequence: " + seq)
 				.type("text/plain").build();
 		}
-		// Вернуть информацию о последовательности 
+		// $Вернуть информацию о последовательности.$
 	}
 
 	@GET @Path("{seq}/{index}") @Produces("text/plain")
 	public Response getDetails(
 		@PathParam("seq") String sequenceID, 
 		@PathParam("index") int index) {
-		// Вернуть член последовательности
+		// $Вернуть член последовательности.$
 	}
 }

@@ -1,47 +1,14 @@
 \documentclass{a4beamer}
 \input{lecture-common.def}
 
-\usepackage{multicol}
 \usetikzlibrary{shapes.misc}
+
 
 \lecturetitle{Программная инженерия. Лекция №25 — Хранение данных}
 \title[Хранение данных]{Хранение данных. Сериализация и объектно-реляционные отображения}
 \author{Алексей Островский}
 \institute{\small{Физико-технический учебно-научный центр НАН Украины}\vspace{2ex}}
 \date{14 мая 2015 г.}
-
-\usepackage{listings}
-\lstset{%
-	tabsize=4,
-	showstringspaces=false,
-	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
-	commentstyle=\color{gray},
-	numbers=left,
-	numberstyle=\footnotesize\color{gray},
-	xleftmargin=2.5em,
-	texcl=true,
-	extendedchars=true,
-	escapechar=\$
-}
-
-\lstdefinelanguage{javascript}%
-	{morekeywords={break,case,catch,%
-		const,constructor,continue,default,do,else,false,%
-		finally,for,function,if,in,instanceof,%
-		new,null,prototype,%
-		return,switch,this,throw,%
-		true,try,typeof,var,while},%
-	sensitive,%
-	morecomment=[l]//,%
-	morecomment=[s]{/*}{*/},%
-	morestring=[b]",%
-	morestring=[b]',%
-}[keywords,comments,strings]%
-
-
-\def\code#1{\texttt{#1}}
-\def\codekw#1{\texttt{\textbf{#1}}}
 
 \begin{document}
 	\frame{\titlepage}
@@ -59,12 +26,11 @@
 		\end{Definition}
 
 		\vspace{1ex}
-		\begin{center}
+		\begin{figure}
 			\input{fig-persistence.tex}
-		\end{center}
-
-		\figureexpl{Data persistence подразумевает двусторонний процесс: 
-			загрузку данных из~постоянной памяти в~оперативную и~наоборот}
+			\caption{Data persistence подразумевает двусторонний процесс: 
+				загрузку данных из~постоянной памяти в~оперативную и~наоборот}
+		\end{figure}
 	}
 
 	\frame{
@@ -174,13 +140,11 @@
 			восстановление состояния объекта или~структуры данных из~сериализованного представления.
 		\end{Definition}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-serialization.tex}
-
-			\vspace{0.5ex}
-			\figureexpl{Сериализация и десериализация могут осуществляться с использованием 
+			\caption{Сериализация и десериализация могут осуществляться с использованием 
 				встроенных или сторонних сервисов}
-		\end{center}
+		\end{figure}
 	}
 
 	\frame{
@@ -754,11 +718,10 @@
 			объектно-ориентированного программирования.
 		\end{Definition}
 
-		\begin{center}
-			\input{fig-orm.tex}
-
-			\figureexpl{Связь между объектами и СУБД в рамках ORM}
-		\end{center}
+		\begin{figure}
+			\input{fig-orm.tex}\vspace{-1ex}
+			\caption{Связь между объектами и СУБД в рамках ORM}
+		\end{figure}
 	}
 
 	\frame{
@@ -885,12 +848,11 @@
 	\frame{
 		\frametitle{Пример использования}
 
-		\begin{center}
+		\begin{figure}
 			\input{fig-orm-tables.tex}
-		\end{center}
-
-		\figureexpl{Схема организации данных в~БД. 
-			Большинство ORM-систем умеют создавать схему на~основе классов сущностей.}
+			\caption{Схема организации данных в~БД. 
+				Большинство ORM-систем умеют создавать схему на~основе классов сущностей.}
+		\end{figure}
 	}
 
 	\frame{
@@ -912,14 +874,17 @@
 			может~решаться с~помощью сериализации или~создания объектно-реляционного отображения 
 			для~сущностей предметной области.
 
+			\vspace{0.5ex}
 			\item
 			Сериализация — сохранение данных в~поток (двоичный или~текстовый). 
 			Средства сериализации присутствуют в~большинстве языков программирования.
 
+			\vspace{0.5ex}
 			\item
 			Два популярных стандарта текстовой сериализации — XML и~JSON — широко используются при~передаче данных, 
 			напр., в~веб-приложениях.
 
+			\vspace{0.5ex}
 			\item
 			Объектно-реляционные отображения используются для~установления связи между~БД и~программой, 
 			написанной на~объектно-ориентированном~ЯП.

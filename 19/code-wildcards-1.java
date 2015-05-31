@@ -1,4 +1,4 @@
-public double totalArea(List<#\only<2>{\color{red}? \textbf{extends} }#Shape> shapes) {
+public double totalArea(List<$\only<2>{\color{red}? \textbf{extends} }$Shape> shapes) {
 	double area = 0.0;
 
 	for (Shape shape : shapes) {
@@ -7,5 +7,5 @@ public double totalArea(List<#\only<2>{\color{red}? \textbf{extends} }#Shape> sh
 	return area;
 }
 
-List<Rectangle> rectangles = // …
-totalArea(rectangles); // \only<1>{Ошибка: List<Rectangle> нельзя привести к List<Shape>}\only<2>{OK: List<Rectangle> — подтип List<? extends Shape>}
+List<Rectangle> rectangles = // ...
+totalArea(rectangles); // $\only<1>{Ошибка: List<Rectangle> нельзя привести к List<Shape>}\only<2>{OK: List<Rectangle> — подтип List<? extends Shape>}$

@@ -6,7 +6,7 @@ def user_map(fname):
     return { fname: wc }
 
 def user_reduce(records):
-    """ $records — коллекция словарей, возвращенных функцией map$.
+    """ $records — коллекция словарей, возвращенных функцией map.$
         $Возвращает словарь, соответствующий файлу с макс. числом слов.$ """
     max_wc = max([rec.values()[0] for rec in records])
     for rec in records: 
