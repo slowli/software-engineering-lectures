@@ -111,10 +111,8 @@
 \def\code#1{\texttt{#1}}
 \def\codekw#1{\code{\textbf{#1}}}
 
-%% Explanation for a figure
-\def\figureexpl#1{%
-	{\footnotesize\color{gray}{#1}\par}
-}
+\def\quoteauthor#1{\par\footnotesize\upshape\hfill—~#1}
+
 %% English term
 \def\engterm#1{(англ. \textit{#1})}
 %% Term with explanation below (to be used in diagrams)

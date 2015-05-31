@@ -44,7 +44,6 @@
 \RequireIfNotLoaded{array}
 \RequireIfNotLoaded{multirow}
 \RequireIfNotLoaded{float}
-\RequireIfNotLoaded[font=small,labelsep=period]{caption}
 \RequireIfNotLoaded[unicode]{hyperref}
 
 %% Font management
@@ -268,9 +267,7 @@
 	\newcommand{\PARAMS}{\renewcommand{\algorithmicrequire}{\algKeyword{Параметры:}}\REQUIRE}
 	\newcommand{\RET}{\STATE\vkReturn}
 	\newcommand{\EXIT}{\STATE\algKeyword{выход}}
-	\newcommand{\CONTINUE}{\STATE\algKeyword{следующий} }
-	%\newcommand{\IFTHEN}[1]{\STATE\algorithmicif\ #1 {\algorithmicthen}}
-	%\newcommand{\PROCEDURE}[1]{\medskip\STATE\algKeyword{ПРОЦЕДУРА} \vkProcedure{#1}}
+	\newcommand{\CONTINUE}{\STATE\algKeyword{следующий}}
 	
 	% Установка номера строк в алгоритмах
 	\newcommand{\setalgline}[1]{
@@ -281,8 +278,6 @@
 	\floatname{algorithm}{Алгоритм}
 	
 	\floatplacement{algorithm}{!t}
-	% чтобы поставить точечку после номера алгоритма в \caption:
-	\captionsetup[ruled]{labelsep=period,font=normal}
 }
 
 \def\xten@loadlistings{
@@ -297,8 +292,6 @@
 	}
 
 	\lstset{%
-		language=java,
-		morekeywords={assert},
 		tabsize=4,
 		showstringspaces=false,
 		keywordstyle=\xten@kwstyle,
@@ -306,8 +299,6 @@
 		texcl=true,
 		escapechar=\#
 	}
-
-	\def\code##1{\texttt{\small ##1}} % XXX: move
 
 	% Включенные в текст листинги
 	\lstdefinestyle{inline}{
@@ -449,20 +440,12 @@
 %% Плавающие объекты
 \floatplacement{figure}{ht}
 \floatplacement{table}{ht}
-\DeclareCaptionFormat{xten@table}{\hfill#1#2{\centering #3}}
-\captionsetup[table]{format=xten@table,labelsep=newline,labelfont=it}
-\captionsetup[figure]{format=plain,indention=2em,labelfont=it}
 %  Положение на странице
 \setcounter{topnumber}{9}
 \setcounter{totalnumber}{9}
 \renewcommand\topfraction{1.0}
 \renewcommand\textfraction{0.0}  % чтобы иллюстрации не улетали в конец документа
 \renewcommand\floatpagefraction{0.01} % float-страниц быть вообще не должно - это чтобы их лучше видеть ;)
-%\setlength\floatsep{.75cm plus .25cm}
-%\setlength\textfloatsep{1cm plus .25cm minus .25cm}
-%\setlength\intextsep{1cm plus .25cm minus .25cm}
-%\setlength\abovecaptionskip{2ex}
-
 
 % Сноска для таблиц и других плавающих объектов
 \newcounter{xten@tfootnote}
