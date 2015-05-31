@@ -1,0 +1,319 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{xtensions}
+\hypersetup{hidelinks}
+
+\textwidth=170mm
+\oddsidemargin=0pt
+\hoffset=-5.4mm % Левое и правое поле 2 см
+\topmargin=-35pt
+\headheight=11pt
+\headsep=24pt
+\textheight=257mm
+\voffset=-5.4mm
+\pagestyle{plain}
+\def\baselinestretch{1.4}
+
+\title{Список вопросов для экзамена по~программной~инженерии}
+\author{Алексей Островский}
+\date{\url{http://softandware.org.ua}}
+
+\newcounter{globalenum}
+\setcounter{globalenum}{0}
+
+\newenvironment{genumerate}{%
+	\begin{enumerate}%
+	\afterlabel.%
+	\setcounter{enumi}{\theglobalenum}%
+}{%
+	\setcounter{globalenum}{\theenumi}%
+	\end{enumerate}%
+}
+
+\begin{document}
+
+\maketitle
+
+\section{Осенний семестр}
+
+\subsubsection*{Введение в программную инженерию}
+
+\begin{genumerate}
+	\item
+	Цель программной инженерии. Индустриальный подход к производству 
+	программного обеспечения.
+
+	\item
+	Дисциплины программной инженерии: научная, инженерная, производственная, 
+	управленческая и экономическая.
+
+	\item
+	Обзор основных областей программной инженерии согласно стандарту SWEBOK: 
+	инженерия требований, проектирование, конструирование, тестирование 
+	и~сопровождение~ПО.
+
+	\item
+	Обзор вспомогательных областей программной инженерии согласно стандарту SWEBOK: 
+	конфигурация, управление инженерией, управление процессами разработки, 
+	инструменты и~методы~ПИ, инженерия качества.
+
+	\item
+	Классификация моделей жизненного цикла ПО. Каскадная, инкрементная 
+	и~эволюционная модели.
+
+	\item
+	Принципы гибкой методологии разработки ПО (agile development).
+\end{genumerate}
+
+\subsubsection*{Проектирование ПО}
+
+\begin{genumerate}
+	\item
+	Инженерия требований к ПО. Функциональные и нефункциональные требования.
+
+	\item
+	Моделирование и представления программных систем.
+
+	\item
+	Унифицированный язык моделирования (UML) и его роль в разработке ПО.
+
+	\item
+	Архитектура ПО. Примеры архитектур: MVC, многослойная архитектура, клиент — сервер.
+
+	\item
+	Объектно\=ориентированное проектирование. Классификация шаблонов проектирования. Примеры шаблонов.
+\end{genumerate}
+
+\subsubsection*{Прикладные методы программирования}
+
+\begin{genumerate}
+	\item
+	Декларативное программирование. Функциональные и логические языки программирования.
+
+	\item
+	Императивное программирование. Аналогии и различия в процедурном, структурном и модульном программировании.
+
+	\item
+	Основы объектно\=ориентированного программирования. Классификация объектно\=ориентированных ЯП.
+
+	\item
+	Программирование с компонентами. Концепция повторного использования.
+
+	\item
+	Основы аспектно-ориентированного программирования. Принцип разделения ответственности (separation of concerns).
+
+	\item
+	Сервисное программирование. Архитектура веб-сервисов.
+
+	\item
+	Синтаксис и семантика языков программирования. Виды семантики: статическая, динамическая и формальная.
+
+	\item
+	Виды метапрограммирования. Понятие рефлексии.
+
+	\item
+	Порождающее программирование. Языки описания предметных областей (DSL). Примеры DSL.
+\end{genumerate}
+
+\section{Весенний семестр}
+
+\subsubsection*{Сопровождение ПО}
+
+\begin{genumerate}
+	\item
+	Эволюция ПО. Сопровождение как частный случай эволюции. 
+	Типы сопровождения: исправление дефектов, адаптация, совершенствование.
+
+	\item
+	Реинженерия и рефакторинг программ.
+
+	\item
+	Документирование ПО. Формы документации. 
+	Автоматические генераторы документации: javadoc, doxygen.
+\end{genumerate}
+
+\subsubsection*{Интерфейсы и взаимодействие}
+
+\begin{genumerate}
+	\item
+	Понятие интерфейса в программной инженерии. Двоичные и программные интерфейсы.
+
+	\item
+	Связывание компонентов приложения с помощью виртуальных машин. 
+	Примеры виртуальных машин: Java Virtual Machine, Common Language Runtime.
+
+	\item
+	Интерфейсы внешних функций. Java Native Interface.
+
+	\item
+	Теория типов данных. Типобезопасность и безопасность памяти. 
+	Классификация систем типов данных в языках программирования: 
+	статическая и динамическая типизация; номинальная, структурная и утиная типизация.
+
+	\item
+	Приведение типов данных и полиморфизм. 
+	Виды полиморфизма: специальный, параметрический и полиморфизм подтипов. 
+	Отличия между наследованием и полиморфизмом.
+
+	\item
+	Интерфейсы в языках программирования. Интерфейс как контракт. 
+	Принцип подстановки Барбары Лисков.
+
+	\item
+	Ковариантность и контравариантность параметрических конструкций в языках программирования (Java, C\#).
+
+	\item
+	Фундаментальные типы данных согласно стандарту ISO~11404. 
+	Типы данных, независимые от ЯП.
+
+	\item
+	Понятие интероперабельности компонентов программных систем. 
+	Низкоуровневая и высокоуровневая интероперабельность.
+
+	\item
+	Архитектура посредников доступа к объектам (object request broker). 
+	Язык спецификации интерфейсов (IDL).
+
+	\item
+	Очереди сообщений. Архитектуры очереди: point to point и publish / subscribe.
+\end{genumerate}
+
+\subsubsection*{Вспомогательные области разработки ПО}
+
+\begin{genumerate}
+	\item
+	Централизованные и распределенные системы управления версиями. Git.
+
+	\item
+	Методы автоматизации сборки ПО. Утилиты make и ant.
+
+	\item
+	Управление выпусками ПО. Выпуски в контексте эволюции программных продуктов.
+
+	\item
+	Основные принципы непрерывной интеграции (continuous integration).
+
+	\item
+	Управление качеством программных систем. Модели качества.
+
+	\item
+	Измерение программного обеспечения. Метрики ПО и их связь с характеристиками качества.
+
+	\item
+	Управление программным проектом. Планирование разработки.
+
+	\item
+	Управление рисками при разработке ПО.
+\end{genumerate}
+
+\subsubsection*{Прикладные аспекты программной инженерии}
+
+\begin{genumerate}
+	\item
+	Постоянное хранение данных (data persistence). Сериализация данных. 
+	Обзор стандартов XML и JSON.
+
+	\item
+	Объектно-реляционные отображения (ORM). Шаблоны проектирования, связанные с ORM: 
+	ActiveRecord, DataMapper.
+
+	\item
+	Сервисная архитектура приложений. Веб-сервисы на основе SOAP / WSDL.
+
+	\item
+	Понятие REST (передача репрезентативного состояния) для сервисов. 
+	Отличительные особенности веб-сервисов на основе REST.
+
+	\item
+	Понятие BigData. Базы данных NoSQL.
+
+	\item
+	Вспомогательные технологии для облачных вычислений. Классификация облачных архитектур.
+\end{genumerate}
+
+\begin{thebibliography}{99}
+	\bibitem{1}
+    Лаврищева Е.\,М., Петрухин В.\,А.
+	Методы и средства программного обеспечения.~— М.:~Мин. образования РФ.~— 2007.~— 415~с.
+
+	\bibitem{2}
+    Лавріщева К.\,М.
+	Програмна інженерія.~— К.:~Академперіодика.~— 2008.~— 319~с.
+
+	\begin{otherlanguage}{english}
+	\bibitem{3}
+    Sommerville I. 
+	Software engineering, 9th~ed.~— Boston, Massachusetts: Addison-Wesley.~— 2011.~— 790~p.
+
+	\bibitem{4}
+    Pfleeger S.\,L., Atlee J.\,M.
+	Software engineering: theory and practice.~— Upper Saddle River, New Jersey: Prentice Hall.~— 2010.~— 756~p.
+
+	\bibitem{5}
+    Guide to the software engineering body of knowledge, version 3.0~/ 
+	ed.~by~Bourque~P., Fairley R.\,E.~— IEEE Computer Society.~— 2014.~— URL: \url{http://swebok.org/}.
+
+	\bibitem{6}
+    McConnell S.
+	Code complete.~— Upper Saddle River, New Jersey: Microsoft Press.~— 2009.~— 960~p.
+
+	\bibitem{7}
+    Pressman R.\,S.
+	Software engineering: a practitioner’s approach.~— Basingstoke: Palgrave Macmillan.~— 2005.~— 880 p.
+
+	\bibitem{8}
+    Object-oriented analysis and design with applications~/ 
+	Booch~G., Maksimchuck~R.\,A., Engle~M.\,W. et~al.~— 
+	Upper Saddle River, New Jersey: Pearson Education.~— 2007.~— 720~p.
+
+	\bibitem{9}
+    Jacobson I., Ng P.-W.
+	Aspect-oriented software development with use cases.~— Boston, Massachusetts: Addison-Wesley.~— 2005.~— 418~p.
+
+	\bibitem{10}
+    Bell M.
+	Service-oriented modeling.~— Hoboken, New Jersey: John Wiley \& Sons.~— 2008.~— 368~p.
+
+	\bibitem{11}
+    Hansen M.\,R., Rischel H.
+	Functional programming using F\#.~— Cambridge: Cambridge University Press.~— 2013.~— 361~p.
+
+	\bibitem{12}
+    Fowler M., Beck K., Brant J., Opdyke W., Roberts D.
+	Refactoring: improving the design of existing code.~— Boston, Massachusetts: Addison-Wesley.~— 2012.~— 455~p.
+
+	\bibitem{13}
+    Hohpe G., Woolf B.
+	Enterprise Integration Patterns.~— Boston, Massachusetts: Addison-Wesley.~— 2012.~— 735~p.
+
+	\bibitem{14}
+    Fowler M.
+	Patterns of enterprise application architecture.~— Boston, Massachusetts: Addison-Wesley.~— 2012.~— 557~p.
+
+	\bibitem{15}
+    Shore J., Warden S.
+	The art of agile development.~— Sebastopol, California: O’Reilly Media.~— 2008.~— 409~p.
+
+	\bibitem{16}
+    Wiegers K., Beatty J.
+	Software requirements. — Upper Saddle River, New Jersey: Pearson Education.~— 2013.~— 672~p.
+
+	\bibitem{17}
+    Myers G.\,J., Sandler C., Badgett T.
+	The art of software testing.~— Hoboken, New Jersey: John Wiley \& Sons.~— 2011.~— 256~p.
+
+	\bibitem{18}
+    Tian J.
+	Software quality engineering. — Hoboken, New Jersey: John Wiley \& Sons.~— 2005.~— 440~p.
+
+	\bibitem{19}
+    Buyya R., Broberg J., Goscinski A.\,M.
+	Cloud computing: principles and paradigms.~— Hoboken, New Jersey: John Wiley \& Sons.~— 2010.~— 664~p.
+
+	\bibitem{20}
+    Coulouris G.\,F., Dollimore J., Kindberg T.
+	Distributed systems: concepts and design.~— Upper Saddle River, New Jersey: Pearson Education.~— 2011.~— 927~p.
+	\end{otherlanguage}
+\end{thebibliography}
+
+\end{document}

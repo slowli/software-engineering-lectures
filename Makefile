@@ -52,7 +52,9 @@ $(OUTDIR)/$(1)-$(2)-beamer.pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*) $(wildcard 
 	mv $(TEMPDIR)/$$(notdir $$@) $$@
 endef
 
-all: $(DIRS)
+.PHONY: all install aux uninstall
+
+all: $(DIRS) aux
 all-a4: $(DIRS_a4)
 all-beamer: $(DIRS_beamer)
 install: all
@@ -61,6 +63,15 @@ $(foreach _dir,$(DIRS), \
 	$(eval _basename = $(basename $(notdir $(filter $(_dir)/%,$(TEX))))) \
 	$(eval $(call DIR_template,$(_dir),$(_basename))) \
 )
+
+aux: $(OUTDIR)/questions.pdf
+
+$(OUTDIR)/questions.pdf: aux/questions.tex
+	mkdir -p $(TEMPDIR)
+	mkdir -p $(OUTDIR)
+	env TEXINPUTS=common:aux: $(CC) $(CFLAGS) --output-directory $(TEMPDIR) $<
+	env TEXINPUTS=common:aux: $(CC) $(CFLAGS) --output-directory $(TEMPDIR) $<
+	mv $(TEMPDIR)/$(notdir $@) $@
 
 show-errors:
 	grep -e "Overfull" -C 3 tmp/*.log
