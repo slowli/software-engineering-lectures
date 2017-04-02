@@ -52,9 +52,9 @@ $(OUTDIR)/$(1)-$(2)-beamer.pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*) $(wildcard 
 	mv $(TEMPDIR)/$$(notdir $$@) $$@
 endef
 
-.PHONY: all install aux uninstall
+.PHONY: all install supplementary uninstall
 
-all: $(DIRS) aux
+all: $(DIRS) supplementary
 all-a4: $(DIRS_a4)
 all-beamer: $(DIRS_beamer)
 install: all
@@ -64,13 +64,13 @@ $(foreach _dir,$(DIRS), \
 	$(eval $(call DIR_template,$(_dir),$(_basename))) \
 )
 
-aux: $(OUTDIR)/questions.pdf
+supplementary: $(OUTDIR)/questions.pdf
 
-$(OUTDIR)/questions.pdf: aux/questions.tex
+$(OUTDIR)/questions.pdf: supplementary/questions.tex
 	mkdir -p $(TEMPDIR)
 	mkdir -p $(OUTDIR)
-	env TEXINPUTS=common:aux: $(CC) $(CFLAGS) --output-directory $(TEMPDIR) $<
-	env TEXINPUTS=common:aux: $(CC) $(CFLAGS) --output-directory $(TEMPDIR) $<
+	env TEXINPUTS=common:supplementary: $(CC) $(CFLAGS) --output-directory $(TEMPDIR) $<
+	env TEXINPUTS=common:supplementary: $(CC) $(CFLAGS) --output-directory $(TEMPDIR) $<
 	mv $(TEMPDIR)/$(notdir $@) $@
 
 show-errors:
