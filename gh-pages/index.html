@@ -1,0 +1,11 @@
+---
+layout: default
+---
+
+<ul>
+{% for lecture in site.lectures %}
+  <li><a href="{{ lecture.url }}">{{ lecture.title }}</a>
+    {{ lecture.excerpt }}
+  </li>
+{% endfor %}
+</ul>

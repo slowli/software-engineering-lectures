@@ -1,0 +1,6 @@
+/_site
+# Генерируются автоматически
+/_lectures
+/files
+.*
+!.gitignore

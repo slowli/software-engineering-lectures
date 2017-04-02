@@ -1,0 +1,17 @@
+theme: jekyll-theme-cayman
+title: Лекции
+description: Презентации и другие материалы по программной инженерии
+exclude:
+  - Gemfile
+  - Gemlock
+collections:
+  lectures:
+    output: true
+    permalink: /:name/
+defaults:
+  - scope:
+      path: ""
+      type: lectures
+    values:
+      layout: lecture
+
