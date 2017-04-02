@@ -25,6 +25,10 @@ DIRS=$(subst /,,$(dir $(TEX)))
 DIRS_a4=$(addsuffix -a4,$(DIRS))
 DIRS_beamer=$(addsuffix -beamer,$(DIRS))
 
+GH_PAGES_DIR=gh-pages
+GH_PAGES_FILES=$(GH_PAGES_DIR)/files
+GH_PAGES_SRC=$(GH_PAGES_DIR)/_lectures
+
 # Function for defining rules for separate presentations.
 #
 # Arguments:
@@ -50,9 +54,19 @@ $(OUTDIR)/$(1)-$(2)-beamer.pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*) $(wildcard 
 	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(1)-$(2)-beamer $(TEMPDIR)/tmp.tex
 	rm $(TEMPDIR)/tmp.tex
 	mv $(TEMPDIR)/$$(notdir $$@) $$@
+
+ifneq (,$(wildcard $(1)/README.md))
+
+$(GH_PAGES_SRC)/$(1)-$(2).md: $(1)/README.md
+	mkdir -p $(GH_PAGES_SRC)
+	sed -r "2 i file: $(1)-$(2)-beamer.pdf" $$< > $$@
+
+GH_PAGES += $(GH_PAGES_SRC)/$(1)-$(2).md
+endif
+
 endef
 
-.PHONY: all install supplementary uninstall
+.PHONY: all install supplementary uninstall gh-pages
 
 all: $(DIRS) supplementary
 all-a4: $(DIRS_a4)
@@ -75,6 +89,13 @@ $(OUTDIR)/questions.pdf: supplementary/questions.tex
 
 show-errors:
 	grep -e "Overfull" -C 3 tmp/*.log
+
+gh-pages: $(DIRS) $(GH_PAGES)
+	mkdir -p $(GH_PAGES_FILES)
+	cp out/*-beamer.pdf $(GH_PAGES_FILES)
+
+gh-serve: gh-pages
+	cd $(GH_PAGES_DIR) && bundle exec jekyll serve
 
 clean:
 	rm -rf $(TEMPDIR)
