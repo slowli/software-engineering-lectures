@@ -3,7 +3,7 @@ title: Лекции
 description: Презентации и другие материалы по программной инженерии
 exclude:
   - Gemfile
-  - Gemlock
+  - Gemfile.lock
 collections:
   lectures:
     output: true
