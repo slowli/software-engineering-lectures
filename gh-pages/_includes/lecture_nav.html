@@ -1,0 +1,6 @@
+{% if page.previous %}
+  <p>Предыдущая лекция: <a href="{{ page.previous.url }}">№{{ page.previous.index | ceil }} — {{ page.previous.title }}</a></p>
+{% endif %}
+{% if page.next %}
+  <p>Следующая лекция: <a href="{{ page.next.url }}">№{{ page.next.index | ceil }} — {{ page.next.title }}</a></p>
+{% endif %}
