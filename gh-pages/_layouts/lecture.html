@@ -1,13 +1,19 @@
 {% include header.html %}
   <h1>{{ page.title }}</h1>
+  {% for section in site.sections %}
+    {% if section.title == page.category %}
+      <p>Раздел: <a href="{{ section.url }}">{{ section.title }}</a></p>
+    {% endif %}
+  {% endfor %}
+
   {{ content }}
   {% if page.file %}
     <p><a href="{{ '/files/' | append: page.file | relative_url }}">Скачать</a></p>
   {% endif %}
   {% if page.previous %}
-    <p>Предыдущая: <a href="{{ page.previous.url | relative_url }}">{{ page.previous.title }}</a></p>
+    <p>Предыдущая: <a href="{{ page.previous.url }}">{{ page.previous.title }}</a></p>
   {% endif %}
   {% if page.next %}
-    <p>Следующая: <a href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a></p>
+    <p>Следующая: <a href="{{ page.next.url }}">{{ page.next.title }}</a></p>
   {% endif %}  
 {% include footer.html %}
