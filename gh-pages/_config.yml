@@ -7,11 +7,19 @@ exclude:
 collections:
   lectures:
     output: true
-    permalink: /:name/
+    permalink: /:path/
+  sections:
+    output: true
+    permalink: /:path/
 defaults:
   - scope:
       path: ""
       type: lectures
     values:
       layout: lecture
+  - scope:
+      path: ""
+      type: sections
+    values:
+      layout: section
 

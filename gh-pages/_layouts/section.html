@@ -1,0 +1,19 @@
+{% include header.html %}
+<h1>Раздел {{page.index}}: {{ page.title }}</h1>
+  
+{% capture lecture_list %}
+<h2>Лекции</h2>
+<ul>
+{% for lecture in site.lectures %}
+  {% if lecture.category == page.title %}
+  <li><a href="{{ lecture.url }}">{{ lecture.title }}</a>
+    <p>{{ lecture.excerpt | strip_html }}</p>
+  </li>
+  {% endif %}
+{% endfor %}
+</ul>
+{% endcapture %}
+
+{{ content | replace: "<!--list-->", lecture_list }}
+
+{% include footer.html %}
