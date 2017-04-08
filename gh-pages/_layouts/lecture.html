@@ -4,4 +4,10 @@
   {% if page.file %}
     <p><a href="{{ '/files/' | append: page.file | relative_url }}">Скачать</a></p>
   {% endif %}
+  {% if page.previous %}
+    <p>Предыдущая: <a href="{{ page.previous.url | relative_url }}">{{ page.previous.title }}</a></p>
+  {% endif %}
+  {% if page.next %}
+    <p>Следующая: <a href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a></p>
+  {% endif %}  
 {% include footer.html %}
