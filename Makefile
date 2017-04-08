@@ -83,7 +83,8 @@ ifneq (,$(wildcard $(1)/README.md))
 
 $(GH_PAGES_SRC)/$(4)/$(3)-$(2).md: $(1)/README.md
 	mkdir -p $(GH_PAGES_SRC)/$(4)
-	sed -r "2 i file: $(3)-$(2)-beamer.pdf" $$< > $$@
+	sed -r "2 i file: $(3)-$(2)-beamer.pdf" $$< | \
+		sed -r "2 i index: $(3)" > $$@
 
 GH_PAGES += $(GH_PAGES_SRC)/$(4)/$(3)-$(2).md
 endif
@@ -133,9 +134,13 @@ $(OUTDIR)/questions.pdf: supplementary/questions.tex
 show-errors:
 	grep -e "Overfull" -C 3 tmp/*.log
 
+ifdef GH_PAGES_NOFILES
+gh-pages: $(GH_PAGES)
+else
 gh-pages: all-beamer $(GH_PAGES)
 	mkdir -p $(GH_PAGES_FILES)
 	cp out/*-beamer.pdf $(GH_PAGES_FILES)
+endif
 
 gh-serve: gh-pages
 	cd $(GH_PAGES_DIR) && bundle exec jekyll serve
@@ -145,5 +150,5 @@ clean:
 
 uninstall: clean
 	rm -rf $(OUTDIR)
-	rm -rf $(GH_PAGES_FILES) $(GH_PAGES_SRC)
+	rm -rf $(GH_PAGES_FILES) $(GH_PAGES_SRC) $(GH_PAGES_SEC)
 
