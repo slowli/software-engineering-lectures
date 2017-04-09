@@ -1,0 +1,75 @@
+.btn .octicon {
+  vertical-align: bottom;
+  margin-right: 0.2rem;
+
+  path {
+    transition: fill 0.2s;
+  }
+}
+
+.page-header {
+  .btn .octicon {
+    path {
+      fill: rgba(255,255,255,0.7);
+    }
+  }
+
+  .btn:hover .octicon path {
+    fill: rgba(255,255,255,0.8);
+  }
+}
+
+
+
+.breadcrumbs,
+.sibling-nav {
+  color: lighten($body-text-color, 25%);
+  font-size: 90%;
+
+  a {
+    color: mix($body-link-color, lighten($body-text-color, 25%), 50%);
+  }
+}
+
+.sibling-nav {
+  margin: 2rem 0;
+}
+
+.pre-header {
+  color: darken($body-text-color, 10%);
+  font-size: 1rem;
+  text-transform: uppercase;
+  line-height: 0.6;
+}
+
+$btn-color: lighten($section-headings-color, 10%);
+
+.btn.btn-download {
+  background-color: transparentize($btn-color, 0.2);
+  border-color: transparentize($btn-color, 0.1);
+  color: white;
+
+  &:hover {
+    border-color: lighten($btn-color, 10%);
+    background-color: $btn-color;
+  }
+
+  .octicon path {
+    fill: #fff;
+  }
+}
+
+.site-owner-github {
+  float: left;
+
+  .octicon path {
+    fill: darken($body-text-color, 10%);
+  }
+}
+
+.site-copyright {
+  font-size: 0.9rem;
+  margin-left: 80px;
+  max-width: 20rem;
+}
+

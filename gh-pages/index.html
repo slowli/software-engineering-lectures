@@ -2,10 +2,11 @@
 layout: default
 ---
 
+<h2>Разделы</h2>
 <ul>
-{% for lecture in site.lectures %}
-  <li><a href="{{ lecture.url }}">{{ lecture.title }}</a>
-    {{ lecture.excerpt }}
+{% for section in site.sections %}
+  <li><a href="{{ section.url }}">{{ section.title }}</a>
+    <p>{{ section.excerpt | strip_html }}</p>
   </li>
 {% endfor %}
 </ul>

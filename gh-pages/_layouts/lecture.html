@@ -1,15 +1,15 @@
 {% include header.html %}
   {% for section in site.sections %}
     {% if section.title == page.category %}
-      <div>Раздел: <a href="{{ section.url }}">{{ section.title }}</a></div>
+      <div class="breadcrumbs">Раздел: <a href="{{ section.url }}">{{ section.title }}</a></div>
     {% endif %}
   {% endfor %}
 
-  <h1><div>Лекция №{{ page.index }}</div>{{ page.title }}</h1>
+  <h1><div class="pre-header">Лекция №{{ page.index }}</div>{{ page.title }}</h1>
 
   {{ content }}
   {% if page.file %}
-    <p><a href="{{ '/files/' | append: page.file | relative_url }}">Скачать</a></p>
+    <p><a class="btn btn-download" href="{{ '/files/' | append: page.file | relative_url }}">{% octicon file-pdf height:24 %} Скачать</a></p>
   {% endif %}
   {% include lecture_nav.html %}
 {% include footer.html %}

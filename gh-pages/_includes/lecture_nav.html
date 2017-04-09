@@ -1,6 +1,10 @@
-{% if page.previous %}
-  <p>Предыдущая лекция: <a href="{{ page.previous.url }}">№{{ page.previous.index | ceil }} — {{ page.previous.title }}</a></p>
-{% endif %}
-{% if page.next %}
-  <p>Следующая лекция: <a href="{{ page.next.url }}">№{{ page.next.index | ceil }} — {{ page.next.title }}</a></p>
+{% if page.previous or page.next %}
+<div class="sibling-nav">
+  {% if page.previous %}
+    <div class="nav-bottom-prev">Предыдущая лекция: <a href="{{ page.previous.url }}">{{ page.previous.index | ceil }}. {{ page.previous.title }}</a></div>
+  {% endif %}
+  {% if page.next %}
+    <div class="nav-bottom-next">Следующая лекция: <a href="{{ page.next.url }}">{{ page.next.index | ceil }}. {{ page.next.title }}</a></div>
+  {% endif %}
+</div>
 {% endif %}

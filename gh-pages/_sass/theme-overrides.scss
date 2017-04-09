@@ -1,0 +1,29 @@
+.page-header-link {
+  display: block;
+  color: inherit;
+  max-width: 64rem;
+  margin: 0 auto;
+
+  &:hover {
+    text-decoration: none !important;
+  }
+}
+
+.main-content {
+  @include large {
+    font-size: 1rem;
+  }
+
+  @include medium {
+     font-size: 1rem;
+  }
+
+  @include small {
+     font-size: 0.9rem;
+  }
+}
+
+.project-tagline {
+  margin-top: 0;
+}
+
