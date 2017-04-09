@@ -44,7 +44,7 @@ TEX_applications=21/interfaces.tex \
 	27/clouds.tex
 
 GH_PAGES_DIR=gh-pages
-GH_PAGES_FILES=$(GH_PAGES_DIR)/files
+GH_PAGES_FILES=$(GH_PAGES_DIR)/assets/pdf
 GH_PAGES_SRC=$(GH_PAGES_DIR)/_lectures
 GH_PAGES_SEC=$(GH_PAGES_DIR)/_sections
 

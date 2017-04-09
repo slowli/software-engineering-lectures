@@ -2,6 +2,6 @@
 # Генерируются автоматически
 /_lectures
 /_sections
-/files
+/assets/pdf
 .*
 !.gitignore
