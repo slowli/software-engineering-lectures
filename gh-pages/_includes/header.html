@@ -8,6 +8,8 @@
     <meta name="theme-color" content="#157878">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="{{ 'assets/js/common.js?v=' | append: site.github.build_revision | relative_url }}"></script>
   </head>
   <body>
     <section class="page-header">
@@ -19,5 +21,5 @@
         <a href="{{ site.github.repository_url }}" class="btn">{% include icon.html icon="github" %} Смотреть на GitHub</a>
       {% endif %}
     </section>
-
-    <section class="main-content">
+    <section class="main-content {{ include.content_classes }}">
+      <div class="main-content-no-footer">
