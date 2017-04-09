@@ -3,10 +3,7 @@ layout: default
 ---
 
 <h2>Разделы</h2>
-<ul>
 {% for section in site.sections %}
-  <li><a href="{{ section.url }}">{{ section.title }}</a>
-    <p>{{ section.excerpt | strip_html }}</p>
-  </li>
+  <h3>{{ section.index | ceil }}. {{ section.title }}</a></h3>
+  <p>{{ section.excerpt | strip_html }} <a href="{{ section.url | relative_url }}">Детальнее→</a></p>
 {% endfor %}
-</ul>

@@ -6,12 +6,12 @@
 {% for lecture in site.lectures %}
   {% if lecture.category == page.title %}
   <h3>{{ lecture.index | ceil }}. {{ lecture.title }}</a></h3>
-  <p>{{ lecture.excerpt | strip_html }} <a href="{{ lecture.url }}">Детальнее→</a></p>
+  <p>{{ lecture.excerpt | strip_html }} <a href="{{ lecture.url | relative_url }}">Детальнее→</a></p>
   {% endif %}
 {% endfor %}
 {% endcapture %}
 
 {{ content | replace: "<!--list-->", lecture_list }}
 
-{% include section_nav.html %}
+{% include sibling_nav.html type="section" %}
 {% include footer.html %}
