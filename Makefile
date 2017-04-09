@@ -145,6 +145,17 @@ endif
 gh-serve: gh-pages
 	cd $(GH_PAGES_DIR) && bundle exec jekyll serve
 
+gh-push-local: gh-pages
+	cd $(GH_PAGES_DIR) && \
+	git init && \
+	mv .gitignore .gitignore~ && \
+	echo "/_site\n.*" > .gitignore && \
+	git add . && \
+	git commit -m "Deploy to GitHub pages" && \
+	git push --force --quiet "../.git" master:gh-pages && \
+	rm -rf .git && \
+	mv -f .gitignore~ .gitignore
+
 clean:
 	rm -rf $(TEMPDIR)
 
