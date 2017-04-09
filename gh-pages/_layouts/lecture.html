@@ -9,7 +9,7 @@
 
   {{ content }}
   {% if page.file %}
-    <p><a class="btn btn-download" href="{{ '/assets/pdf/' | append: page.file | relative_url }}">{% octicon file-pdf height:24 %} Скачать</a></p>
+    <p><a class="btn btn-download" href="{{ '/assets/pdf/' | append: page.file | relative_url }}">{% include icon.html icon="file-pdf" %} Скачать презентацию</a></p>
   {% endif %}
   {% include lecture_nav.html %}
 {% include footer.html %}
