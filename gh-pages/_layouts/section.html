@@ -1,4 +1,7 @@
-{% include header.html content_classes="with-navbar" nanvar=navbar %}
+---
+layout: default
+body_class: with-navbar
+---
 <h1><div class="pre-header">Раздел {{page.index}}</div>{{ page.title }}</h1>
 
 <nav class="toc toc-collapsed" data-toc=".main-content">
@@ -19,4 +22,3 @@
   {{ content | replace: "<!--list-->", lecture_list }}
   {% include sibling_nav.html type="section" %}
 </div>
-{% include footer.html %}

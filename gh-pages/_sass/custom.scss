@@ -34,7 +34,7 @@ $xlarge-breakpoint: 104em;
 /* Table of contents. */
 
 .with-navbar {
-  &.main-content {
+  .main-content {
     @include large {
       max-width: 80rem;
       padding: 2rem 4rem;
@@ -148,4 +148,3 @@ $btn-color: lighten($section-headings-color, 10%);
   margin-left: 84px;
   max-width: 20rem;
 }
-

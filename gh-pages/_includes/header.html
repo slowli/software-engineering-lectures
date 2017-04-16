@@ -1,30 +1,9 @@
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8">
-    <title>{{ page.title | default: site.title | append: site.common_title }}</title>
-    <meta name="description" content="{{ page.description | default: site.description | default: site.github.project_tagline }}"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="{{ 'assets/img/favicon32.png' | relative_url }}" sizes="32x32">
-    <link rel="icon" href="{{ 'assets/img/favicon72.png' | relative_url }}" sizes="72x72">
-    <link rel="icon" href="{{ 'assets/img/favicon114.png' | relative_url }}" sizes="114x114">
-    <link rel="icon" href="{{ 'assets/img/favicon144.png' | relative_url }}" sizes="144x144">
-    <link rel="icon" href="{{ 'assets/img/favicon.svg' | relative_url }}" type="image/xml+svg" sizes="any">
-    <meta name="theme-color" content="#157878">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="{{ 'assets/js/common.js?v=' | append: site.github.build_revision | relative_url }}"></script>
-  </head>
-  <body>
-    <section class="page-header">
-      <a href="{{ '/' | relative_url }}" class="page-header-link">
-        <h1 class="project-name">{{ site.title | default: site.github.repository_name }}</h1>
-        <h2 class="project-tagline">{{ site.description | default: site.github.project_tagline }}</h2>
-      </a>
-      {% if site.github.is_project_page %}
-        <a href="{{ site.github.repository_url }}" class="btn">{% include icon.html icon="github" %} Смотреть на GitHub</a>
-      {% endif %}
-    </section>
-    <section class="main-content {{ include.content_classes }}">
-      <div class="main-content-no-footer">
+<header class="page-header">
+  <a href="{{ '/' | relative_url }}" class="page-header-link">
+    <h1 class="project-name">{{ site.title | default: site.github.repository_name }}</h1>
+    <h2 class="project-tagline">{{ site.description | default: site.github.project_tagline }}</h2>
+  </a>
+  {% if site.github.is_project_page %}
+    <a href="{{ site.github.repository_url }}" class="btn">{% include icon.html icon="github" %} Смотреть на GitHub</a>
+  {% endif %}
+</header>
