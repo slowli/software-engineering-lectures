@@ -8,7 +8,7 @@ keywords:
 common_title: " | Лекции по программной инженерии"
 copyright: |
   &copy; 2014–2017 Алексей Островский. 
-  Тексты доступны по лицензии <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
+  Тексты доступны по лицензии <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
 exclude:
   - Gemfile
   - Gemfile.lock
