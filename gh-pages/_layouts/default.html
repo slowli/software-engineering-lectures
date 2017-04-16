@@ -2,18 +2,35 @@
 scripts: []
 ---
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" prefix="og: http://ogp.me/ns#">
   <head>
     <meta charset="UTF-8">
-    <title>{{ page.title | default: site.title | append: site.common_title }}</title>
-    <meta name="description" content="{{ page.description | default: site.description | default: site.github.project_tagline }}"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    {% assign title = page.title | default: site.title | append: site.common_title %}
+    {% assign description = page.description | default: page.excerpt | default: site.description | default: site.github.project_tagline | strip_html | strip %}
+    <title>{{ title }}</title>
+    <meta name="description" content="{{ description }}"/>
+    <meta name="keywords" content="{{ site.keywords | join: ', ' }}">
+    <meta name="author" content="{{ page.author }}">
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:description" content="{{ description }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ page.url | relative_url }}">
+    <meta property="og:image" content="{{ 'assets/img/icon320.png' |relative_url }}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="320">
+    <meta property="og:image:height" content="320">
+    <meta property="og:image" content="{{ 'assets/img/favicon.svg' |relative_url }}">
+    <meta property="og:image:type" content="image/svg+xml">
+    <meta property="og:image:width" content="320">
+    <meta property="og:image:height" content="320">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="{{ 'assets/img/favicon32.png' | relative_url }}" sizes="32x32">
     <link rel="icon" href="{{ 'assets/img/favicon72.png' | relative_url }}" sizes="72x72">
     <link rel="icon" href="{{ 'assets/img/favicon114.png' | relative_url }}" sizes="114x114">
     <link rel="icon" href="{{ 'assets/img/favicon144.png' | relative_url }}" sizes="144x144">
-    <link rel="icon" href="{{ 'assets/img/favicon.svg' | relative_url }}" type="image/xml+svg" sizes="any">
+    <link rel="icon" href="{{ 'assets/img/favicon.svg' | relative_url }}" type="image/svg+xml" sizes="any">
     <meta name="theme-color" content="#157878">
     
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>

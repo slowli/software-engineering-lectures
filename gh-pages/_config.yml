@@ -1,6 +1,10 @@
 theme: jekyll-theme-cayman
 title: Программная инженерия
 description: Лекции, презентации и другие материалы
+keywords:
+  - программная инженерия
+  - обучение
+  - лекции
 common_title: " | Лекции по программной инженерии"
 copyright: |
   &copy; 2014–2017 Алексей Островский. 
@@ -16,6 +20,10 @@ collections:
     output: true
     permalink: /:path/
 defaults:
+  - scope:
+      path: ""
+    values:
+      author: Алексей Островский
   - scope:
       path: ""
       type: lectures
