@@ -1,6 +1,7 @@
 theme: jekyll-theme-cayman
-title: Лекции
-description: Презентации и другие материалы по программной инженерии
+title: Программная инженерия
+description: Лекции, презентации и другие материалы
+common_title: " | Лекции по программной инженерии"
 copyright: |
   &copy; 2014–2017 Алексей Островский. 
   Тексты доступны по лицензии <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
