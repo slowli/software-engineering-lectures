@@ -1,6 +1,7 @@
 theme: jekyll-theme-cayman
 title: Программная инженерия
 description: Лекции, презентации и другие материалы
+google_analytics: UA-56328802-2
 keywords:
   - программная инженерия
   - обучение
