@@ -1,0 +1,38 @@
+theme: jekyll-theme-cayman
+title: Программная инженерия
+description: Лекции, презентации и другие материалы
+google_analytics: UA-56328802-2
+keywords:
+  - программная инженерия
+  - обучение
+  - лекции
+common_title: " | Лекции по программной инженерии"
+copyright: |
+  &copy; 2014–2017 Алексей Островский. 
+  Тексты доступны по лицензии <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+collections:
+  lectures:
+    output: true
+    permalink: /:path/
+  sections:
+    output: true
+    permalink: /:path/
+defaults:
+  - scope:
+      path: ""
+    values:
+      author: Алексей Островский
+  - scope:
+      path: ""
+      type: lectures
+    values:
+      layout: lecture
+  - scope:
+      path: ""
+      type: sections
+    values:
+      layout: section
+

@@ -1,0 +1,7 @@
+/_site
+# Generated automatically
+/_lectures
+/_sections
+/assets/pdf
+.*
+!.gitignore

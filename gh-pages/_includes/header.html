@@ -1,0 +1,9 @@
+<header class="page-header">
+  <a href="{{ '/' | relative_url }}" class="page-header-link">
+    <h1 class="project-name">{{ site.title | default: site.github.repository_name }}</h1>
+    <h2 class="project-tagline">{{ site.description | default: site.github.project_tagline }}</h2>
+  </a>
+  {% if site.github.is_project_page %}
+    <a href="{{ site.github.repository_url }}" class="btn">{% include icon.html icon="github" %} Смотреть на GitHub</a>
+  {% endif %}
+</header>

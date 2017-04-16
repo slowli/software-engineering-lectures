@@ -1,0 +1,150 @@
+$xlarge-breakpoint: 104em;
+@mixin xlarge {
+  @media screen and (min-width: #{$xlarge-breakpoint}) {
+    @content;
+  }
+}
+
+.page-header .btn .icon {
+  font-size: 24px;
+  vertical-align: -4px;
+}
+
+.breadcrumbs,
+.sibling-nav {
+  color: lighten($body-text-color, 25%);
+  font-size: 90%;
+
+  a {
+    color: mix($body-link-color, lighten($body-text-color, 25%), 50%);
+  }
+}
+
+.sibling-nav {
+  margin: 2rem 0;
+}
+
+.pre-header {
+  color: darken($body-text-color, 10%);
+  font-size: 1rem;
+  text-transform: uppercase;
+  line-height: 0.6;
+}
+
+/* Table of contents. */
+
+.with-navbar {
+  .main-content {
+    @include large {
+      max-width: 80rem;
+      padding: 2rem 4rem;
+    }
+    
+    @include xlarge {
+      position: relative;
+      left: 160px;
+    }
+  }
+  .main-content-column {
+    @include large {
+      margin-right: 320px;
+    }
+  }
+}
+
+.toc {
+  background-color: $hr-border-color;
+  font-size: 0.9rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  
+  @include large {
+    position: absolute; /* fallback */
+    right: 0;
+    float: right;
+    width: 300px;
+    position: sticky;
+    top: 0;
+    
+    h4 .icon {
+      display: none;
+    }
+  }
+  
+  h4 .icon:before {
+    margin: 0; /* needed for accurate animation */
+    transform: rotate(90deg);
+    transition: transform 0.25s;
+  }
+  &.toc-collapsed h4 .icon:before {
+    transform: rotate(0deg);
+  }
+  
+  @include small {
+    &.toc-collapsed>ul {
+      display: none;
+    }    
+    h4 {
+      cursor: pointer;
+    }
+    &.toc-collapsed h4 {
+      margin-bottom: 0;
+    }
+  }
+  @include medium {
+    &.toc-collapsed>ul {
+      display: none;
+    }
+    h4 {
+      cursor: pointer;
+    }
+    &.toc-collapsed h4 {
+      margin-bottom: 0;
+    }
+  }
+
+  h4 {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: darken($body-text-color, 10%);
+  }
+  
+   ul {
+     list-style: none outside none;
+     margin: 0;
+     padding: 0;
+   }
+   ul ul {
+     margin-left: 1.5rem;
+     font-size: 0.8rem;
+     margin-bottom: 0.2rem;
+   }
+}
+
+$btn-color: lighten($section-headings-color, 10%);
+
+.btn.btn-download {
+  background-color: transparentize($btn-color, 0.2);
+  border-color: transparentize($btn-color, 0.1);
+  color: white;
+
+  &:hover {
+    border-color: lighten($btn-color, 10%);
+    background-color: $btn-color;
+  }
+}
+
+.site-footer-project {
+  float: left;
+  
+  .footer-icon {
+    height: 44px;
+  }
+}
+
+.site-copyright {
+  font-size: 0.9rem;
+  margin-left: 84px;
+  max-width: 20rem;
+}
