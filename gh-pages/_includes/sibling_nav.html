@@ -8,10 +8,10 @@
   {% endif %}
 <div class="sibling-nav">
   {% if page.previous %}
-    <div class="nav-bottom-prev">{{ prev_sibling }}: <a href="{{ page.previous.url | relative_url }}">{{ page.previous.index | ceil }}. {{ page.previous.title }}</a></div>
+    <div class="nav-bottom-prev">{{ prev_sibling }}: <a href="{{ page.previous.url | relative_url }}">{{ page.previous.index }}. {{ page.previous.title }}</a></div>
   {% endif %}
   {% if page.next %}
-    <div class="nav-bottom-next">{{ next_sibling }}: <a href="{{ page.next.url | relative_url }}">{{ page.next.index | ceil }}. {{ page.next.title }}</a></div>
+    <div class="nav-bottom-next">{{ next_sibling }}: <a href="{{ page.next.url | relative_url }}">{{ page.next.index }}. {{ page.next.title }}</a></div>
   {% endif %}
 </div>
 {% endif %}

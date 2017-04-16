@@ -9,10 +9,10 @@ description: Все лекции по курсу программной инже
 <p>Все {% include plurals.html val=site.lectures.size one="лекция" few="лекции" many="лекций" %} по курсу программной инженерии на одной странице.</p>
 {% assign section = "" %}
 {% for lecture in site.lectures %}
-  {% if section != lecture.category %}
+  {% if section != lecture.section_id %}
     {% if section != "" %}</ol>{% endif %}
-    {% assign section = lecture.category %}
-    <h2>{{ section }}</h2>
+    {% assign section = lecture.section_id %}
+    <h2>{{ site.sections | where:"section_id", section | map:"title" | first }}</h2>
     <ol class="lecture-list" start="{{ lecture.index }}">
   {% endif %}
   <li><a class="lecture-list-pdf" href="{{ '/assets/pdf/' | append: lecture.file | relative_url }}" title="Презентация по лекции {{ lecture.index }}">{% include icon.html icon="file-pdf" %}</a><a href="{{ lecture.url | relative_url }}" title="Краткое содержание лекции">{{ lecture.title }}</a></li>

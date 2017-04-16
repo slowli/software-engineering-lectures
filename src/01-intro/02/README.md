@@ -1,6 +1,5 @@
 ---
 title: Дисциплины программной инженерии
-category: Введение
 excerpt_separator: <!--more-->
 ---
 

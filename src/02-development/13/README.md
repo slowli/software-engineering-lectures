@@ -1,6 +1,5 @@
 ---
 title: Тестирование ПО
-category: Основные процессы разработки ПО
 excerpt_separator: <!--more-->
 ---
 

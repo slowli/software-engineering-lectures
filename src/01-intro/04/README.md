@@ -1,6 +1,5 @@
 ---
 title: Организационные области знаний SWEBOK
-category: Введение
 excerpt_separator: <!--more-->
 ---
 

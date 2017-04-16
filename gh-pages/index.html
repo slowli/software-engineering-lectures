@@ -19,9 +19,9 @@ description: |
 {% for section in site.sections %}
   {% assign count = 0 %}
   {% for lecture in site.lectures %}
-    {% if lecture.category == section.title %}{% assign count = count | plus: 1 %}{% endif %}
+    {% if lecture.section_id == section.section_id %}{% assign count = count | plus: 1 %}{% endif %}
   {% endfor %}
-  <h3>{{ section.index | ceil }}. {{ section.title }} ({% include plurals.html val=count one="лекция" few="лекции" many="лекций" %})</h3>
+  <h3>{{ section.index }}. {{ section.title }} ({% include plurals.html val=count one="лекция" few="лекции" many="лекций" %})</h3>
   <p>{{ section.excerpt | strip_html }} <a href="{{ section.url | relative_url }}">Детальнее→</a></p>
 {% endfor %}
 

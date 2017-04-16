@@ -84,7 +84,10 @@ ifneq (,$(wildcard $(1)/README.md))
 $(GH_PAGES_SRC)/$(4)/$(3)-$(2).md: $(1)/README.md
 	mkdir -p $(GH_PAGES_SRC)/$(4)
 	sed -r "2 i file: $(3)-$(2)-beamer.pdf" $$< | \
-		sed -r "2 i index: $(3)" > $$@
+		sed -r "2 i section_id: $(4)" | \
+		sed -r "s/section_id: .*-/section_id: /" | \
+		sed -r "2 i index: $(3)" | \
+		sed -r "2 s/index: 0*([1-9][0-9]*).*/index: \1/" > $$@
 
 GH_PAGES += $(GH_PAGES_SRC)/$(4)/$(3)-$(2).md
 endif
@@ -97,7 +100,10 @@ ifneq (,$(wildcard $(SRCDIR)/$(1)/README.md))
 
 $(GH_PAGES_SEC)/$(1).md: $(SRCDIR)/$(1)/README.md
 	mkdir -p $(GH_PAGES_SEC)
-	cp $$< $$@
+	sed -r "2 i section_id: $(1)" $$< | \
+		sed -r "2 s/section_id: .*-/section_id: /" | \
+		sed -r "2 i index: $(1)" | \
+		sed -r "2 s/index: 0*([1-9][0-9]*).*/index: \1/" > $$@
 
 GH_PAGES += $(GH_PAGES_SEC)/$(1).md
 endif
