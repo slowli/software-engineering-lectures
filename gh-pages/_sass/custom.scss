@@ -148,3 +148,21 @@ $btn-color: lighten($section-headings-color, 10%);
   margin-left: 84px;
   max-width: 20rem;
 }
+
+.error-page {
+  .main-content-no-footer {
+    text-align: center;
+    
+    h1 {
+      font-size: 3.25rem;
+      margin: 2.5rem 0;
+    }
+    p {
+      font-size: 20px;
+      margin: 2.5rem 0;
+    }
+  }
+  .site-footer {
+    display: none !important;
+  }
+}
