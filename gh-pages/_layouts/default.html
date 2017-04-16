@@ -1,4 +1,5 @@
 ---
+scripts: []
 ---
 <!DOCTYPE html>
 <html lang="ru">
@@ -7,16 +8,24 @@
     <title>{{ page.title | default: site.title | append: site.common_title }}</title>
     <meta name="description" content="{{ page.description | default: site.description | default: site.github.project_tagline }}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     <link rel="icon" href="{{ 'assets/img/favicon32.png' | relative_url }}" sizes="32x32">
     <link rel="icon" href="{{ 'assets/img/favicon72.png' | relative_url }}" sizes="72x72">
     <link rel="icon" href="{{ 'assets/img/favicon114.png' | relative_url }}" sizes="114x114">
     <link rel="icon" href="{{ 'assets/img/favicon144.png' | relative_url }}" sizes="144x144">
     <link rel="icon" href="{{ 'assets/img/favicon.svg' | relative_url }}" type="image/xml+svg" sizes="any">
     <meta name="theme-color" content="#157878">
+    
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="{{ 'assets/js/common.js?v=' | append: site.github.build_revision | relative_url }}"></script>
+    {% for script in layout.scripts %}
+      {% if script.internal %}
+        {% assign src = script.src | append: '?v=' | append: site.github.build_revision | relative_url %}
+      {% else %}
+        {% assign src = script.src %}
+      {% endif %}
+      <script src="{{ src }}" {% if script.integrity %}integrity="{{ script.integrity }}" crossorigin="anonymous"{% endif %}></script>
+    {% endfor %}
   </head>
   <body class="{{ layout.body_class }}">
     {% include header.html %}
