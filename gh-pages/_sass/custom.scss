@@ -137,8 +137,10 @@ $btn-color: lighten($section-headings-color, 10%);
 
 .site-footer-project {
   float: left;
-  font-size: 32px;
-  color: $header-bg-color;
+  
+  .footer-icon {
+    height: 40px;
+  }
 }
 
 .site-copyright {

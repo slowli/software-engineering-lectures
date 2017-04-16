@@ -1,0 +1,21 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+  width="320" height="320" viewBox="-1000 -1000 2000 2000">  
+  <defs>
+    <g id="composition">
+      <rect x="-770" y="-50" height="100" width="720" />
+	  <rect x="180" y="-60" height="120" width="590" />
+	  <path d="M 0 -200 A 200 200 0 0 1 0 200 v -60 A 140 140 0 0 0 0 -140" />
+	  <circle x="0" y="0" r="100" />
+    </g>
+  </defs>
+
+  <rect x="-975" y="-975" width="1950" height="1950" rx="150" ry="150" fill="#159957" />
+  <path transform="scale(1.2) rotate(180 0 0) translate(-640 -80)" fill="#fff" d="M990 384l10-177q2-38-46-71t-131-52-180-20-180 20-131 52-46 71l10 177 320-101q12-4 27-4t27 4z m296 180q0-12-13-17l-625-196q-2-1-5-1t-6 1l-364 115q-24-19-39-63t-19-99q35-20 35-61 0-39-32-60l32-242q1-7-4-13-5-7-14-7h-107q-8 0-13 7-6 6-5 13l33 242q-33 21-33 60 0 41 36 62 7 115 55 184l-186 58q-12 5-12 17t12 18l625 196q3 1 6 1t5-1l625-196q13-5 13-18z" />
+  
+  <g fill="#11442f" transform="scale(0.86) translate(0 150)">
+    <use x="0" y="680" xlink:href="#composition" />
+    <use x="0" y="220" xlink:href="#composition" />
+  </g>
+</svg>
