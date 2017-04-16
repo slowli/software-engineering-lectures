@@ -3,7 +3,7 @@ layout: default
 ---
 {% for section in site.sections %}
   {% if section.title == page.category %}
-    <div class="breadcrumbs">Раздел: <a href="{{ section.url }}">{{ section.title }}</a></div>
+    <div class="breadcrumbs">Раздел: <a href="{{ section.url | relative_url }}">{{ section.title }}</a></div>
   {% endif %}
 {% endfor %}
 
