@@ -10,13 +10,15 @@ $xlarge-breakpoint: 104em;
   vertical-align: -4px;
 }
 
+$faded-link-color: mix($body-link-color, lighten($body-text-color, 25%), 50%);
+
 .breadcrumbs,
 .sibling-nav {
   color: lighten($body-text-color, 25%);
   font-size: 90%;
 
   a {
-    color: mix($body-link-color, lighten($body-text-color, 25%), 50%);
+    color: $faded-link-color;
   }
 }
 
@@ -164,5 +166,29 @@ $btn-color: lighten($section-headings-color, 10%);
   }
   .site-footer {
     display: none !important;
+  }
+}
+
+.lecture-list {
+  li {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding: 2px;
+    border-bottom: 1px solid $table-border-color;
+    
+    &:last-of-type {
+      border-bottom: none;
+    }
+    &:after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+  }
+  a.lecture-list-pdf {
+    float: right;
+    margin-left: 4px;
+    white-space: nowrap;
+    color: $faded-link-color;
   }
 }
