@@ -15,11 +15,10 @@ scripts:
 
 {% capture lecture_list %}
 <h2>Лекции</h2>
-{% for lecture in site.lectures %}
-  {% if lecture.section_id == page.section_id %}
+{% assign lectures = site.lectures | where:"section_id", page.section_id %}
+{% for lecture in lectures %}
   <h3>{{ lecture.index }}. {{ lecture.title }}</h3>
   <p>{{ lecture.excerpt | strip_html }} <a href="{{ lecture.url | relative_url }}">Детальнее→</a></p>
-  {% endif %}
 {% endfor %}
 {% endcapture %}
 

@@ -1,11 +1,8 @@
 ---
 layout: default
 ---
-{% for section in site.sections %}
-  {% if section.section_id == page.section_id %}
-    <div class="breadcrumbs">Раздел: <a href="{{ section.url | relative_url }}">{{ section.title }}</a></div>
-  {% endif %}
-{% endfor %}
+{% assign section = site.sections | where:"section_id", page.section_id | first %}
+<div class="breadcrumbs">Раздел: <a href="{{ section.url | relative_url }}">{{ section.title }}</a></div>
 
 <h1><div class="pre-header">Лекция №{{ page.index }}</div>{{ page.title }}</h1>
 

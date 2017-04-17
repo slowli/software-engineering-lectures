@@ -17,10 +17,7 @@ description: |
 <p>Лекции по программной инженерии организованы в {% include plurals.html val=site.sections.size one="раздел" few="раздела" many="разделов" %}. К каждому разделу прилагается список контрольных вопросов, тем для самостоятельной работы и список литературы.</p>
 
 {% for section in site.sections %}
-  {% assign count = 0 %}
-  {% for lecture in site.lectures %}
-    {% if lecture.section_id == section.section_id %}{% assign count = count | plus: 1 %}{% endif %}
-  {% endfor %}
+  {% assign count = site.lectures | where:"section_id", section.section_id | size %}
   <h3>{{ section.index }}. {{ section.title }} ({% include plurals.html val=count one="лекция" few="лекции" many="лекций" %})</h3>
   <p>{{ section.excerpt | strip_html }} <a href="{{ section.url | relative_url }}">Детальнее→</a></p>
 {% endfor %}
