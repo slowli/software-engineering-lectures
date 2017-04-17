@@ -54,6 +54,10 @@ $faded-link-color: mix($body-link-color, lighten($body-text-color, 25%), 50%);
   }
 }
 
+.main-content-no-footer {
+  position: relative;
+}
+
 .toc {
   background-color: $hr-border-color;
   font-size: 0.9rem;
