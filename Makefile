@@ -47,6 +47,7 @@ GH_PAGES_DIR=gh-pages
 GH_PAGES_FILES=$(GH_PAGES_DIR)/assets/pdf
 GH_PAGES_SRC=$(GH_PAGES_DIR)/_lectures
 GH_PAGES_SEC=$(GH_PAGES_DIR)/_sections
+MORE_SEP=<!--more-->
 
 # Function for defining rules for separate presentations.
 #
@@ -83,11 +84,15 @@ ifneq (,$(wildcard $(1)/README.md))
 
 $(GH_PAGES_SRC)/$(4)/$(3)-$(2).md: $(1)/README.md
 	mkdir -p $(GH_PAGES_SRC)/$(4)
-	sed -r "2 i file: $(3)-$(2)-beamer.pdf" $$< | \
-		sed -r "2 i section_id: $(4)" | \
-		sed -r "s/section_id: .*-/section_id: /" | \
-		sed -r "2 i index: $(3)" | \
-		sed -r "2 s/index: 0*([1-9][0-9]*).*/index: \1/" > $$@
+	sed -r -e '1 s/^#+ (.*)$$$$/---\ntitle: "\1"\n---/' $$< | \
+	sed -r -e "2 i file: $(3)-$(2)-beamer.pdf" \
+		-e "2 i section_id: $(4)" \
+		-e "2 i index: $(3)" | \
+	sed -r -e "3 s/^section_id: .*-/section_id: /" \
+		-e "4 s/^index: 0*([1-9][0-9]*).*/index: \1/" > $$@
+	if [ `grep -c -e '$(MORE_SEP)' $$<` != 0 ]; then \
+		sed -i -e '2 i excerpt_separator: $(MORE_SEP)' $$@; \
+	fi
 
 GH_PAGES += $(GH_PAGES_SRC)/$(4)/$(3)-$(2).md
 endif
@@ -100,10 +105,14 @@ ifneq (,$(wildcard $(SRCDIR)/$(1)/README.md))
 
 $(GH_PAGES_SEC)/$(1).md: $(SRCDIR)/$(1)/README.md
 	mkdir -p $(GH_PAGES_SEC)
-	sed -r "2 i section_id: $(1)" $$< | \
-		sed -r "2 s/section_id: .*-/section_id: /" | \
-		sed -r "2 i index: $(1)" | \
-		sed -r "2 s/index: 0*([1-9][0-9]*).*/index: \1/" > $$@
+	sed -r -e '1 s/^#+ (.*)$$$$/---\ntitle: "\1"\n---/' $$< | \
+	sed -r -e "2 i section_id: $(1)" \
+		-e "2 i index: $(1)" | \
+	sed -r -e "2 s/section_id: .*-/section_id: /" \
+		-e "3 s/index: 0*([1-9][0-9]*).*/index: \1/" > $$@
+	if [ `grep -c -e '$(MORE_SEP)' $$<` != 0 ]; then \
+		sed -i -e '2 i excerpt_separator: $(MORE_SEP)' $$@; \
+	fi
 
 GH_PAGES += $(GH_PAGES_SEC)/$(1).md
 endif
@@ -165,7 +174,9 @@ gh-push-local: gh-pages
 clean:
 	rm -rf $(TEMPDIR)
 
-uninstall: clean
+gh-clean:
+	rm -rf $(GH_PAGES_FILES) $(GH_PAGES_SRC) $(GH_PAGES_SEC) $(GH_PAGES_DIR)/_site
+
+uninstall: clean clean-gh
 	rm -rf $(OUTDIR)
-	rm -rf $(GH_PAGES_FILES) $(GH_PAGES_SRC) $(GH_PAGES_SEC)
 
