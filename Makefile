@@ -43,11 +43,19 @@ TEX_applications=21/interfaces.tex \
 	26/services.tex \
 	27/clouds.tex
 
+#
+# GitHub Pages-related variables
+#
 GH_PAGES_DIR=gh-pages
 GH_PAGES_FILES=$(GH_PAGES_DIR)/assets/pdf
 GH_PAGES_SRC=$(GH_PAGES_DIR)/_lectures
 GH_PAGES_SEC=$(GH_PAGES_DIR)/_sections
-MORE_SEP=<!--more-->
+# Optional excerpt separator
+EXCERPT_SEP=<!--more-->
+# Heading used to locate the topic list within a page
+TOPICS_HEAD=Темы для самостоятельной работы
+# Heading used to locate the question list within a page
+QUESTIONS_HEAD=Контрольные вопросы
 
 # Function for defining rules for separate presentations.
 #
@@ -55,7 +63,7 @@ MORE_SEP=<!--more-->
 # 	$(1) - directory of the TeX file (starting from $SRCDIR)
 # 	$(2) - base name of the TeX file (excluding the .tex suffix)
 #   $(3) - number of the lecture
-#   $(4) - category of the lecture
+#   $(4) - section of the lecture
 define lecture_template
 $(3): $(3)-a4 $(3)-beamer
 $(3)-a4: $(OUTDIR)/$(3)-$(2).pdf
@@ -90,8 +98,8 @@ $(GH_PAGES_SRC)/$(4)/$(3)-$(2).md: $(1)/README.md
 		-e "2 i index: $(3)" | \
 	sed -r -e "3 s/^section_id: .*-/section_id: /" \
 		-e "4 s/^index: 0*([1-9][0-9]*).*/index: \1/" > $$@
-	if [ `grep -c -e '$(MORE_SEP)' $$<` != 0 ]; then \
-		sed -i -e '2 i excerpt_separator: $(MORE_SEP)' $$@; \
+	if [ `grep -c -e '$(EXCERPT_SEP)' $$<` != 0 ]; then \
+		sed -i -e '2 i excerpt_separator: $(EXCERPT_SEP)' $$@; \
 	fi
 
 GH_PAGES += $(GH_PAGES_SRC)/$(4)/$(3)-$(2).md
@@ -99,6 +107,13 @@ endif
 
 endef
 
+# Function for defining rules for sections of lectures.
+# Prepares the Jekyll-ready version of the README for the section,
+# including the front matter, with topics and questions lists extracted
+# from the main text with the help of sed magic
+#
+# Arguments:
+#  $(1) - section name
 define category_template
 
 ifneq (,$(wildcard $(SRCDIR)/$(1)/README.md))
@@ -110,9 +125,16 @@ $(GH_PAGES_SEC)/$(1).md: $(SRCDIR)/$(1)/README.md
 		-e "2 i index: $(1)" | \
 	sed -r -e "2 s/section_id: .*-/section_id: /" \
 		-e "3 s/index: 0*([1-9][0-9]*).*/index: \1/" > $$@
-	if [ `grep -c -e '$(MORE_SEP)' $$<` != 0 ]; then \
-		sed -i -e '2 i excerpt_separator: $(MORE_SEP)' $$@; \
+	if [ `grep -c -e '$(EXCERPT_SEP)' $$<` != 0 ]; then \
+		sed -i -e '2 i excerpt_separator: $(EXCERPT_SEP)' $$@; \
 	fi
+	sed -r -n -e "1 i topics:" \
+		-e '/^#+ $(TOPICS_HEAD)/,/^#+/{ /(^#+)|(^[[:space:]]*$$$$)/!{ s/[[:space:]]+\*[[:space:]]*(.*)$$$$/  - "\1"/; p; } }' \
+		$$@ > $(TEMPDIR)/section.yml
+	sed -r -n -e "1 i questions:" \
+		-e '/^#+ $(QUESTIONS_HEAD)/,/^#+/{ /(^#+)|(^[[:space:]]*$$$$)/!{ s/[[:space:]]+\*[[:space:]]*(.*)$$$$/  - "\1"/; p; } }' \
+		$$@ >> $(TEMPDIR)/section.yml
+	sed -i -e '2 r $(TEMPDIR)/section.yml' $$@
 
 GH_PAGES += $(GH_PAGES_SEC)/$(1).md
 endif
@@ -174,9 +196,8 @@ gh-push-local: gh-pages
 clean:
 	rm -rf $(TEMPDIR)
 
-gh-clean:
+clean-gh:
 	rm -rf $(GH_PAGES_FILES) $(GH_PAGES_SRC) $(GH_PAGES_SEC) $(GH_PAGES_DIR)/_site
 
 uninstall: clean clean-gh
 	rm -rf $(OUTDIR)
-
