@@ -1,9 +1,12 @@
 ########################################
 # Make script for SE lectures
 #
-# (c) 2014 Alexei Ostrovski
+# (c) 2014, 2017 Alex Ostrovski
 ########################################
 
+########################################
+# Variables
+########################################
 CC=xelatex
 CFLAGS=--halt-on-error --interaction=batchmode
 OUTDIR=out
@@ -43,9 +46,7 @@ TEX_applications=21/interfaces.tex \
 	26/services.tex \
 	27/clouds.tex
 
-#
 # GitHub Pages-related variables
-#
 GH_PAGES_DIR=gh-pages
 GH_PAGES_FILES=$(GH_PAGES_DIR)/assets/pdf
 GH_PAGES_SRC=$(GH_PAGES_DIR)/_lectures
@@ -56,6 +57,10 @@ EXCERPT_SEP=<!--more-->
 TOPICS_HEAD=Темы для самостоятельной работы
 # Heading used to locate the question list within a page
 QUESTIONS_HEAD=Контрольные вопросы
+
+########################################
+# Functions
+########################################
 
 # Function for defining rules for separate presentations.
 #
@@ -140,6 +145,10 @@ GH_PAGES += $(GH_PAGES_SEC)/$(1).md
 endif
 endef
 
+########################################
+# Functions execution
+########################################
+
 $(foreach _cat,$(CATEGORIES), \
 $(foreach _tex,$(TEX_$(word 2,$(subst -, ,$(_cat)))), \
     $(eval _num = $(patsubst %/,%,$(dir $(_tex)))) \
@@ -152,12 +161,25 @@ $(foreach _cat,$(CATEGORIES), \
 	$(eval $(call category_template,$(_cat))) \
 )
 
+########################################
+# Main targets
+########################################
+
 .PHONY: all install supplementary uninstall gh-pages
 
 all: all-a4 all-beamer supplementary
 all-a4: $(LECTURES_A4)
 all-beamer: $(LECTURES_BEAMER)
 install: all gh-pages
+
+clean:
+	rm -rf $(TEMPDIR)
+
+clean-gh:
+	rm -rf $(GH_PAGES_FILES) $(GH_PAGES_SRC) $(GH_PAGES_SEC) $(GH_PAGES_DIR)/_site
+
+uninstall: clean clean-gh
+	rm -rf $(OUTDIR)
 
 supplementary: $(OUTDIR)/questions.pdf
 
@@ -170,6 +192,10 @@ $(OUTDIR)/questions.pdf: supplementary/questions.tex
 
 show-errors:
 	grep -e "Overfull" -C 3 tmp/*.log
+
+########################################
+# GitHub Pages-related targets
+########################################
 
 ifdef GH_PAGES_NOFILES
 gh-pages: $(GH_PAGES)
@@ -192,12 +218,3 @@ gh-push-local: gh-pages
 	git push --force --quiet "../.git" master:gh-pages && \
 	rm -rf .git && \
 	mv -f .gitignore~ .gitignore
-
-clean:
-	rm -rf $(TEMPDIR)
-
-clean-gh:
-	rm -rf $(GH_PAGES_FILES) $(GH_PAGES_SRC) $(GH_PAGES_SEC) $(GH_PAGES_DIR)/_site
-
-uninstall: clean clean-gh
-	rm -rf $(OUTDIR)
