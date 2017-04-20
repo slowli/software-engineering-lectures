@@ -1,18 +1,7 @@
 ---
-layout: default
-body_class: with-navbar
-scripts:
-  - src: //code.jquery.com/jquery-3.1.1.slim.min.js
-    integrity: sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n
-  - src: assets/js/common.js
-    internal: true
+layout: with_navbar
+contents_header: header_section.html
 ---
-<h1><div class="pre-header">Раздел {{page.index}}</div>{{ page.title }}</h1>
-
-<nav class="toc toc-collapsed" data-toc=".main-content">
-	<h4 onclick="$(this).parent().toggleClass('toc-collapsed')">{% include icon.html icon="right-dir" %}Содержание</h4>
-</nav>
-
 {% capture lecture_list %}
 <h2>Лекции</h2>
 {% assign lectures = site.lectures | where:"section_id", page.section_id %}
@@ -22,7 +11,5 @@ scripts:
 {% endfor %}
 {% endcapture %}
 
-<div class="main-content-column">
-  {{ content | replace: "<!--list-->", lecture_list }}
-  {% include sibling_nav.html type="section" %}
-</div>
+{{ content | replace: "<!--list-->", lecture_list }}
+{% include sibling_nav.html type="section" %}
