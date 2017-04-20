@@ -5,9 +5,21 @@ $xlarge-breakpoint: 104em;
   }
 }
 
+.clearfix {
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
 .page-header .btn .icon {
   font-size: 24px;
   vertical-align: -4px;
+}
+
+.header-nav {
+  text-align: center;
 }
 
 $faded-link-color: mix($body-link-color, lighten($body-text-color, 25%), 50%);
@@ -41,7 +53,7 @@ $faded-link-color: mix($body-link-color, lighten($body-text-color, 25%), 50%);
       max-width: 80rem;
       padding: 2rem 4rem;
     }
-    
+
     @include xlarge {
       position: relative;
       left: 160px;
@@ -63,7 +75,7 @@ $faded-link-color: mix($body-link-color, lighten($body-text-color, 25%), 50%);
   font-size: 0.9rem;
   padding: 1rem;
   margin-bottom: 1rem;
-  
+
   @include large {
     position: absolute; /* fallback */
     right: 0;
@@ -71,12 +83,12 @@ $faded-link-color: mix($body-link-color, lighten($body-text-color, 25%), 50%);
     width: 300px;
     position: sticky;
     top: 0;
-    
+
     h4 .icon {
       display: none;
     }
   }
-  
+
   h4 .icon:before {
     margin: 0; /* needed for accurate animation */
     transform: rotate(90deg);
@@ -85,11 +97,11 @@ $faded-link-color: mix($body-link-color, lighten($body-text-color, 25%), 50%);
   &.toc-collapsed h4 .icon:before {
     transform: rotate(0deg);
   }
-  
+
   @include small {
     &.toc-collapsed>ul {
       display: none;
-    }    
+    }
     h4 {
       cursor: pointer;
     }
@@ -115,7 +127,7 @@ $faded-link-color: mix($body-link-color, lighten($body-text-color, 25%), 50%);
     text-transform: uppercase;
     color: darken($body-text-color, 10%);
   }
-  
+
    ul {
      list-style: none outside none;
      margin: 0;
@@ -143,7 +155,7 @@ $btn-color: lighten($section-headings-color, 10%);
 
 .site-footer-project {
   float: left;
-  
+
   .footer-icon {
     height: 44px;
   }
@@ -158,7 +170,7 @@ $btn-color: lighten($section-headings-color, 10%);
 .error-page {
   .main-content-no-footer {
     text-align: center;
-    
+
     h1 {
       font-size: 3.25rem;
       margin: 2.5rem 0;
@@ -179,14 +191,9 @@ $btn-color: lighten($section-headings-color, 10%);
     margin-bottom: 2px;
     padding: 2px;
     border-bottom: 1px solid $table-border-color;
-    
+
     &:last-of-type {
       border-bottom: none;
-    }
-    &:after {
-      content: '';
-      display: block;
-      clear: both;
     }
   }
   a.lecture-list-pdf {

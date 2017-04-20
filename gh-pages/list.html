@@ -12,7 +12,7 @@ description: Все лекции по курсу программной инже
   {% assign lectures = site.lectures | where:"section_id", section.section_id %}
   <ol class="lecture-list" start="{{ lectures | map:'index' | first }}">
   {% for lecture in lectures %}
-    <li><a class="lecture-list-pdf" href="{{ '/assets/pdf/' | append: lecture.file | relative_url }}" title="Презентация по лекции {{ lecture.index }}">{% include icon.html icon="file-pdf" %}</a><a href="{{ lecture.url | relative_url }}" title="Краткое содержание лекции">{{ lecture.title }}</a></li>
+    <li class="clearfix"><a class="lecture-list-pdf" href="{{ '/assets/pdf/' | append: lecture.file | relative_url }}" title="Презентация по лекции {{ lecture.index }}">{% include icon.html icon="file-pdf" %}</a><a href="{{ lecture.url | relative_url }}" title="Краткое содержание лекции">{{ lecture.title }}</a></li>
   {% endfor %}
   </ol>
 {% endfor %}
