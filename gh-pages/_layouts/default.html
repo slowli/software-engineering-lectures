@@ -6,7 +6,7 @@ meta: true
 <html lang="ru" prefix="og: http://ogp.me/ns#">
   <head>
     <meta charset="UTF-8">
-    
+
     {% assign title = page.title | default: site.title | append: site.common_title %}
     {% assign description = page.description | default: page.excerpt | default: site.description | default: site.github.project_tagline | strip_html | strip %}
     <title>{{ title }}</title>
@@ -34,8 +34,8 @@ meta: true
     <link rel="icon" href="{{ 'assets/img/favicon144.png' | relative_url }}" sizes="144x144">
     <link rel="icon" href="{{ 'assets/img/favicon.svg' | relative_url }}" type="image/svg+xml" sizes="any">
     <meta name="theme-color" content="#157878">
-    
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=cyrillic' rel='stylesheet' type='text/css'>
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&amp;subset=cyrillic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     {% for script in layout.scripts %}
       {% if script.internal %}
@@ -67,4 +67,3 @@ meta: true
     {% endif %}
   </body>
 </html>
-   

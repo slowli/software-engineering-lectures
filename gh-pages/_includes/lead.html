@@ -1,0 +1,6 @@
+<div class="lead">
+{%if page.excerpt_separator == "<!--more-->" %}
+  {{ include.text | replace_first: page.excerpt_separator, "</div>" }}
+{% else %}
+  {{ include.text | replace_first: "</p>", "</p></div>" }}
+{% endif %}

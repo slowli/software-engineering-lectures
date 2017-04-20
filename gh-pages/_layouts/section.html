@@ -11,5 +11,6 @@ contents_header: header_section.html
 {% endfor %}
 {% endcapture %}
 
-{{ content | replace: "<!--list-->", lecture_list }}
+{% assign content = content | replace: "<!--list-->", lecture_list %}
+{% include lead.html text=content %}
 {% include sibling_nav.html type="section" %}

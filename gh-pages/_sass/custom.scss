@@ -153,6 +153,16 @@ $btn-color: lighten($section-headings-color, 10%);
   }
 }
 
+.lead {
+  font-size: 115%;
+  font-weight: 300;
+  margin-bottom: 1.15em;
+
+  p {
+    margin-bottom: 0.4em;
+  }
+}
+
 .site-footer-project {
   float: left;
 
