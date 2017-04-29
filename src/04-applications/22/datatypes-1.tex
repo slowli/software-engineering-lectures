@@ -396,13 +396,13 @@
 			\item
 			Целочисленный тип со знаком, занимающий 4 байта памяти:
 
-			\code{\textbf{type} Int = \textbf{new integer range} (-2147483648 .. 2147483647)}
+			\code{\codekw{type} Int = \codekw{new integer range} (-2147483648 .. 2147483647)}
 
 			\vspace{0.5ex}
 			\item
 			Строка символов Unicode:
 
-			\code{\textbf{type} String = \textbf{new sequence of character} (\{ iso standard 10646 \})}
+			\code{\codekw{type} String = \codekw{new sequence of character} (\{ iso standard 10646 \})}
 
 			\vspace{0.5ex}
 			\item
@@ -418,7 +418,7 @@
 			\item
 			Интерфейс процедуры для вычисления чисел Фибоначчи:
 
-			\code{\textbf{type} Fib = \textbf{procedure} ( \textbf{in} n: Int \textbf{selecting} (0 .. *) ) \textbf{returns} ( \textbf{integer} )}
+			\code{\codekw{type} Fib = \codekw{procedure} ( \codekw{in} n: Int \codekw{selecting} (0 .. *) ) \codekw{returns} ( \codekw{integer} )}
 		\end{itemize}
 	}
 
@@ -502,7 +502,7 @@
 			\item
 			Приведение к другим ТД помимо строкового:
 			\begin{itemize}
-				\item \code{\textbf{operator} <Type>()} в С++;
+				\item \code{\codekw{operator} <Type>()} в С++;
 				\item методы \code{\_\_int\_\_}, \code{\_\_float\_\_} и т.\,д. в~Python.
 			\end{itemize}
 

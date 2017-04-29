@@ -297,7 +297,7 @@
 		\end{itemize}
 
 		\vspace{1ex}
-		\textbf{Контекст выполнения:} класс (объект \code{\textbf{this}} / класс, где находится код), пакет.
+		\textbf{Контекст выполнения:} класс (объект \codekw{this} / класс, где находится код), пакет.
 	}
 
 	\subsection{Примеры}
@@ -308,7 +308,7 @@
 		\textbf{Точки соединения в AspectJ:}
 		\begin{itemize}
 			\item
-			\code{call(\textbf{void} show())}
+			\code{call(\codekw{void} show())}
 
 			Вызов метода \code{show()} в произвольном классе.
 
@@ -320,9 +320,9 @@
 
 			\vspace{1ex}
 			\item
-			\code{within(com.example.*) \&\& call(*.\textbf{new}(\textbf{int}))}
+			\code{within(com.example.*) \&\& call(*.\codekw{new}(\codekw{int}))}
 
-			Вызов конструктора, принимающего один аргумент типа \code{\textbf{int}}, в классах из пакета \code{com.example}.
+			Вызов конструктора, принимающего один аргумент типа \codekw{int}, в классах из пакета \code{com.example}.
 
 			\vspace{1ex}
 			\item
@@ -332,7 +332,7 @@
 
 			\vspace{1ex}
 			\item
-			\code{call(\textbf{protected} !\textbf{static} * *(..))}
+			\code{call(\codekw{protected} !\codekw{static} * *(..))}
 
 			Вызов любого защищенного нестатического метода.
 		\end{itemize}
