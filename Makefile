@@ -37,8 +37,8 @@ QUESTIONS_HEAD=Контрольные вопросы
 # Function for defining rules for separate presentations.
 #
 # Arguments:
-# 	$(1) - directory of the TeX file (starting from $SRCDIR)
-# 	$(2) - base name of the TeX file (excluding the .tex suffix)
+#   $(1) - directory of the TeX file (starting from $SRCDIR)
+#   $(2) - base name of the TeX file (excluding the .tex suffix)
 #   $(3) - number of the lecture
 #   $(4) - section of the lecture
 define lecture_template
