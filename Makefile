@@ -151,15 +151,6 @@ clean-gh:
 uninstall: clean clean-gh
 	rm -rf $(OUTDIR)
 
-supplementary: $(OUTDIR)/questions.pdf
-
-$(OUTDIR)/questions.pdf: supplementary/questions.tex
-	mkdir -p $(TEMPDIR)
-	mkdir -p $(OUTDIR)
-	env TEXINPUTS=common:supplementary: $(CC) $(CFLAGS) --output-directory $(TEMPDIR) $<
-	env TEXINPUTS=common:supplementary: $(CC) $(CFLAGS) --output-directory $(TEMPDIR) $<
-	mv $(TEMPDIR)/$(notdir $@) $@
-
 show-errors:
 	grep -e "Overfull" -C 3 tmp/*.log
 
