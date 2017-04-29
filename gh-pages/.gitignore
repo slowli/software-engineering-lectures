@@ -3,5 +3,6 @@
 /_lectures
 /_sections
 /assets/pdf
+Gemfile.lock
 .*
 !.gitignore
