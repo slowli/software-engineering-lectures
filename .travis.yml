@@ -5,10 +5,10 @@ ruby:
   - 2.2
 gemfile: gh-pages/Gemfile
 before_install:
-  - >
-    apt-get install -qq --no-install-recommends texlive
-      texlive-latex-extra texlive-xetex
-      latex-beamer ghostscript
+  - |
+    sudo apt-get install -qq --no-install-recommends texlive \
+      texlive-latex-extra texlive-xetex \
+      latex-beamer ghostscript \
       fonts-lmodern fonts-droid fonts-noto
   - xelatex --version
 script:
