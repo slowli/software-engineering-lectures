@@ -7,9 +7,19 @@ keywords:
   - обучение
   - лекции
 common_title: " | Лекции по программной инженерии"
-copyright: |
-  &copy; 2014–2017 Алексей Островский. 
+copyright: >
+  &copy; 2014–2017 Алексей Островский.
   Тексты доступны по лицензии <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
+header_nav:
+  - name: Разделы
+    title: Разделы курса программной инженерии
+    url: /#sections
+  - name: Лекции
+    title: Все лекции на одной странице
+    url: /list
+  - name: Программа
+    title: Программа курса, список тем для самостоятельной работы и вопросов
+    url: /program
 exclude:
   - Gemfile
   - Gemfile.lock
@@ -35,4 +45,3 @@ defaults:
       type: sections
     values:
       layout: section
-

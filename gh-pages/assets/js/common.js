@@ -1,9 +1,9 @@
 (function(window) {
-  
+
 /**
  * Mounts a table of contents menu on the given element, searching for h2 and h3 tags
  * in the specified portion of the page.
- * 
+ *
  * @param {jQuery} element
  *   where to mount the menu
  * @param {jQuery} lookup
@@ -14,8 +14,8 @@ function TOC(element, lookup) {
   lookup.find('h2,h3').each(function() {
     var $this = $(this);
     var anchor = null;
-    if ($this.eq(0).id) {
-      anchor = $this.eq(0).id;
+    if (this.id) {
+      anchor = this.id;
     } else {
       anchor = 'section-' + (list.children('li').length + 1);
       if ($this.is('h3')) {
@@ -25,7 +25,7 @@ function TOC(element, lookup) {
       $this.eq(0).prop('id', anchor);
     }
     var link = '<li><a href="#' + anchor + '" >' + $this.text() + '</a></li>';
-    
+
     if ($this.is('h2')) {
       list.append(link);
     } else {

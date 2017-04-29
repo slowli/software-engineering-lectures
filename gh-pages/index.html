@@ -1,11 +1,15 @@
 ---
 layout: default
 title: Главная
-description: |
+description: >
   На этом сайте можно найти презентации и другие материалы по курсу программной инженерии в Физико-техническом учебно-научном центре НАН Украины.
 ---
 
 <h1>Программная инженерия</h1>
+
+<div class="lead">
+<p><a href="https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BD%D0%B0%D1%8F_%D0%B8%D0%BD%D0%B6%D0%B5%D0%BD%D0%B5%D1%80%D0%B8%D1%8F" link="norel" taget="_blank">Программная инженерия</a> — это применение инженерного, или индустриального, подхода к разработке программного обеспечения.</p>
+</div>
 
 <p>На этом сайте можно найти презентации и другие материалы по курсу программной инженерии в Физико-техническом учебно-научном центре НАН Украины.</p>
 
@@ -13,15 +17,13 @@ description: |
 Сам сайт собран на основе интеграции <a href="http://pages.github.com/">GitHub Pages</a>. Таким образом, сайт и репозиторий демонстрируют некоторые возможности программной инженерии,
 такие как управление конфигурацией (за счет git/GitHub) и управление выпусками (за счет GitHub Pages).</p>
 
-<h2>Разделы</h2>
-<p>Лекции по программной инженерии организованы в {% include plurals.html val=site.sections.size one="раздел" few="раздела" many="разделов" %}. К каждому разделу прилагается список контрольных вопросов, тем для самостоятельной работы и список литературы.</p>
+<h2 id="sections">Разделы</h2>
+<p>Лекции по программной инженерии организованы в {% include plurals.html val=site.sections.size one="раздел" few="раздела" many="разделов" %}. К каждому разделу прилагается список контрольных вопросов, тем для самостоятельной работы и список литературы.
+<a href="{{ '/list' | relative_url }}">Список всех лекций→</a></p>
 
 {% for section in site.sections %}
-  {% assign count = 0 %}
-  {% for lecture in site.lectures %}
-    {% if lecture.category == section.title %}{% assign count = count | plus: 1 %}{% endif %}
-  {% endfor %}
-  <h3>{{ section.index | ceil }}. {{ section.title }} ({% include plurals.html val=count one="лекция" few="лекции" many="лекций" %})</h3>
+  {% assign count = site.lectures | where:"section_id", section.section_id | size %}
+  <h3>{{ section.index }}. {{ section.title }} ({% include plurals.html val=count one="лекция" few="лекции" many="лекций" %})</h3>
   <p>{{ section.excerpt | strip_html }} <a href="{{ section.url | relative_url }}">Детальнее→</a></p>
 {% endfor %}
 
@@ -34,4 +36,4 @@ description: |
   <li>подготовить один из контрольных вопросов по каждому из {% include plurals.html val=site.sections.size one="раздела" few="разделов" many="разделов" %}.</li>
 </ul>
 
-<p>Меня устраивает любой из способов, хотя первые два нравятся больше третьего.</p>
+<p>Меня устраивает любой из способов, хотя первые два нравятся больше третьего. <a href="{{ '/program' | relative_url }}">Полная программа курса→</a></p>

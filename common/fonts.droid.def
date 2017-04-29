@@ -1,0 +1,4 @@
+%% Lectures - font configuration
+\mainfont{Droid Serif}
+\sansfont[Scale=1.0]{Droid Sans}
+\monofont[Scale=0.94]{Droid Sans Mono}

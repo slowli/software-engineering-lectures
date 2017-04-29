@@ -1,0 +1,4 @@
+%% Lectures - font configuration
+\mainfont{Noto Serif}
+\sansfont[Scale=0.96]{Noto Sans}
+\monofont[Scale=0.93]{Noto Mono}

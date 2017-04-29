@@ -1,29 +1,16 @@
 ---
-layout: default
-body_class: with-navbar
-scripts:
-  - src: //code.jquery.com/jquery-3.1.1.slim.min.js
-    integrity: sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n
-  - src: assets/js/common.js
-    internal: true
+layout: with_navbar
+contents_header: header_section.html
 ---
-<h1><div class="pre-header">Раздел {{page.index}}</div>{{ page.title }}</h1>
-
-<nav class="toc toc-collapsed" data-toc=".main-content">
-	<h4 onclick="$(this).parent().toggleClass('toc-collapsed')">{% include icon.html icon="right-dir" %}Содержание</h4>
-</nav>
-
 {% capture lecture_list %}
 <h2>Лекции</h2>
-{% for lecture in site.lectures %}
-  {% if lecture.category == page.title %}
-  <h3>{{ lecture.index | ceil }}. {{ lecture.title }}</h3>
+{% assign lectures = site.lectures | where:"section_id", page.section_id %}
+{% for lecture in lectures %}
+  <h3>{{ lecture.index }}. {{ lecture.title }}</h3>
   <p>{{ lecture.excerpt | strip_html }} <a href="{{ lecture.url | relative_url }}">Детальнее→</a></p>
-  {% endif %}
 {% endfor %}
 {% endcapture %}
 
-<div class="main-content-column">
-  {{ content | replace: "<!--list-->", lecture_list }}
-  {% include sibling_nav.html type="section" %}
-</div>
+{% assign content = content | replace: "<!--list-->", lecture_list %}
+{% include lead.html text=content %}
+{% include sibling_nav.html type="section" %}

@@ -5,10 +5,24 @@ $xlarge-breakpoint: 104em;
   }
 }
 
+.clearfix {
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
 .page-header .btn .icon {
   font-size: 24px;
   vertical-align: -4px;
 }
+
+.header-nav {
+  text-align: center;
+}
+
+$faded-link-color: mix($body-link-color, lighten($body-text-color, 25%), 50%);
 
 .breadcrumbs,
 .sibling-nav {
@@ -16,7 +30,7 @@ $xlarge-breakpoint: 104em;
   font-size: 90%;
 
   a {
-    color: mix($body-link-color, lighten($body-text-color, 25%), 50%);
+    color: $faded-link-color;
   }
 }
 
@@ -39,7 +53,7 @@ $xlarge-breakpoint: 104em;
       max-width: 80rem;
       padding: 2rem 4rem;
     }
-    
+
     @include xlarge {
       position: relative;
       left: 160px;
@@ -52,12 +66,16 @@ $xlarge-breakpoint: 104em;
   }
 }
 
+.main-content-no-footer {
+  position: relative;
+}
+
 .toc {
   background-color: $hr-border-color;
   font-size: 0.9rem;
   padding: 1rem;
   margin-bottom: 1rem;
-  
+
   @include large {
     position: absolute; /* fallback */
     right: 0;
@@ -65,12 +83,12 @@ $xlarge-breakpoint: 104em;
     width: 300px;
     position: sticky;
     top: 0;
-    
+
     h4 .icon {
       display: none;
     }
   }
-  
+
   h4 .icon:before {
     margin: 0; /* needed for accurate animation */
     transform: rotate(90deg);
@@ -79,11 +97,11 @@ $xlarge-breakpoint: 104em;
   &.toc-collapsed h4 .icon:before {
     transform: rotate(0deg);
   }
-  
+
   @include small {
     &.toc-collapsed>ul {
       display: none;
-    }    
+    }
     h4 {
       cursor: pointer;
     }
@@ -109,7 +127,7 @@ $xlarge-breakpoint: 104em;
     text-transform: uppercase;
     color: darken($body-text-color, 10%);
   }
-  
+
    ul {
      list-style: none outside none;
      margin: 0;
@@ -135,9 +153,19 @@ $btn-color: lighten($section-headings-color, 10%);
   }
 }
 
+.lead {
+  font-size: 115%;
+  font-weight: 300;
+  margin-bottom: 1.15em;
+
+  p {
+    margin-bottom: 0.4em;
+  }
+}
+
 .site-footer-project {
   float: left;
-  
+
   .footer-icon {
     height: 44px;
   }
@@ -147,4 +175,41 @@ $btn-color: lighten($section-headings-color, 10%);
   font-size: 0.9rem;
   margin-left: 84px;
   max-width: 20rem;
+}
+
+.error-page {
+  .main-content-no-footer {
+    text-align: center;
+
+    h1 {
+      font-size: 3.25rem;
+      margin: 2.5rem 0;
+    }
+    p {
+      font-size: 20px;
+      margin: 2.5rem 0;
+    }
+  }
+  .site-footer {
+    display: none !important;
+  }
+}
+
+.lecture-list {
+  li {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding: 2px;
+    border-bottom: 1px solid $table-border-color;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+  a.lecture-list-pdf {
+    float: right;
+    margin-left: 4px;
+    white-space: nowrap;
+    color: $faded-link-color;
+  }
 }
