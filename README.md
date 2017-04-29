@@ -79,7 +79,7 @@ sudo apt-get install --no-install-recommends texlive \
 шрифтов следует переопределить переменную окружения `LECTURE_FONTS`. Команды построения
 берут шрифты из файла `common/fonts.$(LECTURE_FONTS).def`. По умолчанию доступны три
 настройки:
-  * `droid` использует шрифты семейства Droid (Sans, Serif и Sans Mono). 
+  * `droid` использует шрифты семейства Droid (Sans, Serif и Sans Mono).
     Не лучший вариант, т.к. в Droid Sans нет курсивного начертания.
   * `noto` использует шрифты семейства Noto (Sans, Serif и Mono). Noto Mono нет
     в дистрибутиве Ubuntu 14.04 (но есть, скажем, в 16.04).
@@ -87,12 +87,12 @@ sudo apt-get install --no-install-recommends texlive \
 
 Для GitHub Pages доступны опции:
 
-  * `GH_PAGES_NOFILES`. Если эта переменная окружения определена при вызове `make`, 
+  * `GH_PAGES_NOFILES`. Если эта переменная окружения определена при вызове `make`,
     построение презентаций при генерации веб-сайта
     пропускается. Полезно, например, для отладки дизайна.
   * `GH_PAGES_HOST`. Устанавливает хост для Jekyll. Значение по умолчанию - `127.0.0.1`.
 
 Пример использования:
 ```sh
-env GH_PAGES_NOFILES=1 GH_PAGES_HOST=10.0.2.15 make gh-serve
+make GH_PAGES_NOFILES=1 GH_PAGES_HOST=10.0.2.15 gh-serve
 ```
