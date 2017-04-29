@@ -135,12 +135,6 @@
 	\monofont{\xten@monofont}
 \fi
 
-% Попытаться загрузить шрифты из файла конфигурации
-\IfFileExists{fonts.def}{
-	\typeout{Loading fonts from configuration file}
-	\input{fonts.def}
-}
-
 \ifx\XeTeXversion\undefined
 	\xten@cyrdashfalse
 \fi

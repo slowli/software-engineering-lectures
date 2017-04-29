@@ -15,6 +15,9 @@ SRCDIR=src
 
 CATEGORIES=$(shell ls $(SRCDIR))
 
+# Font family (droid or noto)
+LECTURE_FONTS ?= noto+droid
+
 # GitHub Pages-related variables
 GH_PAGES_DIR=gh-pages
 GH_PAGES_FILES=$(GH_PAGES_DIR)/assets/pdf
@@ -49,14 +52,17 @@ LECTURES_BEAMER += $(3)-beamer
 $(OUTDIR)/$(3)-$(2).pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*) $(wildcard $(1)/code-*)
 	mkdir -p $(TEMPDIR)
 	mkdir -p $(OUTDIR)
-	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2) $$<
-	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2) $$<
+	sed -r -e '/^\\input\{lecture-common\.def\}/ r common/fonts.$(LECTURE_FONTS).def' $$< > $(TEMPDIR)/tmp.tex
+	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2) $(TEMPDIR)/tmp.tex
+	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2) $(TEMPDIR)/tmp.tex
+	rm $(TEMPDIR)/tmp.tex
 	mv $(TEMPDIR)/$$(notdir $$@) $$@
 
 $(OUTDIR)/$(3)-$(2)-beamer.pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*) $(wildcard $(1)/code-*)
 	mkdir -p $(TEMPDIR)
 	mkdir -p $(OUTDIR)
-	sed -r "s/documentclass(\[.*\])?\{a4beamer\}/documentclass[page=beamer,scale=8pt]{a4beamer}/" $$< > $(TEMPDIR)/tmp.tex
+	sed -r -e 's/documentclass(\[.*\])?\{a4beamer\}/documentclass[page=beamer,scale=8pt]{a4beamer}/' \
+	 	-e '/^\\input\{lecture-common\.def\}/ r common/fonts.$(LECTURE_FONTS).def' $$< > $(TEMPDIR)/tmp.tex
 	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2)-beamer $(TEMPDIR)/tmp.tex
 	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2)-beamer $(TEMPDIR)/tmp.tex
 	rm $(TEMPDIR)/tmp.tex
