@@ -12,4 +12,5 @@ before_install:
       fonts-lmodern fonts-droid fonts-noto
   - xelatex --version
 script:
-  - env LECTURE_FONTS=noto+droid make gh-build
+  - make LECTURE_FONTS=noto+droid -j 3 all
+  - make gh-build

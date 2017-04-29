@@ -53,10 +53,10 @@ LECTURES_BEAMER += $(3)-beamer
 $(OUTDIR)/$(3)-$(2).pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*) $(wildcard $(1)/code-*)
 	mkdir -p $(TEMPDIR)
 	mkdir -p $(OUTDIR)
-	sed -r -e '/^\\input\{lecture-common\.def\}/ r common/fonts.$(LECTURE_FONTS).def' $$< > $(TEMPDIR)/tmp.tex
-	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2) $(TEMPDIR)/tmp.tex
-	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2) $(TEMPDIR)/tmp.tex
-	rm $(TEMPDIR)/tmp.tex
+	sed -r -e '/^\\input\{lecture-common\.def\}/ r common/fonts.$(LECTURE_FONTS).def' $$< > $(TEMPDIR)/$(3)-$(2).tex
+	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2) $(TEMPDIR)/$(3)-$(2).tex
+	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2) $(TEMPDIR)/$(3)-$(2).tex
+	rm $(TEMPDIR)/$(3)-$(2).tex
 	if [ `grep -c -e '^Overfull' $(TEMPDIR)/$(3)-$(2).log` != 0 ]; then \
 		grep -C 3 -e '^Overfull' $(TEMPDIR)/$(3)-$(2).log; \
 		exit 1; \
@@ -67,10 +67,10 @@ $(OUTDIR)/$(3)-$(2)-beamer.pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*) $(wildcard 
 	mkdir -p $(TEMPDIR)
 	mkdir -p $(OUTDIR)
 	sed -r -e 's/documentclass(\[.*\])?\{a4beamer\}/documentclass[page=beamer,scale=8pt]{a4beamer}/' \
-	 	-e '/^\\input\{lecture-common\.def\}/ r common/fonts.$(LECTURE_FONTS).def' $$< > $(TEMPDIR)/tmp.tex
-	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2)-beamer $(TEMPDIR)/tmp.tex
-	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2)-beamer $(TEMPDIR)/tmp.tex
-	rm $(TEMPDIR)/tmp.tex
+	 	-e '/^\\input\{lecture-common\.def\}/ r common/fonts.$(LECTURE_FONTS).def' $$< > $(TEMPDIR)/$(3)-$(2)-beamer.tex
+	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2)-beamer $(TEMPDIR)/$(3)-$(2)-beamer.tex
+	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2)-beamer $(TEMPDIR)/$(3)-$(2)-beamer.tex
+	rm $(TEMPDIR)/$(3)-$(2)-beamer.tex
 	if [ `grep -c -e '^Overfull' $(TEMPDIR)/$(3)-$(2)-beamer.log` != 0 ]; then \
 		grep -C 3 -e '^Overfull' $(TEMPDIR)/$(3)-$(2)-beamer.log; \
 		exit 1; \
