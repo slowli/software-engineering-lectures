@@ -38,7 +38,7 @@
 	tabsize=4,
 	showstringspaces=false,
 	basicstyle=\linespread{1.25}\ttfamily\small,
-	keywordstyle=\bfseries,
+	keywordstyle=\color[rgb]{0.5,0,0.4},
 	commentstyle=\lstcommentstyle,
 	numbers=left,
 	numberstyle=\footnotesize\color{gray},

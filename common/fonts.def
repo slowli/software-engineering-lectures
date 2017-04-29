@@ -1,7 +1,7 @@
 %% Lectures - font configuration
-\mainfont{Droid Serif}
-\sansfont[Scale=1.0]{Ubuntu}
-\monofont[Scale=1.0]{Ubuntu Mono}
+\mainfont{Noto Serif}
+\sansfont[Scale=0.96]{Noto Sans}
+\monofont[Scale=0.93]{Noto Mono}
 
 % Some other font configurations
 %\mainfont{Cambria}
