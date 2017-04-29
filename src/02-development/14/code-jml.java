@@ -6,9 +6,9 @@ public class SquareRoot {
 	private static final double EPS = 1e-4;
 
 	// $Предусловие$
-	/*@ $\textbf{requires} x >= 0.0;$ @*/
+	/*@ $\codekw{requires} x >= 0.0;$ @*/
 	// $Постусловие$
-	/*@ $\textbf{ensures} JMLDouble.approximatelyEqualTo(x, \textbf{\textbackslash{}result} * \textbf{\textbackslash{}result}, EPS);$
+	/*@ $\codekw{ensures} JMLDouble.approximatelyEqualTo(x, \codekw{\textbackslash{}result} * \codekw{\textbackslash{}result}, EPS);$
 	  @*/
 	public static double sqrt(double x) {
 		// ...
