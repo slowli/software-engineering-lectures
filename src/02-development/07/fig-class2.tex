@@ -3,21 +3,21 @@
 	qty/.style={font=\footnotesize},
 	role/.style={font=\small}
 ]
-	
-	\node(reader) [class,text width=7.5em] {
+
+	\node(reader) [class,text width=8em] {
 		\hfill\textbf{Читатель}\hfill\strut{}
 		\nodepart{two}
 		\nodepart{three}
 		Задолженность
 	};
-	\node(lib) [class,text width=7.5em,right=of reader.north east,anchor=north west] {
+	\node(lib) [class,text width=8em,right=of reader.north east,anchor=north west] {
 		\hfill\textbf{Библиотекарь}\hfill\strut{}
 		\nodepart{two}
 		Зарплата \\
 		Стаж
 		\nodepart{three}
 	};
-	\node(person) [class,text width=7.5em,above=4em of $ (reader.north east)!0.5!(lib.north west) $,anchor=south] {
+	\node(person) [class,text width=8em,above=4em of $ (reader.north east)!0.5!(lib.north west) $,anchor=south] {
 		\hfill\textbf{Личность}\hfill\strut{}
 		\nodepart{two}
 		Имя \\
@@ -26,14 +26,14 @@
 		e-mail
 		\nodepart{three}
 	};
-	\node(library) [class,text width=7.5em,right=6em of lib.north east,anchor=north west] {
+	\node(library) [class,text width=8em,right=6em of lib.north east,anchor=north west] {
 		\hfill\textbf{Библиотека}\hfill\strut{}
 		\nodepart{two}
 		Название \\
 		Информация
 		\nodepart{three}
 	};
-	\node(address) [class,text width=7.5em,above=4em of library,anchor=south] {
+	\node(address) [class,text width=8em,above=4em of library,anchor=south] {
 		\hfill\textbf{Адрес}\hfill\strut{}
 		\nodepart{two}
 		Город \\
@@ -42,24 +42,24 @@
 		\nodepart{three}
 		Расстояние
 	};
-	
+
 	\node(gen) [coordinate,above=2em of $ (reader.north east)!0.5!(lib.north west) $]{};
 	\draw (reader) |- (gen);
 	\draw (lib) |- (gen);
 	\draw[->,>=open triangle 60] (gen) -- (person);
 	\draw[->] (person.east) -- (address.west |- person.east)
-		node(qt1)[qty,above,very near start]{\alert<3>{0..*}} 
-		node[role,below,midway]{живет} 
+		node(qt1)[qty,above,very near start]{\alert<3>{0..*}}
+		node[role,below,midway]{живет}
 		node(qt2)[qty,above,very near end]{\alert<5>{0..1}};
 	\draw[->] (lib.east) -- (library.west |- lib.east)
-		node[qty,above,very near start]{1..*} 
-		node[role,below,midway]{работает} 
+		node[qty,above,very near start]{1..*}
+		node[role,below,midway]{работает}
 		node[qty,above,very near end]{1};
 	\draw[->] (library.north) -- (address.south)
-		node(qt3)[qty,right,very near start]{\alert<4>{0..1}} 
-		node[role,left,midway]{находится} 
+		node(qt3)[qty,right,very near start]{\alert<4>{0..1}}
+		node[role,left,midway]{находится}
 		node[qty,right,very near end]{1};
-		
+
 	\node<2> [note={(gen)},above right=1em and 2em of gen] {%
 		отношение обобщения};
 	\node<3> [note={(qt1.south)},below=1em of qt1.south] {%
@@ -67,7 +67,7 @@
 		Один адрес может соответствовать \\ нескольким людям.};
 	\node<4> [note={(qt3.west)},left=1em of qt3.west] {%
 		Адрес может не соответствовать \\ библиотеке.};
-		
+
 	\node<5> [note={(qt2.south)},below=1em of qt2.south] {%
 		Человек может не предоставить \\ адрес проживания.};
 \end{tikz*}
