@@ -13,38 +13,7 @@ OUTDIR=out
 TEMPDIR=tmp
 SRCDIR=src
 
-# Source TeX files, relative to SRCDIR
-CATEGORIES=01-intro \
-	02-development \
-	03-tools \
-	04-applications
-TEX_intro=01/intro.tex \
-	02/disciplines.tex \
-	03/base-areas.tex \
-	04/aux-areas.tex \
-	05/lifecycle.tex
-TEX_development=06/requirements.tex \
-	07/modeling.tex \
-	08/architecture.tex \
-	09/design-patterns.tex \
-	10/paradigms-1.tex \
-	11/paradigms-2.tex \
-	12/metaprogramming.tex \
-	13/testing.tex \
-	14/v-and-v.tex \
-	15/evolution.tex
-TEX_tools=16/configuration-1.tex \
-	17/configuration-2.tex \
-	18/documentation.tex \
-	19/quality.tex \
-	20/management.tex
-TEX_applications=21/interfaces.tex \
-	22/datatypes-1.tex \
-	23/datatypes-2.tex \
-	24/interoperability.tex \
-	25/persistence.tex \
-	26/services.tex \
-	27/clouds.tex
+CATEGORIES=$(shell ls $(SRCDIR))
 
 # GitHub Pages-related variables
 GH_PAGES_DIR=gh-pages
@@ -150,8 +119,8 @@ endef
 ########################################
 
 $(foreach _cat,$(CATEGORIES), \
-$(foreach _tex,$(TEX_$(word 2,$(subst -, ,$(_cat)))), \
-    $(eval _num = $(patsubst %/,%,$(dir $(_tex)))) \
+$(foreach _tex,$(shell ls -1 $(SRCDIR)/$(_cat)/*/*.tex | grep -v "\/fig-" | sed -e "s|^[^/]*/[^/]*/||"), \
+  $(eval _num = $(patsubst %/,%,$(dir $(_tex)))) \
 	$(eval _dir = $(SRCDIR)/$(_cat)/$(_num)) \
 	$(eval _basename = $(basename $(notdir $(_tex)))) \
 	$(eval $(call lecture_template,$(_dir),$(_basename),$(_num),$(_cat))) \
@@ -166,6 +135,7 @@ $(foreach _cat,$(CATEGORIES), \
 ########################################
 
 .PHONY: all install supplementary uninstall gh-pages
+.DEFAULT_GOAL := all
 
 all: all-a4 all-beamer supplementary
 all-a4: $(LECTURES_A4)
