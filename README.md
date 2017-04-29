@@ -26,7 +26,13 @@
 ## Построение
 
 Построение осуществляется при помощи утилиты make. Необходим XeLaTeX
-(работоспособность проверялась на TeXLive 2013).
+(работоспособность проверялась на TeXLive 2013 и 2015). Установить всё необходимое для LaTeX можно при помощи команды
+```sh
+sudo apt-get install --no-install-recommends texlive \
+  texlive-latex-extra texlive-xetex \
+  latex-beamer ghostscript \
+  fonts-lmodern fonts-droid fonts-noto
+```
 
 ### Команды построения презентаций
 
