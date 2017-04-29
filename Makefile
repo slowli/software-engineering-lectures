@@ -178,6 +178,9 @@ gh-pages: all-beamer $(GH_PAGES)
 	cp out/*-beamer.pdf $(GH_PAGES_FILES)
 endif
 
+gh-build: gh-pages
+	cd $(GH_PAGES_DIR) && bundle exec jekyll build
+
 gh-serve: gh-pages
 	cd $(GH_PAGES_DIR) && bundle exec jekyll serve -H $(GH_PAGES_HOST)
 
