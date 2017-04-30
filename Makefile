@@ -57,8 +57,8 @@ $(OUTDIR)/$(3)-$(2).pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*) $(wildcard $(1)/co
 	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2) $(TEMPDIR)/$(3)-$(2).tex
 	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2) $(TEMPDIR)/$(3)-$(2).tex
 	rm $(TEMPDIR)/$(3)-$(2).tex
-	if [ `grep -c -e '^Overfull' $(TEMPDIR)/$(3)-$(2).log` != 0 ]; then \
-		grep -C 3 -e '^Overfull' $(TEMPDIR)/$(3)-$(2).log; \
+	if [ `grep -c -e '^(Over|Under)full' $(TEMPDIR)/$(3)-$(2).log` != 0 ]; then \
+		grep -C 3 -e '^(Over|Under)full' $(TEMPDIR)/$(3)-$(2).log; \
 		exit 1; \
 	fi
 	mv $(TEMPDIR)/$$(notdir $$@) $$@
@@ -71,8 +71,8 @@ $(OUTDIR)/$(3)-$(2)-beamer.pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*) $(wildcard 
 	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2)-beamer $(TEMPDIR)/$(3)-$(2)-beamer.tex
 	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2)-beamer $(TEMPDIR)/$(3)-$(2)-beamer.tex
 	rm $(TEMPDIR)/$(3)-$(2)-beamer.tex
-	if [ `grep -c -e '^Overfull' $(TEMPDIR)/$(3)-$(2)-beamer.log` != 0 ]; then \
-		grep -C 3 -e '^Overfull' $(TEMPDIR)/$(3)-$(2)-beamer.log; \
+	if [ `grep -c -e '^(Over|Under)full' $(TEMPDIR)/$(3)-$(2)-beamer.log` != 0 ]; then \
+		grep -C 3 -e '^(Over|Under)full' $(TEMPDIR)/$(3)-$(2)-beamer.log; \
 		exit 1; \
 	fi
 	mv $(TEMPDIR)/$$(notdir $$@) $$@
