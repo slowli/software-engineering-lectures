@@ -1,7 +1,7 @@
 dist: trusty
 sudo: required
 language: ruby # for Jekyll
-ruby:
+rvm:
   - 2.2
 gemfile: gh-pages/Gemfile
 cache: bundler
