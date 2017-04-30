@@ -4,6 +4,7 @@ language: ruby # for Jekyll
 ruby:
   - 2.2
 gemfile: gh-pages/Gemfile
+cache: bundler
 before_install:
   - |
     sudo apt-get install -qq --no-install-recommends texlive \
@@ -12,5 +13,7 @@ before_install:
       fonts-lmodern fonts-droid fonts-noto
   - xelatex --version
 script:
-  - make LECTURE_FONTS=noto+droid -j 3 all
-  - make gh-build
+  - make LECTURE_FONTS=noto+droid -j 2 beamer
+  # On this step, we want to test a Jekyll build only, hence the NOFILES flag.
+  # We shouldn't care if the previous step fails
+  - make GH_PAGES_NOFILES=1 gh-build
