@@ -5,6 +5,11 @@ ruby:
   - 2.2
 gemfile: gh-pages/Gemfile
 cache: bundler
+branches:
+  only:
+    - master
+    # tags
+    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 before_install:
   - |
     sudo apt-get install -qq --no-install-recommends texlive \
