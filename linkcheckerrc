@@ -1,0 +1,15 @@
+[output]
+verbose=1
+warnings=1
+
+[csv]
+separator=|
+quotechar="
+parts=urlname,parentname,result,warningstring,infostring,valid,line,column
+
+[checking]
+threads=5
+timeout=10
+
+[filtering]
+checkextern=1

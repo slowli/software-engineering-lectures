@@ -185,6 +185,19 @@ gh-build: gh-pages
 gh-serve: gh-pages
 	cd $(GH_PAGES_DIR) && bundle exec jekyll serve -H $(GH_PAGES_HOST)
 
+gh-test: gh-test-html gh-test-links
+
+gh-test-html: gh-pages
+	python -m html5validator.cli --root $(GH_PAGES_DIR)/_site
+
+gh-test-links: all-beamer gh-pages
+	ps --format pid,command | grep 'jekyll' | grep -v 'grep' | awk '{ print $$1 }' | xargs -r kill -KILL
+	cd $(GH_PAGES_DIR) && bundle exec jekyll serve 2>/dev/null 1>/dev/null &
+	sleep 10
+	linkchecker -f./linkcheckerrc -o csv http://localhost:4000/ | \
+		awk -F '|' -f linkchecker.awk
+	ps --format pid,command | grep 'jekyll' | grep -v 'grep' | awk '{ print $$1 }' | xargs -r kill -KILL
+
 gh-push-local: gh-pages
 	cd $(GH_PAGES_DIR) && \
 	git init && \
