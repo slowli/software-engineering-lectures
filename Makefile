@@ -109,6 +109,7 @@ ifneq (,$(wildcard $(SRCDIR)/$(1)/README.md))
 
 $(GH_PAGES_SEC)/$(1).md: $(SRCDIR)/$(1)/README.md
 	mkdir -p $(GH_PAGES_SEC)
+	mkdir -p $(TEMPDIR)
 	sed -r -e '1 s/^#+ (.*)$$$$/---\ntitle: "\1"\n---/' $$< | \
 	sed -r -e "2 i section_id: $(1)" \
 		-e "2 i index: $(1)" | \
