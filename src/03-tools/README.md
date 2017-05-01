@@ -59,5 +59,5 @@
 [1]: http://www.oracle.com/technetwork/java/javase/documentation/javadoc-137458.html
 [2]: http://www.stack.nl/~dimitri/doxygen/
 [3]: http://resources.sei.cmu.edu/library/asset-view.cfm?assetID=9661
-[4]: http://gruntjs.com/
+[4]: https://gruntjs.com/
 [5]: https://www.npmjs.com/
