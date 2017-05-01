@@ -19,7 +19,8 @@ before_install:
       fonts-lmodern fonts-droid fonts-noto
   - xelatex --version
   # Test toolkits
-  - sudo apt-get install -qq --no-install-recommends linkchecker
+  - python --version
+  - pip install --user linkchecker
   - pip install --user html5validator
 script:
   - make LECTURE_FONTS=noto+droid -j 2 all-beamer

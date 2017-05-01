@@ -194,7 +194,7 @@ gh-test-links: all-beamer gh-pages
 	ps -e --format pid,command | grep 'jekyll' | grep -v 'grep' | awk '{ print $$1 }' | xargs -r kill -KILL
 	cd $(GH_PAGES_DIR) && bundle exec jekyll serve 2>/dev/null 1>/dev/null &
 	sleep 10
-	linkchecker -f./linkcheckerrc -o csv http://localhost:4000/ | \
+	~/.local/bin/linkchecker -f./linkcheckerrc -o csv http://localhost:4000/ | \
 		awk -F '|' -f linkchecker.awk
 	ps -e --format pid,command | grep 'jekyll' | grep -v 'grep' | awk '{ print $$1 }' | xargs -r kill -KILL
 
