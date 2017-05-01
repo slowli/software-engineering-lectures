@@ -1,7 +1,7 @@
 #!/usr/bin/env awk
 BEGIN {
   ii = -1; li = -1; ci = -1; ui = -1; vi = -1; pi = -1; wi = -1; ri = -1
-  nwarn = 0; nerr = 0
+  nwarn = 0; nerr = 0; nredir = 0
   OFS = ""
 }
 {
@@ -10,11 +10,11 @@ BEGIN {
       print "Error [", $pi, ":", $li, ":", $ci, "]: ", $ui, " returned ", $ri
       nerr += 1
     } else if ($wi ~ /.+/) {
-      print "Warning [", $pi, ":", $li, ":", $ci, "]: ", $wi
+      print "Warning [", $pi, ":", $li, ":", $ci, "]: ", $ui, ": ", $wi
       nwarn += 1
     } else if ($ii ~ /(R|r)edirect/) {
-      print "Warning [", $pi, ":", $li, ":", $ci, "]: ", $ui, ": ", $ii
-      nwarn += 1
+      print "Redirect [", $pi, ":", $li, ":", $ci, "]: ", $ui, ": ", $ii
+      nredir += 1
     }
   }
 }
@@ -31,6 +31,6 @@ BEGIN {
   }
 }
 END {
-  print "Errors: ", nerr, " Warnings: ", nwarn
-  exit (nwarn + nerr > 0) ? 1 : 0
+  print "Errors: ", nerr, " Warnings: ", nwarn, " Redirects: ", nredir
+  exit (nerr + nredir > 0) ? 1 : 0
 }
