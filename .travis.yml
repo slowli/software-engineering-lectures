@@ -19,13 +19,14 @@ before_install:
       fonts-lmodern fonts-droid fonts-noto
   - xelatex --version
   # Test toolkits
-  - python --version
+  - python --version # need ~2.7.12 for adequate TLS; does not work with default trusty's 2.7.6
   - pip install --user linkchecker
+  - ~/.local/bin/linkchecker --version
   - pip install --user html5validator
+  - ~/.local/bin/html5validator --version
+
 script:
   - make LECTURE_FONTS=noto+droid -j 2 all-beamer
   # On this step, we want to test a Jekyll build only, hence the NOFILES flag.
   # We shouldn't care if the previous step fails
-  - make GH_PAGES_NOFILES=1 gh-build
-  - make gh-test-html
-  - make gh-test-links
+  - make GH_PAGES_NOFILES=1 test-gh

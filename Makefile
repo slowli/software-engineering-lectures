@@ -17,6 +17,8 @@ CATEGORIES=$(shell ls $(SRCDIR))
 
 # Font family (droid or noto)
 LECTURE_FONTS ?= noto+droid
+# Directory where html5validator and linkchecker binaries are installed
+PY_BIN ?= ~/.local/bin/
 
 # GitHub Pages-related variables
 GH_PAGES_DIR=gh-pages
@@ -185,16 +187,16 @@ gh-build: gh-pages
 gh-serve: gh-pages
 	cd $(GH_PAGES_DIR) && bundle exec jekyll serve -H $(GH_PAGES_HOST)
 
-gh-test: gh-test-html gh-test-links
+test-gh: test-gh-html test-gh-links
 
-gh-test-html: gh-build
-	python -m html5validator.cli --root $(GH_PAGES_DIR)/_site --show-warnings
+test-gh-html: gh-build
+	$(PY_BIN)html5validator --root $(GH_PAGES_DIR)/_site --show-warnings
 
-gh-test-links: all-beamer gh-pages
+test-gh-links: all-beamer gh-pages
 	ps -e --format pid,command | grep 'jekyll' | grep -v 'grep' | awk '{ print $$1 }' | xargs -r kill -KILL
 	cd $(GH_PAGES_DIR) && bundle exec jekyll serve 2>/dev/null 1>/dev/null &
 	sleep 10
-	~/.local/bin/linkchecker -f./linkcheckerrc -o csv http://localhost:4000/ | \
+	$(PY_BIN)linkchecker -f./linkcheckerrc -o csv http://localhost:4000/ | \
 		awk -F '|' -f linkchecker.awk
 	ps -e --format pid,command | grep 'jekyll' | grep -v 'grep' | awk '{ print $$1 }' | xargs -r kill -KILL
 
