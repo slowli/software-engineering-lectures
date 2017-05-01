@@ -19,8 +19,12 @@ before_install:
       fonts-lmodern fonts-droid fonts-noto
   - xelatex --version
   # Test toolkits
-  - python --version # need ~2.7.12 for adequate TLS; does not work with default trusty's 2.7.6
-  - pip install --user linkchecker
+  - python --version # need ~2.7.12 for adequate TLS; does not work with trusty's default 2.7.6
+  # Dirty hack for what seems like a bug in linkchecker
+  - |
+    pip install --user linkchecker && \
+      find ~/.local/lib -regex '.*/linkcheck/__init__.py' -print0 | \
+      xargs -0 sed -i -e "s/requests.__version__ <= '2.2.0'/map(int, requests.__version__.split('.')) <= [2, 2, 0]/"
   - ~/.local/bin/linkchecker --version
   - pip install --user html5validator
   - ~/.local/bin/html5validator --version
