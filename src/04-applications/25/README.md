@@ -42,8 +42,8 @@ ORM используются в MVC-платформах, где использ�
 
 [1]: http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html
 [2]: https://docs.python.org/2/library/pickle.html
-[3]: http://en.wikipedia.org/wiki/XML_schema
-[4]: http://en.wikipedia.org/wiki/XSLT
-[5]: https://www.mongodb.org/
+[3]: https://en.wikipedia.org/wiki/XML_schema
+[4]: https://en.wikipedia.org/wiki/XSLT
+[5]: https://www.mongodb.com/
 [6]: http://docs.oracle.com/javaee/7/tutorial/persistence-intro001.htm
 

@@ -37,5 +37,4 @@ interface в Java или утиная типизация. Еще один спо
 специфичный для платформы код). Наконец, для связи между ЯП высокого уровня могут использоваться программы-посредники (*middleware*), 
 такие как CORBA.
 
-[1]: http://martinfowler.com/bliki/InversionOfControl.html
-
+[1]: https://martinfowler.com/bliki/InversionOfControl.html

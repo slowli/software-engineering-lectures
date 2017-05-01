@@ -54,9 +54,8 @@ REST-сервисы можно легко создавать в рамках в�
 Существуют и специализированные средства для разработки (например, [JAX-RS][4] в Java EE). Для использования веб-сервисов 
 достаточно реализации HTTP-протокола (например, на основе [libcurl][5]) и инструментов для (де)сериализации данных.
 
-[1]: http://en.wikipedia.org/wiki/Mashup_%28web_application_hybrid%29
-[2]: http://en.wikipedia.org/wiki/Business_Process_Execution_Language
+[1]: https://en.wikipedia.org/wiki/Mashup_%28web_application_hybrid%29
+[2]: https://en.wikipedia.org/wiki/Business_Process_Execution_Language
 [3]: http://docs.oracle.com/javaee/7/tutorial/jaxws.htm
 [4]: http://docs.oracle.com/javaee/7/tutorial/jaxrs.htm
-[5]: http://en.wikipedia.org/wiki/CURL
-
+[5]: https://en.wikipedia.org/wiki/CURL

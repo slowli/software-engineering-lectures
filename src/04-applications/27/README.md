@@ -62,8 +62,7 @@
 (например, для составления контекстной рекламы или распознавания лиц на фотографиях) и индексирования 
 (например, для полнотекстового поиска по большим массивам документов).
 
-[1]: http://en.wikipedia.org/wiki/Grid_computing
-[2]: http://en.wikipedia.org/wiki/Utility_computing
-[3]: http://www.mysql.com/products/cluster/
-[4]: http://en.wikipedia.org/wiki/MapReduce
-
+[1]: https://en.wikipedia.org/wiki/Grid_computing
+[2]: https://en.wikipedia.org/wiki/Utility_computing
+[3]: https://www.mysql.com/products/cluster/
+[4]: https://en.wikipedia.org/wiki/MapReduce

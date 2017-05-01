@@ -49,6 +49,6 @@
   * [Software Engineering Body of Knowledge, Version 3.0][1].
   * [Selecting a development approach][2].
 
-[1]: http://www.computer.org/web/swebok/v3
+[1]: https://www.computer.org/web/swebok/v3
 [2]: https://www.cms.gov/Research-Statistics-Data-and-Systems/CMS-Information-Technology/XLC/Downloads/SelectingDevelopmentApproach.pdf
 

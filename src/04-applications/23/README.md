@@ -39,5 +39,4 @@
   * Наследование с модификаторами protected и private в C++ нарушает интерфейс класса (публичные методы теряют видимость).
   * В Java и C# интерфейсы можно расширять; разумеется, о наследовании тут речи не идет по причине отсутствия реализации.
 
-[1]: http://en.wikipedia.org/wiki/Liskov_substitution_principle
-
+[1]: https://en.wikipedia.org/wiki/Liskov_substitution_principle

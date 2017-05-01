@@ -128,7 +128,7 @@
   * [jUnit][10]
 
 [1]: https://eclipse.org/papyrus/
-[2]: http://laravel.com/
+[2]: https://laravel.com/
 [3]: https://symfony.com/
 [4]: https://www.djangoproject.com/
 [5]: http://rubyonrails.org/

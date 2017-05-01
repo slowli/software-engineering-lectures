@@ -50,6 +50,5 @@
 грамотное программирование применяется редко — не все программисты любят писать эссе.
 
 [1]: http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html
-[2]: http://doxygen.org/
-[3]: http://en.wikipedia.org/wiki/Literate_programming
-
+[2]: http://www.stack.nl/~dimitri/doxygen/
+[3]: https://en.wikipedia.org/wiki/Literate_programming
