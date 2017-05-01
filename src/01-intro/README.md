@@ -39,7 +39,7 @@
   * Лаврищева Е.М. Программная инженерия. Учебник. — К.: Академпериодика. — 2008. — 319 с.
   * Sommerville I. Software engineering, 9th ed. — Boston, Massachusetts: Addison-Wesley. — 2011. — 790 p.
   * A Guide to the Project Management Body of Knowledge (PMBOK Guide), 5th ed. – Project Management Institute. — 2013. — 589 p.
-  * Guide to the Software Engineering Body of Knowledge, Version 3.0. / ed. by P. Bourque and R.E. Fairley. — 
+  * Guide to the Software Engineering Body of Knowledge, Version 3.0. / ed. by P. Bourque and R.E. Fairley. —
     IEEE Computer Society. — 2014.
   * McConnell S. Rapid Development: Taming Wild Software Schedules. — Microsoft Press Books. — 1996. — 647 p.
   * Kerr J.M., Hunter R. Inside RAD: How to Build a Fully Functional System in 90 Days or Less. — McGraw-Hill. — 1994. — 213 p.
@@ -51,4 +51,3 @@
 
 [1]: https://www.computer.org/web/swebok/v3
 [2]: https://www.cms.gov/Research-Statistics-Data-and-Systems/CMS-Information-Technology/XLC/Downloads/SelectingDevelopmentApproach.pdf
-
