@@ -1,8 +1,0 @@
-/_site
-# Generated automatically
-/_lectures
-/_sections
-/assets/pdf
-Gemfile.lock
-.*
-!.gitignore

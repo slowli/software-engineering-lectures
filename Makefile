@@ -164,10 +164,10 @@ clean:
 	rm -rf $(TEMPDIR)
 
 clean-gh:
-	rm -rf $(GH_PAGES_FILES) $(GH_PAGES_SRC) $(GH_PAGES_SEC) $(GH_PAGES_DIR)/_site
+	rm -rf $(GH_PAGES_DIR)/_site $(GH_PAGES_DIR)/vendor
 
 uninstall: clean clean-gh
-	rm -rf $(OUTDIR)
+	rm -rf $(OUTDIR) $(GH_PAGES_FILES) $(GH_PAGES_SRC) $(GH_PAGES_SEC)
 
 ########################################
 # GitHub Pages-related targets
@@ -205,10 +205,8 @@ test-gh-links: gh-pages
 gh-push-local: gh-pages
 	cd $(GH_PAGES_DIR) && \
 	git init && \
-	mv .gitignore .gitignore~ && \
 	echo "/_site\n.*" > .gitignore && \
 	git add . && \
 	git commit -m "Deploy to GitHub pages" && \
 	git push --force --quiet "../.git" master:gh-pages && \
-	rm -rf .git && \
-	mv -f .gitignore~ .gitignore
+	rm -rf .git

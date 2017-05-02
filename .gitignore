@@ -1,2 +1,10 @@
 /out
 /tmp
+/gh-pages/_site
+/gh-pages/_lectures
+/gh-pages/_sections
+/gh-pages/assets/pdf
+/gh-pages/Gemfile.lock
+
+.*
+!.gitignore
