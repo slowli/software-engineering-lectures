@@ -175,8 +175,10 @@ uninstall: clean clean-gh
 
 ifdef GH_PAGES_NOFILES
 gh-pages: $(GH_PAGES)
+	mkdir -p $(GH_PAGES_FILES)
+	cp out/*-beamer.pdf $(GH_PAGES_FILES)
 else
-gh-pages: all-beamer $(GH_PAGES)
+gh-pages: $(GH_PAGES) all-beamer
 	mkdir -p $(GH_PAGES_FILES)
 	cp out/*-beamer.pdf $(GH_PAGES_FILES)
 endif
@@ -192,7 +194,7 @@ test-gh: test-gh-html test-gh-links
 test-gh-html: gh-build
 	$(PY_BIN)html5validator --root $(GH_PAGES_DIR)/_site --show-warnings
 
-test-gh-links: all-beamer gh-pages
+test-gh-links: gh-pages
 	ps -e --format pid,command | grep 'jekyll' | grep -v 'grep' | awk '{ print $$1 }' | xargs -r kill -KILL
 	cd $(GH_PAGES_DIR) && bundle exec jekyll serve 2>/dev/null 1>/dev/null &
 	sleep 10
