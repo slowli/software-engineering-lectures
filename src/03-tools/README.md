@@ -50,14 +50,14 @@
   * Sonatype Company. Maven: the definitive guide. — O’Reilly Media. — 2008. — 470 p.
   * Chacon S. Pro Git. — Apress. — 2009. — 288 p.
   * O’Sullivan B. Mercurial: the definitive guide. — O’Reilly Media. — 2009. — 284 p.
-  * [Javadoc Tool][1]
-  * [Doxygen][2]
-  * [CMMI for development, version 1.3][3]
-  * [Grunt: the JavaScript task runner][4]
-  * [Npm][5]
+  * [Javadoc Tool][javadoc]
+  * [Doxygen][doxygen]
+  * [CMMI for development, version 1.3][cmmi]
+  * [Grunt: the JavaScript task runner][grunt]
+  * [Npm][npm]
 
-[1]: http://www.oracle.com/technetwork/java/javase/documentation/javadoc-137458.html
-[2]: http://www.stack.nl/~dimitri/doxygen/
-[3]: http://resources.sei.cmu.edu/library/asset-view.cfm?assetID=9661
-[4]: https://gruntjs.com/
-[5]: https://www.npmjs.com/
+[javadoc]: http://www.oracle.com/technetwork/java/javase/documentation/javadoc-137458.html
+[doxygen]: http://www.stack.nl/~dimitri/doxygen/
+[cmmi]: http://resources.sei.cmu.edu/library/asset-view.cfm?assetID=9661
+[grunt]: https://gruntjs.com/
+[npm]: https://www.npmjs.com/

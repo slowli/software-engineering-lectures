@@ -95,14 +95,14 @@
   * Ho C., Harrop R., Schaefer C. Pro Spring. — Apress. — 2014. — 728 p.
   * White T. Hadoop: the definitive guide, 4th ed. — O’Reilly Media. — 2015. — 756 p.
   * CouchDB: the definitive guide. — O’Reilly Media. — 2010. — 272 p.
-  * [Java EE at a glance][1]
-  * [Apache Spark — lightning-fast cluster computing][2]
-  * [Redis][3]
-  * [Heroku][4]
-  * Goldt S., var der Meer S., Burkett S., Welsh M. [The Linux Programmer’s Guide][5].
+  * [Java EE at a glance][javaee]
+  * [Apache Spark — lightning-fast cluster computing][spark]
+  * [Redis][redis]
+  * [Heroku][heroku]
+  * Goldt S., var der Meer S., Burkett S., Welsh M. [The Linux Programmer’s Guide][lpg].
 
-[1]: http://www.oracle.com/technetwork/java/javaee/overview/index.html
-[2]: http://spark.apache.org/
-[3]: https://redis.io/
-[4]: https://www.heroku.com/
-[5]: http://www.tldp.org/LDP/lpg/
+[javaee]: http://www.oracle.com/technetwork/java/javaee/overview/index.html
+[spark]: http://spark.apache.org/
+[redis]: https://redis.io/
+[heroku]: https://www.heroku.com/
+[lpg]: http://www.tldp.org/LDP/lpg/
