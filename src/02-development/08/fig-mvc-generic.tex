@@ -9,22 +9,22 @@
 		Обновление моделей \\ и выбор представления \\
 		в зависимости от действий \\ пользователя.
 	};
-	\node(view) [block,right=8em of ctrl] {%
-		\textbf{Представление} 
+	\node(view) [block,right=8.5em of ctrl] {%
+		\textbf{Представление}
 		\nodepart{two}
 		Создание наглядного \\
 		отображения моделей; \\
 		запрос изменения моделей; \\
 		захват событий.
 	};
-	\node(model) [block,below right=8em and 4em of ctrl,anchor=center] {%
+	\node(model) [block,below right=8em and 4.25em of ctrl,anchor=center] {%
 		\textbf{Модель}
 		\nodepart{two}
 		Сохранение состояния; \\
 		уведомление отображений \\
 		об изменениях состояния.
 	};
-	
+
 	\node(_tmp) at ($ (ctrl.east) + (0,0.5em) $) [coordinate] {};
 	\draw[->] (_tmp) -- node[label,above]{выбор представления} (_tmp -| view.west);
 	\node(_tmp) at ($ (ctrl.east) + (0,-0.5em) $) [coordinate] {};

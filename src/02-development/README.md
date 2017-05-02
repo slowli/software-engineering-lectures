@@ -44,7 +44,7 @@
   * Роль архитектур MV* в разработке веб-приложений и приложений с графическим интерфейсом.
   * Многослойная архитектура программного обеспечения.
   * Клиент-серверная архитектура.
-  * Конвейерная архитектура. Потоки *NIX как пример использования конвейерной архитектуры.
+  * Конвейерная архитектура. Потоки UNIX как пример использования конвейерной архитектуры.
   * Сущность объектно-ориентированного проектирования. Роль ООП в разработке современного программного обеспечения.
   * Основные концепции ООП.
   * Процесс проектирования в соответствии с ООП.
@@ -116,25 +116,24 @@
   * Myers G.J., Sandler C., Badgett T. The art of software testing. — Hoboken, New Jersey: John Wiley & Sons. — 2011. — 256 p.
   * Fowler M., Beck K., Brant J., Opdyke W., Roberts D. Refactoring: improving the design of existing code. — Boston, Massachusetts: Addison-Wesley. — 2012. — 455 p.
   * Fowler M. Domain-specific languages. — Upper Saddle River, New Jersey: Pearson Education. — 2010. — 640 p.
-  * [Papyrus for Eclipse][1]
-  * [Laravel][2]
-  * [Symfony][3]
-  * [Django][4]
-  * [Ruby on Rails][5]
-  * [AngularJS][6]
-  * [AspectJ project][7]
-  * [Java Pathfinder][8]
-  * [Java ANTLR][9]
-  * [jUnit][10]
+  * [Papyrus for Eclipse][papyrus]
+  * [Laravel][laravel]
+  * [Symfony][symfony]
+  * [Django][django]
+  * [Ruby on Rails][ror]
+  * [AngularJS][angular]
+  * [AspectJ project][aspectj]
+  * [Java Pathfinder][jpf]
+  * [Java ANTLR][antlr]
+  * [jUnit][junit]
 
-[1]: https://eclipse.org/papyrus/
-[2]: http://laravel.com/
-[3]: https://symfony.com/
-[4]: https://www.djangoproject.com/
-[5]: http://rubyonrails.org/
-[6]: https://angularjs.org/
-[7]: https://eclipse.org/aspectj/
-[8]: http://babelfish.arc.nasa.gov/trac/jpf
-[9]: http://www.antlr.org/
-[10]: http://junit.org/
-
+[papyrus]: https://eclipse.org/papyrus/
+[laravel]: https://laravel.com/
+[symfony]: https://symfony.com/
+[django]: https://www.djangoproject.com/
+[ror]: http://rubyonrails.org/
+[angular]: https://angular.io/
+[aspectj]: https://eclipse.org/aspectj/
+[jpf]: http://babelfish.arc.nasa.gov/trac/jpf
+[antlr]: http://www.antlr.org/
+[junit]: http://junit.org/

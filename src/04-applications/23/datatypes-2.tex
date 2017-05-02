@@ -17,13 +17,13 @@
 		\frametitle{Типобезопасность}
 
 		\begin{Definition}
-			\textbf{Типобезопасность} \engterm{type safety} — мера, в~которой язык программирования 
+			\textbf{Типобезопасность} \engterm{type safety} — мера, в~которой язык программирования
 			или~стиль написания программы предотвращает ошибки типов.
 		\end{Definition}
 
 		\begin{Definition}
-			\textbf{Ошибка типа} \engterm{type error} — дефектное или нежелательное поведение программы, 
-			вызванное различием между~ожидаемым и~действительным смыслом данных, связанных с~переменной 
+			\textbf{Ошибка типа} \engterm{type error} — дефектное или нежелательное поведение программы,
+			вызванное различием между~ожидаемым и~действительным смыслом данных, связанных с~переменной
 			или~функцией / методом.
 		\end{Definition}
 
@@ -35,7 +35,7 @@
 		\end{itemize}
 
 		\vspace{1ex}
-		В «хорошем» ЯП результат любого выражения является корректным значением типа, 
+		В «хорошем» ЯП результат любого выражения является корректным значением типа,
 		который может~быть определен на~основе выражения во~время компиляции.
 	}
 
@@ -43,7 +43,7 @@
 		\frametitle{Безопасность памяти}
 
 		\begin{Definition}
-			\textbf{Безопасность памяти} \engterm{memory safety} — мера, в которой язык или стиль программирования 
+			\textbf{Безопасность памяти} \engterm{memory safety} — мера, в которой язык или стиль программирования
 			защищены от ошибок доступа к памяти.
 		\end{Definition}
 
@@ -65,7 +65,7 @@
 		\frametitle{Сильная и слабая типизация}
 
 		\begin{Definition}
-			\textbf{Сильная / слабая типизация} \engterm{strong / weak type system} — 
+			\textbf{Сильная / слабая типизация} \engterm{strong / weak type system} —
 			степень соблюдения языком программирования безопасности типов и памяти.
 		\end{Definition}
 
@@ -75,12 +75,12 @@
 			\item
 			отсутствие указателей / ссылок, арифметики указателей;
 			\item
-			отсутствие различающихся представлений одних и тех же данных 
+			отсутствие различающихся представлений одних и тех же данных
 			(таких как \codekw{union} в~C / C++);
 			\item
 			минимальное количество неявных приведений типов;
 			\item
-			отсутствие неочевидных для программиста спецификаций операций 
+			отсутствие неочевидных для программиста спецификаций операций
 			(таких как перегрузка операторов в~C++).
 		\end{itemize}
 
@@ -104,8 +104,8 @@
 			\item
 			неявная — тип переменных выводится в процессе компиляции. Примеры:
 			\begin{itemize}
-				\item \code{\textbf{var} x = 5} в C\#; 
-				\item \code{List<> list = \textbf{new} ArrayList<String>()} в Java 7+.
+				\item \code{\codekw{var} x = 5} в C\#;
+				\item \code{List<> list = \codekw{new} ArrayList<String>()} в Java 7+.
 			\end{itemize}
 		\end{itemize}
 
@@ -113,7 +113,7 @@
 		\textbf{ЯП со статической типизацией:} C++, Pascal, Java, C\#.
 
 		\vspace{2.5ex}
-		\textbf{Динамическая типизация} — определение типов некоторых конструкций и проверка соответствующих ограничений 
+		\textbf{Динамическая типизация} — определение типов некоторых конструкций и проверка соответствующих ограничений
 		во время выполнения программы.
 
 		\vspace{1ex}
@@ -126,7 +126,7 @@
 		\frametitle{Совместимость типов}
 
 		\begin{Problem}
-			Проверить соответствие типа всех выражений ожидаемому в конкретной ситуации. 
+			Проверить соответствие типа всех выражений ожидаемому в конкретной ситуации.
 			Понятие соответствия специфично для конкретного ЯП.
 		\end{Problem}
 
@@ -141,12 +141,12 @@
 		\textbf{Методы определения совместимости:}
 		\begin{itemize}
 			\item
-			\textbf{«Плоская» система типов:} совместимость = эквивалентность; 
+			\textbf{«Плоская» система типов:} совместимость = эквивалентность;
 			определяется исходя из~деклараций или структуры данных.
 
 			\vspace{1ex}
 			\item
-			\textbf{Иерархическая система типов:} совместимость определяется отношениями 
+			\textbf{Иерархическая система типов:} совместимость определяется отношениями
 			тип — подтип (задекларированными или неявными).
 		\end{itemize}
 	}
@@ -156,7 +156,7 @@
 
 		\begin{itemize}
 			\item
-			\textbf{Номинальная типизация} — вид системы типов, при которой совместимость и~эквивалентность типов 
+			\textbf{Номинальная типизация} — вид системы типов, при которой совместимость и~эквивалентность типов
 			определяется на~основе явных деклараций (наследования, имплементации интерфейсов и~т.\,п.).
 
 			\vspace{0.5ex}
@@ -164,7 +164,7 @@
 
 			\vspace{1ex}
 			\item
-			\textbf{Структурная типизация} — вид системы типов, при~которой совместимость и~эквивалентность типов 
+			\textbf{Структурная типизация} — вид системы типов, при~которой совместимость и~эквивалентность типов
 			определяется на~основе внутренней структуры объектов \emph{во~время компиляции}.
 
 			\vspace{0.5ex}
@@ -172,7 +172,7 @@
 
 			\vspace{1ex}
 			\item
-			\textbf{Утиная типизация} — вид системы типов, при~которой совместимость и~эквивалентность типов 
+			\textbf{Утиная типизация} — вид системы типов, при~которой совместимость и~эквивалентность типов
 			определяется на~основе структуры объектов \emph{во~время выполнения}.
 
 			\vspace{0.5ex}
@@ -186,7 +186,7 @@
 		\frametitle{Утиная типизация}
 
 		\begin{Definition}
-			\textbf{Утиная типизация} \engterm{duck typing} — вид динамической типизации, при которой 
+			\textbf{Утиная типизация} \engterm{duck typing} — вид динамической типизации, при которой
 			корректность использования объекта определяется набором его методов и свойств, а~не~типом.
 		\end{Definition}
 
@@ -194,14 +194,14 @@
 		\textbf{ЯП с утиной типизацией:}
 		\begin{itemize}
 			\item языки с ООП на основе прототипов (JavaScript, Lua);
-			\item Python; 
+			\item Python;
 			\item Smalltalk.
 		\end{itemize}
 
 		\vspace{1ex}
 		\textbf{Пример динамической не утиной типизации:} подсказки типов \engterm{data hinting} в~PHP.
 	}
-	
+
 	\frame{
 		\frametitle{Пример: утиная типизация в Python}
 
@@ -235,7 +235,7 @@
 		\frametitle{Неявное приведение типов данных}
 
 		\begin{Definition}
-			\textbf{Неявное приведение ТД} \engterm{implicit conversion, coercion} — приведение типов данных, 
+			\textbf{Неявное приведение ТД} \engterm{implicit conversion, coercion} — приведение типов данных,
 			осуществляемое автоматически компилятором.
 		\end{Definition}
 
@@ -243,8 +243,8 @@
 		\textbf{Примеры:}
 		\begin{itemize}
 			\item
-			Преобразование между числовыми типами с повышением разрядности или множества представимых чисел 
-			(\codekw{byte}~$\rightarrow$ \codekw{short}~$\rightarrow$ \codekw{int}~$\rightarrow$ 
+			Преобразование между числовыми типами с повышением разрядности или множества представимых чисел
+			(\codekw{byte}~$\rightarrow$ \codekw{short}~$\rightarrow$ \codekw{int}~$\rightarrow$
 				\codekw{long}~$\rightarrow$ \codekw{float}~$\rightarrow$ \codekw{double}).
 
 			\textbf{Код (Java):}
@@ -252,10 +252,10 @@
 
 			\vspace{0.5ex}
 			\item
-			Приведение объектов к строковому представлению; зачастую — с помощью средств ООП: 
+			Приведение объектов к строковому представлению; зачастую — с помощью средств ООП:
 			\begin{itemize}
-				\item метод \code{toString()} в Java; 
-				\item метод \code{ToString()} в C\#; 
+				\item метод \code{toString()} в Java;
+				\item метод \code{ToString()} в C\#;
 				\item метод \code{str.format()} и ключевое слово / функция \code{print} в~Python.
 			\end{itemize}
 		\end{itemize}
@@ -265,7 +265,7 @@
 		\frametitle{Явное приведение типов данных}
 
 		\begin{Definition}
-			\textbf{Явное приведение ТД} \engterm{explicit conversion} — приведение ТД, 
+			\textbf{Явное приведение ТД} \engterm{explicit conversion} — приведение ТД,
 			специфицируемое в~исходном коде программы.
 		\end{Definition}
 
@@ -275,15 +275,15 @@
 			\item
 			С динамической проверкой типа во время выполнения:
 			\begin{itemize}
-				\item приведение типов в Java; 
-				\item оператор \code{\textbf{dynamic\_cast}<T>} в C++.
+				\item приведение типов в Java;
+				\item оператор \code{\codekw{dynamic\_cast}<T>} в C++.
 			\end{itemize}
 
 			\vspace{1ex}
 			\item
 			Без динамической проверки типа:
 			\begin{itemize}
-				\item \code{\textbf{static\_cast}<T>} в C++; 
+				\item \code{\codekw{static\_cast}<T>} в C++;
 				\item оператор \codekw{as} в C\#.
 			\end{itemize}
 		\end{itemize}
@@ -308,11 +308,11 @@
 		\textbf{Виды полиморфизма:}
 		\begin{itemize}
 			\item
-			Специальный (ad hoc) полиморфизм — определение различных реализаций для~конечного числа 
+			Специальный (ad hoc) полиморфизм — определение различных реализаций для~конечного числа
 			фиксированных наборов входных типов (напр., перегрузка функций / методов).
 
 			\item
-			Параметрический полиморфизм — определение обобщенной реализации для~произвольного типа 
+			Параметрический полиморфизм — определение обобщенной реализации для~произвольного типа
 			(напр., шаблоны в C++; generics в Java и C\#).
 
 			\item
@@ -341,7 +341,7 @@
 
 		\lstinputlisting[language=java]{code-poly-parametric.java}
 
-		Информация о параметризации типа в Java доступна только во~время компиляции; 
+		Информация о параметризации типа в Java доступна только во~время компиляции;
 		во~время выполнения эти~сведения \extlink{http://en.wikipedia.org/wiki/Type_erasure}{стираются}:
 
 		\lstinputlisting[language=java]{code-poly-parametric-2.java}
@@ -383,23 +383,23 @@
 
 		\textbf{Принцип подстановки Барбары Лисков} \engterm{Liskov substitution principle, LSP}:
 
-		Функции, использующие базовый тип данных (напр., в качестве аргументов), 
+		Функции, использующие базовый тип данных (напр., в качестве аргументов),
 		должны уметь использовать произвольные подтипы этого типа, не зная об этом.
 
 		\vspace{1ex}
-		{\small(LSP — один из пяти базовых принципов объектно-ориентированного проектирования 
+		{\small(LSP — один из пяти базовых принципов объектно-ориентированного проектирования
 			\extlink{http://en.wikipedia.org/wiki/SOLID_\%28object-oriented_design\%29}{SOLID}.)}
 
 		\vspace{2ex}
-		\textbf{NB.} Полиморфизм подтипов означает наследование интерфейсов, наследование в~ООП — наследование имплементации. 
+		\textbf{NB.} Полиморфизм подтипов означает наследование интерфейсов, наследование в~ООП — наследование имплементации.
 		Один тип может быть подтипом неродственных типов в~ЯП без~множественного наследования.
 
 		\vspace{1ex}
 		\textbf{Пример (Java):}
-		\begin{itemize} 
-			\item 
+		\begin{itemize}
+			\item
 			ArrayList — подтип интерфейсов List, Iterable, Collection, Cloneable, Serializable, RandomAccess;
-			\item 
+			\item
 			ArrayList — подтип классов AbstractList, AbstractCollection и Object.
 		\end{itemize}
 	}
@@ -416,7 +416,7 @@
 		\frametitle{Подтипы и наследование}
 
 		\begin{Definition}
-			\textbf{Наследование} ($=$ наследование реализации, \textit{code inheritance}) — 
+			\textbf{Наследование} ($=$ наследование реализации, \textit{code inheritance}) —
 			перенос для~использования, расширения или~модификации \emph{реализации} методов класса.
 		\end{Definition}
 
@@ -428,7 +428,7 @@
 
 		\vspace{1ex}
 		\begin{Definition}
-			\textbf{Отношение «тип — подтип»} ($=$ наследование интерфейса, \textit{subtyping}) — 
+			\textbf{Отношение «тип — подтип»} ($=$ наследование интерфейса, \textit{subtyping}) —
 			копирование \emph{описания} методов класса для определения совместимости типов.
 		\end{Definition}
 
@@ -446,7 +446,7 @@
 		\frametitle{Интерфейсы ООП}
 
 		\begin{Definition}
-			\textbf{Интерфейс в ООП} — способ задания отношения подтипов на~основе контрактов 
+			\textbf{Интерфейс в ООП} — способ задания отношения подтипов на~основе контрактов
 			(т.\,е.~описания требуемой функциональности).
 		\end{Definition}
 
@@ -476,27 +476,27 @@
 		\frametitle{Сравнение наследования и подтипов}
 
 		\begin{center}\small
-			\begin{tabular}{|p{0.03\textwidth}|p{0.03\textwidth}|p{0.375\textwidth}|p{0.375\textwidth}|}
+			\begin{tabular}{|p{0.075\textwidth}|p{0.375\textwidth}|p{0.375\textwidth}|}
 				\hline
-				\multicolumn{2}{|c|}{} & \multicolumn{2}{c|}{Наследование} \cr
-				\cline{3-4}
-				\multicolumn{2}{|c|}{} & \centering $+$ & \centering $-$ \cr
+					Подтип & \multicolumn{2}{c|}{Наследование} \cr
+				\cline{2-3}
+					& \centering $+$ & \centering $-$ \cr
 				\hline
-				\multirow{2}*{\rotatebox{90}{Подтип\hspace{2ex}\strut{}}} & \centering $+$ 
-					& \raggedright Наследование в Java, C\# 
-						\vspace{0.5ex}\par \code{\textbf{class} A \{ \}} 
-						\par \code{\textbf{class} B \textbf{extends} A \{ \}}
-					& \raggedright Расширение интерфейсов в Java, C\# 
-						\vspace{0.5ex}\par \code{\textbf{intefrace} A \{ \}} 
-						\par \code{\textbf{interface} B \textbf{extends} A \{ \}} \cr
-				\cline{2-4}
-				& \centering $-$ 
+					\centering $+$
+					& \raggedright Наследование в Java, C\#
+						\vspace{0.5ex}\par \code{\codekw{class} A \{ \}}
+						\par \code{\codekw{class} B \codekw{extends} A \{ \}}
+					& \raggedright Расширение интерфейсов в Java, C\#
+						\vspace{0.5ex}\par \code{\codekw{intefrace} A \{ \}}
+						\par \code{\codekw{interface} B \codekw{extends} A \{ \}} \cr
+				\hline
+					\centering $-$
 					& \raggedright Наследование в С++ с~модификаторами \codekw{protected} и~\codekw{private}
-						\vspace{0.5ex}\par \code{\textbf{class} A \{ \};} 
-						\par \code{\textbf{class} B : \textbf{protected} A \{ \};}
-					& \raggedright Независимые типы данных 
-						\vspace{0.5ex}\par \code{\textbf{class} A \{ \}} 
-						\par \code{\textbf{class} B \{ \}} \cr
+						\vspace{0.5ex}\par \code{\codekw{class} A \{ \};}
+						\par \code{\codekw{class} B : \codekw{protected} A \{ \};}
+					& \raggedright Независимые типы данных
+						\vspace{0.5ex}\par \code{\codekw{class} A \{ \}}
+						\par \code{\codekw{class} B \{ \}} \cr
 				\hline
 			\end{tabular}
 		\end{center}
@@ -507,7 +507,7 @@
 	\frame{
 		\frametitle{Ковариантность и контравариантность}
 
-		\textbf{Ковариантность:} 
+		\textbf{Ковариантность:}
 		\code{ParametricType<S>} — подтип \code{ParametricType<T>}, если \code{S} — подтип \code{T}.
 
 		\vspace{1ex}
@@ -526,7 +526,7 @@
 	\frame{
 		\frametitle{Ковариантность и контравариантность}
 
-		\textbf{Контравариантность:} \code{ParametricType<T>} — подтип \code{ParametricType<S>}, 
+		\textbf{Контравариантность:} \code{ParametricType<T>} — подтип \code{ParametricType<S>},
 		если \code{S} — подтип \code{T}.
 
 		\vspace{1ex}
@@ -547,9 +547,9 @@
 		Декларации ко/контравариантности в Java: во время использования типа, а~не~во~время его~декларации:
 		\begin{itemize}
 			\item
-			\code{? \textbf{extends} T} — ковариантное определение типа данных в шаблоне;
+			\code{? \codekw{extends} T} — ковариантное определение типа данных в шаблоне;
 			\item
-			\code{? \textbf{super} T} — контравариантное определение типа данных в шаблоне.
+			\code{? \codekw{super} T} — контравариантное определение типа данных в шаблоне.
 		\end{itemize}
 
 		\vspace{0.5ex}
@@ -568,37 +568,37 @@
 	\section{Заключение}
 
 	\subsection{Выводы}
-	
+
 	\frame{
 		\frametitle{Выводы}
 
 		\begin{enumerate}
 			\item
-			Основное применение системы типов данных — устранение ошибок, связанных с~некорректной интерпретацией данных 
+			Основное применение системы типов данных — устранение ошибок, связанных с~некорректной интерпретацией данных
 			(слабая форма верификации программы). Для~решения этой~задачи вводится понятие совместимых типов~данных.
 
 			\vspace{0.5ex}
 			\item
-			Совместимость типов может определяться с~помощью явных или~неявных приведений, 
+			Совместимость типов может определяться с~помощью явных или~неявных приведений,
 			а~также с~помощью полиморфизма, в~частности отношений «тип — подтип».
 
 			\vspace{0.5ex}
 			\item
-			Определение подтипов и наследование в~ООП — связанные, но~различные понятия. 
-			В~некоторых случаях определение подтипов нетривиально (например, правила ковариантности / контравариантности 
+			Определение подтипов и наследование в~ООП — связанные, но~различные понятия.
+			В~некоторых случаях определение подтипов нетривиально (например, правила ковариантности / контравариантности
 			для~параметрических типов).
 		\end{enumerate}
 	}
-	
+
 	\subsection{Материалы}
-	
+
 	\frame{
 		\frametitle{Материалы}
-		
+
 		\begin{thebibliography}{9}
 			\bibitem[1]{1}
-			Лавріщева К.\,М. 
-			\newblock Програмна інженерія (підручник). 
+			Лавріщева К.\,М.
+			\newblock Програмна інженерія (підручник).
 			\newblock {\footnotesize К., 2008. — 319 с.}
 
 			\bibitem[2]{2}
@@ -612,14 +612,13 @@
 			\newblock {\footnotesize\url{http://lucacardelli.name/Papers/OnUnderstanding.A4.pdf}}
 		\end{thebibliography}
 	}
-	
+
 	\frame{
 		\frametitle{}
-		
+
 		\begin{center}
 			\Huge Спасибо за внимание!
 		\end{center}
 	}
 
 \end{document}
-

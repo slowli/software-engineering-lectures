@@ -4,7 +4,7 @@ layout: default
 {% assign section = site.sections | where:"section_id", page.section_id | first %}
 <div class="breadcrumbs">Раздел: <a href="{{ section.url | relative_url }}">{{ section.title }}</a></div>
 
-<h1><div class="pre-header">Лекция №{{ page.index }}</div>{{ page.title }}</h1>
+<h1><span class="pre-header">Лекция №{{ page.index }}</span>{{ page.title }}</h1>
 
 {% include lead.html text=content %}
 {% if page.file %}

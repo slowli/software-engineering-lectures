@@ -13,7 +13,7 @@
 	};
 	\node(subject-code) [code,below=1em of subject.south,align=left]  {%
 		notifyObservers: \\
-		\hspace{2em}\textbf{for} obs \textbf{in} \textbf{this}.observers: \\
+		\hspace{2em}\codekw{for} obs \codekw{in} \codekw{this}.observers: \\
 		\hspace{4em}obs.notify();
 	};
 	\draw[dashed] (subject) -- (subject-code);

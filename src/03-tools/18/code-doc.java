@@ -1,17 +1,16 @@
 /**
  * $Вычисляет отношение двух действительных чисел.$
- * $В отличие от операции деления \textbf{<code>}/\textbf{</code>}, если знаменатель отношения равен нулю,$
- * $возбуждается исключительная ситуация.$
+ * $В отличие от операции деления \textbf{<code>}/\textbf{</code>}, если знаменатель отношения$
+ * $равен нулю, возбуждается исключительная ситуация.$
  *
- * $\textbf{@param} x$
+ * $\codekw{@param} x$
  *    $числитель$
- * $\textbf{@param} y$
+ * $\codekw{@param} y$
  *    $знаменатель$
- *
- * $\textbf{@return}$
+ * $\codekw{@return}$
  *    $результат операции деления$
  *
- * $\textbf{@throws} ArithmeticException$
+ * $\codekw{@throws} ArithmeticException$
  *    $если знаменатель равен нулю$
  */
 public static double div(double x, double y) {

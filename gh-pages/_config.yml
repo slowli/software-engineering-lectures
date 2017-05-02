@@ -23,6 +23,8 @@ header_nav:
 exclude:
   - Gemfile
   - Gemfile.lock
+  # installed in Travis builds
+  - vendor
 collections:
   lectures:
     output: true

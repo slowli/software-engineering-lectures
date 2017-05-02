@@ -39,6 +39,7 @@ $faded-link-color: mix($body-link-color, lighten($body-text-color, 25%), 50%);
 }
 
 .pre-header {
+  display: block;
   color: darken($body-text-color, 10%);
   font-size: 1rem;
   text-transform: uppercase;

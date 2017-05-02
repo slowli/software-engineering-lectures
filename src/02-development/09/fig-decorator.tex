@@ -24,7 +24,7 @@
 		$+$ operation()
 	};
 	\node(deco-operation) [code,below=1em of decorator.south,anchor=north east] {%
-		\textbf{this}.component.operation();
+		\codekw{this}.component.operation();
 	};
 	\draw[o-,dashed] ($ (decorator.three east) + (-1em,0) $) |- (deco-operation);
 

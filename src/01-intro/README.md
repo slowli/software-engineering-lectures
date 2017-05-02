@@ -39,16 +39,15 @@
   * Лаврищева Е.М. Программная инженерия. Учебник. — К.: Академпериодика. — 2008. — 319 с.
   * Sommerville I. Software engineering, 9th ed. — Boston, Massachusetts: Addison-Wesley. — 2011. — 790 p.
   * A Guide to the Project Management Body of Knowledge (PMBOK Guide), 5th ed. – Project Management Institute. — 2013. — 589 p.
-  * Guide to the Software Engineering Body of Knowledge, Version 3.0. / ed. by P. Bourque and R.E. Fairley. — 
+  * Guide to the Software Engineering Body of Knowledge, Version 3.0. / ed. by P. Bourque and R.E. Fairley. —
     IEEE Computer Society. — 2014.
   * McConnell S. Rapid Development: Taming Wild Software Schedules. — Microsoft Press Books. — 1996. — 647 p.
   * Kerr J.M., Hunter R. Inside RAD: How to Build a Fully Functional System in 90 Days or Less. — McGraw-Hill. — 1994. — 213 p.
   * Shore J., Warden S. The art of agile development. — Sebastopol, California: O’Reilly Media. — 2008. — 409 p.
   * Beck K., Andres C. Extreme programming explained. — Boston, Massachusetts: Addison-Wesley. — 2004. — 180 p.
   * Martin R.C. Agile Software Development: Principles, Patterns, and Practices. — Pearson Education. — 2003. — 529 p.
-  * [Software Engineering Body of Knowledge, Version 3.0][1].
-  * [Selecting a development approach][2].
+  * [Software Engineering Body of Knowledge, Version 3.0][swebok].
+  * [Selecting a development approach][approach].
 
-[1]: http://www.computer.org/web/swebok/v3
-[2]: https://www.cms.gov/Research-Statistics-Data-and-Systems/CMS-Information-Technology/XLC/Downloads/SelectingDevelopmentApproach.pdf
-
+[swebok]: https://www.computer.org/web/swebok/v3
+[approach]: https://www.cms.gov/Research-Statistics-Data-and-Systems/CMS-Information-Technology/XLC/Downloads/SelectingDevelopmentApproach.pdf

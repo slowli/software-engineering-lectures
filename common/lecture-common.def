@@ -109,7 +109,7 @@
 
 %% Inline code snippets
 \def\code#1{\texttt{#1}}
-\def\codekw#1{\code{\textbf{#1}}}
+\def\codekw#1{\code{\color[rgb]{0.5,0,0.4}{#1}}}
 
 \def\quoteauthor#1{\par\footnotesize\upshape\hfill—~#1}
 
@@ -123,4 +123,3 @@
 \def\inlink#1#2{\hyperlink{#1}{\color[rgb]{0.7,0.7,1.0}\dashbar{#2}}}
 %% Explanation for a list item
 \def\itemexpl#1{\begingroup\small\vspace{0.75ex}#1\par\endgroup}
-

@@ -17,6 +17,8 @@ CATEGORIES=$(shell ls $(SRCDIR))
 
 # Font family (droid or noto)
 LECTURE_FONTS ?= noto+droid
+# Directory where html5validator and linkchecker binaries are installed
+PY_BIN ?= ~/.local/bin/
 
 # GitHub Pages-related variables
 GH_PAGES_DIR=gh-pages
@@ -53,20 +55,28 @@ LECTURES_BEAMER += $(3)-beamer
 $(OUTDIR)/$(3)-$(2).pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*) $(wildcard $(1)/code-*)
 	mkdir -p $(TEMPDIR)
 	mkdir -p $(OUTDIR)
-	sed -r -e '/^\\input\{lecture-common\.def\}/ r common/fonts.$(LECTURE_FONTS).def' $$< > $(TEMPDIR)/tmp.tex
-	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2) $(TEMPDIR)/tmp.tex
-	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2) $(TEMPDIR)/tmp.tex
-	rm $(TEMPDIR)/tmp.tex
+	sed -r -e '/^\\input\{lecture-common\.def\}/ r common/fonts.$(LECTURE_FONTS).def' $$< > $(TEMPDIR)/$(3)-$(2).tex
+	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2) $(TEMPDIR)/$(3)-$(2).tex
+	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2) $(TEMPDIR)/$(3)-$(2).tex
+	rm $(TEMPDIR)/$(3)-$(2).tex
+	if [ `grep -c -e '^(Over|Under)full' $(TEMPDIR)/$(3)-$(2).log` != 0 ]; then \
+		grep -C 3 -e '^(Over|Under)full' $(TEMPDIR)/$(3)-$(2).log; \
+		exit 1; \
+	fi
 	mv $(TEMPDIR)/$$(notdir $$@) $$@
 
 $(OUTDIR)/$(3)-$(2)-beamer.pdf: $(1)/$(2).tex $(wildcard $(1)/fig-*) $(wildcard $(1)/code-*)
 	mkdir -p $(TEMPDIR)
 	mkdir -p $(OUTDIR)
 	sed -r -e 's/documentclass(\[.*\])?\{a4beamer\}/documentclass[page=beamer,scale=8pt]{a4beamer}/' \
-	 	-e '/^\\input\{lecture-common\.def\}/ r common/fonts.$(LECTURE_FONTS).def' $$< > $(TEMPDIR)/tmp.tex
-	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2)-beamer $(TEMPDIR)/tmp.tex
-	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2)-beamer $(TEMPDIR)/tmp.tex
-	rm $(TEMPDIR)/tmp.tex
+	 	-e '/^\\input\{lecture-common\.def\}/ r common/fonts.$(LECTURE_FONTS).def' $$< > $(TEMPDIR)/$(3)-$(2)-beamer.tex
+	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2)-beamer $(TEMPDIR)/$(3)-$(2)-beamer.tex
+	env TEXINPUTS=common:$(1): $(CC) $(CFLAGS) --output-directory $(TEMPDIR) --jobname=$(3)-$(2)-beamer $(TEMPDIR)/$(3)-$(2)-beamer.tex
+	rm $(TEMPDIR)/$(3)-$(2)-beamer.tex
+	if [ `grep -c -e '^(Over|Under)full' $(TEMPDIR)/$(3)-$(2)-beamer.log` != 0 ]; then \
+		grep -C 3 -e '^(Over|Under)full' $(TEMPDIR)/$(3)-$(2)-beamer.log; \
+		exit 1; \
+	fi
 	mv $(TEMPDIR)/$$(notdir $$@) $$@
 
 ifneq (,$(wildcard $(1)/README.md))
@@ -101,6 +111,7 @@ ifneq (,$(wildcard $(SRCDIR)/$(1)/README.md))
 
 $(GH_PAGES_SEC)/$(1).md: $(SRCDIR)/$(1)/README.md
 	mkdir -p $(GH_PAGES_SEC)
+	mkdir -p $(TEMPDIR)
 	sed -r -e '1 s/^#+ (.*)$$$$/---\ntitle: "\1"\n---/' $$< | \
 	sed -r -e "2 i section_id: $(1)" \
 		-e "2 i index: $(1)" | \
@@ -153,13 +164,10 @@ clean:
 	rm -rf $(TEMPDIR)
 
 clean-gh:
-	rm -rf $(GH_PAGES_FILES) $(GH_PAGES_SRC) $(GH_PAGES_SEC) $(GH_PAGES_DIR)/_site
+	rm -rf $(GH_PAGES_DIR)/_site $(GH_PAGES_DIR)/vendor
 
 uninstall: clean clean-gh
-	rm -rf $(OUTDIR)
-
-show-errors:
-	grep -e "Overfull" -C 3 tmp/*.log
+	rm -rf $(OUTDIR) $(GH_PAGES_FILES) $(GH_PAGES_SRC) $(GH_PAGES_SEC)
 
 ########################################
 # GitHub Pages-related targets
@@ -167,22 +175,38 @@ show-errors:
 
 ifdef GH_PAGES_NOFILES
 gh-pages: $(GH_PAGES)
+	mkdir -p $(GH_PAGES_FILES)
+	cp out/*-beamer.pdf $(GH_PAGES_FILES)
 else
-gh-pages: all-beamer $(GH_PAGES)
+gh-pages: $(GH_PAGES) all-beamer
 	mkdir -p $(GH_PAGES_FILES)
 	cp out/*-beamer.pdf $(GH_PAGES_FILES)
 endif
 
+gh-build: gh-pages
+	cd $(GH_PAGES_DIR) && bundle exec jekyll build
+
 gh-serve: gh-pages
 	cd $(GH_PAGES_DIR) && bundle exec jekyll serve -H $(GH_PAGES_HOST)
+
+test-gh: test-gh-html test-gh-links
+
+test-gh-html: gh-build
+	$(PY_BIN)html5validator --root $(GH_PAGES_DIR)/_site --show-warnings
+
+test-gh-links: gh-pages
+	ps -e --format pid,command | grep 'jekyll' | grep -v 'grep' | awk '{ print $$1 }' | xargs -r kill -KILL
+	cd $(GH_PAGES_DIR) && bundle exec jekyll serve 2>/dev/null 1>/dev/null &
+	sleep 10
+	$(PY_BIN)linkchecker -f./linkcheckerrc -o csv http://localhost:4000/ | \
+		awk -F '|' -f linkchecker.awk
+	ps -e --format pid,command | grep 'jekyll' | grep -v 'grep' | awk '{ print $$1 }' | xargs -r kill -KILL
 
 gh-push-local: gh-pages
 	cd $(GH_PAGES_DIR) && \
 	git init && \
-	mv .gitignore .gitignore~ && \
 	echo "/_site\n.*" > .gitignore && \
 	git add . && \
 	git commit -m "Deploy to GitHub pages" && \
 	git push --force --quiet "../.git" master:gh-pages && \
-	rm -rf .git && \
-	mv -f .gitignore~ .gitignore
+	rm -rf .git

@@ -10,7 +10,7 @@
 		$+$ function()
 	};
 	\node(abs-function) [code,below=1em of abs.south east,anchor=north west] {
-		\textbf{this}.engine.run();
+		\codekw{this}.engine.run();
 	};
 	\draw[o-,dashed] ($ (abs.south east) + (-2em,1em) $) |- (abs-function);
 
@@ -21,7 +21,7 @@
 		$+$ refinedFunction()
 	};
 	\node(r-abs-function) [code,below=1em of r-abs.south east,anchor=north west] {
-		\textbf{this}.function();
+		\codekw{this}.function();
 	};
 	\draw[o-,dashed] ($ (r-abs.south east) + (-2em,1em) $) |- (r-abs-function);
 

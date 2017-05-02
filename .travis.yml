@@ -1,0 +1,46 @@
+dist: trusty
+sudo: required
+language: ruby # for Jekyll
+rvm:
+  - 2.2
+gemfile: gh-pages/Gemfile
+cache: bundler
+branches:
+  only:
+    - master
+    # tags
+    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+before_install:
+  # LaTeX stuff
+  - |
+    sudo apt-get install -qq --no-install-recommends texlive \
+      texlive-latex-extra texlive-xetex \
+      latex-beamer ghostscript \
+      fonts-lmodern fonts-droid fonts-noto
+  - xelatex --version
+  # Test toolkits
+  - python --version # need ~2.7.12 for adequate TLS; does not work with trusty's default 2.7.6
+  # Dirty hack for what seems like a bug in linkchecker
+  - |
+    pip install --user linkchecker && \
+      find ~/.local/lib -regex '.*/linkcheck/__init__.py' -print0 | \
+      xargs -0 sed -i -e "s/requests.__version__ <= '2.2.0'/map(int, requests.__version__.split('.')) <= [2, 2, 0]/"
+  - ~/.local/bin/linkchecker --version
+  - pip install --user html5validator
+  - ~/.local/bin/html5validator --version
+
+script:
+  - make LECTURE_FONTS=noto+droid -j 2 all-beamer
+  # On this step, we want to test a Jekyll build only, hence the NOFILES flag.
+  # We shouldn't care if the previous step fails
+  - make GH_PAGES_NOFILES=1 test-gh
+
+before_deploy:
+  - make clean-gh
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: gh-pages
+  github_token: $GITHUB_TOKEN
+  on:
+    tags: true
