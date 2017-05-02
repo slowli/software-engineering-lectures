@@ -34,3 +34,13 @@ script:
   # On this step, we want to test a Jekyll build only, hence the NOFILES flag.
   # We shouldn't care if the previous step fails
   - make GH_PAGES_NOFILES=1 test-gh
+
+before_deploy:
+  - make clean-gh
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: gh-pages
+  github_token: $GITHUB_TOKEN
+  on:
+    tags: true
