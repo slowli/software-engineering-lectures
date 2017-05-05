@@ -17,8 +17,8 @@ CATEGORIES=$(shell ls $(SRCDIR))
 
 # Font family (droid or noto)
 LECTURE_FONTS ?= noto+droid
-# Directory where html5validator and linkchecker binaries are installed
-PY_BIN ?= ~/.local/bin/
+# Directory where linter binaries are installed
+LINT_BIN ?= ~/.local/bin/
 
 # GitHub Pages-related variables
 GH_PAGES_DIR=gh-pages
@@ -121,10 +121,10 @@ $(GH_PAGES_SEC)/$(1).md: $(SRCDIR)/$(1)/README.md
 		sed -i -e '2 i excerpt_separator: $(EXCERPT_SEP)' $$@; \
 	fi
 	sed -r -n -e "1 i topics:" \
-		-e '/^#+ $(TOPICS_HEAD)/,/^#+/{ /(^#+)|(^[[:space:]]*$$$$)/!{ s/[[:space:]]+\*[[:space:]]*(.*)$$$$/  - "\1"/; p; } }' \
+		-e '/^#+ $(TOPICS_HEAD)/,/^#+/{ /(^#+)|(^[[:space:]]*$$$$)/!{ s/\*[[:space:]]*(.*)$$$$/- >\n    \1/; s/^/  /; p; } }' \
 		$$@ > $(TEMPDIR)/section.yml
 	sed -r -n -e "1 i questions:" \
-		-e '/^#+ $(QUESTIONS_HEAD)/,/^#+/{ /(^#+)|(^[[:space:]]*$$$$)/!{ s/[[:space:]]+\*[[:space:]]*(.*)$$$$/  - "\1"/; p; } }' \
+		-e '/^#+ $(QUESTIONS_HEAD)/,/^#+/{ /(^#+)|(^[[:space:]]*$$$$)/!{ s/\*[[:space:]]*(.*)$$$$/- >\n    \1/; s/^/  /; p; } }' \
 		$$@ >> $(TEMPDIR)/section.yml
 	sed -i -e '2 r $(TEMPDIR)/section.yml' $$@
 
@@ -159,6 +159,7 @@ all: all-a4 all-beamer supplementary
 all-a4: $(LECTURES_A4)
 all-beamer: $(LECTURES_BEAMER)
 install: all gh-pages
+test: test-md test-html test-links
 
 clean:
 	rm -rf $(TEMPDIR)
@@ -176,11 +177,11 @@ uninstall: clean clean-gh
 ifdef GH_PAGES_NOFILES
 gh-pages: $(GH_PAGES)
 	mkdir -p $(GH_PAGES_FILES)
-	cp out/*-beamer.pdf $(GH_PAGES_FILES)
+	find . -path './out/*-beamer.pdf' -exec cp -t $(GH_PAGES_FILES) {} +
 else
 gh-pages: $(GH_PAGES) all-beamer
 	mkdir -p $(GH_PAGES_FILES)
-	cp out/*-beamer.pdf $(GH_PAGES_FILES)
+	find . -path './out/*-beamer.pdf' -exec cp -t $(GH_PAGES_FILES) {} +
 endif
 
 gh-build: gh-pages
@@ -189,18 +190,21 @@ gh-build: gh-pages
 gh-serve: gh-pages
 	cd $(GH_PAGES_DIR) && bundle exec jekyll serve -H $(GH_PAGES_HOST)
 
-test-gh: test-gh-html test-gh-links
-
-test-gh-html: gh-build
-	$(PY_BIN)html5validator --root $(GH_PAGES_DIR)/_site --show-warnings
-
-test-gh-links: gh-pages
+gh-kill:
 	ps -e --format pid,command | grep 'jekyll' | grep -v 'grep' | awk '{ print $$1 }' | xargs -r kill -KILL
+
+test-md:
+	$(LINT_BIN)mdl --style ./markdownlintrc src
+
+test-html: gh-build
+	$(LINT_BIN)html5validator --root $(GH_PAGES_DIR)/_site --show-warnings
+
+test-links: gh-pages gh-kill
 	cd $(GH_PAGES_DIR) && bundle exec jekyll serve 2>/dev/null 1>/dev/null &
 	sleep 10
-	$(PY_BIN)linkchecker -f./linkcheckerrc -o csv http://localhost:4000/ | \
+	$(LINT_BIN)linkchecker -f./linkcheckerrc -o csv http://localhost:4000/ | \
 		awk -F '|' -f linkchecker.awk
-	ps -e --format pid,command | grep 'jekyll' | grep -v 'grep' | awk '{ print $$1 }' | xargs -r kill -KILL
+	make gh-kill
 
 gh-push-local: gh-pages
 	cd $(GH_PAGES_DIR) && \

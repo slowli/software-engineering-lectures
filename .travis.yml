@@ -28,12 +28,17 @@ before_install:
   - ~/.local/bin/linkchecker --version
   - pip install --user html5validator
   - ~/.local/bin/html5validator --version
+  # Markdown linter
+  - gem install mdl --bindir ~/.local/bin
+  - ~/.local/bin/mdl --version
 
 script:
   - make LECTURE_FONTS=noto+droid -j 2 all-beamer
   # On this step, we want to test a Jekyll build only, hence the NOFILES flag.
   # We shouldn't care if the previous step fails
-  - make GH_PAGES_NOFILES=1 test-gh
+  - make GH_PAGES_NOFILES=1 test
+  # Kill Jekyll if the previous command exited prematurely
+  - make gh-kill
 
 before_deploy:
   - make clean-gh
