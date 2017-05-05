@@ -28,6 +28,9 @@ before_install:
   - ~/.local/bin/linkchecker --version
   - pip install --user html5validator
   - ~/.local/bin/html5validator --version
+  # Markdown linter
+  - gem install mdl --bindir ~/.local/bin
+  - ~/.local/bin/mdl --version
 
 script:
   - make LECTURE_FONTS=noto+droid -j 2 all-beamer
