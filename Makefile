@@ -17,8 +17,8 @@ CATEGORIES=$(shell ls $(SRCDIR))
 
 # Font family (droid or noto)
 LECTURE_FONTS ?= noto+droid
-# Directory where html5validator and linkchecker binaries are installed
-PY_BIN ?= ~/.local/bin/
+# Directory where linter binaries are installed
+LINT_BIN ?= ~/.local/bin/
 
 # GitHub Pages-related variables
 GH_PAGES_DIR=gh-pages
@@ -159,6 +159,7 @@ all: all-a4 all-beamer supplementary
 all-a4: $(LECTURES_A4)
 all-beamer: $(LECTURES_BEAMER)
 install: all gh-pages
+test: test-md test-gh-html test-gh-links
 
 clean:
 	rm -rf $(TEMPDIR)
@@ -176,11 +177,11 @@ uninstall: clean clean-gh
 ifdef GH_PAGES_NOFILES
 gh-pages: $(GH_PAGES)
 	mkdir -p $(GH_PAGES_FILES)
-	cp out/*-beamer.pdf $(GH_PAGES_FILES)
+	if [ -e out/*-beamer.pdf ]; then cp out/*-beamer.pdf $(GH_PAGES_FILES); fi
 else
 gh-pages: $(GH_PAGES) all-beamer
 	mkdir -p $(GH_PAGES_FILES)
-	cp out/*-beamer.pdf $(GH_PAGES_FILES)
+	if [ -e out/*-beamer.pdf ]; then cp out/*-beamer.pdf $(GH_PAGES_FILES); fi
 endif
 
 gh-build: gh-pages
@@ -190,15 +191,17 @@ gh-serve: gh-pages
 	cd $(GH_PAGES_DIR) && bundle exec jekyll serve -H $(GH_PAGES_HOST)
 
 test-gh: test-gh-html test-gh-links
+test-md:
+	$(LINT_BIN)mdl --style ./markdownlintrc src
 
 test-gh-html: gh-build
-	$(PY_BIN)html5validator --root $(GH_PAGES_DIR)/_site --show-warnings
+	$(LINT_BIN)html5validator --root $(GH_PAGES_DIR)/_site --show-warnings
 
 test-gh-links: gh-pages
 	ps -e --format pid,command | grep 'jekyll' | grep -v 'grep' | awk '{ print $$1 }' | xargs -r kill -KILL
 	cd $(GH_PAGES_DIR) && bundle exec jekyll serve 2>/dev/null 1>/dev/null &
 	sleep 10
-	$(PY_BIN)linkchecker -f./linkcheckerrc -o csv http://localhost:4000/ | \
+	$(LINT_BIN)linkchecker -f./linkcheckerrc -o csv http://localhost:4000/ | \
 		awk -F '|' -f linkchecker.awk
 	ps -e --format pid,command | grep 'jekyll' | grep -v 'grep' | awk '{ print $$1 }' | xargs -r kill -KILL
 
