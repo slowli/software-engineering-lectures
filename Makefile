@@ -177,11 +177,11 @@ uninstall: clean clean-gh
 ifdef GH_PAGES_NOFILES
 gh-pages: $(GH_PAGES)
 	mkdir -p $(GH_PAGES_FILES)
-	if [ -e out/*-beamer.pdf ]; then cp out/*-beamer.pdf $(GH_PAGES_FILES); fi
+	find . -path './out/*-beamer.pdf' -exec cp -t $(GH_PAGES_FILES) {} +
 else
 gh-pages: $(GH_PAGES) all-beamer
 	mkdir -p $(GH_PAGES_FILES)
-	if [ -e out/*-beamer.pdf ]; then cp out/*-beamer.pdf $(GH_PAGES_FILES); fi
+	find . -path './out/*-beamer.pdf' -exec cp -t $(GH_PAGES_FILES) {} +
 endif
 
 gh-build: gh-pages
