@@ -121,10 +121,10 @@ $(GH_PAGES_SEC)/$(1).md: $(SRCDIR)/$(1)/README.md
 		sed -i -e '2 i excerpt_separator: $(EXCERPT_SEP)' $$@; \
 	fi
 	sed -r -n -e "1 i topics:" \
-		-e '/^#+ $(TOPICS_HEAD)/,/^#+/{ /(^#+)|(^[[:space:]]*$$$$)/!{ s/[[:space:]]+\*[[:space:]]*(.*)$$$$/  - "\1"/; p; } }' \
+		-e '/^#+ $(TOPICS_HEAD)/,/^#+/{ /(^#+)|(^[[:space:]]*$$$$)/!{ s/\*[[:space:]]*(.*)$$$$/- >\n    \1/; s/^/  /; p; } }' \
 		$$@ > $(TEMPDIR)/section.yml
 	sed -r -n -e "1 i questions:" \
-		-e '/^#+ $(QUESTIONS_HEAD)/,/^#+/{ /(^#+)|(^[[:space:]]*$$$$)/!{ s/[[:space:]]+\*[[:space:]]*(.*)$$$$/  - "\1"/; p; } }' \
+		-e '/^#+ $(QUESTIONS_HEAD)/,/^#+/{ /(^#+)|(^[[:space:]]*$$$$)/!{ s/\*[[:space:]]*(.*)$$$$/- >\n    \1/; s/^/  /; p; } }' \
 		$$@ >> $(TEMPDIR)/section.yml
 	sed -i -e '2 r $(TEMPDIR)/section.yml' $$@
 
