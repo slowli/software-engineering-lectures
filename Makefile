@@ -159,7 +159,7 @@ all: all-a4 all-beamer supplementary
 all-a4: $(LECTURES_A4)
 all-beamer: $(LECTURES_BEAMER)
 install: all gh-pages
-test: test-md test-gh-html test-gh-links
+test: test-md test-html test-links
 
 clean:
 	rm -rf $(TEMPDIR)
@@ -190,20 +190,21 @@ gh-build: gh-pages
 gh-serve: gh-pages
 	cd $(GH_PAGES_DIR) && bundle exec jekyll serve -H $(GH_PAGES_HOST)
 
-test-gh: test-gh-html test-gh-links
+gh-kill:
+	ps -e --format pid,command | grep 'jekyll' | grep -v 'grep' | awk '{ print $$1 }' | xargs -r kill -KILL
+
 test-md:
 	$(LINT_BIN)mdl --style ./markdownlintrc src
 
-test-gh-html: gh-build
+test-html: gh-build
 	$(LINT_BIN)html5validator --root $(GH_PAGES_DIR)/_site --show-warnings
 
-test-gh-links: gh-pages
-	ps -e --format pid,command | grep 'jekyll' | grep -v 'grep' | awk '{ print $$1 }' | xargs -r kill -KILL
+test-links: gh-pages gh-kill
 	cd $(GH_PAGES_DIR) && bundle exec jekyll serve 2>/dev/null 1>/dev/null &
 	sleep 10
 	$(LINT_BIN)linkchecker -f./linkcheckerrc -o csv http://localhost:4000/ | \
 		awk -F '|' -f linkchecker.awk
-	ps -e --format pid,command | grep 'jekyll' | grep -v 'grep' | awk '{ print $$1 }' | xargs -r kill -KILL
+	make gh-kill
 
 gh-push-local: gh-pages
 	cd $(GH_PAGES_DIR) && \

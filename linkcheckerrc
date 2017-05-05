@@ -9,7 +9,7 @@ parts=urlname,parentname,result,warningstring,infostring,valid,line,column
 
 [checking]
 threads=5
-timeout=10
+timeout=20
 anchors=1
 
 [filtering]
