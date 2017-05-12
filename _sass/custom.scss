@@ -1,0 +1,216 @@
+$xlarge-breakpoint: 104em;
+@mixin xlarge {
+  @media screen and (min-width: #{$xlarge-breakpoint}) {
+    @content;
+  }
+}
+
+.clearfix {
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
+.page-header .btn .icon {
+  font-size: 24px;
+  vertical-align: -4px;
+}
+
+.header-nav {
+  text-align: center;
+}
+
+$faded-link-color: mix($body-link-color, lighten($body-text-color, 25%), 50%);
+
+.breadcrumbs,
+.sibling-nav {
+  color: lighten($body-text-color, 25%);
+  font-size: 90%;
+
+  a {
+    color: $faded-link-color;
+  }
+}
+
+.sibling-nav {
+  margin: 2rem 0;
+}
+
+.pre-header {
+  display: block;
+  color: darken($body-text-color, 10%);
+  font-size: 1rem;
+  text-transform: uppercase;
+  line-height: 0.6;
+}
+
+/* Table of contents. */
+
+.with-navbar {
+  .main-content {
+    @include large {
+      max-width: 80rem;
+      padding: 2rem 4rem;
+    }
+
+    @include xlarge {
+      position: relative;
+      left: 160px;
+    }
+  }
+  .main-content-column {
+    @include large {
+      margin-right: 320px;
+    }
+  }
+}
+
+.main-content-no-footer {
+  position: relative;
+}
+
+.toc {
+  background-color: $hr-border-color;
+  font-size: 0.9rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+
+  @include large {
+    position: absolute; /* fallback */
+    right: 0;
+    float: right;
+    width: 300px;
+    position: sticky;
+    top: 0;
+
+    h4 .icon {
+      display: none;
+    }
+  }
+
+  h4 .icon:before {
+    margin: 0; /* needed for accurate animation */
+    transform: rotate(90deg);
+    transition: transform 0.25s;
+  }
+  &.toc-collapsed h4 .icon:before {
+    transform: rotate(0deg);
+  }
+
+  @include small {
+    &.toc-collapsed>ul {
+      display: none;
+    }
+    h4 {
+      cursor: pointer;
+    }
+    &.toc-collapsed h4 {
+      margin-bottom: 0;
+    }
+  }
+  @include medium {
+    &.toc-collapsed>ul {
+      display: none;
+    }
+    h4 {
+      cursor: pointer;
+    }
+    &.toc-collapsed h4 {
+      margin-bottom: 0;
+    }
+  }
+
+  h4 {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: darken($body-text-color, 10%);
+  }
+
+   ul {
+     list-style: none outside none;
+     margin: 0;
+     padding: 0;
+   }
+   ul ul {
+     margin-left: 1.5rem;
+     font-size: 0.8rem;
+     margin-bottom: 0.2rem;
+   }
+}
+
+$btn-color: lighten($section-headings-color, 10%);
+
+.btn.btn-download {
+  background-color: transparentize($btn-color, 0.2);
+  border-color: transparentize($btn-color, 0.1);
+  color: white;
+
+  &:hover {
+    border-color: lighten($btn-color, 10%);
+    background-color: $btn-color;
+  }
+}
+
+.lead {
+  font-size: 115%;
+  font-weight: 300;
+  margin-bottom: 1.15em;
+
+  p {
+    margin-bottom: 0.4em;
+  }
+}
+
+.site-footer-project {
+  float: left;
+
+  .footer-icon {
+    height: 44px;
+  }
+}
+
+.site-copyright {
+  font-size: 0.9rem;
+  margin-left: 84px;
+  max-width: 20rem;
+}
+
+.error-page {
+  .main-content-no-footer {
+    text-align: center;
+
+    h1 {
+      font-size: 3.25rem;
+      margin: 2.5rem 0;
+    }
+    p {
+      font-size: 20px;
+      margin: 2.5rem 0;
+    }
+  }
+  .site-footer {
+    display: none !important;
+  }
+}
+
+.lecture-list {
+  li {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding: 2px;
+    border-bottom: 1px solid $table-border-color;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+  a.lecture-list-pdf {
+    float: right;
+    margin-left: 4px;
+    white-space: nowrap;
+    color: $faded-link-color;
+  }
+}

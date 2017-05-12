@@ -1,0 +1,18 @@
+---
+layout: default
+title: Все лекции
+description: Все лекции по курсу программной инженерии на одной странице.
+---
+
+<h1>Список всех лекций</h1>
+
+<p>Все {% include plurals.html val=site.lectures.size one="лекция" few="лекции" many="лекций" %} по курсу программной инженерии на одной странице.</p>
+{% for section in site.sections %}
+  <h2>{{ section.title }}</h2>
+  {% assign lectures = site.lectures | where:"section_id", section.section_id %}
+  <ol class="lecture-list" start="{{ lectures | map:'index' | first }}">
+  {% for lecture in lectures %}
+    <li class="clearfix"><a class="lecture-list-pdf" href="{{ '/assets/pdf/' | append: lecture.file | relative_url }}" title="Презентация по лекции {{ lecture.index }}">{% include icon.html icon="file-pdf" %}</a><a href="{{ lecture.url | relative_url }}" title="Краткое содержание лекции">{{ lecture.title }}</a></li>
+  {% endfor %}
+  </ol>
+{% endfor %}

@@ -1,0 +1,13 @@
+{% capture result %}
+{% assign tens = include.val | modulo: 100 | divided_by: 10 %}
+{% assign last_digit = include.val | modulo: 10 %}
+{% if tens == 1 %}
+  {{ include.val }} {{ include.many }}
+{% elsif last_digit == 1 %}
+  {{ include.val }} {{ include.one }}
+{% elsif last_digit == 2 or last_digit == 3 or last_digit == 4 %}
+  {{ include.val }} {{ include.few }}
+{% else %}
+  {{ include.val }} {{ include.many }}
+{% endif %}
+{% endcapture %}{{ result | strip }}

@@ -1,0 +1,14 @@
+---
+layout: default
+---
+{% assign section = site.sections | where:"section_id", page.section_id | first %}
+<div class="breadcrumbs">Раздел: <a href="{{ section.url | relative_url }}">{{ section.title }}</a></div>
+
+<h1><span class="pre-header">Лекция №{{ page.index }}</span>{{ page.title }}</h1>
+
+{% include lead.html text=content %}
+{% if page.file %}
+  <p><a class="btn btn-download" href="{{ '/assets/pdf/' | append: page.file | relative_url }}">{% include icon.html icon="file-pdf" %} Скачать презентацию</a></p>
+{% endif %}
+
+{% include sibling_nav.html type="lecture" %}

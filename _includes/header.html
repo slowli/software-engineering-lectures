@@ -1,0 +1,12 @@
+<header class="page-header">
+  <a href="{{ '/' | relative_url }}" class="page-header-link">
+    <h1 class="project-name">{{ site.title | default: site.github.repository_name }}</h1>
+    <h2 class="project-tagline">{{ site.description | default: site.github.project_tagline }}</h2>
+  </a>
+
+  <nav class="header-nav">
+    {% for nav_item in site.header_nav %}
+      <a href="{{ nav_item.url | relative_url }}" title="{{ nav_item.title }}" class="btn">{{ nav_item.name }}</a>
+    {% endfor %}
+  </nav>
+</header>

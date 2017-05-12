@@ -1,0 +1,17 @@
+{% if page.previous or page.next %}
+  {% if include.type == "section" %}
+    {% assign prev_sibling = "Предыдущий раздел" %}
+    {% assign next_sibling = "Следующий раздел" %}
+  {% else %}
+    {% assign prev_sibling = "Предыдущая лекция" %}
+    {% assign next_sibling = "Следующая лекция" %}
+  {% endif %}
+<div class="sibling-nav">
+  {% if page.previous %}
+    <div class="nav-bottom-prev">{{ prev_sibling }}: <a href="{{ page.previous.url | relative_url }}">{{ page.previous.index }}. {{ page.previous.title }}</a></div>
+  {% endif %}
+  {% if page.next %}
+    <div class="nav-bottom-next">{{ next_sibling }}: <a href="{{ page.next.url | relative_url }}">{{ page.next.index }}. {{ page.next.title }}</a></div>
+  {% endif %}
+</div>
+{% endif %}
