@@ -47,5 +47,6 @@ deploy:
   skip_cleanup: true
   local_dir: gh-pages
   github_token: $GITHUB_TOKEN
+  fqdn: lectures.ostrov.ski
   on:
     tags: true
